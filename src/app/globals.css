@@ -1,26 +1,144 @@
 @import "tailwindcss";
 
+/* Dark theme (foundation) */
+:root,
+:root[data-theme="dark"] {
+  --color-bg: #05070a;
+  --color-bg-elevated: #0b0f14;
+  --color-bg-elevated-2: #10151c;
+  --color-border: rgba(233, 240, 244, 0.09);
+  --color-border-strong: rgba(233, 240, 244, 0.16);
+
+  --color-text: #edf1f4;
+  --color-text-muted: #99a3ad;
+  --color-text-faint: #626b74;
+
+  --color-accent: #4fb2e0;
+  --color-accent-strong: #7ecbee;
+  --color-accent-soft: rgba(79, 178, 224, 0.12);
+  --color-accent-contrast: #04121a;
+
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 20px 40px -24px rgba(0, 0, 0, 0.6);
+  --shadow-lift: 0 24px 60px -20px rgba(0, 0, 0, 0.7);
+
+  --grid-line-rgb: 148, 197, 224;
+  --grid-glow-rgb: 79, 178, 224;
+
+  color-scheme: dark;
+}
+
+/* Light theme, designed intentionally, not an inversion */
+:root[data-theme="light"] {
+  --color-bg: #f6f7f9;
+  --color-bg-elevated: #ffffff;
+  --color-bg-elevated-2: #eef1f4;
+  --color-border: rgba(16, 22, 28, 0.09);
+  --color-border-strong: rgba(16, 22, 28, 0.18);
+
+  --color-text: #10161c;
+  --color-text-muted: #4b5661;
+  --color-text-faint: #7c8790;
+
+  --color-accent: #1c85b8;
+  --color-accent-strong: #12658c;
+  --color-accent-soft: rgba(28, 133, 184, 0.1);
+  --color-accent-contrast: #ffffff;
+
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.7) inset, 0 16px 32px -24px rgba(16, 22, 28, 0.16);
+  --shadow-lift: 0 24px 60px -24px rgba(16, 22, 28, 0.22);
+
+  --grid-line-rgb: 60, 82, 102;
+  --grid-glow-rgb: 28, 133, 184;
+
+  color-scheme: light;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-bg: var(--color-bg);
+  --color-bg-elevated: var(--color-bg-elevated);
+  --color-bg-elevated-2: var(--color-bg-elevated-2);
+  --color-border: var(--color-border);
+  --color-border-strong: var(--color-border-strong);
+  --color-text: var(--color-text);
+  --color-text-muted: var(--color-text-muted);
+  --color-text-faint: var(--color-text-faint);
+  --color-accent: var(--color-accent);
+  --color-accent-strong: var(--color-accent-strong);
+  --color-accent-soft: var(--color-accent-soft);
+  --color-accent-contrast: var(--color-accent-contrast);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  border-color: var(--color-border);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* Smooth theme switch, scoped to the properties that actually change. */
+body,
+header,
+footer,
+section,
+a,
+button,
+[class*="bg-"],
+[class*="border"] {
+  transition: background-color 0.25s var(--ease-out), border-color 0.25s var(--ease-out),
+    color 0.25s var(--ease-out);
+}
+
+::selection {
+  background: var(--color-accent-soft);
+  color: var(--color-accent-strong);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Reveal-on-scroll primitive: element starts hidden, .is-visible plays it in. */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
