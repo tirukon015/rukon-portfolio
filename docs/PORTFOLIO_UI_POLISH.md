@@ -406,3 +406,195 @@ Production URL: `https://www.rukon.dev`
 | Prohibited dash characters across 9 live routes | 0 |
 | Homepage screenshot at 1440x900 | Captured and inspected. Full hero above the fold, corrected spacing, no em dash in the role line. |
 
+---
+
+# Follow-up: Container Max-Width Correction
+
+Date: 2026-09-02
+
+This is a focused follow-up to the pass documented above. It resolves the first
+item listed under "Known issues, not fixed in this pass". No other change was
+made: the long-dash cleanup, the hero spacing fix and the responsive section
+padding are all untouched.
+
+## Problem
+
+`Container` applies a default `max-w-6xl`. Five call sites pass
+`className="max-w-3xl"` intending a narrower reading column. That override never
+took effect, so article and case-study body text rendered at the full default
+width.
+
+## Root cause
+
+Confirmed by inspection, not assumed:
+
+- `src/components/ui/container.tsx` baked `max-w-6xl` into its base class string.
+- `src/lib/utils.ts` exports `cn` as `classes.filter(Boolean).join(" ")`. It is a
+  plain string join with no Tailwind conflict resolution.
+- `package.json` has five runtime dependencies. `clsx`, `tailwind-merge`,
+  `classnames` and `class-variance-authority` are **not** installed.
+
+Both utilities therefore landed on the same element. Verified against the
+compiled stylesheet (`.next/static/chunks/*.css`):
+
+```
+.max-w-2xl   char 13138   max-width:var(--container-2xl)
+.max-w-3xl   char 13180   max-width:var(--container-3xl)
+.max-w-6xl   char 13222   max-width:var(--container-6xl)
+```
+
+Both are single-class selectors with identical specificity, so the later
+declaration wins. `.max-w-6xl` is emitted last, so the default silently beat
+every caller-supplied width.
+
+## Fix
+
+`src/components/ui/container.tsx` now emits its default **only when the caller
+has not supplied a width**, so the conflict never exists:
+
+```tsx
+const HAS_MAX_WIDTH = /(?:^|\s)max-w-/;
+
+const hasMaxWidth = HAS_MAX_WIDTH.test(className ?? "");
+
+<div className={cn("mx-auto w-full px-6 md:px-8", !hasMaxWidth && "max-w-6xl", className)}>
+```
+
+Why this approach:
+
+- No `!important`, no negative margins, no page-specific overrides.
+- No new dependency. Adding `tailwind-merge` to resolve one class conflict was
+  rejected: this project deliberately runs five runtime dependencies, and the
+  conflict is created by `Container` itself, so it is fixable at the source.
+- `cn` was left as a plain join. Turning it into a general Tailwind-aware merger
+  would change class resolution for every component in the codebase, which is a
+  far larger blast radius than this bug warrants.
+- The pattern deliberately ignores responsive variants such as `lg:max-w-4xl`,
+  so a caller overriding the width at one breakpoint still gets the base default
+  below it.
+
+Every existing call site works unchanged; none were edited.
+
+## Affected areas
+
+21 `Container` usages. Five pass a custom width and are the only ones whose
+rendered width changes:
+
+| File | Line | Class | Region |
+| --- | --- | --- | --- |
+| `src/app/blog/[slug]/page.tsx` | 115 | `max-w-3xl` | Article header and body |
+| `src/app/blog/[slug]/page.tsx` | 220 | `max-w-3xl` | "Keep reading" |
+| `src/app/work/[slug]/page.tsx` | 207 | `max-w-3xl` | Case-study body |
+| `src/app/work/[slug]/page.tsx` | 311 | `max-w-3xl` | "Writing from this work" |
+| `src/components/sections/faq.tsx` | 14 | `max-w-3xl` | Homepage FAQ |
+
+The other 16 use the default and are unaffected: homepage hero, selected work,
+capabilities, experience, stack, about, process, education, latest writing,
+contact, blog index, category pages, work index, and the case-study header,
+workflow strip and footer.
+
+`src/components/ui/section-heading.tsx` uses `max-w-2xl` on `Reveal`, not
+`Container`. `Reveal` has no baked-in width, so there was never a conflict there
+and it was not touched.
+
+## Verification
+
+### Emitted classes, checked in the served HTML
+
+| Route | Container widths emitted |
+| --- | --- |
+| `/` | `max-w-6xl`, `max-w-6xl`, `max-w-3xl` (FAQ) |
+| `/blog/what-is-a-production-management-system` | `max-w-3xl`, `max-w-3xl` |
+| `/work/rpoms` | `max-w-6xl`, `max-w-3xl`, `max-w-6xl` |
+| `/work` | `max-w-6xl` |
+| `/blog` | `max-w-6xl` |
+
+No element carries two `max-w-*` utilities any more.
+
+### Override behaviour, all sizes
+
+The override rule was exercised against ten inputs; **10 of 10 passed**:
+no className, empty className, `max-w-2xl`, `max-w-3xl`, `max-w-4xl`,
+`max-w-5xl`, an override amongst other classes, unrelated classes,
+a responsive-only `lg:max-w-4xl`, and layout-only classes.
+
+Note that `max-w-2xl`, `4xl` and `5xl` are verified by exercising the rule, not
+by a live call site, because no caller currently uses them.
+
+### Measured width
+
+`--container-3xl: 48rem`, `--container-6xl: 72rem`, confirmed in the built CSS.
+At a 1440px viewport with `md:px-8` (32px each side):
+
+| | Text column width |
+| --- | --- |
+| Before | 1152 - 64 = **1088px** |
+| After | 768 - 64 = **704px** |
+
+Confirmed visually: in the 1440x900 screenshot the article text spans roughly
+x=368 to x=1072, which is 704px, centred.
+
+## Regression QA
+
+### Viewports, article route
+
+| Viewport | Result |
+| --- | --- |
+| 1440x900 | PASS, constrained and centred, no overflow |
+| 1366x768 | PASS |
+| 1024x768 | PASS |
+| 560x900 | PASS, single column, no overflow |
+| 1280x800 | Captured, not individually inspected |
+| 768x1024 | **INCONCLUSIVE**, see below |
+| Below ~480px | NOT VERIFIED, headless window-width clamp described earlier in this document |
+
+At 768x1024 the `Reveal`-wrapped content did not become visible in the
+screenshot even with a 12-second virtual time budget, while the elements outside
+`Reveal` (breadcrumbs, tags) rendered normally. The same page rendered fully at
+1440x900, 1366x768, 1024x768 and 560x900. This is the `IntersectionObserver` in
+`src/components/ui/reveal.tsx` not firing under headless virtual time, not a
+Container issue: `reveal.tsx` and `globals.css` were not modified in this task,
+confirmed by `git diff`.
+
+### Routes
+
+Screenshots inspected at 1440x900: `/`, `/work`, `/work/rpoms`, `/work/erth`,
+`/blog`, `/blog/category/operations`, and one article.
+
+Automated: 27 routes crawled from `/`, **0 broken links, 0 broken assets**.
+
+### Carried-over fixes still intact
+
+| Check | Result |
+| --- | --- |
+| Hero padding `pt-20 pb-24 lg:pt-24 lg:pb-28` | Present |
+| `min-h-[92vh]` occurrences | 0 |
+| Prohibited dash characters across 7 routes | 0 |
+| Homepage hero composition | Unchanged, full hero above the fold at 1440x900 |
+
+### SEO
+
+No SEO change was intended or made. Re-verified after the fix:
+
+| Item | Result |
+| --- | --- |
+| Metadata and JSON-LD across 10 routes | PASS |
+| Sitemap | PASS, 27 URLs |
+| Robots | PASS |
+| `FAQPage` schema matches visible FAQ | PASS, 10 of 10 |
+| Accessibility structure across 8 routes | PASS, no regressions |
+
+### Build
+
+- Lint: PASS, 0 errors, 0 warnings
+- Typecheck: PASS, 0 errors
+- Production build: PASS, 35 routes
+- Automated tests: N/A, no test suite configured
+
+## Result
+
+Caller-supplied `max-w-*` classes now correctly override the `Container`
+default, and default usage is unchanged. Article and case-study body text
+renders at its intended 48rem measure instead of 72rem. No visual design
+change beyond the corrected widths.
+
