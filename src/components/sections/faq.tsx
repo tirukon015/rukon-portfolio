@@ -10,7 +10,7 @@ import { faqs } from "@/content/faq";
  */
 export function Faq() {
   return (
-    <section id="faq" aria-label="Frequently asked questions" className="border-b border-border py-28">
+    <section id="faq" aria-label="Frequently asked questions" className="border-b border-border py-20 sm:py-24 lg:py-28">
       <Container className="max-w-3xl">
         <SectionHeading eyebrow="FAQ" title="A few questions people ask." />
 

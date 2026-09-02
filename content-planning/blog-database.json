@@ -1,0 +1,2443 @@
+{
+  "$schema": "internal",
+  "name": "rukon.dev blog opportunity database",
+  "generated": "2026-09-02",
+  "source": "Portfolio content audit (pass 1) re-scored against source-level evidence (pass 2)",
+  "status": "PLANNING DATA ONLY. Not imported by the application, not routed, not indexed.",
+  "howToRead": {
+    "status": {
+      "publish": "Evidence verified. Ready to write once its anchor case study exists.",
+      "master": "Legitimate topic, held in the database. Lower priority or awaiting a decision.",
+      "rewrite": "Topic stands, but the angle must change. See note.",
+      "merge": "Folds into another article. Not a distinct piece.",
+      "remove": "Dropped. See note."
+    },
+    "evidence": {
+      "A": "Directly verified in source",
+      "B": "Strongly supported by project documentation",
+      "C": "Inferred / indirect, word cautiously or omit",
+      "D": "Unsupported, do not publish"
+    },
+    "priority": {
+      "P1": "First wave",
+      "P2": "Second wave",
+      "P3": "Long-tail depth"
+    }
+  },
+  "rules": [
+    "Every article must cite one of the verified experience areas. An article that could be written without the author's own work is a tutorial, and offers no advantage.",
+    "Malaysia (MYS) articles link outward to their global counterpart and never restate it.",
+    "No article claims RPOMS modules beyond the Daily Report are writing in production.",
+    "No article claims ResearchForge performs retrieval or is a RAG system.",
+    "Figma-based design and prototyping on ERTH is supported evidence (the ERTH V2.3 prototype). Sole design authorship is not.",
+    "Location is used only where the search intent or local context genuinely differs. No city-swap variants."
+  ],
+  "counts": {
+    "totalRows": 230,
+    "distinctArticles": 224,
+    "byStatus": {
+      "publish": 183,
+      "rewrite": 30,
+      "merge": 4,
+      "master": 11,
+      "remove": 2
+    },
+    "byEvidence": {
+      "A": 165,
+      "B": 51,
+      "C": 13,
+      "D": 1
+    },
+    "byPriority": {
+      "P1": 102,
+      "P2": 95,
+      "P3": 33
+    },
+    "byCluster": {
+      "POS": 31,
+      "BSA": 22,
+      "FSE": 33,
+      "DAT": 19,
+      "AIE": 36,
+      "SEO": 28,
+      "ITS": 14,
+      "UXD": 15,
+      "MYS": 20,
+      "CAR": 12
+    }
+  },
+  "clusters": [
+    {
+      "code": "POS",
+      "name": "Production & Operations Systems",
+      "anchorProject": "rpoms",
+      "audience": "Operations managers and SME manufacturers evaluating or replacing a tracking process; developers handed an operations domain for the first time",
+      "articles": 31
+    },
+    {
+      "code": "BSA",
+      "name": "Business Systems & Automation",
+      "anchorProject": "rpoms",
+      "audience": "SME owners and operations leads deciding whether to build; developers taking a first internal-systems brief",
+      "articles": 22
+    },
+    {
+      "code": "FSE",
+      "name": "Full-Stack Engineering",
+      "anchorProject": "rpoms",
+      "audience": "Working developers, primarily Next.js/TypeScript; secondarily Python backend developers",
+      "articles": 33
+    },
+    {
+      "code": "DAT",
+      "name": "Data & Database Systems",
+      "anchorProject": "rpoms",
+      "audience": "Developers and technical leads making persistence decisions on small-to-mid systems",
+      "articles": 19
+    },
+    {
+      "code": "AIE",
+      "name": "AI Engineering & Document Intelligence",
+      "anchorProject": "researchforge",
+      "audience": "Developers shipping a first LLM feature; technical hiring managers assessing production AI experience",
+      "articles": 36
+    },
+    {
+      "code": "SEO",
+      "name": "Technical SEO, GEO & Content Architecture",
+      "anchorProject": "erth",
+      "audience": "Developers who receive SEO briefs; SEO specialists who need implementation to happen; SME owners evaluating an engagement",
+      "articles": 28
+    },
+    {
+      "code": "ITS",
+      "name": "IT Systems & Support Operations",
+      "anchorProject": null,
+      "audience": "Students and career-changers deciding between support and development; SME owners deciding what an IT hire should cover",
+      "articles": 14
+    },
+    {
+      "code": "UXD",
+      "name": "Internal Tool UX & Design-to-Code",
+      "anchorProject": "rpoms",
+      "audience": "Developers building internal tools; designers working on operational software",
+      "articles": 15
+    },
+    {
+      "code": "MYS",
+      "name": "Malaysia & Klang Valley",
+      "anchorProject": null,
+      "audience": "Malaysian SME owners and operations managers; Malaysian employers and recruiters; local students and junior developers",
+      "articles": 20
+    },
+    {
+      "code": "CAR",
+      "name": "Career & Professional Practice",
+      "anchorProject": null,
+      "audience": "Hiring managers assessing the author; students and juniors in a similar position",
+      "articles": 12
+    }
+  ],
+  "articles": [
+    {
+      "id": "POS-01",
+      "title": "Modelling a Physical Production Line as a Database Schema",
+      "slug": "modelling-production-line-database-schema",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "POS-02",
+      "title": "What Changes When You Track Every Unit by Serial Number",
+      "slug": "serial-level-tracking-what-changes",
+      "contentType": "Experience-led",
+      "priority": "P1",
+      "status": "rewrite",
+      "evidence": "A",
+      "note": "Built, not writing in production. Frame as engineering, not daily operation."
+    },
+    {
+      "id": "POS-03",
+      "title": "Configurable Detection Rules: Adding a Product Model Without a Release",
+      "slug": "configurable-detection-rules-no-release",
+      "contentType": "Problem/Solution",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "POS-04",
+      "title": "Staged Imports: Show the Duplicates Before You Write Anything",
+      "slug": "staged-csv-import-duplicates-first",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "rewrite",
+      "evidence": "A",
+      "note": "Production-state qualifier required."
+    },
+    {
+      "id": "POS-05",
+      "title": "A Packing Station That Reports Its Own Problems",
+      "slug": "packing-station-reports-own-problems",
+      "contentType": "Case Study",
+      "priority": "P1",
+      "status": "rewrite",
+      "evidence": "A",
+      "note": "Production-state qualifier required."
+    },
+    {
+      "id": "POS-06",
+      "title": "Why the Packer Must Never Be Recorded as the Acceptor",
+      "slug": "packer-is-not-the-acceptor",
+      "contentType": "Experience-led",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "B",
+      "note": "Documented as a design rule in README/AUTHORS; pin to an enforcing line before making it flagship."
+    },
+    {
+      "id": "POS-07",
+      "title": "Completeness Gates: Refusing to Save a Delivery That Doesn't Match",
+      "slug": "delivery-completeness-gate",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "rewrite",
+      "evidence": "A",
+      "note": "Production-state qualifier required."
+    },
+    {
+      "id": "POS-08",
+      "title": "Batch Carry-Over: Making Progress Continuous Across Daily Reports",
+      "slug": "batch-carry-over-daily-reports",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "POS-09",
+      "title": "One Entry, Two Effects: Coupling a Production Report to Stock Deduction",
+      "slug": "production-report-deducts-stock",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "POS-10",
+      "title": "Stock as a Ledger, Not a Number",
+      "slug": "inventory-as-derived-ledger",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "POS-11",
+      "title": "Why Math.ceil Is the Wrong Function for Packaging Consumption",
+      "slug": "packaging-consumption-threshold-not-ceil",
+      "contentType": "Problem/Solution",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "POS-12",
+      "title": "Designing a Dashboard for a Production Floor, Not a Boardroom",
+      "slug": "production-floor-dashboard-design",
+      "contentType": "Experience-led",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "POS-13",
+      "title": "Four Comparisons That Make a Daily Production Number Useful",
+      "slug": "four-comparisons-daily-production",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "merge",
+      "evidence": "A",
+      "note": "Merge into the expanded reporting-from-operational-data."
+    },
+    {
+      "id": "POS-14",
+      "title": "Per-Person Output Against Per-Person Targets",
+      "slug": "per-person-output-targets",
+      "contentType": "Experience-led",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "POS-15",
+      "title": "'Jimmy' and 'JIMMY' Are One Person: Data-Entry Reality in Operations",
+      "slug": "name-matching-operational-data",
+      "contentType": "Problem/Solution",
+      "priority": "P3",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "POS-16",
+      "title": "Locking a Report After It's Saved, and Deciding Who May Reopen It",
+      "slug": "locking-reports-after-save",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "POS-17",
+      "title": "Generating Delivery Orders From the Office's Own Word Template",
+      "slug": "delivery-orders-from-word-template",
+      "contentType": "Case Study",
+      "priority": "P1",
+      "status": "rewrite",
+      "evidence": "A",
+      "note": "Production-state qualifier required."
+    },
+    {
+      "id": "POS-18",
+      "title": "Exporting to the Exact Spreadsheet Format a Customer Expects",
+      "slug": "export-matching-customer-spreadsheet",
+      "contentType": "Problem/Solution",
+      "priority": "P2",
+      "status": "rewrite",
+      "evidence": "A",
+      "note": "Production-state qualifier required."
+    },
+    {
+      "id": "POS-19",
+      "title": "What a Refurbishment Line Needs That a Manufacturing Line Doesn't",
+      "slug": "refurbishment-vs-manufacturing-systems",
+      "contentType": "Industry Analysis",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "POS-20",
+      "title": "Intake to Delivery: Mapping a Five-Stage Workflow Into Software",
+      "slug": "intake-to-delivery-workflow-mapping",
+      "contentType": "Case Study",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "POS-21",
+      "title": "When the Data Model Falls Behind the Floor",
+      "slug": "data-model-behind-the-floor",
+      "contentType": "Experience-led",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "POS-22",
+      "title": "Reconciling Scanned Reality Against Expected Quantity",
+      "slug": "reconciling-scanned-vs-expected",
+      "contentType": "Technical Guide",
+      "priority": "P3",
+      "status": "rewrite",
+      "evidence": "A",
+      "note": "Production-state qualifier required."
+    },
+    {
+      "id": "POS-23",
+      "title": "Physical Identifiers Belong in the Schema: Numbered Boxes",
+      "slug": "physical-identifiers-in-schema",
+      "contentType": "Technical Guide",
+      "priority": "P3",
+      "status": "rewrite",
+      "evidence": "A",
+      "note": "Production-state qualifier required."
+    },
+    {
+      "id": "POS-24",
+      "title": "Closing a Short Load Without Corrupting the Record",
+      "slug": "closing-a-short-load",
+      "contentType": "Problem/Solution",
+      "priority": "P3",
+      "status": "rewrite",
+      "evidence": "A",
+      "note": "Production-state qualifier required."
+    },
+    {
+      "id": "POS-25",
+      "title": "Attribution: Recording Who Did What, Accurately",
+      "slug": "attribution-in-operational-systems",
+      "contentType": "Technical Guide",
+      "priority": "P3",
+      "status": "rewrite",
+      "evidence": "A",
+      "note": "Production-state qualifier required."
+    },
+    {
+      "id": "POS-26",
+      "title": "Consumables Nobody Counts: Chargers, Cables and Packaging",
+      "slug": "tracking-consumables-nobody-counts",
+      "contentType": "Experience-led",
+      "priority": "P3",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "POS-27",
+      "title": "What to Do When the Floor Disagrees With the System",
+      "slug": "when-the-floor-disagrees-with-the-system",
+      "contentType": "Experience-led",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "POS-28",
+      "title": "Designing for the Operator Who Has One Hand Free",
+      "slug": "designing-for-one-hand-free",
+      "contentType": "Experience-led",
+      "priority": "P2",
+      "status": "master",
+      "evidence": "C",
+      "note": "Inferred from the scan-driven flows; no source states the physical constraint."
+    },
+    {
+      "id": "POS-29",
+      "title": "MES, ERP, or Something Purpose-Built?",
+      "slug": "mes-erp-or-purpose-built",
+      "contentType": "Comparison",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "POS-30",
+      "title": "The Reports Nobody Reads, and How to Tell Before You Build Them",
+      "slug": "reports-nobody-reads",
+      "contentType": "Experience-led",
+      "priority": "P2",
+      "status": "remove",
+      "evidence": "C",
+      "note": "Overlaps BSA-14 and the expanded reporting article; invites claims about reader behaviour with no data behind them."
+    },
+    {
+      "id": "POS-31",
+      "title": "Match the Spreadsheet's Semantics, Not Just Its Data",
+      "slug": "match-the-spreadsheet-semantics",
+      "contentType": "Experience-led",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": "NEW from second pass. serialKey is documented as COUNTIF-compatible."
+    },
+    {
+      "id": "BSA-01",
+      "title": "The Real Cost of a Spreadsheet Three People Edit",
+      "slug": "real-cost-shared-spreadsheet",
+      "contentType": "Business Systems",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "BSA-02",
+      "title": "Deciding What to Digitise First When Everything Is Manual",
+      "slug": "what-to-digitise-first",
+      "contentType": "Problem/Solution",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "BSA-03",
+      "title": "Replace One Process Well Before You Replace Five Badly",
+      "slug": "replace-one-process-first",
+      "contentType": "Experience-led",
+      "priority": "P2",
+      "status": "rewrite",
+      "evidence": "A",
+      "note": "Build sequence and lock design, not a completed migration."
+    },
+    {
+      "id": "BSA-04",
+      "title": "Getting Requirements From People Who Have Never Written One",
+      "slug": "requirements-from-non-writers",
+      "contentType": "Experience-led",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "BSA-05",
+      "title": "Business Rules That Only Exist in Someone's Head",
+      "slug": "undocumented-business-rules",
+      "contentType": "Experience-led",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "BSA-06",
+      "title": "When a Validation Rule Is Really a Business Policy",
+      "slug": "validation-rule-or-business-policy",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "BSA-07",
+      "title": "Build for the Exceptions, Because Operations Is Mostly Exceptions",
+      "slug": "build-for-the-exceptions",
+      "contentType": "Experience-led",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "BSA-08",
+      "title": "Migrating Historical Data Without Importing Its Errors",
+      "slug": "migrating-data-without-errors",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "BSA-09",
+      "title": "Running the Old Process Alongside the New One, and When to Stop",
+      "slug": "parallel-running-when-to-stop",
+      "contentType": "Experience-led",
+      "priority": "P2",
+      "status": "rewrite",
+      "evidence": "C",
+      "note": "Parallel running is inferred; no source documents it."
+    },
+    {
+      "id": "BSA-10",
+      "title": "Training People on Software They Didn't Ask For",
+      "slug": "training-users-who-didnt-ask",
+      "contentType": "Experience-led",
+      "priority": "P2",
+      "status": "master",
+      "evidence": "C",
+      "note": ""
+    },
+    {
+      "id": "BSA-11",
+      "title": "Why an Internal System Needs a Demo Mode",
+      "slug": "why-internal-systems-need-demo-mode",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": "Environment-dependent default must be stated accurately."
+    },
+    {
+      "id": "BSA-12",
+      "title": "Going Live Module by Module Behind One Switch",
+      "slug": "module-by-module-go-live",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "rewrite",
+      "evidence": "A",
+      "note": "LIVE_MODULES currently names only two paths. State that."
+    },
+    {
+      "id": "BSA-13",
+      "title": "What Automation Actually Removes, and What It Only Moves",
+      "slug": "what-automation-removes-and-moves",
+      "contentType": "Industry Analysis",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "BSA-14",
+      "title": "Build the Reports First",
+      "slug": "build-the-reports-first",
+      "contentType": "Experience-led",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "BSA-15",
+      "title": "Output Format Decides Adoption",
+      "slug": "output-format-decides-adoption",
+      "contentType": "Experience-led",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "BSA-16",
+      "title": "Buy or Build: An Honest Framework for a Small Operation",
+      "slug": "buy-or-build-small-operation",
+      "contentType": "Comparison",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "BSA-17",
+      "title": "When Off-the-Shelf Is Right and Your Instinct Is Wrong",
+      "slug": "when-off-the-shelf-is-right",
+      "contentType": "Comparison",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "BSA-18",
+      "title": "Change Management for a Five-Person Team",
+      "slug": "change-management-small-team",
+      "contentType": "Experience-led",
+      "priority": "P3",
+      "status": "master",
+      "evidence": "C",
+      "note": ""
+    },
+    {
+      "id": "BSA-19",
+      "title": "Making an Internal System Survive Its Author",
+      "slug": "internal-system-survive-its-author",
+      "contentType": "Experience-led",
+      "priority": "P1",
+      "status": "rewrite",
+      "evidence": "B",
+      "note": "Keep at the level of the general problem; TODO.md carries open security items."
+    },
+    {
+      "id": "BSA-20",
+      "title": "Measuring Whether the Replaced Process Actually Got Better",
+      "slug": "measuring-process-improvement",
+      "contentType": "Problem/Solution",
+      "priority": "P3",
+      "status": "remove",
+      "evidence": "D",
+      "note": "No measurement exists in any source, and with only the Daily Report live there is no completed replacement to measure."
+    },
+    {
+      "id": "BSA-21",
+      "title": "Keeping a Business System Honest as the Business Changes",
+      "slug": "keeping-a-business-system-honest",
+      "contentType": "Experience-led",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "BSA-22",
+      "title": "The Confirmation Dialog Problem: Two Copies of the Same Arithmetic",
+      "slug": "two-copies-of-the-same-arithmetic",
+      "contentType": "Problem/Solution",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "FSE-01",
+      "title": "Structuring a Next.js App Router Project That Grows Past 30,000 Lines",
+      "slug": "nextjs-app-router-at-30k-lines",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "FSE-02",
+      "title": "Route Handlers or Server Actions for an Internal Admin System?",
+      "slug": "route-handlers-vs-server-actions-admin",
+      "contentType": "Comparison",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "FSE-03",
+      "title": "Hand-Rolled HMAC Sessions in Next.js, and When Not To",
+      "slug": "hmac-signed-sessions-nextjs",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "FSE-04",
+      "title": "Timing-Safe Comparison, and Why === Is a Vulnerability",
+      "slug": "timing-safe-comparison-explained",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "FSE-05",
+      "title": "Fail Closed: Startup Checks That Refuse to Run",
+      "slug": "fail-closed-startup-checks",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "FSE-06",
+      "title": "No Default Passwords: Make a Missing Variable Lock a Door",
+      "slug": "no-default-passwords",
+      "contentType": "Experience-led",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "FSE-07",
+      "title": "Middleware as a Chokepoint, and Its Limits After CVE-2025-29927",
+      "slug": "middleware-chokepoint-and-its-limits",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "FSE-08",
+      "title": "Three-Tier RBAC Without an Auth Library",
+      "slug": "three-tier-rbac-no-library",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "FSE-09",
+      "title": "Hiding a Button Is Presentation, Not Protection",
+      "slug": "hiding-a-button-is-not-protection",
+      "contentType": "Experience-led",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "FSE-10",
+      "title": "Don't Advertise Your Permission Model in an Error Message",
+      "slug": "errors-that-dont-leak-permissions",
+      "contentType": "Technical Guide",
+      "priority": "P3",
+      "status": "merge",
+      "evidence": "A",
+      "note": "Merge with UXD-07. Weakened by the open navigation-leaks-tiers item."
+    },
+    {
+      "id": "FSE-11",
+      "title": "Zod and React Hook Form for Data That Has to Be Right",
+      "slug": "zod-react-hook-form-operational-data",
+      "contentType": "Tutorial",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "FSE-12",
+      "title": "TanStack Table for Data People Scan, Not Browse",
+      "slug": "tanstack-table-for-scanning",
+      "contentType": "Technical Guide",
+      "priority": "P3",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "FSE-13",
+      "title": "Recharts for Dashboards That Refresh Themselves",
+      "slug": "recharts-auto-refreshing-dashboards",
+      "contentType": "Tutorial",
+      "priority": "P3",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "FSE-14",
+      "title": "Generating a .docx From a Template in a Serverless Function",
+      "slug": "generate-docx-from-template-serverless",
+      "contentType": "Tutorial",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "FSE-15",
+      "title": "ExcelJS When the Formatting Is the Requirement",
+      "slug": "exceljs-when-formatting-is-the-requirement",
+      "contentType": "Tutorial",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "FSE-16",
+      "title": "jsPDF for Report History: What Breaks at Volume",
+      "slug": "jspdf-report-export-at-volume",
+      "contentType": "Problem/Solution",
+      "priority": "P3",
+      "status": "master",
+      "evidence": "C",
+      "note": ""
+    },
+    {
+      "id": "FSE-17",
+      "title": "CSV Parsing You Can Trust: Papa Parse and Staged Validation",
+      "slug": "papa-parse-staged-validation",
+      "contentType": "Tutorial",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "FSE-18",
+      "title": "Typed Content as a CMS: When Code Beats a Database",
+      "slug": "typed-content-as-a-cms",
+      "contentType": "Comparison",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "FSE-19",
+      "title": "Two Runtimes, One Origin: Next.js and FastAPI on a Single Vercel Project",
+      "slug": "nextjs-fastapi-one-origin-vercel",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "FSE-20",
+      "title": "Let the Function Timeout Shape the Architecture",
+      "slug": "function-timeout-shapes-architecture",
+      "contentType": "Experience-led",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "FSE-21",
+      "title": "FastAPI Dependency Injection as a Testing Strategy",
+      "slug": "fastapi-dependency-injection-testing",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "FSE-22",
+      "title": "Choosing Status Codes the Frontend Can Branch On",
+      "slug": "status-codes-the-frontend-can-branch-on",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": "Absorbs AIE-26."
+    },
+    {
+      "id": "FSE-23",
+      "title": "Errors That Distinguish the Operator's Fault From the User's",
+      "slug": "operator-fault-vs-user-fault-errors",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "FSE-24",
+      "title": "Build-Time i18n: Make a Missing Translation Fail the Build",
+      "slug": "missing-translation-fails-the-build",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "FSE-25",
+      "title": "RTL Is a Layout Constraint, Not a Translation Task",
+      "slug": "rtl-is-a-layout-constraint",
+      "contentType": "Technical Guide",
+      "priority": "P3",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "FSE-26",
+      "title": "Static for the Portfolio, Dynamic for the Admin Panel",
+      "slug": "static-portfolio-dynamic-admin",
+      "contentType": "Comparison",
+      "priority": "P3",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "FSE-27",
+      "title": "Five Dependencies, and What That Costs",
+      "slug": "five-dependencies-and-what-it-costs",
+      "contentType": "Industry Analysis",
+      "priority": "P3",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "FSE-28",
+      "title": "Next.js 15 to 16: What Actually Changed for an App Router Project",
+      "slug": "nextjs-15-to-16-app-router",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "rewrite",
+      "evidence": "C",
+      "note": "No migration evidence. Rewrite as running 15 and 16 side by side, or drop."
+    },
+    {
+      "id": "FSE-29",
+      "title": "When a Page Should Give Up on a Query",
+      "slug": "when-a-page-should-give-up",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": "NEW from second pass. 8s read deadline with a measured production incident."
+    },
+    {
+      "id": "FSE-30",
+      "title": "When 'No Data' and 'The Read Failed' Must Not Look Alike",
+      "slug": "absence-versus-failure",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": "NEW from second pass. The UNREAD sentinel."
+    },
+    {
+      "id": "FSE-31",
+      "title": "Filling a Word Template That Splits Your Placeholder in Half",
+      "slug": "word-template-run-splitting",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": "NEW from second pass. OOXML run splitting."
+    },
+    {
+      "id": "FSE-32",
+      "title": "Security Headers Belong in Middleware",
+      "slug": "security-headers-in-middleware",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": "NEW from second pass."
+    },
+    {
+      "id": "FSE-33",
+      "title": "503, Not an Empty List",
+      "slug": "503-not-an-empty-list",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": "NEW from second pass."
+    },
+    {
+      "id": "DAT-01",
+      "title": "One Interface, Three Backends: Designing a Swappable Storage Layer",
+      "slug": "one-interface-three-backends",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "DAT-02",
+      "title": "Selecting a Database by Environment Variable, Not by Branch",
+      "slug": "database-by-environment-variable",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "DAT-03",
+      "title": "A Local File Store as a First-Class Development Backend",
+      "slug": "file-store-development-backend",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "DAT-04",
+      "title": "Creating Tables and Indexes on Demand Instead of Migrations",
+      "slug": "on-demand-ddl-instead-of-migrations",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "DAT-05",
+      "title": "When On-Demand DDL Stops Being a Good Idea",
+      "slug": "when-on-demand-ddl-breaks",
+      "contentType": "Comparison",
+      "priority": "P3",
+      "status": "master",
+      "evidence": "C",
+      "note": ""
+    },
+    {
+      "id": "DAT-06",
+      "title": "Model a Ledger, Don't Store a Running Total",
+      "slug": "ledger-not-running-total",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "DAT-07",
+      "title": "Denormalising for a Dashboard Without Lying to Yourself",
+      "slug": "denormalising-for-dashboards",
+      "contentType": "Technical Guide",
+      "priority": "P3",
+      "status": "master",
+      "evidence": "C",
+      "note": ""
+    },
+    {
+      "id": "DAT-08",
+      "title": "Index for the Questions You Actually Ask",
+      "slug": "index-for-the-questions-you-ask",
+      "contentType": "Technical Guide",
+      "priority": "P3",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "DAT-09",
+      "title": "Configuration as Data: Changing Behaviour Without a Release",
+      "slug": "configuration-as-data",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "DAT-10",
+      "title": "Designing a Repository for a Database You Haven't Connected Yet",
+      "slug": "repository-before-the-database",
+      "contentType": "Experience-led",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "DAT-11",
+      "title": "Additive Migrations, and Why You Never Edit One",
+      "slug": "additive-migrations-never-edit",
+      "contentType": "Technical Guide",
+      "priority": "P3",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "DAT-12",
+      "title": "Row-Level Security When the App Has No User Table Yet",
+      "slug": "rls-before-authentication",
+      "contentType": "Technical Guide",
+      "priority": "P3",
+      "status": "master",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "DAT-13",
+      "title": "Serial Numbers as Natural Keys: The Case For and Against",
+      "slug": "serial-numbers-as-natural-keys",
+      "contentType": "Comparison",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "DAT-14",
+      "title": "The Timezone Bug That Corrupts a Daily Report",
+      "slug": "timezone-bug-daily-report",
+      "contentType": "Problem/Solution",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": "Upgraded to P1 after source verification of dates.ts."
+    },
+    {
+      "id": "DAT-15",
+      "title": "What a Report Needs to Be Reproducible Six Months Later",
+      "slug": "reproducible-historical-reports",
+      "contentType": "Technical Guide",
+      "priority": "P3",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "DAT-16",
+      "title": "Design a Schema You Can Explain to the Person Who Uses It",
+      "slug": "schema-you-can-explain",
+      "contentType": "Experience-led",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "DAT-17",
+      "title": "Your Server Keeps UTC. Your Factory Keeps Malaysian Time.",
+      "slug": "server-utc-factory-local-time",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": "NEW from second pass. Also the strongest Malaysia-relevant technical topic."
+    },
+    {
+      "id": "DAT-18",
+      "title": "Prepared Statements Are Off, and That's Correct",
+      "slug": "prepared-statements-off-pgbouncer",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": "NEW from second pass."
+    },
+    {
+      "id": "DAT-19",
+      "title": "Sizing a Connection Pool for Serverless",
+      "slug": "sizing-a-pool-for-serverless",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": "NEW from second pass."
+    },
+    {
+      "id": "AIE-01",
+      "title": "Making a Model Say 'The Paper Doesn't Support This'",
+      "slug": "making-a-model-say-unsupported",
+      "contentType": "Experience-led",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "AIE-02",
+      "title": "Grounding Enforced in Three Places: Prompt, Schema, Interface",
+      "slug": "grounding-in-three-places",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "AIE-03",
+      "title": "insufficient_evidence as a Schema Field, Not a Prompt Instruction",
+      "slug": "insufficient-evidence-schema-field",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "AIE-04",
+      "title": "Schema-Constrained Output With Pydantic",
+      "slug": "schema-constrained-output-pydantic",
+      "contentType": "Tutorial",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "AIE-05",
+      "title": "Refuse a Truncated Response Rather Than Render Half of It",
+      "slug": "refuse-truncated-model-response",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "AIE-06",
+      "title": "Three Sequential Calls Instead of One Big Prompt",
+      "slug": "three-calls-not-one-prompt",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "AIE-07",
+      "title": "Why We Didn't Chunk: Context Windows Changed the Default",
+      "slug": "why-we-didnt-chunk",
+      "contentType": "Industry Analysis",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "AIE-08",
+      "title": "Boundary-Aware Chunking: Paragraph, Then Sentence, Then Give Up",
+      "slug": "boundary-aware-chunking",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "AIE-09",
+      "title": "Chunk Overlap, and What It Is Actually For",
+      "slug": "chunk-overlap-what-its-for",
+      "contentType": "Technical Guide",
+      "priority": "P3",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "AIE-10",
+      "title": "Map-Reduce for Documents That Genuinely Don't Fit",
+      "slug": "map-reduce-for-long-documents",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "AIE-11",
+      "title": "Choose the Model by Your Platform's Timeout, Not by Benchmarks",
+      "slug": "pick-model-by-timeout-not-benchmark",
+      "contentType": "Experience-led",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "AIE-12",
+      "title": "A Provider Abstraction That Makes Switching Vendors One Variable",
+      "slug": "llm-provider-abstraction",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "AIE-13",
+      "title": "Gemini and Anthropic Behind One Interface: What Differs in Practice",
+      "slug": "gemini-and-anthropic-one-interface",
+      "contentType": "Comparison",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "AIE-14",
+      "title": "Validate the Upload Twice, Because Browser Checks Aren't Checks",
+      "slug": "validate-uploads-twice",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "AIE-15",
+      "title": "Verify the PDF Signature Before You Extract Anything",
+      "slug": "verify-pdf-signature-first",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "AIE-16",
+      "title": "Reject the Scanned PDF Instead of Returning Nothing Useful",
+      "slug": "reject-scanned-pdfs",
+      "contentType": "Problem/Solution",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "AIE-17",
+      "title": "Boring Dependencies Win: Choosing pypdf",
+      "slug": "boring-dependencies-win-pypdf",
+      "contentType": "Comparison",
+      "priority": "P3",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "AIE-18",
+      "title": "Testing an LLM Application Without Spending a Token",
+      "slug": "testing-llm-apps-without-tokens",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "AIE-19",
+      "title": "Building the Retrieval Layer Before You Need Retrieval",
+      "slug": "retrieval-layer-before-retrieval",
+      "contentType": "Experience-led",
+      "priority": "P1",
+      "status": "rewrite",
+      "evidence": "A",
+      "note": "Strengthen: the embedding network call is not implemented at all."
+    },
+    {
+      "id": "AIE-20",
+      "title": "Embeddings You Haven't Shipped: What to Build First",
+      "slug": "embeddings-you-havent-shipped",
+      "contentType": "Experience-led",
+      "priority": "P2",
+      "status": "rewrite",
+      "evidence": "A",
+      "note": "Same strengthening."
+    },
+    {
+      "id": "AIE-21",
+      "title": "What 'RAG' Actually Means, and What Most Projects Are Doing Instead",
+      "slug": "what-rag-actually-means",
+      "contentType": "Industry Analysis",
+      "priority": "P1",
+      "status": "rewrite",
+      "evidence": "A",
+      "note": "Publish early. It is what makes every other AIE article trustworthy."
+    },
+    {
+      "id": "AIE-22",
+      "title": "What a Paper-Summary Schema Has to Model",
+      "slug": "paper-summary-schema-design",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "AIE-23",
+      "title": "Research Gap Analysis: Making a Model Show Its Evidence",
+      "slug": "gap-analysis-show-the-evidence",
+      "contentType": "Case Study",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "AIE-24",
+      "title": "Literature Review From One Paper: Scoping a Feature Honestly",
+      "slug": "literature-review-from-one-paper",
+      "contentType": "Experience-led",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "AIE-25",
+      "title": "Prompts Are Source Code, Review Them Like It",
+      "slug": "prompts-are-source-code",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "AIE-26",
+      "title": "Error Codes for an AI Endpoint",
+      "slug": "error-codes-for-an-ai-endpoint",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "merge",
+      "evidence": "A",
+      "note": "Merge into FSE-22. Both handlers document the same contract."
+    },
+    {
+      "id": "AIE-27",
+      "title": "A Health Indicator That Reads the Real Endpoint",
+      "slug": "health-indicator-reads-real-endpoint",
+      "contentType": "Technical Guide",
+      "priority": "P3",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "AIE-28",
+      "title": "Free-Tier Limits as a Product Constraint",
+      "slug": "free-tier-limits-as-product-constraint",
+      "contentType": "Experience-led",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "AIE-29",
+      "title": "Statelessness as an Honest MVP Decision",
+      "slug": "statelessness-as-honest-mvp",
+      "contentType": "Experience-led",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "AIE-30",
+      "title": "Documenting What Your AI App Cannot Do",
+      "slug": "document-what-your-ai-cannot-do",
+      "contentType": "Experience-led",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "AIE-31",
+      "title": "Asymmetric Retrieval: A Question Is Not a Passage",
+      "slug": "asymmetric-retrieval",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": "NEW from second pass. Writable from the interface design without claiming live retrieval."
+    },
+    {
+      "id": "AIE-32",
+      "title": "Your Embedding Dimension Is Permanent",
+      "slug": "embedding-dimension-is-permanent",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": "NEW from second pass."
+    },
+    {
+      "id": "AIE-33",
+      "title": "A Literature Review Across Papers You've Already Analysed",
+      "slug": "review-from-stored-analyses",
+      "contentType": "Case Study",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": "NEW from second pass. cross_review.py was missed in the first audit."
+    },
+    {
+      "id": "AIE-34",
+      "title": "Your Licence Picks Your PDF Library",
+      "slug": "licence-picks-your-pdf-library",
+      "contentType": "Comparison",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": "NEW from second pass."
+    },
+    {
+      "id": "AIE-35",
+      "title": "Sequential on Purpose: Rate Limits Beat Latency",
+      "slug": "sequential-on-purpose",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": "NEW from second pass."
+    },
+    {
+      "id": "AIE-36",
+      "title": "One Shared Model Setting Across Two Vendors",
+      "slug": "shared-model-setting-two-vendors",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": "NEW from second pass."
+    },
+    {
+      "id": "SEO-01",
+      "title": "Implementing an SEO Brief as the Developer: The Whole Cycle",
+      "slug": "implementing-an-seo-brief-as-a-developer",
+      "contentType": "Case Study",
+      "priority": "P1",
+      "status": "rewrite",
+      "evidence": "A",
+      "note": "Authorship framing: claim the direction and the outcome, not the audit prose."
+    },
+    {
+      "id": "SEO-02",
+      "title": "Audit the Page Against the Requirements Before You Write Any Code",
+      "slug": "audit-before-you-code",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "rewrite",
+      "evidence": "A",
+      "note": "Same authorship framing."
+    },
+    {
+      "id": "SEO-03",
+      "title": "A Compliance Matrix: Fulfilled, Partial, Missing, Verify",
+      "slug": "seo-compliance-matrix",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "rewrite",
+      "evidence": "A",
+      "note": "Same authorship framing."
+    },
+    {
+      "id": "SEO-04",
+      "title": "Finding Contradictions in a Client's Own Requirements",
+      "slug": "contradictions-in-client-requirements",
+      "contentType": "Experience-led",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "SEO-05",
+      "title": "When Two Places on the Same Site State Different Rules",
+      "slug": "same-site-different-rules",
+      "contentType": "Problem/Solution",
+      "priority": "P1",
+      "status": "master",
+      "evidence": "A",
+      "note": "Blocked as an ERTH worked example until the client rules on the threshold."
+    },
+    {
+      "id": "SEO-06",
+      "title": "Verify, Soften, or Omit: Handling Unsupported Claims in Copy",
+      "slug": "verify-soften-or-omit",
+      "contentType": "Experience-led",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "SEO-07",
+      "title": "Kilograms or Ringgit? A Unit Error Worth Catching Before Publication",
+      "slug": "unit-error-worth-catching",
+      "contentType": "Case Study",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "SEO-08",
+      "title": "L0, L1, L2: Scoping Change Levels So an SEO Update Isn't a Redesign",
+      "slug": "l0-l1-l2-change-levels",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "SEO-09",
+      "title": "Lock the Visual Language Before You Touch the Content",
+      "slug": "lock-the-visual-language-first",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "rewrite",
+      "evidence": "A",
+      "note": "Drop any Figma framing."
+    },
+    {
+      "id": "SEO-10",
+      "title": "Meeting 79 Requirements Without Adding a Single New Section",
+      "slug": "no-new-sections-required",
+      "contentType": "Case Study",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "SEO-11",
+      "title": "Title and Meta Description as Deliverables",
+      "slug": "title-and-meta-as-deliverables",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "SEO-12",
+      "title": "Adding Canonical, Open Graph and Twitter to a Site That Has None",
+      "slug": "adding-canonical-og-twitter",
+      "contentType": "Tutorial",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "SEO-13",
+      "title": "JSON-LD for a Business With a Real Address",
+      "slug": "json-ld-real-business-address",
+      "contentType": "Tutorial",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "SEO-14",
+      "title": "Picking the Right schema.org Type: Why RecyclingCenter",
+      "slug": "picking-the-right-schema-type",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "SEO-15",
+      "title": "FAQPage Schema After Google Retired FAQ Rich Results",
+      "slug": "faqpage-schema-after-the-retirement",
+      "contentType": "Industry Analysis",
+      "priority": "P1",
+      "status": "master",
+      "evidence": "A",
+      "note": "Time-sensitive. Blocked as an ERTH worked example until the threshold is ruled on."
+    },
+    {
+      "id": "SEO-16",
+      "title": "Structured Data as an AI-Citation Play, Not a SERP-Feature Play",
+      "slug": "structured-data-for-ai-citation",
+      "contentType": "Industry Analysis",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "SEO-17",
+      "title": "GEO Answerability: Nine Questions a Page Must Answer on Its Own",
+      "slug": "geo-answerability-matrix",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "SEO-18",
+      "title": "Modular Content: Writing a Block That Survives Being Extracted",
+      "slug": "modular-content-that-survives-extraction",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "SEO-19",
+      "title": "Trusted Citations: Who Recognised You, When, and Where to Verify It",
+      "slug": "trusted-citations-for-geo",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "SEO-20",
+      "title": "Heading Hierarchy Is Information Architecture",
+      "slug": "heading-hierarchy-is-architecture",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "SEO-21",
+      "title": "The Semantic HTML That Was Missing",
+      "slug": "the-semantic-html-that-was-missing",
+      "contentType": "Case Study",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": "<main> is still not implemented on ERTH. Say so."
+    },
+    {
+      "id": "SEO-22",
+      "title": "Alt Text Policy for Image Slots You Haven't Filled Yet",
+      "slug": "alt-text-for-unfilled-slots",
+      "contentType": "Problem/Solution",
+      "priority": "P3",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "SEO-23",
+      "title": "Ten Sections Nobody Could Reach From the Navigation",
+      "slug": "sections-nobody-could-reach",
+      "contentType": "Case Study",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "SEO-24",
+      "title": "Service-Area Content Without Keyword-Stuffing Locations",
+      "slug": "service-area-content-without-stuffing",
+      "contentType": "SEO/GEO",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": "areaServed with six Malaysian locations is verified in the shipped JSON-LD."
+    },
+    {
+      "id": "SEO-25",
+      "title": "Don't Claim Coverage You Don't Have",
+      "slug": "dont-claim-coverage-you-dont-have",
+      "contentType": "Experience-led",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "SEO-26",
+      "title": "FAQ Content Driven by Objections, Not Keyword Lists",
+      "slug": "faq-driven-by-objections",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": "16-question FAQPage verified in the shipped markup."
+    },
+    {
+      "id": "SEO-27",
+      "title": "Being the Developer in the SEO Conversation",
+      "slug": "the-developer-in-the-seo-conversation",
+      "contentType": "Experience-led",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": "Absorbs CAR-07."
+    },
+    {
+      "id": "SEO-28",
+      "title": "Auditing My Own Site With the Checklist I Used for a Client",
+      "slug": "auditing-my-own-site",
+      "contentType": "Case Study",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": "Now partly resolved by the 2026-09-02 implementation pass; write it as before/after."
+    },
+    {
+      "id": "ITS-01",
+      "title": "What a Software Specialist Actually Does in a Small Company",
+      "slug": "what-a-software-specialist-does",
+      "contentType": "Career",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "ITS-02",
+      "title": "Supporting a System You Also Built",
+      "slug": "supporting-a-system-you-built",
+      "contentType": "Experience-led",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "ITS-03",
+      "title": "IT Support and IT Systems Are Not the Same Job",
+      "slug": "it-support-vs-it-systems",
+      "contentType": "Comparison",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "ITS-04",
+      "title": "Hardware Troubleshooting as a Software Developer",
+      "slug": "hardware-troubleshooting-as-a-developer",
+      "contentType": "Experience-led",
+      "priority": "P3",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "ITS-05",
+      "title": "Maintaining WordPress Alongside Custom Applications",
+      "slug": "wordpress-alongside-custom-apps",
+      "contentType": "Experience-led",
+      "priority": "P3",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "ITS-06",
+      "title": "End-User Support Is a Requirements Channel",
+      "slug": "support-is-a-requirements-channel",
+      "contentType": "Experience-led",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "ITS-07",
+      "title": "Two Deployment Targets: Vercel and cPanel in the Same Project",
+      "slug": "vercel-and-cpanel-same-project",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "ITS-08",
+      "title": "Why Changing an Environment Variable Doesn't Change Your Deployment",
+      "slug": "env-var-change-needs-redeploy",
+      "contentType": "Problem/Solution",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "ITS-09",
+      "title": "Secrets Management for a Team With No Vault",
+      "slug": "secrets-without-a-vault",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "rewrite",
+      "evidence": "B",
+      "note": "Do not publish the open credential-rotation item from TODO.md."
+    },
+    {
+      "id": "ITS-10",
+      "title": "Writing a SECURITY.md for an Internal System",
+      "slug": "security-md-for-internal-systems",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "ITS-11",
+      "title": "Changelogs With Absolute Dates and Real Reasons",
+      "slug": "changelogs-with-absolute-dates",
+      "contentType": "Technical Guide",
+      "priority": "P3",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "ITS-12",
+      "title": "Documentation as an Operations Tool",
+      "slug": "documentation-as-an-operations-tool",
+      "contentType": "Experience-led",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "ITS-13",
+      "title": "What Breaks First in an Unmaintained System",
+      "slug": "what-breaks-first-unmaintained",
+      "contentType": "Experience-led",
+      "priority": "P3",
+      "status": "master",
+      "evidence": "C",
+      "note": ""
+    },
+    {
+      "id": "ITS-14",
+      "title": "Being the Only Person Who Knows How It Works",
+      "slug": "only-person-who-knows-how-it-works",
+      "contentType": "Career",
+      "priority": "P2",
+      "status": "rewrite",
+      "evidence": "B",
+      "note": "NDA sensitivity: keep at the level of the general problem."
+    },
+    {
+      "id": "UXD-01",
+      "title": "Designing for People Who Have No Choice But to Use It",
+      "slug": "designing-for-captive-users",
+      "contentType": "Experience-led",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "UXD-02",
+      "title": "A Component That Reports Its Own Problems",
+      "slug": "component-that-reports-its-own-problems",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "UXD-03",
+      "title": "Show the Duplicates Before the Write, Not After",
+      "slug": "duplicates-before-the-write",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "UXD-04",
+      "title": "A Confirmation Dialog That Agrees With the Dashboard",
+      "slug": "confirmation-that-agrees-with-the-dashboard",
+      "contentType": "Problem/Solution",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "UXD-05",
+      "title": "Add-Only Controls: Designing Away a Class of Mistake",
+      "slug": "add-only-controls",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "UXD-06",
+      "title": "Read-Only After Save: Designing a Lock People Accept",
+      "slug": "read-only-after-save",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "UXD-07",
+      "title": "An Error Message That Doesn't Reveal Your Permission Model",
+      "slug": "errors-that-dont-reveal-permissions",
+      "contentType": "Technical Guide",
+      "priority": "P3",
+      "status": "publish",
+      "evidence": "A",
+      "note": "Absorbs FSE-10."
+    },
+    {
+      "id": "UXD-08",
+      "title": "Empty States That Tell the Truth",
+      "slug": "empty-states-that-tell-the-truth",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "UXD-09",
+      "title": "Dashboards That Auto-Refresh, and When They Shouldn't",
+      "slug": "when-dashboards-should-auto-refresh",
+      "contentType": "Technical Guide",
+      "priority": "P3",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "UXD-10",
+      "title": "Designing for a Scanner, Not a Keyboard",
+      "slug": "designing-for-a-scanner",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "master",
+      "evidence": "C",
+      "note": ""
+    },
+    {
+      "id": "UXD-11",
+      "title": "From HTML Prototype to Production Build Without a Redesign",
+      "slug": "prototype-to-production-no-redesign",
+      "contentType": "Case Study",
+      "priority": "P1",
+      "status": "rewrite",
+      "evidence": "A",
+      "note": "Drop every Figma framing. This is the accurate replacement."
+    },
+    {
+      "id": "UXD-12",
+      "title": "Catalogue the Component Vocabulary Before You Change Anything",
+      "slug": "catalogue-the-component-vocabulary",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "rewrite",
+      "evidence": "A",
+      "note": "Drop every Figma framing."
+    },
+    {
+      "id": "UXD-13",
+      "title": "A Responsive Risk Register: Predicting Layout Failure Before You Code",
+      "slug": "responsive-risk-register",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "UXD-14",
+      "title": "Changing Everything on a Page While Preserving Its Design System",
+      "slug": "changing-everything-preserving-the-system",
+      "contentType": "Case Study",
+      "priority": "P2",
+      "status": "rewrite",
+      "evidence": "A",
+      "note": "Drop every Figma framing."
+    },
+    {
+      "id": "UXD-15",
+      "title": "Show the Name the Office Already Uses",
+      "slug": "show-the-name-they-already-use",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": "NEW from second pass. names.ts picks the most-used spelling."
+    },
+    {
+      "id": "MYS-01",
+      "title": "Building Operational Software for a Malaysian Production Floor",
+      "slug": "operational-software-malaysian-production-floor",
+      "contentType": "Case Study",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": "Malaysia"
+    },
+    {
+      "id": "MYS-02",
+      "title": "What Malaysian SMEs Actually Mean When They Say 'Digitalise'",
+      "slug": "what-malaysian-smes-mean-by-digitalise",
+      "contentType": "Industry Analysis",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "B",
+      "note": "Malaysia"
+    },
+    {
+      "id": "MYS-03",
+      "title": "Spreadsheet to System: Where a Malaysian SME Actually Starts",
+      "slug": "spreadsheet-to-system-malaysian-sme",
+      "contentType": "Problem/Solution",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "B",
+      "note": "Malaysia"
+    },
+    {
+      "id": "MYS-04",
+      "title": "80% Resistance to Smart Manufacturing Isn't a Technology Problem",
+      "slug": "resistance-to-smart-manufacturing-malaysia",
+      "contentType": "Industry Analysis",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "B",
+      "note": "Malaysia"
+    },
+    {
+      "id": "MYS-05",
+      "title": "Production Management Software in Malaysia: Vendor Pages vs. What You Need",
+      "slug": "production-software-malaysia-vendor-vs-reality",
+      "contentType": "Industry Analysis",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "B",
+      "note": "Malaysia. Largest single content gap found in the SERP research."
+    },
+    {
+      "id": "MYS-06",
+      "title": "What to Ask a Malaysian Software Vendor Before You Buy",
+      "slug": "questions-for-a-malaysian-software-vendor",
+      "contentType": "Business Systems",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "B",
+      "note": "Malaysia"
+    },
+    {
+      "id": "MYS-07",
+      "title": "Custom Software vs Off-the-Shelf for a Malaysian SME",
+      "slug": "custom-vs-off-the-shelf-malaysia",
+      "contentType": "Comparison",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "B",
+      "note": "Malaysia. Must link to BSA-16/17, not repeat them."
+    },
+    {
+      "id": "MYS-08",
+      "title": "Software for a Klang Valley Refurbishment Operation",
+      "slug": "klang-valley-refurbishment-software",
+      "contentType": "Case Study",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": "Klang Valley / Selangor"
+    },
+    {
+      "id": "MYS-09",
+      "title": "The Digital Side of E-Waste Recycling in Malaysia",
+      "slug": "digital-side-of-ewaste-malaysia",
+      "contentType": "Industry Analysis",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": "Malaysia"
+    },
+    {
+      "id": "MYS-10",
+      "title": "Working as a Software Developer in Cyberjaya",
+      "slug": "software-developer-in-cyberjaya",
+      "contentType": "Career",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "B",
+      "note": "Cyberjaya"
+    },
+    {
+      "id": "MYS-11",
+      "title": "Software Engineering Internships in Cyberjaya: What to Have Ready",
+      "slug": "cyberjaya-software-internships-preparation",
+      "contentType": "Career",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "B",
+      "note": "Cyberjaya"
+    },
+    {
+      "id": "MYS-12",
+      "title": "The Klang Valley Tech Job Market From a Junior's View",
+      "slug": "klang-valley-tech-market-junior-view",
+      "contentType": "Career",
+      "priority": "P2",
+      "status": "rewrite",
+      "evidence": "C",
+      "note": "KL / Selangor. Do not publish salary figures you cannot source."
+    },
+    {
+      "id": "MYS-13",
+      "title": "AI Engineering Roles in Malaysia: What 'Production Experience' Actually Means",
+      "slug": "ai-engineering-malaysia-production-experience",
+      "contentType": "Career",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": "Malaysia. Local doorway into the AIE cluster."
+    },
+    {
+      "id": "MYS-14",
+      "title": "GEO for Malaysian Businesses: What a Developer Actually Implements",
+      "slug": "geo-malaysia-what-a-developer-implements",
+      "contentType": "SEO/GEO",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": "Malaysia. Strongest local commercial opportunity."
+    },
+    {
+      "id": "MYS-15",
+      "title": "Local SEO for a Malaysian Business With Real Service Areas",
+      "slug": "local-seo-malaysia-real-service-areas",
+      "contentType": "SEO/GEO",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": "Malaysia / Klang Valley. areaServed verified in shipped JSON-LD."
+    },
+    {
+      "id": "MYS-16",
+      "title": "Selangor Manufacturing Digitalisation: What the Grants Don't Cover",
+      "slug": "what-the-grants-dont-cover",
+      "contentType": "Industry Analysis",
+      "priority": "P2",
+      "status": "rewrite",
+      "evidence": "C",
+      "note": "Selangor. No grant-work evidence. Write about the unfunded work, not grant mechanics."
+    },
+    {
+      "id": "MYS-17",
+      "title": "en_MY: Locale, Currency and Address Details That Matter in Markup",
+      "slug": "en-my-locale-in-markup",
+      "contentType": "SEO/GEO",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": "Malaysia"
+    },
+    {
+      "id": "MYS-18",
+      "title": "Bilingual and RTL Considerations for Malaysian Internal Systems",
+      "slug": "multilingual-internal-systems-malaysia",
+      "contentType": "Technical Guide",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": "Malaysia"
+    },
+    {
+      "id": "MYS-19",
+      "title": "Studying IT in Malaysia While Working on Production Systems",
+      "slug": "studying-it-while-working-malaysia",
+      "contentType": "Career",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "B",
+      "note": "Malaysia / Cyberjaya"
+    },
+    {
+      "id": "MYS-20",
+      "title": "Cyberjaya as a Place to Build Things",
+      "slug": "cyberjaya-as-a-place-to-build",
+      "contentType": "Local/Malaysia",
+      "priority": "P3",
+      "status": "publish",
+      "evidence": "B",
+      "note": "Cyberjaya"
+    },
+    {
+      "id": "CAR-01",
+      "title": "Working Across the Software and the Operation It Runs",
+      "slug": "across-the-software-and-the-operation",
+      "contentType": "Career",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "CAR-02",
+      "title": "How I Ended Up Responsible for a Production System",
+      "slug": "how-i-ended-up-owning-a-production-system",
+      "contentType": "Career",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "CAR-03",
+      "title": "What I Learned Building 35,000 Lines for a Handful of Users",
+      "slug": "35000-lines-for-a-handful-of-users",
+      "contentType": "Experience-led",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "CAR-04",
+      "title": "Building a Portfolio When Your Best Work Is Under NDA",
+      "slug": "portfolio-when-work-is-under-nda",
+      "contentType": "Career",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "CAR-05",
+      "title": "Writing a Case Study for a System You Can't Show",
+      "slug": "case-study-for-a-system-you-cant-show",
+      "contentType": "Career",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "CAR-06",
+      "title": "What a Compliance Audit Taught Me About Client Work",
+      "slug": "what-a-compliance-audit-taught-me",
+      "contentType": "Career",
+      "priority": "P2",
+      "status": "rewrite",
+      "evidence": "B",
+      "note": "Authorship framing, as with SEO-01/02/03."
+    },
+    {
+      "id": "CAR-07",
+      "title": "Being the Developer in the Room With the SEO Team",
+      "slug": "developer-in-the-room-with-seo",
+      "contentType": "Career",
+      "priority": "P3",
+      "status": "merge",
+      "evidence": "B",
+      "note": "Merge into SEO-27."
+    },
+    {
+      "id": "CAR-08",
+      "title": "Shipping an AI Side Project, Honestly",
+      "slug": "shipping-an-ai-side-project-honestly",
+      "contentType": "Career",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "CAR-09",
+      "title": "Depth Over Breadth as a Junior Developer",
+      "slug": "depth-over-breadth-junior-developer",
+      "contentType": "Career",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    },
+    {
+      "id": "CAR-10",
+      "title": "Documentation Is a Career Skill",
+      "slug": "documentation-is-a-career-skill",
+      "contentType": "Career",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "A",
+      "note": ""
+    },
+    {
+      "id": "CAR-11",
+      "title": "Saying 'Not Yet' in a Portfolio",
+      "slug": "saying-not-yet-in-a-portfolio",
+      "contentType": "Career",
+      "priority": "P1",
+      "status": "publish",
+      "evidence": "A",
+      "note": "Now demonstrated by the status tables shipped on the case studies."
+    },
+    {
+      "id": "CAR-12",
+      "title": "From IT Support to Systems Ownership",
+      "slug": "from-it-support-to-systems-ownership",
+      "contentType": "Career",
+      "priority": "P2",
+      "status": "publish",
+      "evidence": "B",
+      "note": ""
+    }
+  ]
+}

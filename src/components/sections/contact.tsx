@@ -45,7 +45,7 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" aria-label="Contact" className="py-28">
+    <section id="contact" aria-label="Contact" className="py-20 sm:py-24 lg:py-28">
       <Container>
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1fr_1.2fr]">
           <Reveal>

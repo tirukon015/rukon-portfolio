@@ -17,7 +17,7 @@ export function LatestWriting() {
   if (posts.length === 0) return null;
 
   return (
-    <section aria-label="Latest writing" className="border-b border-border py-28">
+    <section aria-label="Latest writing" className="border-b border-border py-20 sm:py-24 lg:py-28">
       <Container>
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHeading eyebrow="Writing" title="From the blog." />

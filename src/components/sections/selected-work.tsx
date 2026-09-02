@@ -1,21 +1,30 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, Lock } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Lock } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Reveal } from "@/components/ui/reveal";
 import { Tag } from "@/components/ui/tag";
 import { projects } from "@/content/projects";
+import { site } from "@/content/site";
 
 export function SelectedWork() {
   return (
-    <section id="work" aria-label="Selected work" className="border-b border-border py-28">
+    <section id="work" aria-label="Selected work" className="border-b border-border py-20 sm:py-24 lg:py-28">
       <Container>
-        <SectionHeading
-          eyebrow="Selected Work"
-          title="Real systems, not tutorials."
-          description="Two production projects: an internal operations platform, and a public-facing product site."
-        />
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <SectionHeading
+            eyebrow="Selected Work"
+            title="Real systems, not tutorials."
+            description="An internal operations platform running a production line, an AI research assistant, and requirement-driven SEO work on a production website."
+          />
+          <Link
+            href={site.workHref}
+            className="inline-flex items-center gap-1.5 text-sm text-text-muted transition-colors hover:text-accent-strong"
+          >
+            All projects <ArrowRight size={14} />
+          </Link>
+        </div>
 
         <div className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-2">
           {projects.map((project, i) => (
@@ -26,13 +35,19 @@ export function SelectedWork() {
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex h-14 items-center">
-                    <Image
-                      src={project.image!.src}
-                      alt={project.image!.alt}
-                      width={140}
-                      height={40}
-                      className="h-8 w-auto object-contain object-left opacity-90"
-                    />
+                    {project.image ? (
+                      <Image
+                        src={project.image.src}
+                        alt={project.image.alt}
+                        width={140}
+                        height={40}
+                        className="h-8 w-auto object-contain object-left opacity-90"
+                      />
+                    ) : (
+                      <span className="font-mono text-lg font-semibold tracking-tight text-text">
+                        {project.name}
+                      </span>
+                    )}
                   </div>
                   <ArrowUpRight
                     size={20}

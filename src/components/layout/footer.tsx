@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Mail } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/icons";
-import { site, nav } from "@/content/site";
+import { site, nav, footerLinks } from "@/content/site";
 
 export function Footer() {
   return (
@@ -15,7 +15,7 @@ export function Footer() {
         </div>
 
         <nav className="flex flex-wrap gap-x-6 gap-y-2" aria-label="Footer">
-          {nav.map((item) => (
+          {[...nav, ...footerLinks].map((item) => (
             <Link
               key={item.href}
               href={item.href}

@@ -1,12 +1,15 @@
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Reveal } from "@/components/ui/reveal";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { experience } from "@/content/experience";
+import { getProject } from "@/content/projects";
 import { cn } from "@/lib/utils";
 
 export function Experience() {
   return (
-    <section id="experience" aria-label="Professional experience" className="border-b border-border py-28">
+    <section id="experience" aria-label="Professional experience" className="border-b border-border py-20 sm:py-24 lg:py-28">
       <Container>
         <SectionHeading eyebrow="Experience" title="Where the work happened." />
 
@@ -41,6 +44,24 @@ export function Experience() {
                     </li>
                   ))}
                 </ul>
+
+                {(entry.projects ?? []).length > 0 ? (
+                  <div className="mt-6 flex flex-wrap gap-4 border-t border-border pt-5">
+                    {(entry.projects ?? []).map((slug) => {
+                      const project = getProject(slug);
+                      if (!project) return null;
+                      return (
+                        <Link
+                          key={slug}
+                          href={`/work/${slug}`}
+                          className="inline-flex items-center gap-1.5 text-sm text-accent-strong transition-colors hover:text-accent"
+                        >
+                          {project.name} case study <ArrowUpRight size={13} />
+                        </Link>
+                      );
+                    })}
+                  </div>
+                ) : null}
               </div>
             </Reveal>
           ))}

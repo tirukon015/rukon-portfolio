@@ -5,7 +5,7 @@ import { education, certifications } from "@/content/education";
 
 export function Education() {
   return (
-    <section id="education" aria-label="Education and certifications" className="border-b border-border py-20">
+    <section id="education" aria-label="Education and certifications" className="border-b border-border py-16 sm:py-20">
       <Container>
         <div className="grid grid-cols-1 gap-14 lg:grid-cols-2">
           <Reveal>

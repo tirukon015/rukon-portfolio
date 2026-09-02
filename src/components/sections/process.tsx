@@ -6,7 +6,7 @@ import { process, processNote } from "@/content/process";
 
 export function Process() {
   return (
-    <section id="process" aria-label="How I work" className="border-b border-border py-28">
+    <section id="process" aria-label="How I work" className="border-b border-border py-20 sm:py-24 lg:py-28">
       <Container>
         <SectionHeading eyebrow="How I Work" title="From problem to production." />
 

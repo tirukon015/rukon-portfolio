@@ -16,15 +16,75 @@ export type RelatedLink = {
   href: string;
 };
 
+/** What kind of article this is. Drives structure, not styling. */
+export type PostContentType =
+  | "Experience-led"
+  | "Case Study"
+  | "Technical Guide"
+  | "Problem/Solution"
+  | "Comparison"
+  | "Explainer"
+  | "Industry Analysis"
+  | "Career"
+  | "Local/Malaysia"
+  | "SEO/GEO"
+  | "AI Engineering"
+  | "Business Systems";
+
+/** The query shape an article is written to answer. */
+export type SearchIntent =
+  | "informational"
+  | "problem-aware"
+  | "commercial-adjacent"
+  | "navigational";
+
+/**
+ * Editorial state, recorded from the content audit.
+ *
+ * This is planning metadata, not display metadata: nothing here renders. It
+ * exists so that a later editing pass knows what was already decided about an
+ * article, and so no article is quietly deleted because the reasoning was lost.
+ */
+export type EditorialPlan = "keep" | "update" | "expand" | "merge" | "retire";
+
 export type BlogPost = {
   slug: string;
   title: string;
   description: string;
   date: string; // ISO date
+  /** Set when an article is materially revised. Feeds dateModified. */
+  updated?: string;
   category: PostCategory;
   tags: string[];
   sections: PostSection[];
+
+  /** Hand-picked outbound links rendered in the article's Related panel. */
   related?: RelatedLink[];
+  /** Project slugs this article draws its authority from. */
+  relatedProjects?: string[];
+  /** Post slugs worth reading alongside this one, beyond same-category matches. */
+  relatedPosts?: string[];
+
+  /** Defaults to `description` when unset. */
+  excerpt?: string;
+  /** Defaults to `title` when unset. */
+  seoTitle?: string;
+  /** Defaults to `description` when unset. */
+  seoDescription?: string;
+  /** Set only when an article must point somewhere other than its own URL. */
+  canonical?: string;
+  image?: { src: string; alt: string };
+
+  contentType?: PostContentType;
+  searchIntent?: SearchIntent;
+  /** Only set where an article has genuine local context. */
+  location?: string;
+
+  /** Planning metadata from the content audit. Not rendered. */
+  plan?: EditorialPlan;
+  planNote?: string;
+  /** For `plan: "merge"`, the slug this article should fold into. */
+  mergeInto?: string;
 };
 
 export const categories: PostCategory[] = [
@@ -45,6 +105,13 @@ export const posts: BlogPost[] = [
     date: "2026-06-02",
     category: "Operations",
     tags: ["Production Systems", "Operations"],
+    contentType: "Explainer",
+    searchIntent: "informational",
+    relatedProjects: ["rpoms"],
+    relatedPosts: ["common-problems-manual-production-tracking", "reporting-from-operational-data"],
+    plan: "expand",
+    planNote:
+      "Best keyword fit in the set. Definitional pillar for the Operations cluster; needs mechanism-level depth.",
     sections: [
       {
         heading: "What is it?",
@@ -89,6 +156,14 @@ export const posts: BlogPost[] = [
     date: "2026-06-09",
     category: "Operations",
     tags: ["Production Systems", "Operations", "Automation"],
+    contentType: "Experience-led",
+    searchIntent: "informational",
+    relatedProjects: ["rpoms"],
+    relatedPosts: ["common-problems-manual-production-tracking"],
+    plan: "merge",
+    mergeInto: "common-problems-manual-production-tracking",
+    planNote:
+      "~70% overlap with common-problems-manual-production-tracking. Salvage the private-copies-of-a-shared-sheet signal.",
     sections: [
       {
         heading: "What is it?",
@@ -133,6 +208,13 @@ export const posts: BlogPost[] = [
     date: "2026-06-16",
     category: "Operations",
     tags: ["Production Systems", "Operations"],
+    contentType: "Problem/Solution",
+    searchIntent: "problem-aware",
+    relatedProjects: ["rpoms"],
+    relatedPosts: ["what-is-a-production-management-system", "why-production-operations-need-digital-systems"],
+    plan: "merge",
+    planNote:
+      "Merge target. Keeps its slug and absorbs why-production-operations-need-digital-systems.",
     sections: [
       {
         heading: "What is it?",
@@ -178,6 +260,13 @@ export const posts: BlogPost[] = [
     date: "2026-06-23",
     category: "Software Engineering",
     tags: ["Admin Systems", "Software Engineering", "Data"],
+    contentType: "Technical Guide",
+    searchIntent: "informational",
+    relatedProjects: ["rpoms"],
+    relatedPosts: ["why-internal-software-needs-good-ux", "reporting-from-operational-data"],
+    plan: "expand",
+    planNote:
+      "Eleven admin routes and a three-tier permission model are available as worked examples and currently unused.",
     sections: [
       {
         heading: "What is it?",
@@ -222,6 +311,13 @@ export const posts: BlogPost[] = [
     date: "2026-06-30",
     category: "Business Automation",
     tags: ["Automation", "Digital Transformation"],
+    contentType: "Experience-led",
+    searchIntent: "informational",
+    relatedProjects: ["rpoms"],
+    relatedPosts: ["replacing-repetitive-manual-work-with-software"],
+    plan: "update",
+    planNote:
+      "Re-anchor on a manual distinction that had to survive digitisation. Also needs a factual correction: the module sequence described is the build order, not a completed production rollout.",
     sections: [
       {
         heading: "What is it?",
@@ -266,6 +362,13 @@ export const posts: BlogPost[] = [
     date: "2026-07-07",
     category: "IT Systems",
     tags: ["IT Systems", "Operations", "Software Engineering"],
+    contentType: "Experience-led",
+    searchIntent: "informational",
+    relatedProjects: ["rpoms"],
+    relatedPosts: ["what-is-a-production-management-system", "why-internal-software-needs-good-ux"],
+    plan: "expand",
+    planNote:
+      "Flagship essay. Several further floor-derived rules are verified in source and unused here.",
     sections: [
       {
         heading: "What is it?",
@@ -313,6 +416,13 @@ export const posts: BlogPost[] = [
     date: "2026-07-14",
     category: "Software Engineering",
     tags: ["Software Engineering", "Maintenance"],
+    contentType: "Experience-led",
+    searchIntent: "informational",
+    relatedProjects: ["rpoms"],
+    relatedPosts: ["what-an-it-systems-role-actually-involves"],
+    plan: "expand",
+    planNote:
+      "A dated changelog spanning several months is available as evidence. Do not publish the open credential-rotation item.",
     sections: [
       {
         heading: "What is it?",
@@ -357,6 +467,13 @@ export const posts: BlogPost[] = [
     date: "2026-07-21",
     category: "UI/UX",
     tags: ["Figma", "UI/UX", "Design"],
+    contentType: "Explainer",
+    searchIntent: "informational",
+    relatedProjects: ["erth"],
+    relatedPosts: ["from-figma-design-to-production-website"],
+    plan: "update",
+    planNote:
+      "RETIREMENT WITHDRAWN (2026-09-02). The ERTH Figma prototype (ERTH V2.3) was supplied as evidence, so the design-first premise is supported and the article stays. One outstanding edit: the body claims sole design authorship, which the prototype alone does not establish, soften to design and prototyping involvement. Also still the shortest article in the set at 174 words.",
     sections: [
       {
         heading: "What is it?",
@@ -401,6 +518,13 @@ export const posts: BlogPost[] = [
     date: "2026-07-28",
     category: "Web Development",
     tags: ["Figma", "Web Development", "Frontend"],
+    contentType: "Technical Guide",
+    searchIntent: "informational",
+    relatedProjects: ["erth"],
+    relatedPosts: ["translating-figma-components-into-reusable-code", "designing-for-desktop-and-mobile-before-development"],
+    plan: "expand",
+    planNote:
+      "Promoted from merge target to cluster pillar (2026-09-02) now the ERTH Figma prototype is evidenced. Two outstanding edits: the body claims the design was created solely by the author, which the prototype alone does not establish; and the 'still in progress' statement is stale, contradicted by the shipped v13/v14 builds.",
     sections: [
       {
         heading: "What is it?",
@@ -445,6 +569,13 @@ export const posts: BlogPost[] = [
     date: "2026-08-04",
     category: "Web Development",
     tags: ["Figma", "Web Development", "Components"],
+    contentType: "Technical Guide",
+    searchIntent: "informational",
+    relatedProjects: ["erth"],
+    relatedPosts: ["from-figma-design-to-production-website"],
+    plan: "update",
+    planNote:
+      "MERGE WITHDRAWN (2026-09-02). Component translation is a genuinely distinct topic, now evidenced by the ERTH Figma prototype plus the documented ten-component vocabulary. One outstanding edit: the body claims sole design authorship, which the prototype alone does not establish. Residual overlap with from-figma-design-to-production-website should be handled by differentiating the angle, not by merging.",
     sections: [
       {
         heading: "What is it?",
@@ -489,6 +620,13 @@ export const posts: BlogPost[] = [
     date: "2026-08-11",
     category: "UI/UX",
     tags: ["UI/UX", "Responsive Design"],
+    contentType: "Technical Guide",
+    searchIntent: "informational",
+    relatedProjects: ["erth"],
+    relatedPosts: ["from-figma-design-to-production-website"],
+    plan: "update",
+    planNote:
+      "MERGE WITHDRAWN (2026-09-02). Planning responsive behaviour at design time is supported by the ERTH Figma prototype, and the documented pre-implementation responsive risk register gives it concrete evidence. One outstanding edit: the body claims sole design authorship, which the prototype alone does not establish.",
     sections: [
       {
         heading: "What is it?",
@@ -533,6 +671,12 @@ export const posts: BlogPost[] = [
     date: "2026-08-15",
     category: "IT Systems",
     tags: ["IT Systems", "IT Support"],
+    contentType: "Career",
+    searchIntent: "informational",
+    relatedPosts: ["why-system-maintenance-matters-after-deployment", "why-developers-should-understand-the-physical-process"],
+    plan: "expand",
+    planNote:
+      "Real local search demand. Expand across the full span of the role, from end-user support to owning a production system.",
     sections: [
       {
         heading: "What is it?",
@@ -577,6 +721,13 @@ export const posts: BlogPost[] = [
     date: "2026-08-18",
     category: "Business Automation",
     tags: ["Automation", "Business Systems"],
+    contentType: "Problem/Solution",
+    searchIntent: "informational",
+    relatedProjects: ["rpoms"],
+    relatedPosts: ["from-manual-workflow-to-digital-workflow"],
+    plan: "update",
+    planNote:
+      "Both named examples, document generation from a template and automatic stock deduction, are verified in source. Keep them and go deeper.",
     sections: [
       {
         heading: "What is it?",
@@ -621,6 +772,13 @@ export const posts: BlogPost[] = [
     date: "2026-08-21",
     category: "Software Engineering",
     tags: ["UI/UX", "Software Engineering", "Admin Systems"],
+    contentType: "Experience-led",
+    searchIntent: "informational",
+    relatedProjects: ["rpoms"],
+    relatedPosts: ["how-admin-panels-help-manage-operational-data"],
+    plan: "expand",
+    planNote:
+      "Several concrete mechanisms are verified and unused: components that report their own problems, imports that surface duplicates before writing, add-only controls.",
     sections: [
       {
         heading: "What is it?",
@@ -665,6 +823,13 @@ export const posts: BlogPost[] = [
     date: "2026-08-24",
     category: "IT Systems",
     tags: ["Data", "Reporting", "Operations"],
+    contentType: "Technical Guide",
+    searchIntent: "informational",
+    relatedProjects: ["rpoms"],
+    relatedPosts: ["what-is-a-production-management-system", "how-admin-panels-help-manage-operational-data"],
+    plan: "expand",
+    planNote:
+      "Four comparison modes and batch carry-over are verified. Expand into the mechanics rather than the principle alone.",
     sections: [
       {
         heading: "What is it?",
@@ -708,16 +873,56 @@ export function getPost(slug: string) {
 }
 
 export function getPostsByCategory(category: PostCategory) {
-  return posts.filter((p) => p.category === category);
+  return sortedPosts().filter((p) => p.category === category);
 }
 
+/** Categories that actually have at least one post. */
+export function usedCategories(): PostCategory[] {
+  return categories.filter((c) => posts.some((p) => p.category === c));
+}
+
+/**
+ * Related reading for an article.
+ *
+ * Hand-picked `relatedPosts` come first, because a curated pair is always
+ * better than a category match. Same-category posts fill any remaining slots,
+ * which is what keeps this useful as the library grows past the point where
+ * "same category" means anything on its own.
+ */
 export function getRelatedPosts(post: BlogPost, limit = 3) {
-  return posts
-    .filter((p) => p.slug !== post.slug && p.category === post.category)
-    .slice(0, limit);
+  const picked = (post.relatedPosts ?? [])
+    .map((slug) => posts.find((p) => p.slug === slug))
+    .filter((p): p is BlogPost => Boolean(p) && p!.slug !== post.slug);
+
+  const seen = new Set(picked.map((p) => p.slug));
+  const sameCategory = sortedPosts().filter(
+    (p) => p.slug !== post.slug && p.category === post.category && !seen.has(p.slug)
+  );
+
+  return [...picked, ...sameCategory].slice(0, limit);
+}
+
+/**
+ * Articles that draw on a given project.
+ *
+ * Reads the structured `relatedProjects` field, and falls back to the older
+ * hand-written `related` links so no existing relationship is lost.
+ */
+export function getPostsForProject(projectSlug: string) {
+  const href = `/work/${projectSlug}`;
+  return sortedPosts().filter(
+    (p) =>
+      p.relatedProjects?.includes(projectSlug) ||
+      p.related?.some((link) => link.href === href)
+  );
 }
 
 /** Newest first. */
 export function sortedPosts() {
   return [...posts].sort((a, b) => (a.date < b.date ? 1 : -1));
+}
+
+/** Falls back to `description` so every card and meta tag has copy. */
+export function postExcerpt(post: BlogPost) {
+  return post.excerpt ?? post.description;
 }

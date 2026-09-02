@@ -1,4 +1,4 @@
-# Touhidul Islam Rukon — Portfolio
+# Touhidul Islam Rukon, Portfolio
 
 Personal portfolio and blog for Touhidul Islam Rukon, IT Systems & Operations Lead / Software Developer.
 
@@ -15,10 +15,13 @@ Live at [rukon.dev](https://rukon.dev).
 
 ## Structure
 
-- `src/app` — routes: home, `/blog`, `/blog/[slug]`, `/work/[slug]`, `/api/contact`
-- `src/components` — layout, section, and UI components
-- `src/content` — typed content data (site config, projects, experience, education, skills, blog posts, FAQ, process)
-- `src/lib` — small hooks and utilities (media query, reading time, active-section tracking)
+- `src/app`, routes: home, `/blog`, `/blog/[slug]`, `/work/[slug]`, `/api/contact`
+- `src/components`, layout, section, and UI components
+- `src/content`, typed content data (site config, projects, experience, education, skills, blog posts, FAQ, process)
+- `src/lib`, small hooks and utilities (media query, reading time, active-section tracking)
+- `docs`, engineering notes for changes made to this repository
+- `content-planning`, blog research dataset. Planning data only, not imported by the app
+- `reports`, internal audit and preview artefacts. Not routed and not indexed
 
 ## Running locally
 

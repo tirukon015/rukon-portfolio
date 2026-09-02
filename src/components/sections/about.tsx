@@ -7,7 +7,7 @@ import { site } from "@/content/site";
 
 export function About() {
   return (
-    <section id="about" aria-label="About me" className="border-b border-border py-28">
+    <section id="about" aria-label="About me" className="border-b border-border py-20 sm:py-24 lg:py-28">
       <Container>
         <Reveal className="flex flex-col items-start gap-8 sm:flex-row sm:items-center">
           <div className="w-48 shrink-0 overflow-hidden rounded-2xl border border-border-strong bg-bg-elevated-2 sm:w-56">

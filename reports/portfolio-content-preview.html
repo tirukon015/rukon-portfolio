@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en-MY" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Portfolio Content Preview, rukon.dev</title>
+<style>
+  /* Tokens copied from src/app/globals.css so the preview reads as the same
+     site. This file is a prototype: it must not be imported, and the
+     production stylesheet was not modified to produce it. */
+  :root, :root[data-theme="dark"] {
+    --bg:#05070a; --bg-el:#0b0f14; --bg-el2:#10151c;
+    --border:rgba(233,240,244,.09); --border-strong:rgba(233,240,244,.16);
+    --text:#edf1f4; --muted:#99a3ad; --faint:#626b74;
+    --accent:#4fb2e0; --accent-strong:#7ecbee; --accent-soft:rgba(79,178,224,.12);
+    --shadow-card:0 1px 0 rgba(255,255,255,.04) inset, 0 20px 40px -24px rgba(0,0,0,.6);
+    --ok:#5fbf8f; --warn:#d9ac55; --risk:#e08585;
+  }
+  :root[data-theme="light"] {
+    --bg:#f6f7f9; --bg-el:#fff; --bg-el2:#eef1f4;
+    --border:rgba(16,22,28,.09); --border-strong:rgba(16,22,28,.18);
+    --text:#10161c; --muted:#4b5661; --faint:#7c8790;
+    --accent:#1c85b8; --accent-strong:#12658c; --accent-soft:rgba(28,133,184,.1);
+    --shadow-card:0 1px 0 rgba(255,255,255,.7) inset, 0 16px 32px -24px rgba(16,22,28,.16);
+    --ok:#2c6e45; --warn:#855d08; --risk:#96322f;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased}
+  .mono{font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace}
+  .wrap{max-width:72rem;margin:0 auto;padding:0 1.5rem}
+  @media(min-width:768px){.wrap{padding:0 2rem}}
+
+  header.top{border-bottom:1px solid var(--border);padding:4.5rem 0 2.5rem}
+  .eyebrow{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.75rem;
+    text-transform:uppercase;letter-spacing:.18em;color:var(--accent)}
+  h1{font-size:clamp(2rem,5vw,3.25rem);line-height:1.05;letter-spacing:-.025em;
+    font-weight:600;margin:.75rem 0 0;text-wrap:balance}
+  .lede{color:var(--muted);font-size:1.0625rem;max-width:60ch;margin:1rem 0 0}
+
+  section.part{border-bottom:1px solid var(--border);padding:3.5rem 0}
+  .partnum{font-family:ui-monospace,Menlo,monospace;font-size:.75rem;color:var(--accent);letter-spacing:.1em}
+  h2{font-size:clamp(1.4rem,3vw,1.95rem);letter-spacing:-.02em;font-weight:600;margin:.4rem 0 0;text-wrap:balance}
+  h3{font-size:1.05rem;font-weight:600;margin:2rem 0 .5rem}
+  h4{font-family:ui-monospace,Menlo,monospace;font-size:.7rem;text-transform:uppercase;
+    letter-spacing:.14em;color:var(--faint);font-weight:500;margin:1.75rem 0 .5rem}
+  p{margin:0 0 .85rem;color:var(--muted)}
+  p.tight{margin-bottom:.35rem}
+  .sublede{color:var(--muted);max-width:66ch;margin:.75rem 0 1.75rem}
+  ul,ol{margin:0 0 1rem;padding-left:1.15rem;color:var(--muted)}
+  li{margin-bottom:.4rem}
+  a{color:var(--accent-strong);text-decoration:none}
+  a:hover{color:var(--accent)}
+  code{font-family:ui-monospace,Menlo,monospace;font-size:.875em;background:var(--bg-el2);
+    border:1px solid var(--border);border-radius:3px;padding:.08em .34em;color:var(--text)}
+
+  .card{border:1px solid var(--border);background:var(--bg-el);border-radius:1rem;
+    padding:1.5rem;box-shadow:var(--shadow-card)}
+  .grid{display:grid;gap:1.25rem}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(310px,1fr))}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+
+  .chip{display:inline-block;border:1px solid var(--border-strong);border-radius:999px;
+    padding:.2rem .7rem;font-family:ui-monospace,Menlo,monospace;font-size:.7rem;color:var(--muted);
+    white-space:nowrap}
+  .chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.75rem}
+  .state{display:inline-block;border:1px solid currentColor;border-radius:999px;
+    padding:.15rem .6rem;font-family:ui-monospace,Menlo,monospace;font-size:.65rem;
+    text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;font-weight:600}
+  .s-live{color:var(--accent-strong)} .s-built{color:var(--muted)} .s-no{color:var(--faint)}
+  .s-open{color:var(--warn)} .s-risk{color:var(--risk)}
+
+  table{border-collapse:collapse;width:100%;font-size:.86rem;margin:0 0 1rem}
+  .tw{overflow-x:auto;border:1px solid var(--border);border-radius:.6rem;background:var(--bg-el)}
+  th{text-align:left;font-family:ui-monospace,Menlo,monospace;font-size:.65rem;
+    text-transform:uppercase;letter-spacing:.1em;color:var(--faint);font-weight:600;
+    padding:.6rem .8rem;border-bottom:1px solid var(--border-strong);white-space:nowrap;
+    background:var(--bg-el2)}
+  td{padding:.6rem .8rem;border-bottom:1px solid var(--border);vertical-align:top;color:var(--muted)}
+  tr:last-child td{border-bottom:0}
+  td strong{color:var(--text);font-weight:600}
+
+  .note{border-left:3px solid var(--accent);background:var(--accent-soft);
+    padding:.9rem 1.1rem;border-radius:0 .5rem .5rem 0;margin:0 0 1.25rem}
+  .note.warn{border-left-color:var(--warn);background:color-mix(in srgb,var(--warn) 10%,var(--bg-el))}
+  .note.risk{border-left-color:var(--risk);background:color-mix(in srgb,var(--risk) 10%,var(--bg-el))}
+  .note p:last-child{margin-bottom:0}
+  .note strong{color:var(--text)}
+
+  .flow{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin:.75rem 0 0}
+  .step{display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--border-strong);
+    background:var(--bg-el);border-radius:999px;padding:.4rem .9rem;font-size:.85rem;color:var(--text)}
+  .step i{font-style:normal;font-family:ui-monospace,Menlo,monospace;font-size:.7rem;color:var(--accent)}
+  .arrow{color:var(--faint);font-size:.8rem}
+
+  .link-map{display:grid;gap:.5rem;margin-top:.75rem}
+  .link-row{display:grid;grid-template-columns:minmax(140px,180px) 1fr;gap:.75rem;
+    border-bottom:1px solid var(--border);padding:.55rem 0;font-size:.86rem}
+  .link-row:last-child{border-bottom:0}
+  .link-row .from{color:var(--text);font-weight:500}
+  .link-row .to{color:var(--muted)}
+
+  footer.end{padding:2.5rem 0 4rem;color:var(--faint);font-size:.82rem;
+    font-family:ui-monospace,Menlo,monospace}
+  .toggle{position:fixed;top:1rem;right:1rem;z-index:10;border:1px solid var(--border-strong);
+    background:var(--bg-el);color:var(--muted);border-radius:999px;padding:.4rem .9rem;
+    font-family:ui-monospace,Menlo,monospace;font-size:.7rem;cursor:pointer}
+  .toggle:hover{color:var(--text)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<button class="toggle" id="t" type="button" aria-label="Toggle colour theme">THEME</button>
+
+<header class="top">
+  <div class="wrap">
+    <p class="eyebrow">Content &amp; structure prototype &middot; not production</p>
+    <h1>Portfolio Content Preview</h1>
+    <p class="lede">The content architecture proposed for rukon.dev, shown in the site's own visual language. Everything marked <span class="state s-live">Live</span> is implemented in production. Everything else is prepared, deferred, or blocked on a decision.</p>
+    <div class="chips">
+      <span class="chip">Design system: unchanged</span>
+      <span class="chip">Evidence-gated content</span>
+      <span class="chip">3 case studies</span>
+      <span class="chip">224 planned articles</span>
+      <span class="chip">15 posts preserved</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- 1 -->
+<section class="part">
+  <div class="wrap">
+    <span class="partnum">01</span>
+    <h2>Professional positioning</h2>
+    <p class="sublede">One role label, one statement, three checkable proof points. All shipped.</p>
+
+    <div class="grid g2">
+      <div class="card">
+        <h4>Before</h4>
+        <p class="tight"><strong style="color:var(--text)">Software Developer</strong></p>
+        <p>&ldquo;I work at the intersection of IT systems and real-world operations: designing and building the software, and understanding the physical processes it runs, from customer-facing websites to the internal tools that keep a real business running.&rdquo;</p>
+        <p class="tight" style="color:var(--faint);font-size:.85rem">No AI. No SEO. No proof point above the fold.</p>
+      </div>
+      <div class="card">
+        <h4>After <span class="state s-live">Live</span></h4>
+        <p class="tight"><strong style="color:var(--text)">Software Developer ,  Operations &amp; AI Systems</strong></p>
+        <p>&ldquo;I build the systems a business actually runs on. A production-operations platform for a live router-refurbishment line, an AI document-analysis application deployed on its own domain, and requirement-driven SEO and content work on a production website ,  built end to end, and maintained after launch.&rdquo;</p>
+        <p class="tight" style="color:var(--faint);font-size:.85rem">Feeds the hero, every page title, the site description, Open Graph and the Person schema from one field.</p>
+      </div>
+    </div>
+
+    <h4>Hero proof points</h4>
+    <p class="sublede" style="margin-bottom:.75rem">Three claims a stranger can check in one click each, placed above the buttons.</p>
+    <ul class="mono" style="border-left:2px solid var(--border-strong);padding-left:1rem;list-style:none;font-size:.85rem;color:var(--faint)">
+      <li>Production-operations platform, in daily use &rarr; <a href="#rpoms">/work/rpoms</a></li>
+      <li>AI research assistant, deployed and tested &rarr; <a href="#rf">/work/researchforge</a></li>
+      <li>Technical SEO shipped on a production website &rarr; <a href="#erth">/work/erth</a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- 2 -->
+<section class="part">
+  <div class="wrap">
+    <span class="partnum">02</span>
+    <h2>About &amp; profile</h2>
+    <p class="sublede">Reordered to lead with what was built. The study status stays ,  it moves to last, after the evidence. <span class="state s-live">Live</span></p>
+
+    <div class="card">
+      <h4>Profile tags</h4>
+      <div class="chips">
+        <span class="chip">Operations Systems</span><span class="chip">Full-Stack Engineering</span>
+        <span class="chip">AI / LLM Engineering</span><span class="chip">Technical SEO</span>
+      </div>
+      <p style="margin-top:1rem;font-size:.85rem;color:var(--faint)">Was: Software Engineering &middot; Web Development &middot; Business Systems &middot; IT Infrastructure ,  two of which were the weakest things in the evidence base.</p>
+      <h4>Paragraph order</h4>
+      <ol style="font-size:.9rem">
+        <li>Who and where ,  systems a business depends on, not products with users</li>
+        <li>RPOMS ,  the largest, with the both-sides role stated</li>
+        <li>ResearchForge ,  <strong style="color:var(--text)">newly added</strong>, with the grounding principle</li>
+        <li>ERTH ,  <strong style="color:var(--text)">rewritten</strong> as requirement-driven SEO work, not Figma</li>
+        <li>Degree, and what he is looking for</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section class="part">
+  <div class="wrap">
+    <span class="partnum">03</span>
+    <h2>Capability architecture</h2>
+    <p class="sublede">Nine capabilities, grouped by the kind of problem rather than by technology. Each one names the project behind it, and each name is a link to that case study. <span class="state s-live">Live</span></p>
+
+    <div class="grid g3">
+      <div class="card"><h3 style="margin-top:0">Production &amp; Operations Systems</h3><p style="font-size:.88rem">Modelling a physical process closely enough to run it: intake, stages, stock, delivery, and the business rules a floor imposes that no specification contains.</p><p class="mono" style="font-size:.7rem;color:var(--faint);margin:0">EVIDENCE &middot; RPOMS</p></div>
+      <div class="card"><h3 style="margin-top:0">Full-Stack Web Development</h3><p style="font-size:.88rem">End to end in TypeScript and Python ,  interfaces, API routes, data models, and the deployment path to production.</p><p class="mono" style="font-size:.7rem;color:var(--faint);margin:0">EVIDENCE &middot; RPOMS &middot; ResearchForge</p></div>
+      <div class="card"><h3 style="margin-top:0">AI &amp; LLM Engineering</h3><p style="font-size:.88rem">Schema-constrained output validated on return, grounding enforced in the prompt, the schema and the interface, and a provider abstraction that makes the vendor a configuration choice.</p><p class="mono" style="font-size:.7rem;color:var(--faint);margin:0">EVIDENCE &middot; ResearchForge</p></div>
+      <div class="card"><h3 style="margin-top:0">Document Processing</h3><p style="font-size:.88rem">Ingesting real files rather than clean ones, and generating documents that match a format someone's process already depends on.</p><p class="mono" style="font-size:.7rem;color:var(--faint);margin:0">EVIDENCE &middot; ResearchForge &middot; RPOMS</p></div>
+      <div class="card"><h3 style="margin-top:0">Data &amp; Database Systems</h3><p style="font-size:.88rem">Schema design in PostgreSQL and MySQL, a storage interface with interchangeable backends, and deriving figures from a full history rather than storing untraceable totals.</p><p class="mono" style="font-size:.7rem;color:var(--faint);margin:0">EVIDENCE &middot; RPOMS &middot; ResearchForge</p></div>
+      <div class="card"><h3 style="margin-top:0">System Architecture</h3><p style="font-size:.88rem">Choosing where a decision lives: one chokepoint rather than a check per route, one interface rather than a vendor dependency, one copy of a rule rather than two that can disagree.</p><p class="mono" style="font-size:.7rem;color:var(--faint);margin:0">EVIDENCE &middot; RPOMS &middot; ResearchForge</p></div>
+      <div class="card"><h3 style="margin-top:0">Technical SEO &amp; GEO Implementation</h3><p style="font-size:.88rem">Metadata, canonicals, structured data, heading hierarchy, semantic HTML, and content structured so an answer engine can quote a section and still be right.</p><p class="mono" style="font-size:.7rem;color:var(--faint);margin:0">EVIDENCE &middot; ERTH</p></div>
+      <div class="card"><h3 style="margin-top:0">Business Process Automation</h3><p style="font-size:.88rem">One entry that updates everything downstream, staged imports that surface problems before they are written, and paperwork generated rather than retyped.</p><p class="mono" style="font-size:.7rem;color:var(--faint);margin:0">EVIDENCE &middot; RPOMS</p></div>
+      <div class="card"><h3 style="margin-top:0">IT Systems &amp; Support</h3><p style="font-size:.88rem">Supporting the systems a business runs on day to day, including ones built and maintained personally.</p><p class="mono" style="font-size:.7rem;color:var(--faint);margin:0">No project link ,  role evidence only</p></div>
+    </div>
+
+    <div class="note" style="margin-top:1.5rem">
+      <p><strong>Three capabilities are new:</strong> AI &amp; LLM Engineering, Document Processing, and Technical SEO &amp; GEO Implementation. All three were absent from the site entirely, and all three are evidence level A.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section class="part" id="rpoms">
+  <div class="wrap">
+    <span class="partnum">04</span>
+    <h2>RPOMS ,  project presentation</h2>
+    <p class="sublede"><span class="state s-live">Live</span> Rewritten and corrected. The outcome claim was contradicted by the source and has been fixed.</p>
+
+    <div class="card">
+      <p class="mono" style="color:var(--accent);font-size:.75rem;margin:0">Router Production Operations Management System</p>
+      <h3 style="margin:.4rem 0 .5rem;font-size:1.4rem">The system built to run a router-refurbishment production line.</h3>
+      <p style="font-size:.92rem">A production-operations platform built for a router-refurbishment programme run by Blue Bee Technologies, covering every stage a unit passes through, from intake to delivery. Around 35,800 lines of TypeScript across eleven admin modules and twenty-four API routes.</p>
+      <div class="flow">
+        <span class="step"><i>01</i>Unit arrives</span><span class="arrow">&rarr;</span>
+        <span class="step"><i>02</i>Accepted into the registry</span><span class="arrow">&rarr;</span>
+        <span class="step"><i>03</i>Cleaned</span><span class="arrow">&rarr;</span>
+        <span class="step"><i>04</i>Packed into a numbered box</span><span class="arrow">&rarr;</span>
+        <span class="step"><i>05</i>Delivered with matching paperwork</span>
+      </div>
+    </div>
+
+    <h4>Case-study sections</h4>
+    <div class="tw"><table>
+      <thead><tr><th>Section</th><th>What it carries</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Overview</strong></td><td>Scale stated: 35,800 lines, 11 admin modules, 24 API handlers, three storage backends</td></tr>
+        <tr><td><strong>Problem</strong></td><td>Spreadsheets have no validation, no single source of truth once someone keeps a private copy, and no audit trail</td></tr>
+        <tr><td><strong>Context</strong></td><td>Refurbishment is not manufacturing: unknown condition, unpredictable quantity, serial numbers the system does not choose</td></tr>
+        <tr><td><strong>My Role</strong></td><td>Both sides ,  the software and the floor it supports</td></tr>
+        <tr><td><strong>Engineering Approach</strong></td><td>Fail in the safe direction &middot; a number should be traceable &middot; business rules live in one place</td></tr>
+        <tr><td><strong>Architecture</strong></td><td>Three backends by environment &middot; Supabase pooler with prepared statements off &middot; read deadlines &middot; one middleware chokepoint, auth deliberately separate</td></tr>
+        <tr><td><strong>Key Features</strong></td><td>Daily report &middot; serial registry &middot; packing and delivery &middot; delivery orders &middot; workforce &middot; dashboard in English and Arabic</td></tr>
+        <tr><td><strong>Technical Decisions</strong></td><td>Three tiers with no default passwords &middot; threshold-based box consumption &middot; Malaysian business-day boundary &middot; typed i18n that fails the build</td></tr>
+        <tr><td><strong>Outcome</strong></td><td><strong>Corrected.</strong> Daily Report live; everything else complete behind a write lock</td></tr>
+        <tr><td><strong>Status table</strong></td><td>New. Four rows: what writes, what reads, what is locked, what does not exist</td></tr>
+        <tr><td><strong>Technical stack</strong></td><td>New. Five groups instead of one flat chip row</td></tr>
+        <tr><td><strong>Limitations</strong></td><td>New. Four stated plainly, including no test suite</td></tr>
+      </tbody>
+    </table></div>
+
+    <h4>What's live, and what isn't</h4>
+    <div class="tw"><table>
+      <thead><tr><th>State</th><th>Module</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td><span class="state s-live">Implemented</span></td><td><strong>Daily Production Report</strong></td><td>Live in production. Writes report data and deducts stock in the same step.</td></tr>
+        <tr><td><span class="state s-live">Implemented</span></td><td><strong>Monitoring dashboard</strong></td><td>Live. Reading is never blocked, so every figure and chart renders from real data.</td></tr>
+        <tr><td><span class="state s-built">Built, not live</span></td><td><strong>Registry, packing, delivery, workforce, inventory</strong></td><td>Complete and rendering live data, held behind a deployment-level write lock pending programme sign-off.</td></tr>
+        <tr><td><span class="state s-no">Not connected</span></td><td><strong>Automated test suite</strong></td><td>None exists. Correctness is gated by build, typecheck and lint per milestone. On the project's own backlog.</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="note risk">
+      <p><strong>The correction that mattered.</strong> The previous outcome sentence read: &ldquo;in active use for daily production reporting, registry, packing, delivery, and workforce tracking.&rdquo; The source says otherwise ,  <code>LIVE_MODULES</code> names exactly two paths, and the project's own <code>TODO.md</code> states &ldquo;Production runs the demo lock: only the Daily Report writes.&rdquo; The rewritten version is more interesting than the original claim, not less: a default-on lock that names what may write is a design decision worth describing.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section class="part" id="rf">
+  <div class="wrap">
+    <span class="partnum">05</span>
+    <h2>ResearchForge ,  project presentation</h2>
+    <p class="sublede"><span class="state s-live">Live</span> Entirely new. This project was absent from the site.</p>
+
+    <div class="card">
+      <p class="mono" style="color:var(--accent);font-size:.75rem;margin:0">AI research paper assistant &middot; independent project</p>
+      <h3 style="margin:.4rem 0 .5rem;font-size:1.4rem">An AI research assistant built to say when the paper doesn't support the answer.</h3>
+      <p style="font-size:.92rem">Upload an academic PDF and get a structured summary, a research-gap analysis where every gap carries the evidence it rests on, and a literature review scoped to the prior work the paper itself discusses. A Python/FastAPI backend and a Next.js frontend deployed as one project behind a single origin.</p>
+      <div class="flow">
+        <span class="step"><i>01</i>Upload a PDF</span><span class="arrow">&rarr;</span>
+        <span class="step"><i>02</i>Validate and extract</span><span class="arrow">&rarr;</span>
+        <span class="step"><i>03</i>Analyse</span><span class="arrow">&rarr;</span>
+        <span class="step"><i>04</i>Read the structured result</span>
+      </div>
+    </div>
+
+    <h4>Implemented / available / not connected</h4>
+    <p class="sublede" style="margin-bottom:.75rem">This distinction is the most important thing on the page. &ldquo;It exists in the repository&rdquo; and &ldquo;it runs in production&rdquo; are different claims.</p>
+    <div class="tw"><table>
+      <thead><tr><th>State</th><th>Capability</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td><span class="state s-live">Implemented</span></td><td><strong>Upload, validation, extraction</strong></td><td>Double validation, PDF signature check, encryption and scanned-file rejection.</td></tr>
+        <tr><td><span class="state s-live">Implemented</span></td><td><strong>Summary, gaps, literature review</strong></td><td>Three schema-constrained model calls, each validated on return.</td></tr>
+        <tr><td><span class="state s-live">Implemented</span></td><td><strong>Provider abstraction</strong></td><td>Gemini and Anthropic behind one interface. Gemini is the configured default.</td></tr>
+        <tr><td><span class="state s-live">Implemented</span></td><td><strong>Conditional chunking</strong></td><td>Whole-document by default; map-reduce only above a character threshold.</td></tr>
+        <tr><td><span class="state s-built">Built, not live</span></td><td><strong>Research library &amp; cross-paper review</strong></td><td>Pages, routes, repository, schemas and prompt written and tested. Without a database every route answers 503 rather than pretending the library is empty.</td></tr>
+        <tr><td><span class="state s-no">Not connected</span></td><td><strong>Embedding provider</strong></td><td>Interface and request construction written and unit-tested offline. The HTTP call is deliberately not implemented, so no embedding is ever produced.</td></tr>
+        <tr><td><span class="state s-no">Not connected</span></td><td><strong>Retrieval / vector search</strong></td><td>Not implemented. The analysis path sends the document, not retrieved passages. <strong>This is not a RAG system.</strong></td></tr>
+        <tr><td><span class="state s-no">Not connected</span></td><td><strong>Database (Supabase / pgvector)</strong></td><td>Migrations, repository and Supabase implementation exist and are tested against a mock. No project connected, nothing persisted.</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="note">
+      <p><strong>Why this table is an asset rather than an admission.</strong> Published limitations are rare and disproportionately trust-building with technical readers. A hiring manager who reads &ldquo;this is not a RAG system&rdquo; on a candidate's own site learns more about their judgement than any capability claim would tell them.</p>
+    </div>
+
+    <h4>Limitations, stated on the page</h4>
+    <ul>
+      <li>Nothing is saved. Reloading the tab discards the analysis.</li>
+      <li>No OCR, so scanned papers with no text layer are rejected rather than processed.</li>
+      <li>The literature review covers only the prior work one paper discusses. It does not search a corpus.</li>
+      <li>No authentication and no rate limiting. Acceptable only while the application stores nothing.</li>
+      <li>Papers are identified by filename ,  bibliographic metadata extraction is not implemented.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 6 -->
+<section class="part" id="erth">
+  <div class="wrap">
+    <span class="partnum">06</span>
+    <h2>ERTH ,  project presentation</h2>
+    <p class="sublede"><span class="state s-live">Live</span> Fully rewritten. Every Figma claim removed; one contradiction recorded as open rather than resolved.</p>
+
+    <div class="grid g2">
+      <div class="card">
+        <h4>Before</h4>
+        <p class="tight"><strong style="color:var(--text)">&ldquo;Designed in Figma, and the website I'm building from that design.&rdquo;</strong></p>
+        <p style="font-size:.88rem">Role: UI/UX Designer &amp; Web Developer. Tech: Figma, React, HTML5, CSS3, JavaScript. Outcome: &ldquo;Development is in progress&hellip; the site is being refined toward its final production version.&rdquo;</p>
+        <p class="tight" style="color:var(--risk);font-size:.85rem">The central claim is unsupported by the supplied evidence, and the framing discards the rarest capability in the engagement.</p>
+      </div>
+      <div class="card">
+        <h4>After</h4>
+        <p class="tight"><strong style="color:var(--text)">&ldquo;Meeting a page of SEO requirements without redesigning the page.&rdquo;</strong></p>
+        <p style="font-size:.88rem">Role: Web Developer ,  requirements implementation &amp; technical SEO. Tech: HTML5, CSS3, JavaScript, Semantic HTML, Schema.org JSON-LD, Open Graph, Responsive CSS.</p>
+        <p class="tight" style="color:var(--accent-strong);font-size:.85rem">Every clause verified in the shipped markup. No Figma. No sole-authorship claim over the audit prose.</p>
+      </div>
+    </div>
+
+    <div class="flow" style="margin-top:1.25rem">
+      <span class="step"><i>01</i>Read the requirements</span><span class="arrow">&rarr;</span>
+      <span class="step"><i>02</i>Audit the live page against them</span><span class="arrow">&rarr;</span>
+      <span class="step"><i>03</i>Raise contradictions</span><span class="arrow">&rarr;</span>
+      <span class="step"><i>04</i>Implement by change level</span><span class="arrow">&rarr;</span>
+      <span class="step"><i>05</i>Re-audit</span>
+    </div>
+
+    <h4>Verified in the shipped markup</h4>
+    <div class="tw"><table>
+      <thead><tr><th>Element</th><th>Before</th><th>After</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Title tag</strong></td><td>Generic reward-led copy</td><td>Brief-specified string</td></tr>
+        <tr><td><strong>Canonical</strong></td><td>Absent</td><td>Present</td></tr>
+        <tr><td><strong>Open Graph</strong></td><td>Absent</td><td>7 tags, locale <code>en_MY</code></td></tr>
+        <tr><td><strong>Twitter card</strong></td><td>Absent</td><td><code>summary_large_image</code></td></tr>
+        <tr><td><strong>Organization / RecyclingCenter</strong></td><td>Absent</td><td>Full postal address, contact details, <strong>6 areas served</strong>, verified social profile</td></tr>
+        <tr><td><strong>FAQPage</strong></td><td>Absent</td><td><strong>16 question/answer pairs</strong> mirroring the visible FAQ</td></tr>
+        <tr><td><strong>Structure</strong></td><td>, </td><td>21 sections &middot; 1 <code>&lt;nav&gt;</code> &middot; 1 <code>&lt;h1&gt;</code> &middot; 17 <code>&lt;h2&gt;</code> &middot; 35 <code>&lt;h3&gt;</code> &middot; 35 alt attributes</td></tr>
+        <tr><td><strong>New sections added</strong></td><td>, </td><td><strong>Zero.</strong> Every gap met inside what already existed.</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="note warn">
+      <p><strong>Recorded as open, not resolved.</strong> The free-pickup eligibility rule is stated two different ways ,  in the client's own requirements document, and consequently on the shipped page and inside its <code>FAQPage</code> structured data. The case study says so explicitly and asserts neither reading. Full detail in <code>ERTH_REMAINING_ITEMS.md</code>.</p>
+      <p style="margin-top:.5rem">Also open: the <code>&lt;main&gt;</code> landmark was recommended in the audit and is not implemented on ERTH. The status table lists it as <em>built, not live</em> rather than claiming it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 7 -->
+<section class="part">
+  <div class="wrap">
+    <span class="partnum">07</span>
+    <h2>Engineering evidence</h2>
+    <p class="sublede">Nineteen mechanisms verified at source level in the second pass. These are what make the capability claims checkable rather than assertable. <span class="state s-built">Available for writing</span></p>
+
+    <div class="grid g2">
+      <div class="card">
+        <h4>RPOMS</h4>
+        <ul style="font-size:.88rem">
+          <li><strong style="color:var(--text)">Malaysian business-day boundary</strong> ,  a UTC server would not roll the day over until 8am local, long enough for a morning delivery to file under yesterday</li>
+          <li><strong style="color:var(--text)">Read deadlines</strong> ,  added after a measured incident: 1.2s on one attempt, still hanging ninety seconds later on the next</li>
+          <li><strong style="color:var(--text)">The <code>UNREAD</code> sentinel</strong> ,  where a fallback would be dishonest, callers get a distinct value and decide for themselves</li>
+          <li><strong style="color:var(--text)">Security headers in middleware</strong> ,  nosniff, DENY, strict-origin, Permissions-Policy on every response</li>
+          <li><strong style="color:var(--text)">Supabase pooler handling</strong> ,  prepared statements off, because PgBouncer transaction pooling does not support them</li>
+          <li><strong style="color:var(--text)">OOXML run-splitting</strong> ,  Word splits a line across runs, so a placeholder can straddle several; two passes fix it</li>
+          <li><strong style="color:var(--text)">Longest-prefix serial rules</strong> with Excel <code>COUNTIF</code>-compatible duplicate keys</li>
+          <li><strong style="color:var(--text)">Preferred-spelling names</strong> ,  display the spelling the office uses most, not an invented capitalisation</li>
+          <li><strong style="color:var(--text)">Whole-history inventory</strong> ,  a documented refusal to window, because a window reads high and does so quietly</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>ResearchForge</h4>
+        <ul style="font-size:.88rem">
+          <li><strong style="color:var(--text)">Cross-paper review</strong> ,  built from stored analyses, not by re-reading PDFs, with the cost stated in the module</li>
+          <li><strong style="color:var(--text)">Asymmetric retrieval design</strong> ,  questions and passages embedded differently, which most implementations discard</li>
+          <li><strong style="color:var(--text)">Dimension permanence</strong> ,  1024 is baked into the column; <code>embedding_model</code> per row is what makes a switch survivable</li>
+          <li><strong style="color:var(--text)">Licence-driven dependency choice</strong> ,  the faster PDF library is AGPL, incompatible with an MIT repo</li>
+          <li><strong style="color:var(--text)">Conservative text cleaning</strong> ,  ligatures, hyphenation, whitespace that never crosses newlines</li>
+          <li><strong style="color:var(--text)">Deliberately sequential calls</strong> ,  parallelism multiplies rate-limit burden for a latency win that does not matter</li>
+          <li><strong style="color:var(--text)">Cross-vendor model guard</strong> ,  a leftover model name falls back to the provider's own default</li>
+          <li><strong style="color:var(--text)">503, not an empty list</strong> ,  &ldquo;an empty list is a claim, and a deployment with no database is not in a position to make it&rdquo;</li>
+          <li><strong style="color:var(--text)">Vendor-neutral error hierarchies</strong>, applied independently to generation and to storage</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section class="part">
+  <div class="wrap">
+    <span class="partnum">08</span>
+    <h2>AI / LLM section</h2>
+    <p class="sublede">36 planned articles, the largest cluster. 24 at evidence level A. All anchored to the ResearchForge case study.</p>
+
+    <div class="note risk">
+      <p><strong>Constraint that governs the entire cluster.</strong> ResearchForge has no live retrieval. Every article describes what is built, never what is implied. Three articles exist specifically to handle that boundary in public ,  and they are more interesting because of it, not less.</p>
+    </div>
+
+    <div class="tw"><table>
+      <thead><tr><th>ID</th><th>Article</th><th>Why it works</th><th>Pri</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">AIE-21</td><td><strong>What &ldquo;RAG&rdquo; Actually Means, and What Most Projects Are Doing Instead</strong></td><td>Publishing this first is what makes the other 35 trustworthy. Defines the term precisely, then states plainly which side this project is on.</td><td>P1</td></tr>
+        <tr><td class="mono">AIE-01</td><td><strong>Making a Model Say &ldquo;The Paper Doesn't Support This&rdquo;</strong></td><td>Refusal-by-design is the hardest and least-written-about part of a grounded feature.</td><td>P1</td></tr>
+        <tr><td class="mono">AIE-03</td><td><strong><code>insufficient_evidence</code> as a Schema Field, Not a Prompt Instruction</strong></td><td>A precise, reusable technique almost nobody has named. It is literally a Pydantic field.</td><td>P1</td></tr>
+        <tr><td class="mono">AIE-07</td><td><strong>Why We Didn't Chunk: Context Windows Changed the Default</strong></td><td>Contrarian and correct. Nearly every RAG tutorial still teaches chunk-by-default.</td><td>P1</td></tr>
+        <tr><td class="mono">AIE-11</td><td><strong>Choose the Model by Your Platform's Timeout, Not by Benchmarks</strong></td><td>Model-selection content is entirely benchmark-driven and ignores deployment reality.</td><td>P1</td></tr>
+        <tr><td class="mono">AIE-18</td><td><strong>Testing an LLM Application Without Spending a Token</strong></td><td>An open question for most teams, with 186 offline tests behind the answer.</td><td>P1</td></tr>
+        <tr><td class="mono">AIE-33</td><td><strong>A Literature Review Across Papers You've Already Analysed</strong></td><td>Discovered in the second pass. Reads stored analyses rather than re-extracting PDFs, and publishes the cost.</td><td>P1</td></tr>
+        <tr><td class="mono">AIE-30</td><td><strong>Documenting What Your AI App Cannot Do</strong></td><td>The thesis of the whole cluster, and now demonstrated by the status table shipped on the case study.</td><td>P1</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- 9 -->
+<section class="part">
+  <div class="wrap">
+    <span class="partnum">09</span>
+    <h2>SEO / GEO section</h2>
+    <p class="sublede">28 planned articles, 22 at evidence level A. The highest-differentiation cluster in the research: Malaysian GEO is a RM3k, RM10k/month category with no practitioner-implementer voice in it.</p>
+
+    <div class="tw"><table>
+      <thead><tr><th>ID</th><th>Article</th><th>Status</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">SEO-01</td><td><strong>Implementing an SEO Brief as the Developer: The Whole Cycle</strong></td><td><span class="state s-open">Rewrite angle</span></td><td>Claim the direction and the outcome, not sole authorship of the audit prose.</td></tr>
+        <tr><td class="mono">SEO-15</td><td><strong>FAQPage Schema After Google Retired FAQ Rich Results</strong></td><td><span class="state s-open">Held</span></td><td>Time-sensitive and strong, but blocked as an ERTH worked example until the threshold is ruled on.</td></tr>
+        <tr><td class="mono">SEO-17</td><td><strong>GEO Answerability: Nine Questions a Page Must Answer on Its Own</strong></td><td><span class="state s-built">Ready</span></td><td>A testable matrix, where the category's content is entirely definitional.</td></tr>
+        <tr><td class="mono">SEO-18</td><td><strong>Modular Content: Writing a Block That Survives Being Extracted</strong></td><td><span class="state s-built">Ready</span></td><td>The central GEO writing technique, rarely demonstrated.</td></tr>
+        <tr><td class="mono">SEO-24</td><td><strong>Service-Area Content Without Keyword-Stuffing Locations</strong></td><td><span class="state s-built">Ready</span></td><td><code>areaServed</code> across six Malaysian locations is verified in the shipped JSON-LD.</td></tr>
+        <tr><td class="mono">SEO-26</td><td><strong>FAQ Content Driven by Objections, Not Keyword Lists</strong></td><td><span class="state s-built">Ready</span></td><td>16-question FAQPage verified. Now also applied to this site's own FAQ.</td></tr>
+        <tr><td class="mono">SEO-27</td><td><strong>Being the Developer in the SEO Conversation</strong></td><td><span class="state s-built">Ready</span></td><td>Every published account of this relationship is written from the SEO side.</td></tr>
+        <tr><td class="mono">SEO-28</td><td><strong>Auditing My Own Site With the Checklist I Used for a Client</strong></td><td><span class="state s-built">Ready</span></td><td>Partly resolved by this implementation pass ,  write it as before/after.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h4>What this site now ships, having shipped it for a client first</h4>
+    <div class="tw"><table>
+      <thead><tr><th>Element</th><th>Before</th><th>After</th></tr></thead>
+      <tbody>
+        <tr><td>Structured data</td><td><span class="state s-risk">None</span></td><td>Person &middot; WebSite &middot; ProfilePage &middot; FAQPage &middot; Blog &middot; BlogPosting &middot; CollectionPage &middot; CreativeWork &middot; BreadcrumbList</td></tr>
+        <tr><td>Canonical</td><td>Blog routes only</td><td>Every route</td></tr>
+        <tr><td>Open Graph image</td><td><span class="state s-risk">None</span></td><td>Generated card on every route</td></tr>
+        <tr><td>Twitter card</td><td><code>summary</code>, root only</td><td><code>summary_large_image</code>, every route</td></tr>
+        <tr><td>Locale</td><td><code>en_US</code></td><td><code>en_MY</code>, and <code>lang="en-MY"</code></td></tr>
+        <tr><td>Breadcrumbs</td><td><span class="state s-risk">None</span></td><td>Visible and in schema on every non-home route</td></tr>
+        <tr><td>Project index</td><td><span class="state s-risk">None</span></td><td><code>/work</code></td></tr>
+        <tr><td>Category pages</td><td>Client-side filter only</td><td>6 crawlable routes with their own metadata</td></tr>
+        <tr><td>Sitemap URLs</td><td>19</td><td>27</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section class="part">
+  <div class="wrap">
+    <span class="partnum">10</span>
+    <h2>Technical skills</h2>
+    <p class="sublede">Tiered rather than flat. Appearing in a dependency file is not the same as having built something substantial with it. <span class="state s-live">Live</span></p>
+
+    <div class="grid g2">
+      <div class="card">
+        <h4 style="color:var(--accent);margin-top:0">Primary</h4>
+        <p style="font-size:.85rem;margin-bottom:.6rem">What I reach for by default, and have built production systems with.</p>
+        <div class="chips"><span class="chip">TypeScript</span><span class="chip">React</span><span class="chip">Next.js (App Router)</span><span class="chip">Node.js</span><span class="chip">Python</span></div>
+      </div>
+      <div class="card">
+        <h4 style="color:var(--accent);margin-top:0">Working</h4>
+        <p style="font-size:.85rem;margin-bottom:.6rem">Used substantially across more than one project.</p>
+        <div class="chips"><span class="chip">FastAPI</span><span class="chip">Pydantic</span><span class="chip">PostgreSQL</span><span class="chip">MySQL</span><span class="chip">Tailwind CSS</span><span class="chip">Zod</span><span class="chip">REST APIs</span><span class="chip">Git / GitHub</span><span class="chip">HTML5</span><span class="chip">CSS3</span><span class="chip">JavaScript</span></div>
+      </div>
+      <div class="card">
+        <h4 style="color:var(--accent);margin-top:0">Project-specific</h4>
+        <p style="font-size:.85rem;margin-bottom:.6rem">Chosen for a particular problem, and used properly for it.</p>
+        <div class="chips"><span class="chip">Google Gemini API</span><span class="chip">Anthropic API</span><span class="chip">pypdf</span><span class="chip">pytest</span><span class="chip">ruff</span><span class="chip">TanStack Table</span><span class="chip">Recharts</span><span class="chip">React Hook Form</span><span class="chip">ExcelJS</span><span class="chip">jsPDF</span><span class="chip">JSZip</span><span class="chip">Papa Parse</span><span class="chip">Supabase</span><span class="chip">Schema.org JSON-LD</span></div>
+      </div>
+      <div class="card">
+        <h4 style="color:var(--accent);margin-top:0">Supporting</h4>
+        <p style="font-size:.85rem;margin-bottom:.6rem">Part of the work, at a maintenance or foundational level.</p>
+        <div class="chips"><span class="chip">Vercel</span><span class="chip">cPanel</span><span class="chip">Resend</span><span class="chip">WordPress</span><span class="chip">Elementor</span><span class="chip">WooCommerce</span><span class="chip">C</span><span class="chip">C++</span></div>
+      </div>
+    </div>
+
+    <div class="note warn" style="margin-top:1.5rem">
+      <p><strong>One removal:</strong> <em>Figma</em> was in the Design category and has been taken out. There is no evidence in any supplied source that it was used, and the ERTH Figma claim it supported is unverified. It is a one-line restore in <code>src/content/skills.ts</code> if evidence turns up.</p>
+      <p style="margin-top:.5rem"><strong>One addition worth noting:</strong> <em>Resend</em> was documented in the project README and powering the live contact form, but was missing from the stack entirely.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 11 -->
+<section class="part">
+  <div class="wrap">
+    <span class="partnum">11</span>
+    <h2>Case-study structure</h2>
+    <p class="sublede">One structure, applied to all three projects. Sections render only when a project has content for them ,  nothing is padded to fill a template. <span class="state s-live">Live</span></p>
+
+    <div class="tw"><table>
+      <thead><tr><th>Block</th><th>RPOMS</th><th>ResearchForge</th><th>ERTH</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Breadcrumbs</strong></td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+        <tr><td><strong>Tagline + summary + role/period/affiliation</strong></td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+        <tr><td><strong>NDA badge</strong></td><td>Yes</td><td>, </td><td>, </td></tr>
+        <tr><td><strong>Independent-project badge</strong></td><td>, </td><td>Yes</td><td>, </td></tr>
+        <tr><td><strong>External links</strong></td><td>, </td><td>Live application</td><td>, </td></tr>
+        <tr><td><strong>Workflow strip</strong></td><td>5 steps</td><td>4 steps</td><td>5 steps</td></tr>
+        <tr><td><strong>Narrative sections</strong></td><td>9</td><td>8</td><td>9</td></tr>
+        <tr><td><strong>Section-level caveat</strong></td><td>, </td><td>, </td><td>Yes ,  the open eligibility rule</td></tr>
+        <tr><td><strong>Status table</strong></td><td>4 rows</td><td>8 rows</td><td>6 rows</td></tr>
+        <tr><td><strong>Grouped technical stack</strong></td><td>5 groups</td><td>5 groups</td><td>3 groups</td></tr>
+        <tr><td><strong>Limitations</strong></td><td>4</td><td>5</td><td>3</td></tr>
+        <tr><td><strong>Writing from this work</strong></td><td>Auto</td><td>Auto</td><td>Auto</td></tr>
+        <tr><td><strong>Next project + all projects + contact</strong></td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- 12 + 13 + 14 -->
+<section class="part">
+  <div class="wrap">
+    <span class="partnum">12, 14</span>
+    <h2>Related writing &amp; the two-way project relationship</h2>
+    <p class="sublede">The mechanism that turns project work into blog authority. Both directions are derived from one field, so they cannot drift apart. <span class="state s-live">Live</span></p>
+
+    <h4>Project &rarr; blog</h4>
+    <p style="font-size:.9rem">Each case study renders a <em>&ldquo;Writing from this work&rdquo;</em> section, built by <code>getPostsForProject()</code>. It reads the structured <code>relatedProjects</code> field and falls back to the older hand-written <code>related</code> links, so no existing relationship was lost in the migration.</p>
+    <div class="link-map">
+      <div class="link-row"><span class="from">/work/rpoms</span><span class="to">10 articles ,  production systems, admin panels, reporting, maintenance, automation, internal UX</span></div>
+      <div class="link-row"><span class="from">/work/erth</span><span class="to">4 articles ,  the design-to-code group, all four flagged for merge or retirement</span></div>
+      <div class="link-row"><span class="from">/work/researchforge</span><span class="to">0 articles today ,  36 planned. This is the largest single content opportunity in the plan.</span></div>
+    </div>
+
+    <h4>Blog &rarr; project</h4>
+    <p style="font-size:.9rem">Each article renders a <em>&ldquo;The work behind this&rdquo;</em> panel above its Related links, showing the project name and its tagline rather than a bare link, so the reader knows what they are clicking into.</p>
+    <div class="link-map">
+      <div class="link-row"><span class="from">Article</span><span class="to">&rarr; its case study &middot; its category page &middot; 2, 3 curated sibling articles</span></div>
+      <div class="link-row"><span class="from">Category page</span><span class="to">&rarr; its anchor project &middot; all its articles &middot; the blog index</span></div>
+      <div class="link-row"><span class="from">Homepage</span><span class="to">&rarr; /work &middot; all three case studies &middot; latest three articles &middot; capability evidence links</span></div>
+      <div class="link-row"><span class="from">Experience entry</span><span class="to">&rarr; the case study that role produced</span></div>
+    </div>
+
+    <h4>Related-article selection</h4>
+    <p style="font-size:.9rem"><code>getRelatedPosts()</code> was category-only, which degrades to near-random as a category grows. It now takes hand-picked <code>relatedPosts</code> first and fills any remaining slots from the same category ,  so a curated pair always wins, and the fallback still works at 200 articles.</p>
+
+    <div class="note">
+      <p><strong>The sequencing consequence.</strong> Writing the AI cluster before the ResearchForge case study existed would have meant 36 articles with nowhere authoritative to link. Writing the SEO cluster before the ERTH rewrite would have meant 28 articles pointing at a page describing different work. Both case studies now exist, so both clusters are unblocked.</p>
+    </div>
+  </div>
+</section>
+
+<!-- unresolved -->
+<section class="part">
+  <div class="wrap">
+    <span class="partnum">, </span>
+    <h2>Unresolved &amp; deliberately excluded</h2>
+    <p class="sublede">Recorded here so nothing is quietly dropped.</p>
+
+    <div class="tw"><table>
+      <thead><tr><th>Item</th><th>State</th><th>What would resolve it</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Figma authorship of the ERTH design</strong></td><td><span class="state s-risk">Removed from the site</span></td><td>The file, an export, or a share link. Zero occurrences of the string <code>figma</code> anywhere in the supplied evidence.</td></tr>
+        <tr><td><strong>ERTH free-pickup threshold</strong></td><td><span class="state s-open">Recorded as open</span></td><td>A client ruling. Both readings currently appear on the live page and one is inside FAQPage structured data.</td></tr>
+        <tr><td><strong>ERTH audit authorship framing</strong></td><td><span class="state s-open">Worded conservatively</span></td><td>Drafts, commit history or dated working notes, if a stronger claim is wanted.</td></tr>
+        <tr><td><strong>Malaysian keyword volume</strong></td><td><span class="state s-open">Unvalidated</span></td><td>A keyword tool with country set to Malaysia. Blocks the 20-article MYS cluster only.</td></tr>
+        <tr><td><strong>Resend sending domain</strong></td><td><span class="state s-open">Sandbox sender</span></td><td>Verify a domain in Resend, then change the <code>from</code> address. The handler itself is good work.</td></tr>
+        <tr><td><strong>4 blog posts carrying the Figma claim</strong></td><td><span class="state s-open">Preserved, flagged</span></td><td>Nothing deleted. Each carries <code>plan</code> and <code>planNote</code> in the data. Resolving the Figma question resolves all four in one merge pass.</td></tr>
+        <tr><td><strong>BIT4543 / AI individual assignment</strong></td><td><span class="state s-no">Excluded</span></td><td>Classical AI search coursework (BFS, DFS, A*, 8-puzzle, Romania). Academic, not AI engineering. Using it would weaken the positioning ResearchForge legitimately supports.</td></tr>
+        <tr><td><strong>RAG / retrieval / embeddings as live capability</strong></td><td><span class="state s-no">Never claimed</span></td><td>Nothing. The source is unambiguous: the embedding network call is not implemented.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+</main>
+
+<footer class="end">
+  <div class="wrap">
+    <p>Standalone content &amp; structure prototype &middot; 2 September 2026 &middot; <code>reports/portfolio-content-preview.html</code></p>
+    <p>Not imported by the application. Not routed. Not indexed. The production stylesheet was not modified to produce this file ,  its tokens are copied from <code>src/app/globals.css</code> so the preview reads in the same visual language.</p>
+    <p>Companion documents: <code>ERTH_REMAINING_ITEMS.md</code> &middot; <code>content-planning/blog-database.json</code></p>
+  </div>
+</footer>
+
+<script>
+  // Standalone preview only: mirrors the site's light/dark toggle so the
+  // content can be reviewed in both themes. No production code depends on this.
+  (function () {
+    var root = document.documentElement;
+    var btn = document.getElementById("t");
+    var stored = null;
+    try { stored = localStorage.getItem("preview-theme"); } catch (e) {}
+    if (stored) root.setAttribute("data-theme", stored);
+    btn.addEventListener("click", function () {
+      var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem("preview-theme", next); } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>
