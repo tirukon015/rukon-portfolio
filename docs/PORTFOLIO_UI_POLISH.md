@@ -358,3 +358,51 @@ Commands are the project's own, from `package.json`.
 - Re-validated metadata and JSON-LD on 10 routes.
 - Re-checked accessibility structure on 8 routes.
 - Captured and inspected screenshots at 9 viewport sizes and 6 routes.
+
+## Git
+
+Repository: `https://github.com/tirukon015/rukon-portfolio` (public)
+
+Branch: `main`
+
+Commit: `28ade95` "fix: polish viewport spacing and typography punctuation"
+
+Push: **SUCCESS** (`81d9759..28ade95  main -> main`)
+
+The local working copy was not a Git repository. Rather than re-clone, it was
+initialised in place, pointed at the existing remote, and `git reset --soft
+origin/main` was used to set HEAD to the remote commit without touching the
+working tree. **Existing history is intact**: `b87c038` and `81d9759` are still
+the first two commits.
+
+39 paths were committed. `node_modules`, `.next`, `.vercel` and `.env.local`
+were confirmed ignored, and no key, certificate or token-bearing file was
+staged.
+
+## Deployment
+
+Platform: Vercel, project `rpoms/rukon-portfolio` (existing project, unchanged
+domain and DNS)
+
+Deployment: **SUCCESS**, `rukon-portfolio-9nmjmw9eu-rpoms.vercel.app`, target
+production
+
+Production URL: `https://www.rukon.dev`
+
+### Post-deployment verification, performed against the live site
+
+| Check | Result |
+| --- | --- |
+| `https://rukon.dev` | 200 |
+| `https://www.rukon.dev` | 200 |
+| `/work`, `/work/rpoms`, `/work/researchforge`, `/work/erth` | 200 |
+| `/blog`, `/blog/category/operations`, one article route | 200 |
+| `/sitemap.xml` | 200, 27 URLs |
+| `/robots.txt` | 200 |
+| Canonical on `/` | `https://rukon.dev` |
+| `og:locale` | `en_MY` |
+| `twitter:card` | `summary_large_image` |
+| JSON-LD blocks on `/` | 4 |
+| Prohibited dash characters across 9 live routes | 0 |
+| Homepage screenshot at 1440x900 | Captured and inspected. Full hero above the fold, corrected spacing, no em dash in the role line. |
+
