@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Lock } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
 import { Tag } from "@/components/ui/tag";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
+import { ProjectMark } from "@/components/ui/project-mark";
 import { JsonLd } from "@/components/seo/json-ld";
 import { projects } from "@/content/projects";
 import { getPostsForProject } from "@/content/posts";
@@ -82,19 +82,13 @@ export default function WorkIndexPage() {
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex h-14 items-center">
-                      {project.image ? (
-                        <Image
-                          src={project.image.src}
-                          alt={project.image.alt}
-                          width={140}
-                          height={40}
-                          className="h-8 w-auto object-contain object-left opacity-90"
-                        />
-                      ) : (
-                        <span className="font-mono text-lg font-semibold tracking-tight text-text">
-                          {project.name}
-                        </span>
-                      )}
+                      <ProjectMark
+                        project={project}
+                        width={140}
+                        height={40}
+                        className="h-8 w-auto object-contain object-left opacity-90"
+                        fallbackClassName="font-mono text-lg font-semibold tracking-tight text-text"
+                      />
                     </div>
                     <ArrowUpRight
                       size={20}

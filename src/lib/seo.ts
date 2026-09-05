@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { site } from "@/content/site";
 
-export const BASE_URL = `https://${site.domain}`;
+export const BASE_URL = `https://${site.canonicalHost}`;
 
 /** Absolute URL for a site-relative path. Schema.org wants absolute URLs. */
 export function absoluteUrl(path = "/"): string {
@@ -38,11 +38,17 @@ export function personSchema() {
       addressCountry: "MY",
     },
     knowsAbout: [
+      "Web development",
+      "IT operations",
       "Production management systems",
       "Operations software",
       "Full-stack web development",
-      "Next.js",
+      "HTML",
+      "CSS",
+      "JavaScript",
       "TypeScript",
+      "React",
+      "Next.js",
       "Python",
       "FastAPI",
       "LLM application development",
@@ -50,6 +56,8 @@ export function personSchema() {
       "PostgreSQL",
       "Technical SEO",
       "Structured data",
+      "Web accessibility",
+      "Web performance",
     ],
     sameAs: [site.links.github, site.links.linkedin, site.links.twitter],
   };

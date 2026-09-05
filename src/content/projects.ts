@@ -53,6 +53,11 @@ export type Project = {
   limitations?: string[];
   image?: {
     src: string;
+    /**
+     * Variant for the dark theme. Only needed where a mark ships with an
+     * opaque background, which makes one file wrong in one of the two themes.
+     */
+    srcDark?: string;
     alt: string;
     variant: "mark" | "screenshot";
   };
@@ -126,7 +131,7 @@ export const projects: Project[] = [
         heading: "Overview",
         body: [
           "RPOMS is an internal operations system built for a router-refurbishment programme that Blue Bee Technologies runs in partnership with ERTH and Maxis. Before RPOMS, the operation was coordinated through spreadsheets. RPOMS models the whole path a unit takes, arriving, accepted, cleaned, packed into a numbered box, and delivered with the paperwork that goes with it, as one system.",
-          "It runs to roughly 35,800 lines of TypeScript, across ten admin modules, twenty-five API route handlers, a public monitoring dashboard, and a storage layer with three interchangeable backends.",
+          "It runs to roughly 35,800 lines of TypeScript, across ten admin modules, twenty-five API route handlers, a viewer-gated monitoring dashboard, and a storage layer with three interchangeable backends.",
         ],
       },
       {
@@ -170,8 +175,9 @@ export const projects: Project[] = [
       {
         heading: "Key Features",
         body: [
-          "Daily Production Report: the day's figures entered once. Saving updates the public dashboard and deducts stock in the same step: routers by accepted plus retired, chargers and cables by packaging volume. Targets and batch figures carry over from the previous report, so a batch's progress is continuous rather than restarting each day.",
+          "Daily Production Report: the day's figures entered once. Saving updates the monitoring dashboard and deducts stock in the same step: routers by accepted plus retired, chargers and cables by packaging volume. Targets and batch figures carry over from the previous report, so a batch's progress is continuous rather than restarting each day.",
           "Serial Registry: every unit by serial number, with who accepted it and when. Serial format is validated against configurable detection rules stored as data, with longer prefixes tried first so a specific rule beats a general one. Duplicate keys are compared case-insensitively, matching the behaviour of the spreadsheet the registry replaced.",
+          "Staged CSV import: both the registry and the daily report can be populated from a file, and the file is parsed and previewed before anything is written. Duplicates are surfaced for a row-by-row decision rather than discovered afterwards, which is the difference between an import someone trusts and one they re-check by hand.",
           "Packing and Delivery: serials are scanned into numbered boxes, and a box reports its own problems rather than leaving them to be discovered later. A delivery cannot be saved unless the scanned load matches the quantity it was raised for.",
           "Delivery Orders: generated from the office's own Word document with the details filled in, not redrawn. Word distributes a line of text across several runs, so a placeholder can be split in one place and intact in another; the generator does two passes for exactly that reason. Tracker lists export to Excel in the format the customer's sheet expects.",
           "Workforce: per-person output against per-person targets. Names are matched case-insensitively, and the spelling displayed is the one the office uses most often rather than an invented capitalisation.",
@@ -227,9 +233,246 @@ export const projects: Project[] = [
     ],
     image: {
       src: "/images/rpoms-mark.png",
+      srcDark: "/images/rpoms-mark-dark.png",
       alt: "RPOMS wordmark",
       variant: "mark",
     },
+  },
+
+  {
+    slug: "erth",
+    name: "ERTH",
+    fullName: "ERTH: production homepage, technical SEO and GEO implementation",
+    tagline: "A design-tool prototype rebuilt as a production website that ships 3.7 kB of JavaScript.",
+    summary:
+      "The production homepage for ERTH, a Malaysian e-waste collection and rewards service. Prototyped in Figma, specified as an approved design file, and rebuilt as static HTML, CSS and vanilla JavaScript bundled by Vite, with the technical SEO, structured data and accessibility work done in the same pass. Complete and deployed.",
+    role: "UI/UX and Web Developer: design prototyping, production build, technical SEO",
+    period: "2026 (completed)",
+    affiliation: "ERTH",
+    confidential: false,
+    kind: "professional",
+    tech: [
+      "HTML5",
+      "CSS3",
+      "JavaScript",
+      "Vite 7",
+      "Figma",
+      "Schema.org JSON-LD",
+      "WebP / srcset",
+      "Responsive CSS",
+    ],
+    techGroups: [
+      {
+        label: "Design & prototyping",
+        items: ["Figma", "Interactive prototype", "Component vocabulary"],
+      },
+      {
+        label: "Implementation",
+        items: ["HTML5", "CSS3", "Vanilla JavaScript", "Semantic HTML", "Responsive CSS", "Vite 7"],
+      },
+      {
+        label: "Search & structured data",
+        items: [
+          "Schema.org JSON-LD",
+          "Organization / RecyclingCenter",
+          "FAQPage",
+          "WebSite",
+          "Open Graph",
+          "Twitter cards",
+          "Canonical URLs",
+          "robots.txt / sitemap.xml",
+        ],
+      },
+      {
+        label: "Performance & accessibility",
+        items: [
+          "Self-hosted WOFF2 subsets",
+          "WebP re-encoding",
+          "srcset",
+          "axe-core",
+          "prefers-reduced-motion",
+          "Focus management",
+        ],
+      },
+      {
+        label: "Quality & platform",
+        items: ["ESLint 9", "sharp", "Post-build verification script", "Vercel"],
+      },
+    ],
+    highlights: [
+      "Prototype runtime removed: roughly 250 kB of CDN React and design-tool JavaScript replaced by 3.7 kB that only handles interaction",
+      "Image payload cut from 12.0 MB to 2.7 MB by re-encoding to WebP and adding srcset variants",
+      "A post-build script fails the build on a missing asset, a dead in-page link, an image without alt text, or a JSON-LD block that does not parse",
+      "axe-core reports zero violations across the default, mobile, menu-open, dialog-open and disclosure-open states",
+      "Head block went from no canonical, no social metadata and no structured data to all three, with three JSON-LD blocks",
+      "Four real prototype defects found and fixed, including a wrapper element that closed early and rendered a heading black on near-black",
+      "Zero third-party requests: every font and image is self-hosted",
+    ],
+    workflow: [
+      "Prototype in Figma",
+      "Audit the approved design",
+      "Rebuild as static HTML/CSS/JS",
+      "Verify the build",
+      "Deploy",
+    ],
+    sections: [
+      {
+        heading: "Overview",
+        body: [
+          "ERTH is a Malaysian e-waste collection and rewards service operated by Blue Bee Technologies: doorstep pickup, free shipping through Pos Malaysia, a 24/7 drop-off point in Cyberjaya, and cashless rewards. The site is a single long-form homepage covering pickup, rewards and pricing, what ERTH accepts, business services, service areas, drop-off options, the recycling process, press coverage, FAQ and contact.",
+          "The engagement ran in two phases. First, the interface was worked out as an interactive Figma prototype. Then the client approved a design file as final, and the production website was built from it: 1,076 lines of markup, 534 lines of CSS and 228 lines of JavaScript, bundled by Vite and deployed on Vercel. That build is complete and live.",
+        ],
+      },
+      {
+        heading: "Problem",
+        body: [
+          "A recycling and trade-in service depends on people trusting it enough to hand over a device and the data on it. The page has to make the process, the pricing, the eligibility rules and the handling of personal data legible before someone commits to anything.",
+          "The approved design existed only as a self-extracting design-tool bundle: fonts, images and markup encoded as base64 inside script blocks, unpacked in the browser at runtime, with React and Babel pulled from a CDN and a runtime that re-rendered inline styles on every state change. It demonstrated the design. It was not a website anyone should ship.",
+        ],
+      },
+      {
+        heading: "Context",
+        body: [
+          "The client's decision was that one design file was final and every earlier revision was superseded. That made the brief unusually precise: not build something like this, but ship exactly this, correctly.",
+          "A locked design is the interesting constraint. Meeting a long list of content, search and accessibility requirements is straightforward if you are allowed to add sections. Meeting them inside a design nobody may change is a different problem, and it is the one this build was.",
+        ],
+      },
+      {
+        heading: "My Role",
+        body: [
+          "Both phases, and they are different kinds of work. The interface was worked out as an interactive Figma prototype before implementation, covering page structure, visual direction and the user flow from choosing a device through to payout.",
+          "The second phase is the production build: extracting the assets from the approved bundle, rebuilding the page as static files, fixing the defects the prototype carried, and implementing the technical SEO, structured data, performance and accessibility work. That half was mine end to end, including the deployment configuration.",
+        ],
+        note:
+          "The Figma prototype is a shared working file rather than a solo artefact, so this describes design and prototyping involvement and the translation into production, not sole authorship of the design.",
+      },
+      {
+        heading: "Engineering Approach",
+        body: [
+          "The stack decision was to remove rather than add. A single static page does not need React, Babel, a CDN dependency or a render pass before first paint. Dropping all of it took roughly 250 kB of JavaScript out of the page and left 3.7 kB that does nothing but handle interaction.",
+          "The inline styles were deliberately kept. In the approved file the inline style attributes are the design specification: every dimension, colour and clamp() lives there. Rewriting a thousand of them into class names would have introduced visual drift for no functional gain, so the markup was preserved and only the parts a static file cannot express moved into CSS.",
+          "Three things had to move. Hover attributes the prototype's runtime interpreted became real hover rules. Open and closed state the prototype expressed by rewriting inline display became hidden, aria-expanded and a class, with CSS deciding appearance. And the desktop and mobile split the prototype computed from window.innerWidth in JavaScript became a media query at the same breakpoint, so the correct layout is painted on the first frame instead of after hydration.",
+        ],
+      },
+      {
+        heading: "Fixing the prototype",
+        body: [
+          "Rebuilding a design file section by section surfaces defects that a demo hides. Four were real enough to fix.",
+          "The page wrapper closed early, part-way down the document, so every section after it never inherited the light text colour. One heading rendered black on a near-black background. The colours now live on the body element.",
+          "A dialog contained an iframe whose source was an unresolved template binding, so every page load fetched a URL that did not exist. No booking form was configured, so the iframe is gone and the contact-channel list the design already provided is the dialog body.",
+          "Six links pointed at the section they were already inside. They now resolve to the action they describe. And two grid definitions forced horizontal scrolling below 400px, which a minmax floor and a released column span fixed.",
+        ],
+      },
+      {
+        heading: "Verifying the build",
+        body: [
+          "A hand-built static page has no type checker, so the guarantees had to be written. A post-build script runs as part of every build and fails it on a referenced asset missing from the output, an in-page link or aria-controls pointing at an id that does not exist, an absent required head tag, JSON-LD that does not parse, an image with no alt text or no intrinsic size, more or fewer than one h1, or any prototype artefact surviving into the output.",
+          "That last check is the one that matters most on a project like this. A template binding or a generated class name that leaks into production is invisible in review and obvious to a visitor, and it is exactly the kind of thing a rebuild leaves behind.",
+        ],
+      },
+      {
+        heading: "Technical SEO",
+        body: [
+          "The head block was built out from nothing: the specified title and meta description, a canonical URL, robots directives, a full Open Graph set with the locale declared as Malaysian English, and a large-image Twitter card, plus robots.txt, sitemap.xml, a web manifest and a full favicon set.",
+          "Three JSON-LD blocks ship. An Organization node also typed as a recycling centre, carrying the alternate name, legal name, logo, contact details, a full postal address for the Cyberjaya premises, the areas served and a verified social profile. An FAQPage node mirroring the sixteen questions visible on the page. And a WebSite node stating the site name and alternate name.",
+          "Structure was treated as information architecture rather than decoration: one h1, section-level h2s, card-level h3s, descriptive alt text, and an internal-linking pass that found several sections were unreachable from the navigation despite being on the page. All page content is in the static HTML; nothing depends on JavaScript to be crawlable.",
+        ],
+      },
+      {
+        heading: "GEO / AI-search readability",
+        body: [
+          "Content an AI system can read and answer from directly is a different target from ranking a page. The approach was to test it rather than assert it: nine questions a visitor actually asks, each checked for whether the page answers it self-containedly.",
+          "Where a section needed to survive being extracted on its own, it was written to do so. The block explaining the difference between disposal and recycling defines both terms, states the distinction and says why it matters, so an answer engine quoting only that block still produces something correct.",
+          "Recognition claims were restructured to carry who recognised the achievement, when, and where it can be verified, because for an AI system an unattributed claim and an invented one look the same. The FAQ was expanded from the objections customers actually raise rather than from a keyword list, and the structured data mirrors exactly what a reader sees.",
+        ],
+      },
+      {
+        heading: "Content accuracy",
+        body: [
+          "A consistency pass across the page found six contradictions and unsupported claims. These were raised for a client decision rather than resolved unilaterally, because picking one reading of a business rule is not a developer's call to make.",
+          "One was a headline figure that appeared to confuse two different units: a large number presented as currency where the cited source reported it as a weight. Catching that before publication mattered more than any markup change in the engagement.",
+          "The working stance throughout was to verify, soften, or omit. No award, statistic, certification, testimonial or coverage claim was introduced that the source material did not support.",
+        ],
+      },
+      {
+        heading: "Performance and accessibility",
+        body: [
+          "Every font and image is self-hosted, so the page makes no third-party requests at all. Photographic and illustrative assets were re-encoded to WebP and the largest ones given srcset variants, taking the image payload from 12.0 MB to 2.7 MB. Every image carries intrinsic width and height so nothing shifts as they arrive, below-the-fold images are lazy, the hero backdrop is marked high priority, and the two Latin font subsets are preloaded.",
+          "On accessibility: a skip link, main, nav, footer and aside landmarks, accessible names on sections carrying no heading, a visible focus ring on every interactive element, aria-expanded and aria-controls on all disclosures and dropdowns, Escape and focus trapping in both dialogs with focus restored to the opener, keyboard-operable navigation dropdowns, underlines on inline links that colour alone did not distinguish, and prefers-reduced-motion honoured. axe-core reports zero violations in the default, mobile, menu-open, dialog-open and disclosure-open states.",
+        ],
+      },
+      {
+        heading: "Outcome",
+        body: [
+          "The website development is complete. The production homepage is built, verified and deployed on Vercel, serving the approved design as static files with no third-party requests, a passing post-build check, and a head block carrying full metadata and three structured-data blocks where previously there were none.",
+          "It is recognisably the same design the client approved. What changed is everything underneath it: a quarter of a megabyte of prototype JavaScript gone, an image payload cut by more than three quarters, four real defects fixed, and a build that refuses to ship if any of that regresses.",
+        ],
+      },
+    ],
+    status: [
+      {
+        label: "Production homepage build",
+        state: "implemented",
+        detail: "Complete and deployed. Static HTML, CSS and vanilla JavaScript bundled by Vite 7.",
+      },
+      {
+        label: "Title, meta description, canonical, robots",
+        state: "implemented",
+        detail: "All present in the shipped page; none existed before.",
+      },
+      {
+        label: "Open Graph and Twitter card",
+        state: "implemented",
+        detail: "Full Open Graph set with Malaysian English locale, and a large-image Twitter card.",
+      },
+      {
+        label: "Structured data",
+        state: "implemented",
+        detail:
+          "Three JSON-LD blocks: Organization / RecyclingCenter, a sixteen-question FAQPage, and WebSite.",
+      },
+      {
+        label: "Semantic landmarks and accessibility",
+        state: "implemented",
+        detail:
+          "Skip link, main / nav / footer / aside landmarks, focus management in both dialogs. axe-core reports zero violations across five interaction states.",
+      },
+      {
+        label: "Performance pass",
+        state: "implemented",
+        detail:
+          "Self-hosted fonts and images, WebP with srcset, intrinsic sizing, lazy loading. Image payload 12.0 MB to 2.7 MB.",
+      },
+      {
+        label: "Post-build verification",
+        state: "implemented",
+        detail:
+          "Runs on every build and fails it on a missing asset, dead in-page link, missing head tag, unparseable JSON-LD, image without alt or intrinsic size, or a surviving prototype artefact.",
+      },
+      {
+        label: "Free-pickup eligibility wording",
+        state: "not-connected",
+        detail:
+          "A content question, not a build one. Two readings of the eligibility rule appear in the client-approved copy; it was raised for a ruling and both are carried through as supplied rather than silently picked between.",
+      },
+      {
+        label: "Gallery and press-outlet imagery",
+        state: "available",
+        detail:
+          "Intentional placeholders in the approved design, labelled as awaiting photography and carried through as-is.",
+      },
+    ],
+    limitations: [
+      "The content and SEO strategy was supplied by the client. This engagement was the design prototyping, the production build and the compliance implementation, not the strategy.",
+      "Two sections are placeholders in the approved design pending client-supplied photography, and are carried through rather than invented.",
+      "One eligibility rule is stated two ways in the approved copy and remains a client content decision.",
+    ],
+    image: {
+      src: "/images/erth-mark.png",
+      alt: "ERTH mark",
+      variant: "mark",
+    },
+    links: [{ label: "Live website", href: "https://erth.app", external: true }],
   },
 
   {
@@ -238,7 +481,7 @@ export const projects: Project[] = [
     fullName: "ResearchForge: AI research paper assistant",
     tagline: "An AI research assistant built to say when the paper doesn't support the answer.",
     summary:
-      "Upload an academic PDF and get a structured summary, a research-gap analysis where every gap carries the evidence it rests on, and a literature review scoped to the prior work the paper itself discusses. A Python/FastAPI backend and a Next.js frontend deployed as one project behind a single origin.",
+      "Upload an academic PDF and get a structured summary, a research-gap analysis where every gap carries the evidence it rests on, and a literature review scoped to the prior work the paper itself discusses. A Python and FastAPI backend beside a Next.js frontend, deployed as one Vercel project behind a single origin, with accounts and a private per-user research library.",
     role: "Designer & developer",
     period: "2026",
     affiliation: "Independent project",
@@ -251,9 +494,9 @@ export const projects: Project[] = [
       "Next.js 16 (App Router)",
       "React 19",
       "TypeScript",
-      "Google Gemini",
+      "Supabase / PostgreSQL",
       "Anthropic",
-      "pypdf",
+      "Groq",
       "pytest",
     ],
     techGroups: [
@@ -267,7 +510,23 @@ export const projects: Project[] = [
       },
       {
         label: "AI",
-        items: ["Google Gemini", "Anthropic", "Schema-constrained structured output"],
+        items: [
+          "Anthropic Claude",
+          "Groq",
+          "Google Gemini (implemented)",
+          "Schema-constrained structured output",
+          "Automatic provider fallback",
+        ],
+      },
+      {
+        label: "Data & auth",
+        items: [
+          "Supabase Postgres",
+          "Supabase Auth",
+          "Row Level Security",
+          "SQL migrations",
+          "Content-hash analysis cache",
+        ],
       },
       {
         label: "Documents",
@@ -280,24 +539,27 @@ export const projects: Project[] = [
     ],
     highlights: [
       "Every claim must be grounded in the uploaded paper, enforced in the prompt, the response schema, and the interface",
-      "A provider abstraction over Gemini and Anthropic, so switching vendors is one environment variable",
-      "186 offline tests: model calls are replaced by a fake provider, so no test touches the network or spends a token",
-      "Two runtimes behind one origin, so the custom domain and every preview URL work from the same build",
+      "Two providers behind one interface, with the owner choosing the primary and the other becoming its automatic fallback",
+      "Fallback fires only for rate limits and temporary provider failures, never for a bad PDF or a validation error that would fail identically on either vendor",
+      "Every analysis records which provider and model actually produced it, whether the fallback was used, and how long it took",
+      "Private per-account libraries enforced by Postgres Row Level Security rather than by the interface",
+      "446 tests across seventeen files: the model provider is replaced by an offline fake, so the suite spends no tokens",
       "The model tier was chosen to fit a 300-second function ceiling, not from a benchmark table",
       "What it cannot do is published on the site, not buried in a README",
     ],
     workflow: [
+      "Sign in",
       "Upload a PDF",
       "Validate and extract",
       "Analyse",
-      "Read the structured result",
+      "Read and keep the result",
     ],
     sections: [
       {
         heading: "Overview",
         body: [
           "ResearchForge reads an academic PDF and produces three things: a structured summary covering the research problem, methodology, key findings and conclusion; a research-gap analysis where each gap is shown alongside the wording in the paper that supports calling it a gap; and a literature review of the prior work the paper itself discusses.",
-          "It is deployed on its own subdomain as a single Vercel project running two services behind one origin.",
+          "It is deployed on its own subdomain as a single Vercel project running two services behind one origin, with email and Google sign-in and a research library private to each account.",
         ],
       },
       {
@@ -311,7 +573,7 @@ export const projects: Project[] = [
         heading: "Context",
         body: [
           "This is an independent project, built to work through a problem properly rather than to serve a client: what does it actually take to ship an LLM feature that behaves honestly under real platform constraints?",
-          "That framing shaped the scope. It stores nothing, has no accounts, and says so on screen. Those are defensible for a stateless analysis tool and would not be for a product.",
+          "It began as a stateless tool with no accounts, which kept the first version defensible while there was nothing stored to protect. Adding a library meant that stopped being true, so authentication, per-account ownership and database-level access control went in together rather than being retrofitted around a feature that had already shipped.",
         ],
       },
       {
@@ -326,8 +588,24 @@ export const projects: Project[] = [
         heading: "Architecture",
         body: [
           "One Vercel project runs two services. A Next.js frontend serves everything except the API, and a FastAPI backend serves /health and /api/*, with routing declared in the project configuration. Because both share one origin, the frontend calls the API with a relative path, which is what makes the custom domain, the .vercel.app domain and every preview URL work from the same build.",
-          "Generation sits behind a provider interface. The analysis service depends on that interface and never on a vendor SDK, each vendor's SDK is imported only inside its own provider module, and the concrete provider is built by a factory with a local import so adding one never forces every caller to import every SDK. Switching vendors is one environment variable; adding one is a single new file.",
+          "Generation sits behind a provider interface. The analysis service depends on that interface and never on a vendor SDK, each vendor's SDK is imported only inside its own provider module, and the concrete provider is built by a factory with a local import so adding one never forces every caller to import every SDK. Three provider implementations exist; two are wired as the active pair.",
           "Vendor errors are wrapped in project-owned exception types, with a missing API key separated out from the rest because it is a deployment problem rather than a user's fault and maps to a different status code. Status codes are chosen so the frontend can tell the cases apart without parsing message text: too large, unusable PDF, unusable model reply, no credentials configured. Nothing expected returns a 500.",
+        ],
+      },
+      {
+        heading: "Providers and fallback",
+        body: [
+          "The owner picks which of the two providers is primary, and the other automatically becomes the fallback. There is no per-user model picker: the choice is an operational one, made once, and the interface does not pretend otherwise.",
+          "Fallback is deliberately narrow. It fires once per analysis, and only for a rate limit or a temporary provider failure. It does not fire for a malformed PDF, a schema validation failure or a missing key, because those fail identically on either vendor and retrying them just spends a second vendor's quota to produce the same error more slowly.",
+          "Every stored analysis records which provider and model actually produced it, whether the fallback was used, and how long the call took. Without that, a result whose quality looks off has no explanation attached to it, and 'which model wrote this' becomes unanswerable a week later.",
+        ],
+      },
+      {
+        heading: "Accounts and data ownership",
+        body: [
+          "Authentication is Supabase Auth: email and password with sign-up, sign-in, forgot-password and reset flows, plus Google sign-in completing at a dedicated callback route. Passwords never reach the ResearchForge database.",
+          "Every paper, analysis and review belongs to exactly one account, and that is enforced by Postgres Row Level Security rather than by a filter in the API layer. The distinction matters: an interface check is a convention that the next endpoint can forget, and a row-level policy is a rule the database applies whether or not the query remembered to.",
+          "Re-uploading a paper that has already been analysed reuses the stored analysis instead of paying for it again. Identity is a content hash of the extracted text, not the filename, so the same paper saved under a different name still matches.",
         ],
       },
       {
@@ -342,8 +620,8 @@ export const projects: Project[] = [
       {
         heading: "Testing",
         body: [
-          "186 offline tests, run with pytest. The suite never touches the network and never spends a token: the model provider is replaced by an offline fake through FastAPI's dependency-override mechanism, which is the practical reason the endpoint takes its provider as a dependency rather than constructing one.",
-          "Coverage spans the analysis pipeline, both LLM providers, the library schemas, the repository implementation against a mock, the embedding request construction, and the backend foundation. Linting is ruff; a mypy configuration is present.",
+          "446 tests across seventeen files, run with pytest. The suite never touches the network and never spends a token: the model provider is replaced by an offline fake through FastAPI's dependency-override mechanism, which is the practical reason the endpoint takes its provider as a dependency rather than constructing one. A separate live smoke test against real provider keys exists and is opt-in, so it never runs by accident.",
+          "Coverage spans the analysis pipeline, all three LLM providers, the provider router and availability rules, authentication, per-account ownership, the analysis cache and content hashing, the library schemas, the Supabase repository against a mock, the embedding request construction, and the backend foundation. Linting is ruff; a mypy configuration is present.",
         ],
       },
       {
@@ -351,13 +629,13 @@ export const projects: Project[] = [
         body: [
           "The model tier was chosen against a platform constraint rather than a benchmark. A Vercel function has a 300-second ceiling, and three sequential schema-constrained calls have to complete inside it. A deeper-reasoning model is one environment variable away with no code change.",
           "pypdf was chosen over faster alternatives on licensing. The fastest option ships native binaries and is AGPL, which is incompatible with an MIT repository intended to be read publicly. Only one function touches the library, so swapping it later is a one-function change.",
-          "The application is stateless by choice, and that choice is what makes the absence of authentication and rate limiting defensible rather than negligent: there is nothing stored to protect.",
+          "Provenance columns degrade per migration rather than all at once: a database that has not yet run a later migration loses only the fields that migration added, instead of the whole write failing. A schema change should not be able to take the feature down while it is rolling out.",
         ],
       },
       {
         heading: "Outcome",
         body: [
-          "A working, deployed application that does what it says and states what it does not do. The analysis path is complete and in use; the persistence and retrieval layers are written and tested but not connected, and both the interface and the documentation say so rather than implying otherwise.",
+          "A working, deployed application with accounts, a private research library and recorded provenance, that does what it says and states what it does not do. The analysis and library paths are complete and in production; retrieval over a stored corpus is written only as far as the embedding request construction, and both the interface and the documentation say so rather than implying otherwise.",
         ],
       },
     ],
@@ -373,20 +651,39 @@ export const projects: Project[] = [
         detail: "Live. Three schema-constrained model calls, each validated on return.",
       },
       {
-        label: "Provider abstraction (Gemini, Anthropic)",
+        label: "Accounts and authentication",
         state: "implemented",
-        detail: "Both providers implemented behind one interface. Gemini is the configured default.",
+        detail:
+          "Live. Supabase Auth with email and password, plus Google sign-in. The deployed /health endpoint reports auth enabled.",
+      },
+      {
+        label: "Private research library",
+        state: "implemented",
+        detail:
+          "Live and database-backed. Papers, analyses and reviews are scoped to one account by Postgres Row Level Security.",
+      },
+      {
+        label: "Provider abstraction and automatic fallback",
+        state: "implemented",
+        detail:
+          "Anthropic and Groq wired as the active pair, with a Gemini implementation also in the codebase. The owner picks the primary; the other becomes the fallback.",
+      },
+      {
+        label: "Recorded provenance",
+        state: "implemented",
+        detail:
+          "Each analysis stores the provider and model that produced it, whether the fallback was used, and the elapsed time.",
+      },
+      {
+        label: "Analysis reuse",
+        state: "implemented",
+        detail:
+          "A paper already analysed is matched by a content hash of its extracted text and its stored analysis reused.",
       },
       {
         label: "Conditional chunking for long papers",
         state: "implemented",
         detail: "Whole-document by default; map-reduce only above a configured character threshold.",
-      },
-      {
-        label: "Research library and cross-paper review",
-        state: "available",
-        detail:
-          "Pages, API routes, repository, schemas and prompt are written and tested. Without a connected database every route answers 503 rather than pretending the library is empty.",
       },
       {
         label: "Embedding provider",
@@ -400,213 +697,18 @@ export const projects: Project[] = [
         detail:
           "Not implemented. The analysis path performs no retrieval: it sends the document, not retrieved passages. This is not a RAG system.",
       },
-      {
-        label: "Database (Supabase / pgvector)",
-        state: "not-connected",
-        detail:
-          "Migrations, a storage-independent repository and a Supabase implementation exist and are tested against a mock. No project is connected and nothing is persisted.",
-      },
     ],
     limitations: [
-      "Nothing is saved. Reloading the tab discards the analysis.",
       "No OCR, so scanned papers with no text layer are rejected rather than processed.",
       "The literature review covers only the prior work one paper discusses. It does not search a corpus.",
-      "No authentication and no rate limiting. Acceptable only while the application stores nothing.",
-      "Papers are identified by filename: bibliographic metadata extraction is not implemented.",
+      "Upstream provider rate limits are handled and surfaced with a retry hint, but the application does not rate-limit its own users.",
+      "Papers are identified by filename and content hash: bibliographic metadata extraction is not implemented.",
+      "Retrieval over a stored corpus is planned, not built.",
     ],
     links: [
       { label: "Live application", href: "https://researchforge.rukon.dev", external: true },
+      { label: "Source on GitHub", href: "https://github.com/tirukon015/researchforge", external: true },
     ],
-  },
-
-  {
-    slug: "erth",
-    name: "ERTH",
-    fullName: "ERTH: homepage requirements, SEO and GEO implementation",
-    tagline: "Meeting a page of SEO requirements without redesigning the page.",
-    summary:
-      "Homepage development for ERTH, a Malaysian e-waste collection and rewards service, worked from a supplied requirements document. A content, technical-SEO and AI-search-readability update delivered on the existing production design rather than a redesign.",
-    role: "UI/UX and Web Developer: design prototyping, requirements implementation, technical SEO",
-    period: "2026",
-    affiliation: "ERTH",
-    confidential: false,
-    kind: "professional",
-    tech: [
-      "Figma",
-      "HTML5",
-      "CSS3",
-      "JavaScript",
-      "Semantic HTML",
-      "Schema.org JSON-LD",
-      "Open Graph",
-      "Responsive CSS",
-    ],
-    techGroups: [
-      {
-        label: "Design & prototyping",
-        items: ["Figma", "Interactive prototype", "Component vocabulary"],
-      },
-      {
-        label: "Implementation",
-        items: ["HTML5", "CSS3", "JavaScript", "Semantic HTML", "Responsive CSS"],
-      },
-      {
-        label: "Search & structured data",
-        items: [
-          "Schema.org JSON-LD",
-          "Organization / RecyclingCenter",
-          "FAQPage",
-          "Open Graph",
-          "Twitter cards",
-          "Canonical URLs",
-        ],
-      },
-      {
-        label: "Method",
-        items: [
-          "Requirements compliance matrix",
-          "Contradiction register",
-          "Scoped change levels",
-          "Answerability testing",
-        ],
-      },
-    ],
-    highlights: [
-      "Interface prototyped in Figma, then translated into the production build",
-      "Worked from a supplied requirements document rather than an open brief",
-      "Audited the live page against every requirement before changing a line of markup",
-      "Raised six content contradictions with the client instead of resolving them unilaterally",
-      "Scoped every change by impact level so the existing visual system stayed locked",
-      "Head block went from no canonical, no Open Graph and no structured data to a full set",
-      "Zero new sections and zero new components: every gap was met inside what already existed",
-    ],
-    workflow: [
-      "Read the requirements",
-      "Audit the live page against them",
-      "Raise contradictions",
-      "Implement by change level",
-      "Re-audit",
-    ],
-    sections: [
-      {
-        heading: "Overview",
-        body: [
-          "ERTH is a Malaysian e-waste collection and rewards service: doorstep pickup, free shipping through Pos Malaysia, a 24/7 drop-off point in Cyberjaya, and cashless rewards. The homepage engagement was a requirements-compliance, content and technical-SEO update, explicitly not a redesign.",
-          "The work was carried out against a supplied requirements document that specified the content, the customer questions the page had to answer, and the SEO and structured-data expectations.",
-        ],
-      },
-      {
-        heading: "Problem",
-        body: [
-          "A recycling and trade-in service depends on people trusting it enough to hand over a device and the data on it. The page has to make the process, the pricing, the eligibility rules and the handling of personal data legible before someone commits to anything.",
-          "The existing page was visually finished and functionally sound, but incomplete against the requirements: several customer questions had no direct answer, some answers contradicted each other, and the head block carried no canonical, no social metadata and no structured data at all.",
-        ],
-      },
-      {
-        heading: "Context",
-        body: [
-          "The requirements positioned this as a compliance, content and functionality update on an approved design baseline. The instruction was explicit: preserve the visual design, section structure and order, navigation, typography, colours, components and responsive behaviour; integrate anything missing into the most appropriate existing section rather than adding new ones.",
-          "That constraint is the interesting part of the engagement. Meeting a long list of content and search requirements is straightforward if you are allowed to add sections. Meeting them inside a locked design is a different problem.",
-        ],
-      },
-      {
-        heading: "My Role",
-        body: [
-          "Two phases, and they are different kinds of work. The interface was worked out as an interactive Figma prototype (ERTH V2.3) before implementation, covering the page structure, the visual direction and the user flow from choosing a device through to payout. Translating that prototype into the production build is the design-to-code half of the engagement.",
-          "The second phase, described below, came later and against a design baseline that already existed: development against a supplied requirements document: auditing the live page, producing the compliance assessment, raising the items that needed a client decision, implementing the changes, and re-checking the result against the same matrix.",
-          "The SEO and content strategy came from the requirements document. What I owned there was the implementation side, turning it into markup, structure and copy on a live page without breaking the design it had to live inside.",
-        ],
-        note:
-          "The Figma prototype is a shared working file rather than a solo artefact, so this describes design and prototyping involvement and the translation into production, not sole authorship of the design.",
-      },
-      {
-        heading: "Engineering Approach",
-        body: [
-          "The first step was not to change anything. The existing page was documented first: twenty-one sections catalogued by id and role, the visual language recorded precisely (backgrounds, accent values, type scale, card treatment, button geometry, motion, section rhythm), and the reusable component vocabulary named. That record is what a design lock actually is; without it, 'do not redesign' is a hope rather than a constraint.",
-          "With the page documented, every requirement was scored against it as fulfilled, partially fulfilled, missing, or needing factual verification. The finding that shaped the rest of the work was that every gap mapped to copy inside an existing component, an extra card in a grid that already auto-fits, or the document head. No new section was required.",
-          "Changes were then scoped by impact. Text-node swaps inside existing elements. Additions inside existing components. Extra cards in existing grids. Sorting the work this way is what kept a content update from turning into a redesign by accretion.",
-          "Layout risk was assessed before implementation rather than discovered after it: each planned change was listed against the way it could break at a given width, and the mitigation, so that longer compliance copy would not quietly break a card, a button row or the hero.",
-        ],
-      },
-      {
-        heading: "Content accuracy",
-        body: [
-          "A consistency pass across the whole page found six contradictions and unsupported claims. These were raised for a client decision rather than resolved unilaterally, because picking one reading of a business rule is not a developer's call to make.",
-          "One was a headline figure that appeared to confuse two different units: a large number presented as currency where the cited source reported it as a weight. Catching that before publication mattered more than any markup change in the engagement.",
-          "The working stance throughout was to verify, soften, or omit. No award, statistic, certification, testimonial or coverage claim was introduced that the source material did not support, and absolute claims about data handling were kept conditional because nothing in the source supported stating them absolutely.",
-        ],
-        note:
-          "One item raised in that pass, a free-pickup eligibility rule stated two different ways, remains a client decision and is still reflected inconsistently on the page. It is recorded as open rather than presented as resolved.",
-      },
-      {
-        heading: "Technical SEO",
-        body: [
-          "The head block was built out from nothing: the specified title and meta description, a canonical URL, a full Open Graph set with the locale declared as Malaysian English, and a large-image Twitter card.",
-          "Two JSON-LD blocks were added. An Organization node also typed as a recycling centre, carrying the alternate name, legal name, logo, contact details, a full postal address for the Cyberjaya premises, the areas served, and a verified social profile. And an FAQPage node mirroring the questions visible on the page.",
-          "Structure was treated as information architecture rather than decoration: one h1, section-level h2s, card-level h3s, descriptive alt text, and an internal-linking pass that found several sections were unreachable from the navigation despite being on the page.",
-        ],
-      },
-      {
-        heading: "GEO / AI-search readability",
-        body: [
-          "The requirements asked for content an AI system could read and answer from directly, which is a different target from ranking a page. The approach was to test it rather than assert it: nine questions a visitor actually asks, what is collected, whether broken electronics are accepted, what qualifies for free pickup, where the service operates, how pickup works, how to book, what happens after collection, how data-bearing devices are handled, whether businesses are served, each checked for whether the page answers it self-containedly.",
-          "Where a section needed to survive being extracted on its own, it was written to do so. The block explaining the difference between disposal and recycling defines both terms, states the distinction and says why it matters, so that an answer engine quoting only that block still produces something correct.",
-          "Recognition claims were restructured to carry who recognised the achievement, when, and where it can be verified, because for an AI system, an unattributed claim and an invented one look the same.",
-          "The FAQ was expanded from the questions customers actually raise as objections rather than from a keyword list, and the structured data mirrors exactly what a reader sees. That ordering matters: the markup is a machine-readable copy of real content, not a substitute for it.",
-        ],
-      },
-      {
-        heading: "Outcome",
-        body: [
-          "An updated homepage that is recognisably the same website. The difference is in completeness, accuracy, information structure and search readability rather than appearance: zero new sections, zero new components, no change to section order, palette, type, spacing or motion.",
-          "The head block went from carrying no canonical, no social metadata and no structured data to carrying all three, including service-area information for six Malaysian locations and a sixteen-question FAQPage.",
-        ],
-      },
-    ],
-    status: [
-      {
-        label: "Title, meta description, canonical",
-        state: "implemented",
-        detail: "All three present in the shipped page; none existed before.",
-      },
-      {
-        label: "Open Graph and Twitter card",
-        state: "implemented",
-        detail: "Full Open Graph set with Malaysian English locale, and a large-image Twitter card.",
-      },
-      {
-        label: "Organization / RecyclingCenter JSON-LD",
-        state: "implemented",
-        detail: "Full postal address, contact details, areas served and a verified social profile.",
-      },
-      {
-        label: "FAQPage JSON-LD",
-        state: "implemented",
-        detail: "Sixteen question-and-answer pairs mirroring the visible FAQ.",
-      },
-      {
-        label: "Semantic landmarks",
-        state: "available",
-        detail:
-          "The navigation is wrapped in a nav landmark. Wrapping the body sections in a main landmark was identified and is not yet applied.",
-      },
-      {
-        label: "Free-pickup eligibility wording",
-        state: "not-connected",
-        detail:
-          "Raised as a contradiction and awaiting a client ruling. Both readings currently appear on the page, so it is recorded here as open rather than described as resolved.",
-      },
-    ],
-    limitations: [
-      "The SEO and content strategy was supplied by the client. This engagement was the implementation and the compliance assessment, not the strategy.",
-      "Several external links and image slots were left as placeholders pending client-supplied URLs and photography.",
-      "One eligibility rule remains contradictory on the page and requires a client decision.",
-    ],
-    image: {
-      src: "/images/erth-mark.png",
-      alt: "ERTH mark",
-      variant: "mark",
-    },
   },
 ];
 

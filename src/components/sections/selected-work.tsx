@@ -1,10 +1,10 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Lock } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Reveal } from "@/components/ui/reveal";
 import { Tag } from "@/components/ui/tag";
+import { ProjectMark } from "@/components/ui/project-mark";
 import { projects } from "@/content/projects";
 import { site } from "@/content/site";
 
@@ -16,7 +16,7 @@ export function SelectedWork() {
           <SectionHeading
             eyebrow="Selected Work"
             title="Real systems, not tutorials."
-            description="An internal operations platform running a production line, an AI research assistant, and requirement-driven SEO work on a production website."
+            description="An internal operations platform running a production line, a completed production website, and an AI research assistant."
           />
           <Link
             href={site.workHref}
@@ -35,19 +35,13 @@ export function SelectedWork() {
               >
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex h-14 items-center">
-                    {project.image ? (
-                      <Image
-                        src={project.image.src}
-                        alt={project.image.alt}
-                        width={140}
-                        height={40}
-                        className="h-8 w-auto object-contain object-left opacity-90"
-                      />
-                    ) : (
-                      <span className="font-mono text-lg font-semibold tracking-tight text-text">
-                        {project.name}
-                      </span>
-                    )}
+                    <ProjectMark
+                      project={project}
+                      width={140}
+                      height={40}
+                      className="h-8 w-auto object-contain object-left opacity-90"
+                      fallbackClassName="font-mono text-lg font-semibold tracking-tight text-text"
+                    />
                   </div>
                   <ArrowUpRight
                     size={20}

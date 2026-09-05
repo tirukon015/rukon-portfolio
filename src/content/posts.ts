@@ -522,9 +522,10 @@ export const posts: BlogPost[] = [
     searchIntent: "informational",
     relatedProjects: ["erth"],
     relatedPosts: ["translating-figma-components-into-reusable-code", "designing-for-desktop-and-mobile-before-development"],
-    plan: "expand",
+    plan: "keep",
     planNote:
-      "Promoted from merge target to cluster pillar (2026-09-02) now the ERTH Figma prototype is evidenced. Two outstanding edits: the body claims the design was created solely by the author, which the prototype alone does not establish; and the 'still in progress' statement is stale, contradicted by the shipped v13/v14 builds.",
+      "Both outstanding edits applied (2026-09-06): sole authorship of the design is no longer claimed, and the stale 'still in progress' statement is replaced now the production build has shipped.",
+    updated: "2026-09-06",
     sections: [
       {
         heading: "What is it?",
@@ -541,7 +542,8 @@ export const posts: BlogPost[] = [
       {
         heading: "Real-world perspective",
         body: [
-          "I'm currently building the ERTH website from a Figma design I created myself, across multiple build iterations, checking each one against the design as it goes. Development is still in progress, some sections are further along than others, which is a normal part of this process, not a shortcut being skipped.",
+          "I took the ERTH homepage through this whole path. The interface was worked out as an interactive Figma prototype first, and the production website was then built from the approved design file: static HTML, CSS and vanilla JavaScript bundled by Vite. That build is finished and deployed.",
+          "The gap between the two was larger than the design suggested. Rebuilding element by element surfaced four defects nobody had noticed in the prototype, including a wrapper that closed early and left one heading rendering black on a near-black background. A design file can look complete and still be some distance from a page a browser handles correctly.",
         ],
       },
       {
@@ -865,6 +867,335 @@ export const posts: BlogPost[] = [
       },
     ],
     related: [{ label: "RPOMS case study", href: "/work/rpoms" }],
+  },
+  {
+    slug: "rebuilding-a-design-prototype-as-a-production-website",
+    title: "Rebuilding a Design-Tool Prototype as a Production Website",
+    description:
+      "An approved design arrived as a self-extracting bundle running React from a CDN. Shipping it meant removing almost everything and keeping the part that was actually the specification.",
+    date: "2026-08-28",
+    category: "Web Development",
+    tags: ["HTML", "CSS", "JavaScript", "Vite", "Performance", "Design to Code"],
+    contentType: "Experience-led",
+    searchIntent: "problem-aware",
+    relatedProjects: ["erth"],
+    relatedPosts: [
+      "verifying-a-static-site-you-built-by-hand",
+      "from-figma-design-to-production-website",
+    ],
+    sections: [
+      {
+        heading: "What actually arrived",
+        body: [
+          "The design for the ERTH homepage was approved as a single file, and every earlier revision was declared superseded. That is a good brief to receive. It removes the usual argument about which version is current, and it replaces 'build something like this' with 'ship exactly this, correctly'.",
+          "What the file was, though, was not a website. It was a self-extracting design-tool bundle: fonts, images and markup encoded as base64 inside script blocks, unpacked in the browser at runtime, with React and Babel pulled from a CDN and a runtime that re-rendered inline styles on every state change. It rendered the design faithfully. It also spent a quarter of a megabyte of JavaScript and a full render pass before anything appeared.",
+          "There is a real temptation at this point to keep the machinery. It works, after all, and keeping it is less thinking than replacing it. But the page is one static document. Nothing on it needs a component tree, a compiler in the browser, or a style engine that recomputes on state change.",
+        ],
+      },
+      {
+        heading: "The decision was to remove, not add",
+        body: [
+          "The rebuild shipped static HTML, CSS and vanilla JavaScript bundled by Vite. Roughly 250 kB of prototype JavaScript came out. What went back in was 3.7 kB that does nothing but handle interaction: menus, disclosures, two dialogs.",
+          "That ratio is worth sitting with. The visible behaviour of the page did not change at all. Every menu still opens, every dialog still traps focus, every disclosure still expands. The entire difference was framework and runtime that the page never needed, carried along because it came in the box.",
+          "The other half of the removal was network. Every font and image is self-hosted, so the production page makes no third-party requests whatsoever. A page that reaches out to a CDN is a page whose first paint depends on somebody else's uptime and somebody else's TLS handshake.",
+        ],
+      },
+      {
+        heading: "Keeping the inline styles on purpose",
+        body: [
+          "The one thing I did not touch was the thousand-odd inline style attributes, and that surprises people.",
+          "In this file the inline styles are the design specification. Every dimension, every colour, every clamp() lives there. There is no separate stylesheet that says what the design is. Rewriting all of them into semantic class names would have been a large, mechanical, entirely untestable transformation whose only possible outcomes were 'identical' and 'subtly wrong'.",
+          "So the markup was preserved verbatim, and only the parts a static file genuinely cannot express were moved out. That is a smaller, more honest change, and it is one you can verify section by section against the approved design rather than hoping.",
+          "The general form of this: when a generated artefact is the source of truth for something, converting it to a nicer representation is not a refactor. It is a re-specification, and it needs the same review the original got.",
+        ],
+      },
+      {
+        heading: "Three things that had to move",
+        body: [
+          "Hover states. The prototype expressed them as custom attributes its runtime read and applied. A static page has no runtime, so those became real CSS hover rules. They need !important, because the elements they target carry inline styles, and the prototype's own generated stylesheet did exactly the same thing for exactly the same reason.",
+          "Open and closed state. The prototype toggled inline display values from JavaScript. That became the hidden attribute plus aria-expanded and a class, with CSS deciding appearance. This is a straight upgrade: the state is now in the accessibility tree instead of only in a style property, so a screen reader can tell a collapsed section from an expanded one.",
+          "The responsive split. The prototype computed desktop versus mobile in JavaScript from window.innerWidth and rendered accordingly. That became a media query at the same breakpoint. The behaviour is identical and the experience is not: the correct layout is now painted on the first frame, rather than the wrong one being painted and then corrected once JavaScript runs.",
+          "All three follow the same pattern. Each one takes a decision the prototype made at runtime, in JavaScript, and moves it into a declaration the browser can act on before any script executes.",
+        ],
+      },
+      {
+        heading: "A rebuild finds the bugs a demo hides",
+        body: [
+          "Going through an approved design element by element is the most thorough review it will ever get. Four defects turned up that nobody had noticed in months of looking at the prototype.",
+          "The page wrapper closed early, part-way down the document. Every section after that point never inherited the light text colour, so one heading rendered black on a near-black background. Invisible in the design tool, which applied colours its own way; plainly broken in a browser.",
+          "A dialog contained an iframe whose source was an unresolved template binding, so every single page load fetched a URL that did not exist. Six links pointed at the section they were already inside. And two grid definitions forced horizontal scrolling below 400px.",
+          "None of these were introduced by the rebuild. All of them were in the thing that had been signed off. That is not a criticism of the review, it is the nature of reviewing a prototype: you check whether it looks right, and it did.",
+        ],
+      },
+      {
+        heading: "What I would tell someone facing the same file",
+        body: [
+          "Work out what part of the artefact is the specification and what part is the delivery mechanism. Keep the first exactly. Replace the second freely.",
+          "Do not treat 'it already works' as a reason to ship the runtime. A prototype's job is to be convincing quickly; a production page's job is to be cheap and correct for every visitor, forever. Those are different jobs with different right answers.",
+          "Expect to find defects, and raise them rather than quietly fixing them into something else. Every one of the four here was reported as a fix with a reason, not absorbed into a redesign.",
+        ],
+      },
+    ],
+    related: [{ label: "ERTH case study", href: "/work/erth" }],
+  },
+  {
+    slug: "verifying-a-static-site-you-built-by-hand",
+    title: "Verifying a Static Site You Built by Hand",
+    description:
+      "Hand-written HTML has no type checker and no test runner. On a production build I wrote the guarantees instead, as a post-build script that fails the build.",
+    date: "2026-08-31",
+    category: "Software Engineering",
+    tags: ["HTML", "Build Tooling", "Quality", "Accessibility", "SEO"],
+    contentType: "Technical Guide",
+    searchIntent: "problem-aware",
+    relatedProjects: ["erth"],
+    relatedPosts: [
+      "rebuilding-a-design-prototype-as-a-production-website",
+      "why-system-maintenance-matters-after-deployment",
+    ],
+    sections: [
+      {
+        heading: "The gap nobody mentions",
+        body: [
+          "Choosing static HTML, CSS and vanilla JavaScript for a single page is usually the right call. It is fast, it has no dependency surface worth attacking, and it will still build in five years.",
+          "What you give up is not usually stated out loud: every safety net. There is no type checker to tell you a reference is wrong. No component test to catch a broken prop. No framework to notice that the thing you linked to does not exist. A typo in an href is just a string that happens to be wrong, and nothing in the toolchain has an opinion about it.",
+          "On a page of a thousand lines of markup with dozens of internal anchors, that is not a theoretical risk. So on the ERTH homepage the guarantees got written by hand, as a script that runs as part of every build and fails it.",
+        ],
+      },
+      {
+        heading: "What it refuses to ship",
+        body: [
+          "A referenced asset that is not in the build output. The commonest failure in a static build is a path that was right in the source tree and wrong after bundling, and it produces a broken image rather than an error.",
+          "An in-page link or an aria-controls attribute pointing at an id that does not exist. These two are the same class of bug and both are silent: the link does nothing, or the control announces a relationship to an element that is not there.",
+          "A required head tag that is absent. Canonical, description, Open Graph, viewport. Easy to add, easy to lose in an edit, and invisible until something downstream is already wrong.",
+          "JSON-LD that does not parse. Structured data is the one part of a page whose only consumer is a machine, which means a human will never notice it is broken. Parsing it at build time costs nothing and closes that gap completely.",
+          "An image with no alt attribute or no intrinsic width and height. The first is an accessibility failure, the second is a layout shift, and both are things a busy edit drops.",
+          "More or fewer than exactly one h1.",
+        ],
+      },
+      {
+        heading: "The check that mattered most",
+        body: [
+          "The last rule is the one I would keep if I could only keep one: the build fails if any prototype artefact survives into the output. An unresolved template binding, a generated class name from the design tool, a raw internal identifier.",
+          "This matters specifically because the page was rebuilt from a design-tool export. Artefacts from that kind of source do not look like errors. They look like content. A stray binding renders as literal braces in the middle of a sentence, and if it lands in a section nobody scrolls to during review, it ships and stays shipped.",
+          "It is worth naming the general rule: the checks worth automating are the ones that fail invisibly. A broken layout gets found in five minutes by the first person who looks. A missing canonical tag, an unparseable schema block, a leaked template binding in section eighteen — those can live in production indefinitely, because nothing about the page announces them.",
+        ],
+      },
+      {
+        heading: "Why it runs in the build, not in CI",
+        body: [
+          "The check is wired into the build command itself rather than sitting in a separate pipeline step. That is deliberate. A verification you can forget to run is a verification you will eventually forget to run, and the moment you most want it is the moment you are in a hurry.",
+          "Attaching it to the build also means it protects the local preview and the deployment equally, without any configuration in the hosting platform. There is one command, it either produces a deployable directory or it fails with a reason, and there is no state in between.",
+        ],
+      },
+      {
+        heading: "Scaling this down",
+        body: [
+          "This is maybe a couple of hundred lines of Node. It is not a framework and it does not want to be one. It parses the built HTML, walks a handful of assertions, and exits non-zero with a message naming the element that failed.",
+          "If you are shipping a hand-built page, start with three checks: every internal anchor resolves, every image has alt text, and every JSON-LD block parses. Those three cover the majority of what actually goes wrong and they take an afternoon.",
+          "The point is not the specific list. It is that on a project with no type system, the invariants you care about still exist. They are just unwritten, and unwritten invariants are the ones that break.",
+        ],
+      },
+    ],
+    related: [{ label: "ERTH case study", href: "/work/erth" }],
+  },
+  {
+    slug: "cutting-a-page-image-payload-from-12mb-to-under-3mb",
+    title: "Cutting a Page's Image Payload From 12 MB to Under 3 MB",
+    description:
+      "The performance and accessibility pass on a production homepage: what was actually slow, what fixed it, and why most of it was not clever.",
+    date: "2026-09-03",
+    category: "Web Development",
+    tags: ["Performance", "Accessibility", "Images", "Fonts", "Core Web Vitals"],
+    contentType: "Problem/Solution",
+    searchIntent: "problem-aware",
+    relatedProjects: ["erth"],
+    relatedPosts: [
+      "rebuilding-a-design-prototype-as-a-production-website",
+      "designing-for-desktop-and-mobile-before-development",
+    ],
+    sections: [
+      {
+        heading: "Where the weight was",
+        body: [
+          "The ERTH homepage is a single long page with a lot of photography: devices, collection scenes, an award plaque, press logos. As it came out of the design tool the image payload was 12.0 MB.",
+          "That number is not unusual and it is not anybody's fault. Design tools export at the fidelity the designer was working at, because that is the correct default for design. It just is not the correct default for a phone on mobile data in Malaysia.",
+          "After the pass it is 2.7 MB. Nothing in the design changed. No image was dropped, cropped or replaced.",
+        ],
+      },
+      {
+        heading: "What actually did it",
+        body: [
+          "Re-encoding to WebP did most of the work. Photographic and illustrative assets converted at a sensible quality, which for this page was visually indistinguishable at every size the design uses.",
+          "srcset on the largest images did the rest. The hero backdrop and the collection-centre photograph are the two assets that dominate on a big screen and are wildly oversized on a small one, so those got width variants and a browser that picks.",
+          "That is the entire image strategy. Two techniques, both older than most of the frameworks people reach for, applied to the assets that actually mattered rather than uniformly to everything.",
+        ],
+      },
+      {
+        heading: "Stopping the page from moving",
+        body: [
+          "Payload is only half of it. The other half is whether the page holds still while it loads, and that is a separate fix with a separate mechanism.",
+          "Every image carries intrinsic width and height attributes. The browser can then reserve the correct box before the bytes arrive, so text does not jump down the page as photographs appear. This costs two attributes per image and it is the single highest-value accessibility and usability fix in the whole pass, because a page that moves under your finger while you are reading is genuinely hostile.",
+          "Below-the-fold images are lazy, and the hero backdrop is explicitly marked high priority so the lazy default does not deprioritise the one image that is on screen immediately.",
+        ],
+      },
+      {
+        heading: "Fonts, self-hosted and subset",
+        body: [
+          "The fonts are self-hosted as WOFF2 subsets rather than pulled from a font service. Combined with self-hosting the images, that takes the page to zero third-party requests.",
+          "There are two reasons and only one of them is speed. The first is that a third-party font request is a dependency on someone else's availability and TLS handshake, sitting directly in the path of your first paint. The second is that it is a request to another party's server carrying your visitor's IP address, which for a Malaysian consumer service handling people's old devices and personal data is a conversation worth not having at all.",
+          "The two Latin subsets that the page actually renders in are preloaded. The rest are declared and fetched only if a visitor's content needs them.",
+        ],
+      },
+      {
+        heading: "Accessibility in the same pass",
+        body: [
+          "Performance and accessibility got done together, because on a static rebuild they touch the same markup and splitting them means editing everything twice.",
+          "What went in: a skip link, main, nav, footer and aside landmarks, accessible names on the sections that carry no heading, a visible focus ring on every interactive element, aria-expanded and aria-controls on all disclosures and dropdowns, Escape and focus trapping in both dialogs with focus returned to whatever opened them, keyboard-operable navigation dropdowns, underlines on inline links that colour alone did not distinguish, and prefers-reduced-motion honoured.",
+          "axe-core reports zero violations across five states: default, mobile, menu open, dialog open, disclosure open. Testing the states matters more than testing the page. Almost every accessibility bug I have found in an interactive component lives in a state the automated pass never opened.",
+        ],
+      },
+      {
+        heading: "The unglamorous conclusion",
+        body: [
+          "None of this was clever. WebP, srcset, width and height attributes, lazy loading, self-hosted subset fonts, landmarks and focus management. All of it is a decade old or more and all of it is in every guide.",
+          "The reason it is worth writing down anyway is that a 12 MB page is not usually the result of someone not knowing about WebP. It is the result of a handoff where the performance pass was nobody's explicit job. On this build it was written into the definition of done, alongside a build check that fails if an image loses its alt text or its dimensions, which is the part that keeps it true after the next edit.",
+        ],
+      },
+    ],
+    related: [{ label: "ERTH case study", href: "/work/erth" }],
+  },
+  {
+    slug: "making-an-llm-admit-the-paper-does-not-say",
+    title: "Making an LLM Admit the Paper Doesn't Say That",
+    description:
+      "The dangerous failure of an AI summarising tool is not a blank answer. It is a plausible one about a section that was never in the source. Enforcing that in three places.",
+    date: "2026-09-05",
+    category: "Software Engineering",
+    tags: ["LLM", "AI Engineering", "Structured Output", "FastAPI", "Python"],
+    contentType: "AI Engineering",
+    searchIntent: "problem-aware",
+    relatedProjects: ["researchforge"],
+    relatedPosts: [
+      "when-not-to-fall-back-to-another-ai-provider",
+      "why-internal-software-needs-good-ux",
+    ],
+    sections: [
+      {
+        heading: "The failure that matters",
+        body: [
+          "ResearchForge reads an academic PDF and produces a structured summary, a research-gap analysis, and a literature review of the prior work the paper discusses. The interesting engineering problem in that is not getting a good answer. Models are good at good answers.",
+          "The problem is what happens on a paper that does not contain what you asked for. Hand a position paper to something that has been told to extract a methodology, and it will not return nothing. It will return a methodology: fluent, structured, appropriately hedged, and invented.",
+          "For a research tool that failure is worse than no answer, because it is indistinguishable from a correct one unless the reader already knows the paper. And a reader who already knows the paper did not need the tool.",
+        ],
+      },
+      {
+        heading: "Why the prompt is not enough",
+        body: [
+          "The obvious response is to put it in the system prompt. Only use the paper. Say so if the paper does not support a section. That is necessary and it is nowhere near sufficient, because a prompt instruction is a preference expressed in the same channel as everything else competing for the model's attention.",
+          "More to the point, a prompt gives the model no shape in which to decline. If the response format has a methodology field and no way to say 'absent', then the least-cost path to a valid answer is to fill it. You have built a structure where honesty has no representation.",
+          "So the rule is enforced in three places rather than requested once.",
+        ],
+      },
+      {
+        heading: "One: the schema has somewhere to put 'no'",
+        body: [
+          "Each response model carries explicit fields for declining. There is a list naming any section the paper did not support, and a boolean plus explanation for the case where the whole analysis cannot be grounded at all.",
+          "That is the actual mechanism. Not the instruction, the affordance. Given a structured slot that means 'this paper has no methodology section', a model will use it, because it is now the cheapest valid answer rather than an invalid one.",
+          "The response models are converted to JSON Schema and handed to the model as the required output format, with additional properties forbidden. Every reply is validated on return, and a truncated or malformed answer is refused outright rather than partially rendered. A half-parsed analysis shown as though it were complete is the same class of lie as an invented one.",
+        ],
+      },
+      {
+        heading: "Two: the interface prints it",
+        body: [
+          "The third enforcement point is the one that is easiest to skip and hardest to justify skipping. The interface renders those fields.",
+          "If the model says a section was unsupported, the reader sees that the section was unsupported. The field is not swallowed, not rendered as an empty state that looks like a loading failure, not tucked behind a disclosure. It is the answer.",
+          "A schema field nobody displays is a schema field nobody can rely on, and it is also a quiet invitation to stop populating it correctly. Displaying it closes the loop between what the model was asked to do and what the user actually gets.",
+        ],
+      },
+      {
+        heading: "Three calls, not one",
+        body: [
+          "The summary, the gap analysis and the literature review run as three separate model calls rather than one call returning three objects.",
+          "They are different tasks with different evidence rules. Separating them means a failure in one does not corrupt the others, and each prompt can be improved without regression-testing the other two.",
+          "They run sequentially rather than in parallel, on purpose. Parallelising them would multiply the peak rate-limit burden three times over to win latency that nobody notices on a single upload. That is a bad trade, and it is one that gets made by default a lot.",
+        ],
+      },
+      {
+        heading: "Evidence beside every claim",
+        body: [
+          "For the gap analysis specifically, each identified gap is returned with the wording in the paper that supports calling it a gap, and displayed that way.",
+          "This is the same idea one level up. A gap with its evidence attached is checkable in about four seconds: read the quote, decide whether it means what the tool says it means. A gap without evidence is something you either trust or do not, with no third option.",
+          "That distinction, between an output you can verify and an output you must trust, is most of what separates an AI feature that survives contact with a sceptical user from one that gets used twice.",
+        ],
+      },
+    ],
+    related: [{ label: "ResearchForge case study", href: "/work/researchforge" }],
+  },
+  {
+    slug: "when-not-to-fall-back-to-another-ai-provider",
+    title: "When Not to Fall Back to Another AI Provider",
+    description:
+      "Automatic failover between model vendors is easy to build and easy to build wrong. Most errors should never trigger it.",
+    date: "2026-09-06",
+    category: "Software Engineering",
+    tags: ["LLM", "AI Engineering", "Architecture", "Reliability", "Python"],
+    contentType: "AI Engineering",
+    searchIntent: "problem-aware",
+    relatedProjects: ["researchforge"],
+    relatedPosts: [
+      "making-an-llm-admit-the-paper-does-not-say",
+      "why-system-maintenance-matters-after-deployment",
+    ],
+    sections: [
+      {
+        heading: "The abstraction first",
+        body: [
+          "ResearchForge generates through a provider interface rather than a vendor SDK. The analysis service depends on the interface and never on a vendor, each vendor's SDK is imported only inside its own provider module, and the concrete provider is built by a factory using a local import, so adding a vendor never forces every caller to import every SDK.",
+          "The practical payoff is small and constant: switching the primary vendor is one environment variable, and adding a vendor is one new file. The larger payoff is that the rest of the codebase never learns which model it is talking to, so no vendor quirk can leak into the analysis logic and quietly become load-bearing.",
+        ],
+      },
+      {
+        heading: "Fallback is the easy part to get wrong",
+        body: [
+          "With two providers behind one interface, automatic failover is about fifteen lines. Catch the error, try the other one, return whichever answers. That version is worse than having no fallback at all.",
+          "The reason is that most errors are not vendor-specific. A PDF that fails validation will fail validation on the other vendor. A response that fails schema validation will very likely fail it again. A missing API key is a deployment problem, and trying the second vendor turns a clear configuration error into a confusing one.",
+          "In every one of those cases a blind fallback spends a second vendor's quota, doubles the user's wait, and produces the same error at the end. It converts a fast, clear failure into a slow, muddled one.",
+        ],
+      },
+      {
+        heading: "The rule that survived",
+        body: [
+          "The fallback fires once per analysis, and only for a rate limit or a temporary provider failure.",
+          "Those two are the entire legitimate category: conditions that are genuinely about that vendor at that moment, and where a different vendor plausibly gives a different outcome. Everything else fails immediately with the real reason.",
+          "Once per analysis matters too. Not once per model call, once per analysis. Three sequential calls each allowed their own fallback is a request that can bounce between vendors five times before failing, and there is a 300-second function ceiling to fit inside.",
+        ],
+      },
+      {
+        heading: "Errors have to be distinguishable to be handled",
+        body: [
+          "None of the above is expressible unless the error types are distinguishable in the first place, which is why vendor exceptions get wrapped in project-owned types at the provider boundary.",
+          "A missing API key is separated out from other failures specifically because it is an operator problem rather than a user's fault, and it maps to a different status code. Status codes are chosen so the frontend can tell cases apart without parsing message text: too large, unusable PDF, unusable model reply, no credentials configured. Nothing expected returns a 500.",
+          "Parsing vendor error strings to decide control flow is the thing to avoid here. Those strings are not an API, they change without notice, and a fallback rule built on substring matching fails open in the worst possible way, at the moment the vendor is already having a bad day.",
+        ],
+      },
+      {
+        heading: "Record what actually answered",
+        body: [
+          "Every stored analysis records which provider and model actually produced it, whether the fallback was used, and how long the call took.",
+          "This turns out to be the feature I would least want to remove. Without it, an output that looks off has no explanation attached to it, and 'which model wrote this one?' becomes unanswerable a week later. With it, the question is a column.",
+          "It also makes the fallback observable rather than invisible. A silent failover is indistinguishable from no failover right up until the bill arrives, or until quality shifts for a week and nobody can say why.",
+        ],
+      },
+      {
+        heading: "The general shape",
+        body: [
+          "Retry the conditions that are about the vendor. Fail fast on the conditions that are about the request. Wrap vendor errors in your own types so you can tell the two apart. Bound the retry at the level of the user's operation, not the individual call. Record what answered.",
+          "None of that is specific to language models. It is ordinary reliability engineering, and the only reason it is worth saying about LLM providers is that the cost of an unnecessary retry is unusually high and unusually easy to miss.",
+        ],
+      },
+    ],
+    related: [{ label: "ResearchForge case study", href: "/work/researchforge" }],
   },
 ];
 

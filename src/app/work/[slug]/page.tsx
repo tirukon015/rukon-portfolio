@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, ArrowUpRight, Lock } from "lucide-react";
@@ -8,6 +7,7 @@ import { Reveal } from "@/components/ui/reveal";
 import { Tag } from "@/components/ui/tag";
 import { ButtonLink } from "@/components/ui/button";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
+import { ProjectMark } from "@/components/ui/project-mark";
 import { JsonLd } from "@/components/seo/json-ld";
 import { getProject, getOtherProjects, projects, type CapabilityState } from "@/content/projects";
 import { getPostsForProject, postExcerpt } from "@/content/posts";
@@ -102,19 +102,13 @@ export default async function CaseStudyPage({ params }: { params: Params }) {
           <Breadcrumbs items={crumbs} />
 
           <Reveal className="mt-8 flex flex-wrap items-center gap-4">
-            {project.image ? (
-              <Image
-                src={project.image.src}
-                alt={project.image.alt}
-                width={160}
-                height={48}
-                className="h-9 w-auto object-contain object-left"
-              />
-            ) : (
-              <span className="font-mono text-xl font-semibold tracking-tight text-text">
-                {project.name}
-              </span>
-            )}
+            <ProjectMark
+              project={project}
+              width={160}
+              height={48}
+              className="h-9 w-auto object-contain object-left"
+              fallbackClassName="font-mono text-xl font-semibold tracking-tight text-text"
+            />
             {project.confidential ? (
               <span className="inline-flex items-center gap-1.5 rounded-full border border-border-strong px-3 py-1 font-mono text-xs text-text-faint">
                 <Lock size={12} /> NDA-safe overview

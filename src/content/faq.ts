@@ -15,7 +15,7 @@ export const faqs: FaqItem[] = [
   {
     question: "What does Touhidul Islam Rukon build?",
     answer:
-      "Operational and business systems, AI applications, and production websites. The main three are RPOMS, a production-operations platform for a router-refurbishment line; ResearchForge, an AI research assistant that analyses academic PDFs; and homepage development for ERTH, a Malaysian e-waste collection service. Based in Cyberjaya, Selangor, Malaysia.",
+      "Websites and the internal systems a business runs on, plus the IT operations around them. The main three are RPOMS, a production-operations platform for a router-refurbishment line; the completed production homepage for ERTH, a Malaysian e-waste collection service; and ResearchForge, an AI research assistant that analyses academic PDFs. Based in Cyberjaya, Selangor, Malaysia.",
   },
   {
     question: "What is RPOMS?",
@@ -25,17 +25,22 @@ export const faqs: FaqItem[] = [
   {
     question: "What is ResearchForge?",
     answer:
-      "ResearchForge is an AI research assistant. Upload an academic PDF and it returns a structured summary, a research-gap analysis where each gap carries the evidence in the paper that supports it, and a literature review of the prior work that paper discusses. It runs a Python and FastAPI backend beside a Next.js frontend as one deployment behind a single origin, with 186 offline tests.",
+      "ResearchForge is an AI research assistant. Upload an academic PDF and it returns a structured summary, a research-gap analysis where each gap carries the evidence in the paper that supports it, and a literature review of the prior work that paper discusses. It runs a Python and FastAPI backend beside a Next.js frontend as one deployment behind a single origin, with accounts, a private per-user library, and 446 tests that run entirely offline.",
   },
   {
     question: "Does ResearchForge use RAG or retrieval?",
     answer:
-      "No. The analysis path sends the document itself to the model rather than retrieved passages, so it is not a retrieval-augmented system. The retrieval layer (an embedding provider interface, a storage-independent repository, and pgvector migrations) is written and unit-tested, but the embedding network call is deliberately not implemented and no database is connected. The application states this rather than implying otherwise.",
+      "No. The analysis path sends the document itself to the model rather than retrieved passages, so it is not a retrieval-augmented system. A database is connected and analyses are stored in a per-account library, but the retrieval layer is not: the embedding provider interface and request construction are written and unit-tested, while the embedding network call is deliberately not implemented, so no embedding is ever produced and nothing is retrieved. The application states this rather than implying otherwise.",
   },
   {
     question: "What was your role on the ERTH website?",
     answer:
-      "Two phases. The interface was prototyped in Figma before implementation, and translating that prototype into the production build is the design-to-code half of the work. The second phase was development against a supplied requirements document: a content, technical-SEO and AI-search-readability update on the existing design, not a redesign, auditing the live page against every requirement, raising content contradictions for the client to rule on, and implementing the changes inside the existing components. The page went from having no canonical, no Open Graph and no structured data to a full set, with zero new sections added.",
+      "Two phases, and the work is complete. The interface was prototyped in Figma before implementation. The production homepage was then built from the client-approved design as static HTML, CSS and vanilla JavaScript bundled by Vite, which replaced roughly 250 kB of prototype JavaScript with 3.7 kB, cut the image payload from 12.0 MB to 2.7 MB, and fixed four real defects the prototype carried. Technical SEO, structured data, performance and accessibility were implemented in the same pass: the head block went from no canonical, no Open Graph and no structured data to all three, with three JSON-LD blocks, and axe-core reports zero violations across five interaction states.",
+  },
+  {
+    question: "Is Touhidul Islam Rukon a web developer or an IT operations lead?",
+    answer:
+      "Both, and the two sides feed each other. The web development side is production websites and application interfaces in HTML, CSS, JavaScript, TypeScript, React and Next.js. The IT operations side is running the systems a business depends on day to day: deployment, configuration, troubleshooting, hardware and equipment, and web property maintenance. On RPOMS the roles are the same job, because the system models a physical production line and its rules come from the floor rather than a specification.",
   },
   {
     question: "What kind of systems do you work on?",
@@ -50,7 +55,7 @@ export const faqs: FaqItem[] = [
   {
     question: "Do you do technical SEO work?",
     answer:
-      "Yes, at the implementation level: metadata, canonical URLs, Open Graph and Twitter cards, Schema.org JSON-LD, heading hierarchy, semantic HTML, internal linking, and structuring content so an answer engine can quote a single section and still be correct. On the ERTH homepage this was delivered against a supplied requirements document without changing the established design.",
+      "Yes, at the implementation level: metadata, canonical URLs, Open Graph and Twitter cards, Schema.org JSON-LD, heading hierarchy, semantic HTML, internal linking, and structuring content so an answer engine can quote a single section and still be correct. On the ERTH homepage this was delivered as part of the production build, against a supplied requirements document and without changing the approved design.",
   },
   {
     question: "Where are you based?",
@@ -60,6 +65,6 @@ export const faqs: FaqItem[] = [
   {
     question: "Are you available for software or web development opportunities?",
     answer:
-      "Yes. I'm open to software engineering roles, internship or full-time, and I'm reachable by email or WhatsApp.",
+      "Yes. I'm open to web development and IT operations roles, internship or full-time, and I'm reachable by email or WhatsApp.",
   },
 ];

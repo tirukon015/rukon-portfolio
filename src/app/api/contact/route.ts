@@ -36,6 +36,18 @@ export async function POST(request: Request) {
   if (message.length > 5000) {
     return NextResponse.json({ error: "Message is too long." }, { status: 400 });
   }
+  // The short fields were unbounded. `subject` in particular is interpolated
+  // into an email header, and `name` into the body, so both are capped at a
+  // length no genuine submission reaches.
+  if (name.length > 200 || email.length > 320 || subject.length > 200) {
+    return NextResponse.json({ error: "One of those fields is too long." }, { status: 400 });
+  }
+  // A newline in a header field is never legitimate. Resend takes JSON rather
+  // than raw SMTP so this is not exploitable today, but the value should not
+  // carry line breaks into a header regardless of who parses it next.
+  if (/[\r\n]/.test(subject) || /[\r\n]/.test(email) || /[\r\n]/.test(name)) {
+    return NextResponse.json({ error: "Invalid characters in a field." }, { status: 400 });
+  }
 
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {

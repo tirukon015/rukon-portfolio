@@ -13,6 +13,7 @@ import { estimateReadingTime } from "@/lib/reading-time";
 import { site } from "@/content/site";
 import {
   absoluteUrl,
+  BASE_URL,
   breadcrumbSchema,
   graph,
   openGraphFor,
@@ -39,7 +40,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     title,
     description,
     alternates: { canonical: post.canonical ?? `/blog/${post.slug}` },
-    authors: [{ name: site.name, url: `https://${site.domain}` }],
+    authors: [{ name: site.name, url: BASE_URL }],
     openGraph: openGraphFor({
       title,
       description,

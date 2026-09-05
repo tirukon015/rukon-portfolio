@@ -2,17 +2,27 @@ export const site = {
   name: "Touhidul Islam Rukon",
   shortName: "Rukon",
   initials: "TIR",
-  role: "Software Developer, Operations and AI Systems",
+  role: "Web Developer & IT Operations Lead",
   location: "Cyberjaya, Selangor, Malaysia",
   email: "tirukon015@gmail.com",
   emailHref: "mailto:tirukon015@gmail.com",
   phoneDisplay: "+60 11-1784 2250",
   whatsapp: "https://wa.me/601117842250",
+  /** Display form, used in the OG image wordmark. Not a URL. */
   domain: "rukon.dev",
+  /**
+   * The host production actually serves from.
+   *
+   * The apex 308-redirects to www, so building canonicals, og:url and the
+   * sitemap from the apex pointed every one of them at a URL that redirects.
+   * Canonical metadata has to name the URL that answers 200, not the one that
+   * bounces, so every absolute URL is built from this.
+   */
+  canonicalHost: "www.rukon.dev",
   /** Used for og:locale and the Person schema. */
   locale: "en_MY",
   statement:
-    "I build the systems a business actually runs on. A production-operations platform for a live router-refurbishment line, an AI document-analysis application deployed on its own domain, and requirement-driven SEO and content work on a production website, built end to end, and maintained after launch.",
+    "I build websites and the internal systems a business actually runs on, and I run the IT operations around them. A production-operations platform for a live router-refurbishment line, a completed production website, and an AI document-analysis application on its own domain, built end to end and maintained after launch.",
   links: {
     github: "https://github.com/tirukon015",
     linkedin: "https://linkedin.com/in/tirukon015",

@@ -61,18 +61,18 @@ export function Hero() {
               </li>
               <li>
                 <Link
-                  href="/work/researchforge"
+                  href="/work/erth"
                   className="transition-colors hover:text-accent-strong"
                 >
-                  AI research assistant, deployed and tested
+                  Production website, built and completed
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/work/erth"
+                  href="/work/researchforge"
                   className="transition-colors hover:text-accent-strong"
                 >
-                  Technical SEO shipped on a production website
+                  AI research assistant, deployed and tested
                 </Link>
               </li>
             </ul>
