@@ -42,3 +42,8 @@ next-env.d.ts
 
 .vercel
 .env*
+
+# The real CV. This repository is public, so the confidential document is
+# never committed: production reads it from private storage via CV_DOCUMENT_URL,
+# and this path is the local development copy only.
+private/

@@ -34,9 +34,13 @@ export async function GET(request: Request) {
 
   const document = await loadCVDocument();
   if (!document.ok) {
-    console.error("CV grant verified but the document could not be read.");
+    console.error(
+      document.reason === "not-configured"
+        ? "CV grant verified but no document source is configured (set CV_DOCUMENT_URL)."
+        : "CV grant verified but the document could not be fetched from private storage."
+    );
     return NextResponse.json(
-      { error: "The CV is temporarily unavailable. Please email me and I'll send it directly." },
+      { error: "The CV is temporarily unavailable. Please reach me through LinkedIn." },
       { status: 503, headers: { "Cache-Control": "no-store, private" } }
     );
   }

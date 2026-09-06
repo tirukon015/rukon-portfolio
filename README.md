@@ -57,6 +57,10 @@ Plus generated `robots.txt`, `sitemap.xml`, `icon` and `opengraph-image`.
 
 **The CV page is public; three fields are not.** `/cv` renders the whole CV from `src/content/cv.ts`. Email, phone and address are absent from that file by design, because it ships in the client bundle. They come from `/api/cv/contact`, which checks the same grant as the document route, so one form submission releases all three at once and unlocks the download.
 
+**The real CV PDF is not in this repository, and must not be.** This repository is public, so a committed PDF is a published PDF whatever directory it sits in — `private/` only means "not served as a static asset by Next". `private/` is git-ignored and holds the local development copy only; production fetches the document from private storage via `CV_DOCUMENT_URL`. See `src/lib/cv-access/document.ts`.
+
+**Known and accepted: the email is public elsewhere.** The footer and the Contact section both publish `site.email` deliberately, and that is intentional. The CV page still gates Email Address alongside Phone and Address, so the three fields behave consistently there, but gating it on `/cv` does **not** make the address globally confidential — anyone can read it from any other page. It has been removed from the Person JSON-LD, because metadata is a different matter from a visible contact link. Phone and address appear nowhere else on the site, so those two are genuinely protected.
+
 **The CV is not a static file.** `private/cv/` sits outside `public/`, so the document has no static URL. `/api/cv/document` is the only way to reach it and it verifies a server-signed grant cookie first. The three CV buttons link to `/cv`, never to the file. See `src/lib/cv-access/` for the service abstraction and the two marked Supabase integration points.
 
 **`image.srcDark`.** Some supplied logos ship on an opaque background, which makes one file wrong in one theme. Set `srcDark` and `ProjectMark` renders both, with CSS choosing, so the correct one paints on the first frame.
@@ -79,6 +83,8 @@ npm run build
 | --- | --- | --- |
 | `RESEND_API_KEY` | `/api/contact` | Via the Resend Vercel integration. Without it the form returns a clear error rather than a false success. |
 | `CV_CONTACT_EMAIL`, `CV_CONTACT_PHONE`, `CV_CONTACT_ADDRESS` | `/api/cv/contact` | The three gated CV fields. Kept out of source because this repository is public. All three or none: a partial set returns 503 rather than revealing some fields and failing the rest. |
+| `CV_DOCUMENT_URL` | `/api/cv/document` | Where the real CV PDF is fetched from. **Required in production** — the PDF is not in this repository. Any private, authenticated URL: a Vercel Blob private URL, a Supabase signed URL, or similar. Read server-side only and never sent to a browser. Without it the route returns 503. |
+| `CV_DOCUMENT_TOKEN` | `/api/cv/document` | Optional bearer token for `CV_DOCUMENT_URL`, when the storage provider needs one. |
 | `CV_ACCESS_SECRET` | `/api/cv/*` | Signs the CV access grant. **Required in production** — without it the request route returns 503 rather than issuing a grant it cannot verify. In development a per-process random secret is used, so no setup is needed locally. Any random string of 16+ characters. |
 
 ---
