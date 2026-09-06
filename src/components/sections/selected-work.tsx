@@ -16,7 +16,7 @@ export function SelectedWork() {
           <SectionHeading
             eyebrow="Selected Work"
             title="Real systems, not tutorials."
-            description="An internal operations platform running a production line, a completed production website, and an AI research assistant."
+            description="An ERP-style operational system running a live production line, a completed business website, and a deployed AI research assistant."
           />
           <Link
             href={site.workHref}

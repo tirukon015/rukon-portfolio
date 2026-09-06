@@ -2,7 +2,7 @@ export const site = {
   name: "Touhidul Islam Rukon",
   shortName: "Rukon",
   initials: "TIR",
-  role: "Web Developer & IT Operations Lead",
+  role: "IT Systems & Operations Lead · Web Developer · Software Specialist",
   location: "Cyberjaya, Selangor, Malaysia",
   email: "tirukon015@gmail.com",
   emailHref: "mailto:tirukon015@gmail.com",
@@ -22,7 +22,7 @@ export const site = {
   /** Used for og:locale and the Person schema. */
   locale: "en_MY",
   statement:
-    "I build websites and the internal systems a business actually runs on, and I run the IT operations around them. A production-operations platform for a live router-refurbishment line, a completed production website, and an AI document-analysis application on its own domain, built end to end and maintained after launch.",
+    "I work across IT systems, operations, web and software: understanding an operational problem, designing the system for it, building and deploying it, then supporting and improving it once people depend on it daily. RPOMS, an ERP-style operational platform running a live router-refurbishment line, is the clearest example.",
   links: {
     github: "https://github.com/tirukon015",
     linkedin: "https://linkedin.com/in/tirukon015",

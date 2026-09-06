@@ -1069,7 +1069,7 @@ export const posts: BlogPost[] = [
     slug: "making-an-llm-admit-the-paper-does-not-say",
     title: "Making an LLM Admit the Paper Doesn't Say That",
     description:
-      "The dangerous failure of an AI summarising tool is not a blank answer. It is a plausible one about a section that was never in the source. Enforcing that in three places.",
+      "The dangerous failure of an AI summarising tool is not a blank answer. It is a plausible one about a section that was never in the source. Enforcing groundedness in four layers instead of asking for it once.",
     date: "2026-09-05",
     category: "Software Engineering",
     tags: ["LLM", "AI Engineering", "Structured Output", "FastAPI", "Python"],
@@ -1094,11 +1094,11 @@ export const posts: BlogPost[] = [
         body: [
           "The obvious response is to put it in the system prompt. Only use the paper. Say so if the paper does not support a section. That is necessary and it is nowhere near sufficient, because a prompt instruction is a preference expressed in the same channel as everything else competing for the model's attention.",
           "More to the point, a prompt gives the model no shape in which to decline. If the response format has a methodology field and no way to say 'absent', then the least-cost path to a valid answer is to fill it. You have built a structure where honesty has no representation.",
-          "So the rule is enforced in three places rather than requested once.",
+          "So the rule is enforced in four layers rather than requested once: the prompt, the schema, validation on return, and discarding anything that fails.",
         ],
       },
       {
-        heading: "One: the schema has somewhere to put 'no'",
+        heading: "The schema has somewhere to put 'no'",
         body: [
           "Each response model carries explicit fields for declining. There is a list naming any section the paper did not support, and a boolean plus explanation for the case where the whole analysis cannot be grounded at all.",
           "That is the actual mechanism. Not the instruction, the affordance. Given a structured slot that means 'this paper has no methodology section', a model will use it, because it is now the cheapest valid answer rather than an invalid one.",
@@ -1106,9 +1106,10 @@ export const posts: BlogPost[] = [
         ],
       },
       {
-        heading: "Two: the interface prints it",
+        heading: "Validate, then discard rather than repair",
         body: [
-          "The third enforcement point is the one that is easiest to skip and hardest to justify skipping. The interface renders those fields.",
+          "Every reply is validated against the declared schema on return. The layer that makes that matter is what happens next: output that fails validation is rejected outright, not patched into something renderable. A partially valid analysis the system repaired would be an invented analysis, which is exactly what the grounding claim forbids.",
+          "The last layer is the one easiest to skip and hardest to justify skipping. The interface renders the decline fields.",
           "If the model says a section was unsupported, the reader sees that the section was unsupported. The field is not swallowed, not rendered as an empty state that looks like a loading failure, not tucked behind a disclosure. It is the answer.",
           "A schema field nobody displays is a schema field nobody can rely on, and it is also a quiet invitation to stop populating it correctly. Displaying it closes the loop between what the model was asked to do and what the user actually gets.",
         ],

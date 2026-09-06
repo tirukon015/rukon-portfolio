@@ -1,17 +1,19 @@
 export const about = {
-  profileTitle: "Web Developer & IT Operations Lead",
+  profileTitle: "IT Systems & Operations Lead · Web Developer · Software Specialist",
   profileTags: [
+    "IT Systems & Operations",
     "Web Development",
-    "IT Operations",
-    "Operations Systems",
-    "AI / LLM Engineering",
+    "Software Development",
+    "IT Support",
+    "Business Workflows",
   ],
   paragraphs: [
-    "I'm a web developer and IT operations lead based in Cyberjaya, Malaysia. The work runs across two sides that usually sit apart: building the websites and internal systems, and running the operations they support day to day.",
-    "The largest of those is RPOMS, a production-operations platform I designed and built for a router-refurbishment programme run by Blue Bee Technologies, and still maintain. As IT Systems & Operations Lead for it I own both halves: the software, interfaces, data model, access control and the deployment path to production, and the physical process it supports, the stock it tracks, and the people running it. Around 35,800 lines of TypeScript across ten admin modules and twenty-five API routes.",
-    "For ERTH, a Malaysian e-waste collection service, I prototyped the interface in Figma and then built the production homepage from the approved design: static HTML, CSS and vanilla JavaScript bundled by Vite, with the technical SEO, structured data, performance and accessibility work in the same pass. That website is complete and deployed.",
-    "Alongside that I built ResearchForge, an AI research assistant that reads an academic PDF and produces a structured summary, a gap analysis where every gap carries the evidence behind it, and a literature review. It runs a Python and FastAPI backend beside a Next.js frontend on its own domain, with accounts and a private per-user library, and it's built to say when the paper doesn't support an answer rather than produce a plausible one.",
-    "My own stack is still moving. TypeScript is what I write production systems in daily, and I'm deliberately deepening it alongside newer platform work rather than treating it as finished. I'm currently completing a B.Sc. in Information Technology at the University of Cyberjaya, and looking for web development and IT operations roles, internship or full-time, where I can keep building systems that hold up under real, daily use.",
+    "I'm a hands-on technology professional in Cyberjaya, Malaysia. My work sits where three things meet: the operational problem a business actually has, the system built to solve it, and the day-to-day support that keeps it working once people depend on it.",
+    "That means I'm rarely doing only one of those jobs. I write the software, but I also gather the requirement from the floor rather than a specification, deploy it, support the users, troubleshoot the hardware and software around it, and keep improving it after launch. The technical work and the operational work are the same job.",
+    "RPOMS is the clearest example. It's an ERP-style operational system I designed and built for a router-refurbishment programme at Blue Bee Technologies, and still maintain: serial-level asset tracking, inventory and consumable deduction, packing, delivery and paperwork generation, workforce output, operational dashboards and reporting, and three-tier access control. Around 35,800 lines of TypeScript across ten admin modules and twenty-five API routes, replacing the spreadsheets the operation used to run on.",
+    "On the web side, I prototyped the ERTH homepage in Figma and then built the production website from the approved design: static HTML, CSS and vanilla JavaScript on Vite, with the technical SEO, structured data, performance and accessibility work in the same pass. Alongside that I maintain the company's web properties, including WordPress, Elementor and WooCommerce work.",
+    "ResearchForge, a university group project, is where I work on AI application engineering: a deployed research assistant with a Python and FastAPI backend, a Next.js frontend, accounts and per-user data isolation enforced in the database.",
+    "I'm completing a B.Sc. in Information Technology at the University of Cyberjaya. My TypeScript and newer platform work is something I'm deliberately still deepening rather than treating as finished. I'm open to roles across IT systems and operations, web development and software.",
   ],
   facts: [
     { label: "Location", value: "Cyberjaya, Selangor, Malaysia" },

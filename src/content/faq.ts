@@ -25,7 +25,7 @@ export const faqs: FaqItem[] = [
   {
     question: "What is ResearchForge?",
     answer:
-      "ResearchForge is an AI research assistant. Upload an academic PDF and it returns a structured summary, a research-gap analysis where each gap carries the evidence in the paper that supports it, and a literature review of the prior work that paper discusses. It runs a Python and FastAPI backend beside a Next.js frontend as one deployment behind a single origin, with accounts, a private per-user library, and 446 tests that run entirely offline.",
+      "ResearchForge is an AI research assistant. Upload an academic PDF and it returns a structured summary, a research-gap analysis where each gap carries the evidence in the paper that supports it, and a literature review of the prior work that paper discusses. It runs a Python and FastAPI backend beside a Next.js frontend as one deployment behind a single origin, with accounts, a private per-user library whose isolation is enforced by PostgreSQL Row Level Security, and 538 passing tests that never call a paid interface. It was built as a five-person university group project for BIT4543 Artificial Intelligence at the University of Cyberjaya.",
   },
   {
     question: "Does ResearchForge use RAG or retrieval?",

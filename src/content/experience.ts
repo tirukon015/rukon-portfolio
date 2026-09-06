@@ -12,21 +12,22 @@ export type ExperienceEntry = {
 
 export const experience: ExperienceEntry[] = [
   {
-    role: "Software Specialist / IT Support Technician",
+    role: "IT Systems & Operations Lead · Web Developer · Software Specialist",
     org: "Blue Bee Technologies Sdn. Bhd.",
     location: "Cyberjaya, Malaysia",
     period: "2024 - Present",
     summary:
-      "Web development and IT operations for the company's internal systems, infrastructure and web properties, and IT Systems & Operations Lead for RPOMS.",
+      "One role covering the whole chain: operational requirement, system design, web and software implementation, deployment, daily support, and ongoing maintenance. Lead for RPOMS, the ERP-style operational system running the company's router-refurbishment programme.",
     primary: true,
     projects: ["rpoms", "erth"],
     bullets: [
-      "Act as IT Systems & Operations Lead for RPOMS: designed and built the system end to end: data model, three-tier access control, ten admin modules, twenty-five API routes, and a storage layer that runs on PostgreSQL, MySQL or a local file store, and remain its maintainer.",
-      "Work directly with the operational side RPOMS supports: the ERTH x Maxis router-refurbishment line, the stock it consumes, and the people running it, so the system's rules come from the floor rather than from a specification.",
-      "Built RPOMS to replace spreadsheet-based tracking across the full production lifecycle, from intake and serial registry through packing, delivery and workforce reporting.",
-      "Delivered the ERTH production homepage: prototyped in Figma, then built from the approved design as static HTML, CSS and vanilla JavaScript with technical SEO, structured data, performance and accessibility work in the same pass.",
-      "Run IT operations for internal systems: software support and troubleshooting for the company's day-to-day business tracking system, hardware troubleshooting, system installation, and maintenance of PCs and IT equipment.",
-      "Manage website maintenance and technical support for company web properties, including WordPress development, Elementor page design and WooCommerce setup.",
+      "Lead RPOMS end to end: gathered the requirement from the production floor, designed the data model and three-tier access control, built ten admin modules and twenty-five API routes, took it to production, and remain its maintainer.",
+      "Built RPOMS as a real operational system rather than a reporting tool: serial-level asset tracking, inventory and consumable deduction tied to valid business events, packing and delivery validation, generated delivery paperwork, workforce output, and operational dashboards.",
+      "Work directly with the operation the system serves, the ERTH x Maxis refurbishment line, its stock and the people running it, so the software's rules come from how the floor actually works rather than from an assumed process.",
+      "Built the ERTH production homepage: prototyped in Figma, then implemented from the approved design as static HTML, CSS and vanilla JavaScript, with technical SEO, structured data, performance and accessibility delivered in the same pass.",
+      "Maintain company web properties, including WordPress development, Elementor page design and WooCommerce setup, from requirement through to deployment and ongoing upkeep.",
+      "Provide day-to-day IT support and operations: troubleshooting the internal business tracking system and other software, hardware diagnosis and repair, system installation, and maintenance of PCs and IT equipment.",
+      "Handle deployment and environment work across Vercel, Supabase and cPanel hosting, including configuration, environment and secret management, and resolving production issues as they surface.",
     ],
   },
   {
@@ -41,18 +42,18 @@ export const experience: ExperienceEntry[] = [
     ],
   },
   {
-    role: "Developer (independent project)",
-    org: "ResearchForge",
+    role: "Developer, ResearchForge (university group project)",
+    org: "University of Cyberjaya, BIT4543 Artificial Intelligence",
     location: "Cyberjaya, Malaysia",
     period: "2026",
     summary:
-      "An AI research assistant built end to end and deployed on its own subdomain, taken as a way to work through LLM engineering properly rather than to serve a client.",
+      "A five-person group project building and deploying an AI research paper assistant. Development, deployment and maintenance of the live system on my own domain and repository.",
     projects: ["researchforge"],
     bullets: [
       "Built and deployed a Python and FastAPI backend beside a Next.js frontend as one Vercel project behind a single origin.",
-      "Enforced evidence grounding in three places, the prompt, the response schema and the interface, so the tool declines rather than inventing a section the paper does not support.",
-      "Added accounts and a private per-account research library, with ownership enforced by Postgres Row Level Security rather than by an interface check.",
-      "Wrote 446 tests that run entirely offline against a fake model provider, so the suite spends no tokens and needs no network.",
+      "Implemented per-user data isolation in the database with PostgreSQL Row Level Security, after an application-level ownership check proved insufficient in production.",
+      "Constrained model output to a declared schema, validated it on return and discarded anything that failed rather than repairing it.",
+      "Backed the system with an offline test suite: 522 backend tests passing and 16 frontend tests, none of which call a paid interface.",
     ],
   },
 ];

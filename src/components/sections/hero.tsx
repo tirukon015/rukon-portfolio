@@ -56,7 +56,7 @@ export function Hero() {
                   href="/work/rpoms"
                   className="transition-colors hover:text-accent-strong"
                 >
-                  Production-operations platform, in daily use
+                  WMS/ERP-style operational system, in daily use
                 </Link>
               </li>
               <li>
@@ -64,7 +64,7 @@ export function Hero() {
                   href="/work/erth"
                   className="transition-colors hover:text-accent-strong"
                 >
-                  Production website, built and completed
+                  Business website, built and completed
                 </Link>
               </li>
               <li>

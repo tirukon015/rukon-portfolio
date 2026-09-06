@@ -13,22 +13,28 @@ export type Capability = {
  */
 export const capabilities: Capability[] = [
   {
+    title: "IT Systems & Operations",
+    description:
+      "Running the systems a business depends on daily, including the ones I build: deployment and environment configuration, secret management, production issue resolution, user and technical support, hardware diagnosis and repair, system installation, and keeping it all working as requirements change.",
+    evidence: ["rpoms"],
+  },
+  {
+    title: "WMS / ERP-style Operational Systems",
+    description:
+      "Turning a physical operation into one system: asset and serial tracking, inventory and consumable deduction, production stages, delivery, workforce output and operational reporting, all reading from a single data model so a dashboard figure traces back to the event behind it.",
+    evidence: ["rpoms"],
+  },
+  {
     title: "Web Development",
     description:
-      "Building the actual website: semantic HTML, CSS that holds up from 320px, and only the JavaScript a page needs. A production homepage shipped as static files with no third-party requests, and application interfaces in React and Next.js.",
+      "Building the actual website: semantic HTML, CSS that holds up from 320px, and only the JavaScript a page needs. A production homepage shipped as static files with no third-party requests, application interfaces in React and Next.js, and WordPress, Elementor and WooCommerce maintenance on company web properties.",
     evidence: ["erth", "rpoms", "researchforge"],
   },
   {
-    title: "Production & Operations Systems",
+    title: "Business Requirements to Working System",
     description:
-      "Modelling a physical process in software closely enough to run it: intake, stages, stock, delivery, and the business rules a floor imposes that no specification contains.",
-    evidence: ["rpoms"],
-  },
-  {
-    title: "IT Operations & Support",
-    description:
-      "Keeping the systems a business runs on running, including the ones I build myself: deployment, configuration, environment and secret management, troubleshooting, hardware and equipment maintenance, and web property upkeep.",
-    evidence: ["rpoms"],
+      "Taking a requirement from the people doing the work rather than from a specification, deciding what the system has to model, building it, putting it into use, and correcting it once real use exposes what the requirement left out.",
+    evidence: ["rpoms", "erth"],
   },
   {
     title: "Full-Stack Web Development",
@@ -39,7 +45,7 @@ export const capabilities: Capability[] = [
   {
     title: "AI & LLM Engineering",
     description:
-      "Shipping an LLM feature that behaves: schema-constrained output validated on return, grounding enforced in the prompt, the schema and the interface, and a provider abstraction that makes the vendor a configuration choice with an automatic fallback.",
+      "Shipping an LLM feature that behaves: groundedness enforced in four layers rather than requested in a prompt, output validated against a declared schema and discarded rather than repaired when it fails, and a provider abstraction with a narrow, whitelisted automatic fallback.",
     evidence: ["researchforge"],
   },
   {
@@ -148,12 +154,12 @@ export const stack: StackCategory[] = [
     note: "Chosen for a particular problem, and used properly for it.",
     items: [
       "Figma",
-      "Anthropic API",
       "Groq API",
-      "Google Gemini API",
+      "Anthropic API",
       "Supabase (Auth, Postgres, RLS)",
       "pypdf",
       "pytest",
+      "Vitest",
       "ruff",
       "TanStack Table",
       "Recharts",

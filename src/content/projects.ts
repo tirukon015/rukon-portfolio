@@ -27,7 +27,7 @@ export type ProjectStatusItem = {
   detail: string;
 };
 
-export type ProjectKind = "professional" | "personal-project";
+export type ProjectKind = "professional" | "personal-project" | "group-project";
 
 export type Project = {
   slug: string;
@@ -69,9 +69,9 @@ export const projects: Project[] = [
     slug: "rpoms",
     name: "RPOMS",
     fullName: "Router Production Operations Management System",
-    tagline: "The system built to run a router-refurbishment production line.",
+    tagline: "A real-world WMS/ERP-like operational system running a live production line.",
     summary:
-      "A production-operations platform built for a router-refurbishment programme run by Blue Bee Technologies, covering every stage a unit passes through, from intake to delivery. Around 35,800 lines of TypeScript across ten admin modules and twenty-five API routes.",
+      "A WMS/ERP-style operational system that replaced the spreadsheets running a router-refurbishment line. Serial-level asset tracking, inventory deduction, packing, delivery and generated paperwork, workforce output and dashboards. Designed, built and maintained by me: 35,800 lines of TypeScript, ten admin modules, twenty-five API routes.",
     role: "IT Systems & Operations Lead, RPOMS",
     period: "2026 (ongoing)",
     affiliation: "Blue Bee Technologies Sdn. Bhd., ERTH × Maxis programme",
@@ -112,6 +112,9 @@ export const projects: Project[] = [
       },
     ],
     highlights: [
+      "Covers the operational chain end to end: asset intake, inventory, production stages, packing, delivery and reporting, in one system",
+      "Serial-level traceability from intake through packing to a delivered box, so any unit can be accounted for after the fact",
+      "Consumable stock (chargers, LAN cables, packaging) deducts from the production figures entered once, rather than being counted a second time by hand",
       "One storage interface with three interchangeable backends, chosen by which environment variables are present",
       "Three access tiers with server-side enforcement, HMAC-signed sessions, and no default passwords",
       "Serial-level registry with configurable detection rules, so a new router model does not need a release",
@@ -130,7 +133,8 @@ export const projects: Project[] = [
       {
         heading: "Overview",
         body: [
-          "RPOMS is an internal operations system built for a router-refurbishment programme that Blue Bee Technologies runs in partnership with ERTH and Maxis. Before RPOMS, the operation was coordinated through spreadsheets. RPOMS models the whole path a unit takes, arriving, accepted, cleaned, packed into a numbered box, and delivered with the paperwork that goes with it, as one system.",
+          "RPOMS is an internal WMS/ERP-style operational system built for a router-refurbishment programme that Blue Bee Technologies runs in partnership with ERTH and Maxis. Before RPOMS, the operation was coordinated through spreadsheets. RPOMS models the whole path a unit takes, arriving, accepted, cleaned, packed into a numbered box, and delivered with the paperwork that goes with it, as one system.",
+          "The comparison to a warehouse or resource-planning system is about shape rather than scale. It is not a commercial ERP suite and does not try to be one: there is no finance, procurement or HR module. What it shares with that category is the structure, a single operational data model that inventory, production, delivery, workforce and reporting all read from, so a figure on a dashboard traces back to the event that produced it.",
           "It runs to roughly 35,800 lines of TypeScript, across ten admin modules, twenty-five API route handlers, a viewer-gated monitoring dashboard, and a storage layer with three interchangeable backends.",
         ],
       },
@@ -245,7 +249,7 @@ export const projects: Project[] = [
     fullName: "ERTH: production homepage, technical SEO and GEO implementation",
     tagline: "A design-tool prototype rebuilt as a production website that ships 3.7 kB of JavaScript.",
     summary:
-      "The production homepage for ERTH, a Malaysian e-waste collection and rewards service. Prototyped in Figma, specified as an approved design file, and rebuilt as static HTML, CSS and vanilla JavaScript bundled by Vite, with the technical SEO, structured data and accessibility work done in the same pass. Complete and deployed.",
+      "The production website for a Malaysian e-waste collection service. Prototyped in Figma, then built from the approved design as static HTML, CSS and vanilla JavaScript: 250 kB of prototype JavaScript down to 3.7 kB, images 12.0 MB down to 2.7 MB, full technical SEO and structured data added. Complete and deployed.",
     role: "UI/UX and Web Developer: design prototyping, production build, technical SEO",
     period: "2026 (completed)",
     affiliation: "ERTH",
@@ -481,28 +485,28 @@ export const projects: Project[] = [
     fullName: "ResearchForge: AI research paper assistant",
     tagline: "An AI research assistant built to say when the paper doesn't support the answer.",
     summary:
-      "Upload an academic PDF and get a structured summary, a research-gap analysis where every gap carries the evidence it rests on, and a literature review scoped to the prior work the paper itself discusses. A Python and FastAPI backend beside a Next.js frontend, deployed as one Vercel project behind a single origin, with accounts and a private per-user research library.",
-    role: "Designer & developer",
+      "An AI research assistant that reads an academic PDF and returns a summary, a gap analysis carrying its own evidence, and a literature review, declining rather than inventing where the paper does not support a section. Python and FastAPI behind a Next.js frontend, with accounts and per-user isolation enforced in PostgreSQL. A five-person university group project.",
+    role: "Developer: backend, deployment, data isolation and testing",
     period: "2026",
-    affiliation: "Independent project",
+    affiliation: "University of Cyberjaya, BIT4543 Artificial Intelligence (five-person group project)",
     confidential: false,
-    kind: "personal-project",
+    kind: "group-project",
     tech: [
-      "Python 3.12",
+      "Python 3.14",
       "FastAPI",
       "Pydantic",
       "Next.js 16 (App Router)",
       "React 19",
       "TypeScript",
       "Supabase / PostgreSQL",
-      "Anthropic",
       "Groq",
+      "Anthropic",
       "pytest",
     ],
     techGroups: [
       {
         label: "Backend",
-        items: ["Python 3.12", "FastAPI", "Pydantic", "pydantic-settings", "uvicorn"],
+        items: ["Python 3.14", "FastAPI", "Pydantic", "pydantic-settings", "uvicorn"],
       },
       {
         label: "Frontend",
@@ -511,9 +515,8 @@ export const projects: Project[] = [
       {
         label: "AI",
         items: [
-          "Anthropic Claude",
-          "Groq",
-          "Google Gemini (implemented)",
+          "Groq (qwen3.6-27b, primary)",
+          "Anthropic (claude-opus-5, fallback)",
           "Schema-constrained structured output",
           "Automatic provider fallback",
         ],
@@ -534,16 +537,16 @@ export const projects: Project[] = [
       },
       {
         label: "Quality & platform",
-        items: ["pytest", "ruff", "mypy config", "Vercel (multi-service, one origin)"],
+        items: ["pytest", "Vitest", "ruff", "Vercel (multi-service, one origin)"],
       },
     ],
     highlights: [
       "Every claim must be grounded in the uploaded paper, enforced in the prompt, the response schema, and the interface",
-      "Two providers behind one interface, with the owner choosing the primary and the other becoming its automatic fallback",
+      "Two providers behind one interface: Groq qwen3.6-27b as configured primary, Anthropic claude-opus-5 as automatic fallback",
       "Fallback fires only for rate limits and temporary provider failures, never for a bad PDF or a validation error that would fail identically on either vendor",
       "Every analysis records which provider and model actually produced it, whether the fallback was used, and how long it took",
-      "Private per-account libraries enforced by Postgres Row Level Security rather than by the interface",
-      "446 tests across seventeen files: the model provider is replaced by an offline fake, so the suite spends no tokens",
+      "Per-user isolation moved out of application code and into Postgres Row Level Security, after an application-level check proved insufficient in production",
+      "538 passing tests, 522 backend and 16 frontend, none of which call a paid interface",
       "The model tier was chosen to fit a 300-second function ceiling, not from a benchmark table",
       "What it cannot do is published on the site, not buried in a README",
     ],
@@ -572,14 +575,16 @@ export const projects: Project[] = [
       {
         heading: "Context",
         body: [
-          "This is an independent project, built to work through a problem properly rather than to serve a client: what does it actually take to ship an LLM feature that behaves honestly under real platform constraints?",
-          "It began as a stateless tool with no accounts, which kept the first version defensible while there was nothing stored to protect. Adding a library meant that stopped being true, so authentication, per-account ownership and database-level access control went in together rather than being retrofitted around a feature that had already shipped.",
+          "ResearchForge was built for BIT4543 Artificial Intelligence at the University of Cyberjaya, by a group of five. The system was designed, implemented, deployed and tested by the project group, and the report records results from running the deployed system rather than estimates.",
+          "It began as a stateless tool with no accounts, which kept the first version defensible while there was nothing stored to protect. Adding a library meant that stopped being true, so authentication, per-user ownership and database-level access control went in together rather than being retrofitted around a feature that had already shipped.",
         ],
+        note:
+          "A five-person group project. This case study describes the work and the system rather than claiming sole authorship; the areas listed under the role above are the ones I carried, and the deployment and repository are mine.",
       },
       {
         heading: "Engineering Approach",
         body: [
-          "The founding principle is that every claim must be grounded in the uploaded paper, and it is enforced in three separate places rather than requested once in a prompt. The system prompt states it. The response schema carries fields the model uses to decline, a list naming any section the paper did not support, and a boolean plus explanation where a whole analysis cannot be grounded. The interface prints those fields rather than hiding them.",
+          "The founding principle is that every claim must be grounded in the uploaded paper, and it is enforced in four layers rather than requested once in a prompt. The prompt requires it, and the prompts live in version-controlled files rather than scattered through the code. The response schema carries explicit insufficient-evidence fields, giving the model a way to decline that is as easy as complying. Every reply is validated against that schema on return. And output that fails validation is discarded rather than repaired, which is the rule that makes the other three mean anything: a partially valid analysis that the system patched up would be an invented analysis.",
           "Structured output is the mechanism, not a convenience. Each response model is converted to a JSON Schema and handed to the model as the required output format, with additional properties forbidden. Every reply is validated on return, and a truncated or malformed answer is refused outright rather than partially rendered.",
           "The three analyses run as three separate model calls. They are different tasks with different evidence rules, so separating them means a failure in one does not corrupt the others, and each can be improved on its own. They run sequentially on purpose: running them in parallel would multiply the peak rate-limit burden for a latency win that does not matter on a single upload.",
         ],
@@ -588,15 +593,17 @@ export const projects: Project[] = [
         heading: "Architecture",
         body: [
           "One Vercel project runs two services. A Next.js frontend serves everything except the API, and a FastAPI backend serves /health and /api/*, with routing declared in the project configuration. Because both share one origin, the frontend calls the API with a relative path, which is what makes the custom domain, the .vercel.app domain and every preview URL work from the same build.",
-          "Generation sits behind a provider interface. The analysis service depends on that interface and never on a vendor SDK, each vendor's SDK is imported only inside its own provider module, and the concrete provider is built by a factory with a local import so adding one never forces every caller to import every SDK. Three provider implementations exist; two are wired as the active pair.",
+          "Generation sits behind a provider interface. The analysis service depends on that interface and never on a vendor SDK, each vendor's SDK is imported only inside its own provider module, and the concrete provider is built by a factory with a local import so adding one never forces every caller to import every SDK. An earlier version used Google Gemini; it is a historical provider only and produces none of the current analyses.",
           "Vendor errors are wrapped in project-owned exception types, with a missing API key separated out from the rest because it is a deployment problem rather than a user's fault and maps to a different status code. Status codes are chosen so the frontend can tell the cases apart without parsing message text: too large, unusable PDF, unusable model reply, no credentials configured. Nothing expected returns a 500.",
         ],
       },
       {
         heading: "Providers and fallback",
         body: [
-          "The owner picks which of the two providers is primary, and the other automatically becomes the fallback. There is no per-user model picker: the choice is an operational one, made once, and the interface does not pretend otherwise.",
-          "Fallback is deliberately narrow. It fires once per analysis, and only for a rate limit or a temporary provider failure. It does not fire for a malformed PDF, a schema validation failure or a missing key, because those fail identically on either vendor and retrying them just spends a second vendor's quota to produce the same error more slowly.",
+          "The owner picks which of the two providers is primary, and the other automatically becomes the fallback. Groq running qwen3.6-27b is the configured primary; Anthropic claude-opus-5 is the fallback. There is no per-user model picker: the choice is an operational one, made once, and the interface does not pretend otherwise.",
+          "Availability is enforced when the router is constructed rather than checked at call time, so a provider that has been switched off is never built and no code path can reach it.",
+          "Fallback is deliberately narrow. It fires once per analysis, and only for a rate limit or a temporary provider failure, checked against a whitelist so a new error type does not become retryable by default. It does not fire for a malformed PDF, a schema validation failure or a missing key, because those fail identically on either vendor and retrying them just spends a second vendor's quota to produce the same error more slowly.",
+          "One switch per analysis, not per call. An analysis makes at least three calls, and allowing each to fail over independently would let different sections be written by different models, which makes the recorded model identity meaningless.",
           "Every stored analysis records which provider and model actually produced it, whether the fallback was used, and how long the call took. Without that, a result whose quality looks off has no explanation attached to it, and 'which model wrote this' becomes unanswerable a week later.",
         ],
       },
@@ -620,8 +627,9 @@ export const projects: Project[] = [
       {
         heading: "Testing",
         body: [
-          "446 tests across seventeen files, run with pytest. The suite never touches the network and never spends a token: the model provider is replaced by an offline fake through FastAPI's dependency-override mechanism, which is the practical reason the endpoint takes its provider as a dependency rather than constructing one. A separate live smoke test against real provider keys exists and is opt-in, so it never runs by accident.",
-          "Coverage spans the analysis pipeline, all three LLM providers, the provider router and availability rules, authentication, per-account ownership, the analysis cache and content hashing, the library schemas, the Supabase repository against a mock, the embedding request construction, and the backend foundation. Linting is ruff; a mypy configuration is present.",
+          "538 passing tests: 522 backend with pytest and 16 frontend with Vitest, plus 5 live-provider tests skipped by design. No test in the suite calls a paid interface. Every provider is replaced by a fake through FastAPI's dependency-override mechanism, which is the practical reason the endpoint takes its provider as a dependency rather than constructing one.",
+          "The distribution is deliberate rather than even. Authentication is the largest module at 61 tests, on the judgement that a silent failure there costs most. Then the LLM providers at 49, every database access path at 48, rate-limit recognition and retry discipline at 42, and the provider router at 36.",
+          "Automated tests were not sufficient on their own. The isolation defect described above passed every one of them while being wrong in production, because the ownership tests modelled Row Level Security with a stub. Verifying it needed live scripts running a scenario as two different people against the deployed system. That is the argument for keeping unit, integration and live testing as separate levels: each can pass while another fails.",
         ],
       },
       {
@@ -636,6 +644,8 @@ export const projects: Project[] = [
         heading: "Outcome",
         body: [
           "A working, deployed application with accounts, a private research library and recorded provenance, that does what it says and states what it does not do. The analysis and library paths are complete and in production; retrieval over a stored corpus is written only as far as the embedding request construction, and both the interface and the documentation say so rather than implying otherwise.",
+          "Measured on the deployed system: a new analysis of a full paper takes a median of 98.8 seconds, ranging from 72.6 to 115.2 across the evaluation corpus, because three separate passes are made over the whole document. A cache hit returns in 2.7 to 3.2 seconds.",
+          "The evaluation also produced a negative result worth stating. The intended comparison between the two providers could not be completed: with the fallback removed, the configured primary refused every request, because its free tier allows 7,000 input tokens per minute and every corpus paper needed more than that in a single call. The architecture supports two providers and the fallback is verified, but the system is effectively single-provider until a primary that can accept a whole paper is configured.",
         ],
       },
     ],
@@ -666,7 +676,7 @@ export const projects: Project[] = [
         label: "Provider abstraction and automatic fallback",
         state: "implemented",
         detail:
-          "Anthropic and Groq wired as the active pair, with a Gemini implementation also in the codebase. The owner picks the primary; the other becomes the fallback.",
+          "Groq qwen3.6-27b is the configured primary and Anthropic claude-opus-5 the fallback. Availability is enforced when the router is constructed, so a disabled provider is never built.",
       },
       {
         label: "Recorded provenance",
@@ -699,6 +709,11 @@ export const projects: Project[] = [
       },
     ],
     limitations: [
+      "Effectively single-provider. The two-provider architecture works and the fallback is tested, but the configured primary's free tier cannot accept a full paper, so genuine redundancy is not achieved today.",
+      "Grounded is not the same as accurate. Output is constrained to the supplied document and non-conforming output is discarded, but nothing establishes that a summary is correct. Generated content needs checking before it is relied on or cited.",
+      "No labelled benchmark, so no accuracy figure is reported. The evaluation measures completion, fallback behaviour, provenance, latency and cost avoidance instead.",
+      "The evaluation covers five English-language papers from one discipline, analysed once per configuration and assessed by the project team rather than independently.",
+      "A revoked session stays valid for up to about five seconds, a deliberate trade against contacting the auth service on every request.",
       "No OCR, so scanned papers with no text layer are rejected rather than processed.",
       "The literature review covers only the prior work one paper discusses. It does not search a corpus.",
       "Upstream provider rate limits are handled and surfaced with a retry hint, but the application does not rate-limit its own users.",

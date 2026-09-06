@@ -73,8 +73,12 @@ export default function OpengraphImage() {
             style={{
               marginTop: 20,
               color: "#4fb2e0",
-              fontSize: 30,
+              fontSize: 26,
               fontWeight: 500,
+              lineHeight: 1.3,
+              // The title is three segments long. Without an explicit width the
+              // renderer has nothing to wrap against inside a flex column.
+              maxWidth: 1040,
             }}
           >
             {site.role}
@@ -88,7 +92,7 @@ export default function OpengraphImage() {
               maxWidth: 900,
             }}
           >
-            Production &amp; operations systems · AI applications · Technical SEO
+            Operational systems · Business websites · Software · IT support
           </div>
         </div>
 
