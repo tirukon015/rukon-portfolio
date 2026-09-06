@@ -27,7 +27,14 @@ export function personSchema() {
     name: site.name,
     alternateName: site.shortName,
     url: BASE_URL,
-    email: site.email,
+    /*
+     * `email` intentionally omitted.
+     *
+     * The Person node is emitted on every page, /cv included, so putting the
+     * address here published it in the page source of the very page that gates
+     * it. schema.org does not require the field, and the site still offers a
+     * contact route through the form and the footer link.
+     */
     jobTitle: site.role,
     description: site.statement,
     image: absoluteUrl("/images/profile.png"),

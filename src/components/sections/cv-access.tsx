@@ -1,71 +1,92 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
-import { Download, FileText, Lock, ShieldCheck } from "lucide-react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { Download, Lock, ShieldCheck } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
 import { Button, ButtonLink } from "@/components/ui/button";
-import { site } from "@/content/site";
+import { cv, protectedContactFields, type ProtectedContactKey } from "@/content/cv";
 
-/**
- * LOCKED -> FORM -> SUBMITTING -> GRANTED
- *
- * `GRANTED` only controls what this component renders. It is not what protects
- * the document: the API route verifies a signed cookie the server issued, so
- * setting this state in devtools reveals nothing.
- */
+type Contact = Record<ProtectedContactKey, string>;
+
+/** locked -> form -> submitting -> granted */
 type State = "locked" | "form" | "submitting" | "granted";
 
 const SESSION_KEY = "cv-access-granted";
 
-const noopSubscribe = () => () => {};
-
-/**
- * Whether this tab already completed the form.
- *
- * Read through `useSyncExternalStore` rather than in an effect, matching
- * `useMounted` and `useMediaQuery` elsewhere in this codebase: the server
- * snapshot is `false`, so the markup sent from the server is always the locked
- * state and there is nothing to mismatch on hydration.
- */
-function useSessionGranted(): boolean {
-  return useSyncExternalStore(
-    noopSubscribe,
-    () => {
-      try {
-        return sessionStorage.getItem(SESSION_KEY) === "1";
-      } catch {
-        // Private mode or blocked storage. The form simply shows again.
-        return false;
-      }
-    },
-    () => false
-  );
-}
-
 export function CVAccess({ source = "direct" }: { source?: string }) {
   const [state, setState] = useState<State>("locked");
+  const [contact, setContact] = useState<Contact | null>(null);
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState<{ fullName?: string; email?: string }>({});
 
   const nameId = useId();
   const emailId = useId();
-  const nameErrorId = `${nameId}-error`;
-  const emailErrorId = `${emailId}-error`;
+  const panelId = useId();
 
-  const sessionGranted = useSessionGranted();
-  const granted = state === "granted" || sessionGranted;
-
-  const formRef = useRef<HTMLFormElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
-  const grantedHeadingRef = useRef<HTMLHeadingElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
 
-  // Move focus to whatever just replaced the previous step, so the flow is
-  // followable without a mouse.
+  const granted = contact !== null;
+
+  /**
+   * Ask the server whether this browser already holds a grant.
+   *
+   * The grant is an httpOnly cookie, so the page cannot read it. Asking the
+   * route is the only way to know, and it is also the right way: the server
+   * stays the authority on whether the values are released, and a returning
+   * visitor inside the grant window does not fill the form twice.
+   */
+  const fetchContact = useCallback(async (): Promise<boolean> => {
+    try {
+      const res = await fetch("/api/cv/contact");
+      if (!res.ok) return false;
+      const json = await res.json();
+      if (!json?.contact) return false;
+      setContact(json.contact as Contact);
+      return true;
+    } catch {
+      return false;
+    }
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    // Only worth a request if this tab has been granted before; otherwise every
+    // first-time visitor pays for a guaranteed 401.
+    let seen = false;
+    try {
+      seen = sessionStorage.getItem(SESSION_KEY) === "1";
+    } catch {
+      seen = false;
+    }
+    if (!seen) return;
+
+    void (async () => {
+      const ok = await fetchContact();
+      if (!ok && !cancelled) {
+        // The grant expired. Clear the hint so the next load does not retry.
+        try {
+          sessionStorage.removeItem(SESSION_KEY);
+        } catch {
+          /* nothing to clean up */
+        }
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [fetchContact]);
+
   useEffect(() => {
     if (state === "form") nameRef.current?.focus();
-    if (granted) grantedHeadingRef.current?.focus();
-  }, [state, granted]);
+  }, [state]);
+
+  function openForm() {
+    setState("form");
+    panelRef.current?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -103,65 +124,192 @@ export function CVAccess({ source = "direct" }: { source?: string }) {
         return;
       }
 
+      // One submission, then a single fetch that fills all three fields at once.
+      const ok = await fetchContact();
+      if (!ok) {
+        setState("form");
+        setError("Access was granted but the details could not be loaded. Please try again.");
+        return;
+      }
+
       try {
         sessionStorage.setItem(SESSION_KEY, "1");
       } catch {
-        // Non-fatal: access still works for this page view.
+        /* access still works for this page view */
       }
       setState("granted");
     } catch {
       setState("form");
-      setError("Network error. Please try again, or email me directly.");
+      setError("Network error. Please try again, or reach me through LinkedIn.");
     }
   }
 
   return (
-    <section aria-label="CV access" className="py-20 sm:py-24 lg:py-28">
+    <section aria-label="Curriculum vitae" className="py-16 sm:py-20 lg:py-24">
       <Container>
         <Reveal>
           <span className="font-mono text-xs uppercase tracking-[0.18em] text-accent">
             Curriculum Vitae
           </span>
-          <h1 className="mt-3 max-w-3xl text-4xl font-semibold tracking-tight text-text sm:text-5xl">
-            {granted ? "Confidential CV" : "My CV is available on request."}
+          <h1 className="mt-3 text-4xl font-semibold tracking-tight text-text sm:text-5xl">
+            {cv.name}
           </h1>
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-text-muted">
-            {granted
-              ? "Access granted for this session. The document below is the current version."
-              : "The full CV carries contact details that aren't published on this site, so it sits behind a short form. Tell me who you are and it opens straight away."}
-          </p>
+          <p className="mt-3 max-w-3xl text-base text-text-muted sm:text-lg">{cv.title}</p>
         </Reveal>
 
-        <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-[1.25fr_1fr] lg:items-start">
-          <Reveal delayMs={80}>
-            {granted ? <Viewer headingRef={grantedHeadingRef} /> : <LockedPreview />}
-          </Reveal>
+        <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-[1.5fr_1fr] lg:items-start">
+          {/* ---------------- The CV itself, public ---------------- */}
+          <div className="flex flex-col gap-10">
+            <Reveal delayMs={60}>
+              <Block title="Career Summary">
+                <ul className="flex flex-col gap-2.5">
+                  {cv.summary.map((line) => (
+                    <Bullet key={line}>{line}</Bullet>
+                  ))}
+                </ul>
+              </Block>
+            </Reveal>
 
-          <Reveal delayMs={140}>
-            <div className="rounded-2xl border border-border bg-bg-elevated p-8 shadow-[var(--shadow-card)]">
-              {granted ? (
-                <GrantedPanel />
-              ) : state === "locked" ? (
-                <div>
-                  <h2 className="text-lg font-semibold text-text">Request access</h2>
-                  <p className="mt-2 text-sm leading-relaxed text-text-muted">
-                    Your name and email are recorded so I know who asked. That&apos;s all this is:
-                    an access log, not identity verification.
-                  </p>
-                  <div className="mt-6">
-                    <Button type="button" onClick={() => setState("form")}>
-                      <Lock size={16} /> Click to view
-                    </Button>
-                  </div>
+            <Reveal delayMs={80}>
+              <Block title="Key Proficiencies">
+                <dl className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                  {cv.proficiencies.map((group) => (
+                    <div key={group.heading}>
+                      <dt className="text-sm font-medium text-text">{group.heading}</dt>
+                      <dd className="mt-1 text-sm leading-relaxed text-text-muted">
+                        {group.items.join(" ")}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </Block>
+            </Reveal>
+
+            <Reveal delayMs={100}>
+              <Block title="Experience & Activities">
+                <div className="flex flex-col gap-6">
+                  {cv.experience.map((role) => (
+                    <div key={role.title}>
+                      <h3 className="text-sm font-semibold text-text">{role.title}</h3>
+                      {role.org ? (
+                        <p className="mt-0.5 text-sm text-text-faint">{role.org}</p>
+                      ) : null}
+                      {role.meta ? (
+                        <p className="mt-0.5 font-mono text-xs text-text-faint">{role.meta}</p>
+                      ) : null}
+                      <p className="mt-2 text-sm leading-relaxed text-text-muted">{role.body}</p>
+                    </div>
+                  ))}
                 </div>
-              ) : (
-                <form ref={formRef} onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
-                  <div>
-                    <h2 className="text-lg font-semibold text-text">Request access</h2>
-                    <p className="mt-2 text-sm leading-relaxed text-text-muted">
-                      Recorded as an access log. Not identity verification.
-                    </p>
+              </Block>
+            </Reveal>
+
+            <Reveal delayMs={120}>
+              <Block title="Academic Qualification">
+                <div className="flex flex-col gap-5">
+                  {cv.education.map((entry) => (
+                    <div key={entry.institution}>
+                      <h3 className="text-sm font-semibold text-text">
+                        {entry.institution}{" "}
+                        <span className="font-normal text-text-faint">{entry.location}</span>
+                      </h3>
+                      <p className="mt-0.5 text-sm text-text-muted">{entry.award}</p>
+                      <p className="mt-0.5 font-mono text-xs text-text-faint">{entry.meta}</p>
+                    </div>
+                  ))}
+                </div>
+              </Block>
+            </Reveal>
+
+            <Reveal delayMs={140}>
+              <Block title="Training">
+                <SectionList sections={cv.training} />
+              </Block>
+            </Reveal>
+
+            <Reveal delayMs={160}>
+              <Block title="Volunteer Activities">
+                <SectionList sections={cv.volunteer} />
+              </Block>
+            </Reveal>
+
+            <Reveal delayMs={180}>
+              <Block title="Professional Development">
+                <ul className="flex flex-col gap-2.5">
+                  {cv.professionalDevelopment.map((line) => (
+                    <Bullet key={line}>{line}</Bullet>
+                  ))}
+                </ul>
+              </Block>
+            </Reveal>
+
+            <Reveal delayMs={200}>
+              <Block title="Skills & Languages">
+                <dl className="flex flex-col gap-4">
+                  <Row label="Soft skills" value={cv.softSkills.join(", ")} />
+                  <Row label="Computer skills" value={cv.computerSkills.join("; ")} />
+                  <Row label="Languages" value={cv.languages.join(", ")} />
+                </dl>
+              </Block>
+            </Reveal>
+          </div>
+
+          {/* ---------------- Contact, three gated fields ---------------- */}
+          <Reveal delayMs={100}>
+            <div
+              ref={panelRef}
+              className="flex flex-col gap-6 rounded-2xl border border-border bg-bg-elevated p-8 shadow-[var(--shadow-card)] lg:sticky lg:top-24"
+            >
+              <div>
+                <h2 className="text-sm font-semibold text-text">Contact</h2>
+                <p className="mt-1 text-xs leading-relaxed text-text-faint">
+                  {granted
+                    ? "Released for this session. Please keep these to the people who need them."
+                    : "Three fields are held back. Everything else on this page is open."}
+                </p>
+              </div>
+
+              <dl className="flex flex-col gap-5">
+                {protectedContactFields.map((field) => (
+                  <ProtectedField
+                    key={field.key}
+                    label={field.label}
+                    placeholderWidth={field.placeholderWidth}
+                    value={contact?.[field.key]}
+                    onRequest={openForm}
+                    busy={state === "submitting"}
+                  />
+                ))}
+
+                {cv.links.map((link) => (
+                  <div key={link.label}>
+                    <dt className="font-mono text-[11px] uppercase tracking-wide text-text-faint">
+                      {link.label}
+                    </dt>
+                    <dd className="mt-1 text-sm">
+                      <a
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-text transition-colors hover:text-accent-strong"
+                      >
+                        {link.value}
+                      </a>
+                    </dd>
                   </div>
+                ))}
+              </dl>
+
+              {state === "form" || state === "submitting" ? (
+                <form
+                  id={panelId}
+                  onSubmit={handleSubmit}
+                  noValidate
+                  className="flex flex-col gap-4 border-t border-border pt-6"
+                >
+                  <p className="text-sm leading-relaxed text-text-muted">
+                    Enter your name and email to view the protected contact details.
+                  </p>
 
                   <div>
                     <label htmlFor={nameId} className="block text-sm text-text-muted">
@@ -175,11 +323,11 @@ export function CVAccess({ source = "direct" }: { source?: string }) {
                       autoComplete="name"
                       required
                       aria-invalid={fieldErrors.fullName ? true : undefined}
-                      aria-describedby={fieldErrors.fullName ? nameErrorId : undefined}
+                      aria-describedby={fieldErrors.fullName ? `${nameId}-error` : undefined}
                       className="mt-2 w-full rounded-xl border border-border-strong bg-bg-elevated px-4 py-3 text-sm text-text outline-none transition-colors focus:border-accent"
                     />
                     {fieldErrors.fullName ? (
-                      <p id={nameErrorId} className="mt-2 text-sm text-red-400">
+                      <p id={`${nameId}-error`} className="mt-2 text-sm text-red-400">
                         {fieldErrors.fullName}
                       </p>
                     ) : null}
@@ -197,25 +345,62 @@ export function CVAccess({ source = "direct" }: { source?: string }) {
                       autoComplete="email"
                       required
                       aria-invalid={fieldErrors.email ? true : undefined}
-                      aria-describedby={fieldErrors.email ? emailErrorId : undefined}
+                      aria-describedby={fieldErrors.email ? `${emailId}-error` : undefined}
                       className="mt-2 w-full rounded-xl border border-border-strong bg-bg-elevated px-4 py-3 text-sm text-text outline-none transition-colors focus:border-accent"
                     />
                     {fieldErrors.email ? (
-                      <p id={emailErrorId} className="mt-2 text-sm text-red-400">
+                      <p id={`${emailId}-error`} className="mt-2 text-sm text-red-400">
                         {fieldErrors.email}
                       </p>
                     ) : null}
                   </div>
 
-                  <Button type="submit" disabled={state === "submitting"}>
+                  <Button type="submit" disabled={state === "submitting"} className="w-full">
                     {state === "submitting" ? "Requesting…" : "Request Access"}
                   </Button>
+
+                  <p className="text-xs leading-relaxed text-text-faint">
+                    Recorded as an access log. This is not identity verification.
+                  </p>
 
                   <div role="status" aria-live="polite" className="min-h-5 text-sm">
                     {error ? <p className="text-red-400">{error}</p> : null}
                   </div>
                 </form>
-              )}
+              ) : null}
+
+              <div className="border-t border-border pt-6">
+                {granted ? (
+                  <>
+                    <p className="mb-4 inline-flex items-center gap-2 text-sm font-medium text-text">
+                      <ShieldCheck size={16} className="text-accent" /> Access granted
+                    </p>
+                    <ButtonLink
+                      href="/api/cv/document?disposition=attachment"
+                      variant="primary"
+                      external
+                      className="w-full"
+                    >
+                      <Download size={16} /> Download CV
+                    </ButtonLink>
+                  </>
+                ) : (
+                  <>
+                    <p className="text-xs leading-relaxed text-text-faint">
+                      The full CV file includes these contact details, so the download opens with
+                      the same request.
+                    </p>
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      onClick={openForm}
+                      className="mt-4 w-full"
+                    >
+                      <Lock size={15} /> Download CV
+                    </Button>
+                  </>
+                )}
+              </div>
             </div>
           </Reveal>
         </div>
@@ -225,119 +410,101 @@ export function CVAccess({ source = "direct" }: { source?: string }) {
 }
 
 /**
- * The locked state.
+ * One gated field.
  *
- * Everything here is a placeholder shape. No line of the real CV is present in
- * the markup, so there is nothing to recover by unblurring, deleting a class or
- * reading the page source: the bytes simply are not in the response.
+ * Locked, this renders a bar of placeholder geometry: there is no real value in
+ * the markup to un-blur, because the value has not been sent to this browser at
+ * all. The blur is on the placeholder, so it is decoration rather than
+ * protection, and removing it in devtools reveals a grey rectangle.
+ *
+ * Granted, all three fill at once from a single response, and the transition is
+ * a fade and a short rise using the tokens already in the design system.
  */
-function LockedPreview() {
-  return (
-    <div
-      className="relative overflow-hidden rounded-2xl border border-border bg-bg-elevated p-8 shadow-[var(--shadow-card)]"
-      aria-hidden="true"
-    >
-      <div className="pointer-events-none select-none blur-[5px]" aria-hidden="true">
-        <div className="h-5 w-48 rounded bg-bg-elevated-2" />
-        <div className="mt-3 h-3 w-64 rounded bg-bg-elevated-2" />
-        <div className="mt-8 h-3 w-24 rounded bg-bg-elevated-2" />
-        <div className="mt-4 flex flex-col gap-2.5">
-          {[92, 86, 78, 88, 64].map((w) => (
-            <div key={w} className="h-2.5 rounded bg-bg-elevated-2" style={{ width: `${w}%` }} />
-          ))}
-        </div>
-        <div className="mt-8 h-3 w-28 rounded bg-bg-elevated-2" />
-        <div className="mt-4 grid grid-cols-2 gap-3">
-          {[0, 1, 2, 3].map((i) => (
-            <div key={i} className="h-2.5 rounded bg-bg-elevated-2" />
-          ))}
-        </div>
-        <div className="mt-8 flex flex-col gap-2.5">
-          {[80, 70, 90].map((w) => (
-            <div key={w} className="h-2.5 rounded bg-bg-elevated-2" style={{ width: `${w}%` }} />
-          ))}
-        </div>
-      </div>
+function ProtectedField({
+  label,
+  placeholderWidth,
+  value,
+  onRequest,
+  busy,
+}: {
+  label: string;
+  placeholderWidth: string;
+  value?: string;
+  onRequest: () => void;
+  busy: boolean;
+}) {
+  const revealed = typeof value === "string" && value.length > 0;
 
-      <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-bg/70 px-6 text-center">
-        <span className="flex h-11 w-11 items-center justify-center rounded-full border border-border-strong bg-bg-elevated text-accent">
-          <Lock size={18} />
-        </span>
-        <p className="font-mono text-xs uppercase tracking-[0.18em] text-accent">Confidential CV</p>
-        <p className="text-sm text-text-muted">Click to view</p>
-      </div>
-    </div>
-  );
-}
-
-function Viewer({ headingRef }: { headingRef: React.RefObject<HTMLHeadingElement | null> }) {
-  return (
-    <div className="overflow-hidden rounded-2xl border border-border bg-bg-elevated shadow-[var(--shadow-card)]">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border px-6 py-4">
-        <h2
-          ref={headingRef}
-          tabIndex={-1}
-          className="inline-flex items-center gap-2 text-sm font-semibold text-text outline-none"
-        >
-          <ShieldCheck size={16} className="text-accent" /> Access granted
-        </h2>
-        <span className="font-mono text-xs uppercase tracking-wide text-text-faint">
-          Current version
-        </span>
-      </div>
-
-      {/*
-        The viewer points at the same protected route as the download. It is not
-        a second, weaker path to the file: an unauthorised request for this src
-        gets the same 401 the download would.
-      */}
-      <object
-        data="/api/cv/document?disposition=inline"
-        type="application/pdf"
-        className="h-[36rem] w-full bg-bg-elevated-2"
-        aria-label={`Curriculum vitae of ${site.name}`}
-      >
-        <div className="flex flex-col items-start gap-4 p-8">
-          <p className="text-sm text-text-muted">
-            Your browser can&apos;t display the PDF inline. Open it in a new tab or download it
-            instead.
-          </p>
-          <ButtonLink href="/api/cv/document?disposition=inline" variant="secondary" external>
-            <FileText size={16} /> Open CV
-          </ButtonLink>
-        </div>
-      </object>
-    </div>
-  );
-}
-
-function GrantedPanel() {
   return (
     <div>
-      <h2 className="text-lg font-semibold text-text">Your copy</h2>
-      <p className="mt-2 text-sm leading-relaxed text-text-muted">
-        The CV includes contact details that aren&apos;t published on the site. Please keep it to
-        the people who need it.
-      </p>
-      <div className="mt-6 flex flex-wrap gap-3">
-        {/*
-          A plain link rather than a fetch-and-blob: the browser handles the
-          download, and the request carries the grant cookie automatically.
-        */}
-        <ButtonLink href="/api/cv/document?disposition=attachment" variant="primary" external>
-          <Download size={16} /> Download CV
-        </ButtonLink>
-        <ButtonLink href="/api/cv/document?disposition=inline" variant="secondary" external>
-          <FileText size={16} /> Open in new tab
-        </ButtonLink>
-      </div>
-      <p className="mt-6 text-xs leading-relaxed text-text-faint">
-        Access lasts for this browser session. Something wrong with the document?{" "}
-        <a href={site.emailHref} className="text-accent-strong hover:text-accent">
-          Email me
-        </a>
-        .
-      </p>
+      <dt className="font-mono text-[11px] uppercase tracking-wide text-text-faint">{label}</dt>
+      <dd className="mt-1">
+        {revealed ? (
+          <span
+            key="revealed"
+            className="block animate-[cv-reveal_420ms_var(--ease-out)_both] text-sm break-words text-text"
+          >
+            {value}
+          </span>
+        ) : (
+          <button
+            type="button"
+            onClick={onRequest}
+            disabled={busy}
+            aria-label={`${label} is protected. Request access to view it.`}
+            className="group flex w-full flex-col items-start gap-1.5 rounded-lg text-left outline-none focus-visible:outline-2 focus-visible:outline-accent disabled:opacity-60"
+          >
+            <span
+              aria-hidden="true"
+              style={{ width: placeholderWidth }}
+              className="h-4 max-w-full rounded bg-bg-elevated-2 blur-[3px] transition-colors duration-300 group-hover:bg-border-strong"
+            />
+            <span className="inline-flex items-center gap-1.5 text-xs text-text-faint transition-colors duration-200 group-hover:text-accent-strong">
+              <Lock size={11} /> Click to view
+            </span>
+          </button>
+        )}
+      </dd>
+    </div>
+  );
+}
+
+function Block({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <h2 className="font-mono text-xs uppercase tracking-[0.18em] text-accent">{title}</h2>
+      <div className="mt-5">{children}</div>
+    </div>
+  );
+}
+
+function Bullet({ children }: { children: React.ReactNode }) {
+  return (
+    <li className="flex gap-3 text-sm leading-relaxed text-text-muted">
+      <span aria-hidden="true" className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent" />
+      <span>{children}</span>
+    </li>
+  );
+}
+
+function SectionList({ sections }: { sections: readonly { heading: string; items: readonly string[] }[] }) {
+  return (
+    <div className="flex flex-col gap-5">
+      {sections.map((section) => (
+        <div key={section.heading}>
+          <h3 className="text-sm font-semibold text-text">{section.heading}</h3>
+          <p className="mt-1 text-sm leading-relaxed text-text-muted">{section.items.join(" ")}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function Row({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="grid grid-cols-1 gap-1 sm:grid-cols-[10rem_1fr] sm:gap-4">
+      <dt className="font-mono text-[11px] uppercase tracking-wide text-text-faint">{label}</dt>
+      <dd className="text-sm leading-relaxed text-text-muted">{value}</dd>
     </div>
   );
 }

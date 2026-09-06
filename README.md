@@ -55,6 +55,8 @@ Plus generated `robots.txt`, `sitemap.xml`, `icon` and `opengraph-image`.
 
 **`canonicalHost`, not `domain`.** The apex 308-redirects to `www`, so every absolute URL is built from `site.canonicalHost` via `src/lib/seo.ts`. `site.domain` is display text only.
 
+**The CV page is public; three fields are not.** `/cv` renders the whole CV from `src/content/cv.ts`. Email, phone and address are absent from that file by design, because it ships in the client bundle. They come from `/api/cv/contact`, which checks the same grant as the document route, so one form submission releases all three at once and unlocks the download.
+
 **The CV is not a static file.** `private/cv/` sits outside `public/`, so the document has no static URL. `/api/cv/document` is the only way to reach it and it verifies a server-signed grant cookie first. The three CV buttons link to `/cv`, never to the file. See `src/lib/cv-access/` for the service abstraction and the two marked Supabase integration points.
 
 **`image.srcDark`.** Some supplied logos ship on an opaque background, which makes one file wrong in one theme. Set `srcDark` and `ProjectMark` renders both, with CSS choosing, so the correct one paints on the first frame.
@@ -76,6 +78,7 @@ npm run build
 | Variable | Required for | Notes |
 | --- | --- | --- |
 | `RESEND_API_KEY` | `/api/contact` | Via the Resend Vercel integration. Without it the form returns a clear error rather than a false success. |
+| `CV_CONTACT_EMAIL`, `CV_CONTACT_PHONE`, `CV_CONTACT_ADDRESS` | `/api/cv/contact` | The three gated CV fields. Kept out of source because this repository is public. All three or none: a partial set returns 503 rather than revealing some fields and failing the rest. |
 | `CV_ACCESS_SECRET` | `/api/cv/*` | Signs the CV access grant. **Required in production** — without it the request route returns 503 rather than issuing a grant it cannot verify. In development a per-process random secret is used, so no setup is needed locally. Any random string of 16+ characters. |
 
 ---

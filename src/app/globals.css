@@ -164,3 +164,30 @@ button,
     transition: none;
   }
 }
+
+/*
+ * Contact reveal.
+ *
+ * Plays once when a protected field's value arrives, so all three fill together
+ * rather than popping in. Same easing token and the same short rise as the
+ * reveal-on-scroll primitive above, so it reads as the existing motion
+ * vocabulary rather than a new one, with a brief accent tint on the way in.
+ */
+@keyframes cv-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+    color: var(--color-accent);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    color: var(--color-text);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-\[cv-reveal_420ms_var\(--ease-out\)_both\] {
+    animation: none !important;
+  }
+}
