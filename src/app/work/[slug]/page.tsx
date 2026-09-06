@@ -114,9 +114,9 @@ export default async function CaseStudyPage({ params }: { params: Params }) {
                 <Lock size={12} /> NDA-safe overview
               </span>
             ) : null}
-            {project.kind === "personal-project" || project.kind === "group-project" ? (
+            {project.kind === "university-project" ? (
               <span className="inline-flex items-center rounded-full border border-border-strong px-3 py-1 font-mono text-xs text-text-faint">
-                {project.kind === "group-project" ? "Group project" : "Independent project"}
+                University project
               </span>
             ) : null}
           </Reveal>

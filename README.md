@@ -81,4 +81,4 @@ npm run build
 
 - **[RPOMS](https://www.rukon.dev/work/rpoms)** — WMS/ERP-style operational system running a live router-refurbishment line. NDA-safe overview.
 - **[ERTH](https://www.rukon.dev/work/erth)** — production homepage for a Malaysian e-waste service. Complete and deployed.
-- **[ResearchForge](https://www.rukon.dev/work/researchforge)** — deployed AI research paper assistant. Five-person university group project.
+- **[ResearchForge](https://www.rukon.dev/work/researchforge)** — deployed AI research paper assistant. University project, taken from planning documents to a maintained deployment.

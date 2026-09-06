@@ -27,7 +27,7 @@ export type ProjectStatusItem = {
   detail: string;
 };
 
-export type ProjectKind = "professional" | "personal-project" | "group-project";
+export type ProjectKind = "professional" | "university-project";
 
 export type Project = {
   slug: string;
@@ -485,12 +485,12 @@ export const projects: Project[] = [
     fullName: "ResearchForge: AI research paper assistant",
     tagline: "An AI research assistant built to say when the paper doesn't support the answer.",
     summary:
-      "An AI research assistant that reads an academic PDF and returns a summary, a gap analysis carrying its own evidence, and a literature review, declining rather than inventing where the paper does not support a section. Python and FastAPI behind a Next.js frontend, with accounts and per-user isolation enforced in PostgreSQL. A five-person university group project.",
-    role: "Developer: backend, deployment, data isolation and testing",
+      "A university AI research-paper assistant, live on its own domain. Upload a paper and get a summary, a gap analysis carrying its own evidence, and a literature review, with the system declining rather than inventing where the paper does not support a section. Built end to end: planning documents through architecture, Next.js and FastAPI, PostgreSQL Row Level Security, 538 tests, deployment and maintenance.",
+    role: "Developer: end to end, from planning documents to a maintained deployment",
     period: "2026",
-    affiliation: "University of Cyberjaya, BIT4543 Artificial Intelligence (five-person group project)",
+    affiliation: "University of Cyberjaya, BIT4543 Artificial Intelligence",
     confidential: false,
-    kind: "group-project",
+    kind: "university-project",
     tech: [
       "Python 3.14",
       "FastAPI",
@@ -541,6 +541,8 @@ export const projects: Project[] = [
       },
     ],
     highlights: [
+      "Taken end to end: project plan, milestones, risks and numbered decisions committed before the first feature, through to a deployed system still being maintained",
+      "A data-isolation defect that every automated test passed: the backend held a privileged key that bypassed Row Level Security, so every policy was present and every policy was inert",
       "Every claim must be grounded in the uploaded paper, enforced in the prompt, the response schema, and the interface",
       "Two providers behind one interface: Groq qwen3.6-27b as configured primary, Anthropic claude-opus-5 as automatic fallback",
       "Fallback fires only for rate limits and temporary provider failures, never for a bad PDF or a validation error that would fail identically on either vendor",
@@ -575,11 +577,19 @@ export const projects: Project[] = [
       {
         heading: "Context",
         body: [
-          "ResearchForge was built for BIT4543 Artificial Intelligence at the University of Cyberjaya, by a group of five. The system was designed, implemented, deployed and tested by the project group, and the report records results from running the deployed system rather than estimates.",
+          "ResearchForge was developed as part of BIT4543 Artificial Intelligence at the University of Cyberjaya. It is a university project, but it was not built as a classroom prototype: it is deployed on its own subdomain, has accounts and stored user data, and the reported results come from running the deployed system rather than from estimates.",
           "It began as a stateless tool with no accounts, which kept the first version defensible while there was nothing stored to protect. Adding a library meant that stopped being true, so authentication, per-user ownership and database-level access control went in together rather than being retrofitted around a feature that had already shipped.",
         ],
-        note:
-          "A five-person group project. This case study describes the work and the system rather than claiming sole authorship; the areas listed under the role above are the ones I carried, and the deployment and repository are mine.",
+      },
+      {
+        heading: "My Work",
+        body: [
+          "I took this from an empty repository to a deployed system that is still maintained, and the order matters: the first commit is the project structure, the working rules, a project plan with milestones, risks and numbered decisions, the environment contract and the documentation skeleton. Features came after that, not before it.",
+          "Planning and specification. Milestones were tracked and closed in the repository (M1 complete, risk R1 resolved), and technical choices were recorded as numbered decisions rather than made silently, including one that was locked, revisited and re-locked when a better option was found. Requirements were derived from the objectives and refined during development as defects exposed expectations nobody had written down.",
+          "Architecture and design. Two services in one Vercel project behind a single origin, a provider interface that keeps vendor SDKs out of the analysis code, a storage-independent repository, the database schema and its migrations, and the decision to enforce ownership in PostgreSQL rather than in application code.",
+          "Implementation, both sides. The Python and FastAPI backend, its API endpoints and error semantics, PDF ingestion and text normalisation, the three-pass analysis pipeline, prompt and structured-output handling, schema validation, the content-hash cache, authentication and owner configuration. On the frontend, the Next.js application: the landing page, sign-in and account flows, the analysis workspace, the research library, paper detail and cross-paper review, themes, and the responsive layout.",
+          "Then the parts that only exist once something is real: production configuration and environment management, deployment, debugging live failures, refactoring, the test suite, and maintenance after the system was already working.",
+        ],
       },
       {
         heading: "Engineering Approach",
@@ -611,7 +621,9 @@ export const projects: Project[] = [
         heading: "Accounts and data ownership",
         body: [
           "Authentication is Supabase Auth: email and password with sign-up, sign-in, forgot-password and reset flows, plus Google sign-in completing at a dedicated callback route. Passwords never reach the ResearchForge database.",
-          "Every paper, analysis and review belongs to exactly one account, and that is enforced by Postgres Row Level Security rather than by a filter in the API layer. The distinction matters: an interface check is a convention that the next endpoint can forget, and a row-level policy is a rule the database applies whether or not the query remembered to.",
+          "Every paper, analysis and review belongs to exactly one account. Application-level ownership checks alone proved insufficient for reliable isolation in production, so the guarantee was moved into the database: PostgreSQL Row Level Security enforces per-user access at the data layer.",
+          "The mechanism is which credential the backend uses to reach the database. Requests are made as the signed-in user, so PostgreSQL resolves the authenticated identity and applies every policy automatically. A forgotten ownership filter then returns nothing rather than everything, which is the opposite of how that mistake usually fails. Ownership columns default to the authenticated identity, so a row cannot be inserted without an owner even if the application code omits it.",
+          "Records created before authentication existed remain unowned. They were deliberately neither deleted nor assigned to an owner that could not be established, and they are unreachable because a null owner never matches an authenticated identity.",
           "Re-uploading a paper that has already been analysed reuses the stored analysis instead of paying for it again. Identity is a content hash of the extracted text, not the filename, so the same paper saved under a different name still matches.",
         ],
       },
@@ -638,6 +650,33 @@ export const projects: Project[] = [
           "The model tier was chosen against a platform constraint rather than a benchmark. A Vercel function has a 300-second ceiling, and three sequential schema-constrained calls have to complete inside it. A deeper-reasoning model is one environment variable away with no code change.",
           "pypdf was chosen over faster alternatives on licensing. The fastest option ships native binaries and is AGPL, which is incompatible with an MIT repository intended to be read publicly. Only one function touches the library, so swapping it later is a one-function change.",
           "Provenance columns degrade per migration rather than all at once: a database that has not yet run a later migration loses only the fields that migration added, instead of the whole write failing. A schema change should not be able to take the feature down while it is rolling out.",
+        ],
+      },
+      {
+        heading: "Deployment",
+        body: [
+          "This did not stop at localhost. One Vercel project runs both services behind a single origin: a Next.js frontend serving everything except the API, and a FastAPI backend serving /health and /api/*, with the routing declared in the project configuration and a 300-second function ceiling the analysis has to fit inside.",
+          "Single-origin is the decision that makes the rest work. Because both services answer on the same origin, the frontend calls the API with a relative path, so the custom domain, the .vercel.app domain and every preview URL all work from one build with no per-environment base URL to get wrong.",
+          "Production configuration is its own body of work: environment and secret management across the application, the database and two model providers, a guard that refuses a publishable key in a slot that requires a private one rather than silently showing an empty library, and a health endpoint that reports whether auth and the library are actually wired rather than just that the process is up.",
+        ],
+      },
+      {
+        heading: "Production debugging",
+        body: [
+          "The most instructive defect was in data isolation, and it is instructive precisely because nothing caught it. An earlier version of the backend connected to the database with a privileged key, the kind designed to bypass Row Level Security. Every policy was present. Every policy was correctly written. Every policy was inert. The application worked, every feature behaved correctly, and the whole automated suite passed, because at the unit level nothing was wrong.",
+          "It was found by signing in as a second real account and checking whether the first account's papers were visible. The fix was to connect as the signed-in user so PostgreSQL resolves the caller identity itself. That is the episode that turned isolation from something every query has to remember into something the database enforces.",
+          "A content delivery network hid the real errors. The custom domain is served through a CDN that replaces an origin error body with a short generic message, so every failed analysis looked identical and carried no explanation. Addressing the application origin directly returned the real provider message, which is how the free-tier token limit behind the whole evaluation was identified. Without that step the central finding would have stayed invisible.",
+          "A schema change broke every library read. Queries were selecting new provenance and cache columns before the matching migration had been applied, and the database rejected the entire request rather than the missing columns, so all reads failed at once. The fix retries and degrades one migration level at a time, returning the columns that do exist instead of failing completely.",
+          "Rate limiting arrived disguised as generic server errors. Handling was rewritten to be vendor-neutral: rate limits are recognised as such, retry information is passed through, an exhausted quota is distinguished from temporary throttling, and the hidden retries inside client libraries were switched off because they multiply cost without telling the caller.",
+          "Sign-out, sign-in and same-origin routing each needed their own fix: pinning the PKCE flow and deriving every redirect from the running origin, making logout take effect promptly, and calling the backend same-origin so the custom domain and every preview URL work from one build.",
+        ],
+      },
+      {
+        heading: "Maintenance",
+        body: [
+          "Work did not stop at the first working version. After the analysis path was live, the system gained authentication and private libraries, Google sign-in, a second provider with owner-controlled availability, account settings, analysis reuse, and provenance recording, each of which meant revisiting code that already worked.",
+          "Some of that was correcting earlier decisions rather than adding to them. The provider architecture was rebuilt when the original vendor's rate limits proved unworkable, the frontend was rebuilt as a research dashboard, and provenance columns were changed to degrade per migration after the schema-skew failure rather than being left to fail as a unit.",
+          "A caching subtlety is recorded rather than quietly fixed: because the cache is keyed by content rather than by user or provider, a cached result can be returned where a fresh analysis was expected. That affected measurement twice during evaluation. Neither was a defect in the cache, which behaved as designed; both were defects in measurement, resolved by clearing the relevant rows before measuring. It is worth stating because a correctness-preserving optimisation invalidating an experiment silently is a general risk, not a one-off.",
         ],
       },
       {
