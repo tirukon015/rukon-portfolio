@@ -20,6 +20,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: BASE_URL, lastModified: latest, changeFrequency: "monthly", priority: 1 },
     { url: `${BASE_URL}/work`, lastModified: latest, changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE_URL}/blog`, lastModified: latest, changeFrequency: "weekly", priority: 0.7 },
+    // The access page is indexable. The document behind it is not, and the
+    // route that serves it sets its own noindex header.
+    { url: `${BASE_URL}/cv`, lastModified: latest, changeFrequency: "yearly", priority: 0.4 },
   ];
 
   const projectRoutes: MetadataRoute.Sitemap = projects.map((p) => ({

@@ -54,8 +54,8 @@ export function About() {
               ))}
             </div>
             <div className="mt-8">
-              <ButtonLink href={site.resumeHref} variant="secondary" external download={site.resumeFileName}>
-                Download Resume
+              <ButtonLink href={`${site.cvHref}?from=about`} variant="secondary">
+                View CV
               </ButtonLink>
             </div>
           </Reveal>

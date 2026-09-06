@@ -95,8 +95,8 @@ export function Contact() {
               <ButtonLink href="/#work" variant="secondary">
                 View My Work
               </ButtonLink>
-              <ButtonLink href={site.resumeHref} variant="secondary" external download={site.resumeFileName}>
-                Download Resume
+              <ButtonLink href={`${site.cvHref}?from=contact`} variant="secondary">
+                View CV
               </ButtonLink>
             </div>
           </Reveal>

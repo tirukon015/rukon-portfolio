@@ -18,6 +18,29 @@ const styles: Record<NonNullable<BaseProps["variant"]>, string> = {
 const base =
   "inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-accent";
 
+/**
+ * The same pill as `ButtonLink`, as a real `<button>`.
+ *
+ * Added because the CV access flow needs an in-page action rather than a
+ * navigation. It shares `base` and `styles` with the link version so the two
+ * cannot drift apart visually.
+ */
+export function Button({
+  children,
+  variant = "primary",
+  className,
+  ...props
+}: BaseProps & React.ButtonHTMLAttributes<HTMLButtonElement>) {
+  return (
+    <button
+      {...props}
+      className={cn(base, styles[variant], "disabled:opacity-60", className)}
+    >
+      {children}
+    </button>
+  );
+}
+
 export function ButtonLink({
   href,
   children,

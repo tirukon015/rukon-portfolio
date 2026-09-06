@@ -6,8 +6,13 @@ export const site = {
   location: "Cyberjaya, Selangor, Malaysia",
   email: "tirukon015@gmail.com",
   emailHref: "mailto:tirukon015@gmail.com",
-  phoneDisplay: "+60 11-1784 2250",
-  whatsapp: "https://wa.me/601117842250",
+  /*
+   * The phone number used to live here. It was rendered nowhere, but `site` is
+   * imported by client components, so it shipped in the JavaScript bundle and
+   * was readable by anyone who looked. That made it public while the CV
+   * containing the same number sat behind the access gate. Removed rather than
+   * left as a contradiction; it belongs in the CV, which is now gated.
+   */
   /** Display form, used in the OG image wordmark. Not a URL. */
   domain: "rukon.dev",
   /**
@@ -28,8 +33,14 @@ export const site = {
     linkedin: "https://linkedin.com/in/tirukon015",
     twitter: "https://x.com/myself_rukon",
   },
-  resumeHref: "/documents/Touhidul-Islam-Rukon-Resume.pdf",
-  resumeFileName: "Touhidul-Islam-Rukon-Resume.pdf",
+  /**
+   * The CV is no longer a static file link.
+   *
+   * It sits behind an access page: the document itself lives outside `public/`
+   * and is served only by an API route that checks a server-issued grant, so
+   * there is no URL anywhere that hands it over without going through the form.
+   */
+  cvHref: "/cv",
   /**
    * Single source of truth for the blog link. Today it's an in-app route;
    * swapping to an external subdomain (e.g. https://blog.rukon.dev) later

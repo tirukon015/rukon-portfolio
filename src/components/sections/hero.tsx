@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Download, Mail } from "lucide-react";
+import { FileText, Mail } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/icons";
 import { CursorGrid } from "@/components/cursor-grid";
 import { HeroSpotlight } from "@/components/hero-spotlight";
@@ -81,13 +81,8 @@ export function Hero() {
               <ButtonLink href="/#work" variant="primary">
                 View My Work
               </ButtonLink>
-              <ButtonLink
-                href={site.resumeHref}
-                variant="secondary"
-                external
-                download={site.resumeFileName}
-              >
-                <Download size={16} /> Download Resume
+              <ButtonLink href={`${site.cvHref}?from=hero`} variant="secondary">
+                <FileText size={16} /> View CV
               </ButtonLink>
             </div>
 

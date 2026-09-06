@@ -28,6 +28,16 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  /*
+   * The CV lives in `private/`, outside `public/`, so it has no static URL and
+   * can only be reached through the route that checks the access grant. It is
+   * read at runtime with `fs`, which file tracing cannot infer from a computed
+   * path, so the document route is told to include it explicitly. Without this
+   * the route deploys without the file and answers 503.
+   */
+  outputFileTracingIncludes: {
+    "/api/cv/document": ["./private/cv/**"],
+  },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
