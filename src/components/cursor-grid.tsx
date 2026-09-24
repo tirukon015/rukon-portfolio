@@ -14,13 +14,14 @@ const FALLBACK_GLOW_RGB = "79, 178, 224";
  * Cursor-reactive background grid for the hero.
  *
  * Idle: a near-invisible base grid.
- * Active: a soft radial glow + brighter grid lines follow the pointer and
+ * Active: a soft radial glow and brighter grid lines follow the pointer and
  * fade smoothly with distance.
  *
- * Canvas-based (no WebGL). Only runs its render loop while the pointer is
- * inside the hero or a fade is still settling, otherwise it's fully idle.
- * Devices without a fine pointer, and prefers-reduced-motion, get a static
- * CSS grid instead and never mount the canvas or any listeners.
+ * Canvas-based (no WebGL). Pointer events are read from the hero section this
+ * sits in, not the window, so the loop only runs while the pointer is over the
+ * hero or a fade is still settling; moving the mouse elsewhere on the page
+ * costs nothing. Devices without a fine pointer, and prefers-reduced-motion,
+ * get a static CSS grid instead and never mount the canvas or any listeners.
  */
 export function CursorGrid() {
   const containerRef = useRef<HTMLDivElement>(null);
