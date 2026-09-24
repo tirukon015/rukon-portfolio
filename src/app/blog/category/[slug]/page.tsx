@@ -113,43 +113,8 @@ export default async function CategoryPage({ params }: { params: Params }) {
           ) : null}
         </Reveal>
 
-        <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {categoryPosts.map((post, i) => (
-            <Reveal key={post.slug} delayMs={Math.min(i * 40, 200)}>
-              <Link
-                href={`/blog/${post.slug}`}
-                className="group flex h-full flex-col rounded-2xl border border-border p-6 transition-colors hover:border-border-strong"
-              >
-                <div className="flex items-center gap-3 text-xs text-text-faint">
-                  <span className="font-mono uppercase tracking-wide text-accent">
-                    {post.category}
-                  </span>
-                  <span aria-hidden="true">&middot;</span>
-                  <time dateTime={post.date}>
-                    {new Date(post.date).toLocaleDateString("en-GB", {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
-                    })}
-                  </time>
-                </div>
-                <h2 className="mt-3 text-lg font-semibold text-text">{post.title}</h2>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-text-muted">
-                  {postExcerpt(post)}
-                </p>
-                <div className="mt-4 flex items-center justify-between text-xs text-text-faint">
-                  <span>{estimateReadingTime(post.sections)}</span>
-                  <span className="inline-flex items-center gap-1.5 text-accent-strong">
-                    Read
-                    <ArrowRight
-                      size={13}
-                      className="transition-transform duration-200 group-hover:translate-x-0.5"
-                    />
-                  </span>
-                </div>
-              </Link>
-            </Reveal>
-          ))}
+        <div className="mt-12">
+          <PostList posts={categoryPosts} />
         </div>
 
         <div className="mt-14 border-t border-border pt-8">
