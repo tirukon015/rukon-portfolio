@@ -95,6 +95,17 @@
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /*
+   * Editorial display sizes. Fluid, so the hero headline is large on a wide
+   * screen without becoming a wall of type on a phone.
+   */
+  --text-display: clamp(2.5rem, 1.3rem + 3.6vw, 4rem);
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.03em;
+  --text-display-sm: clamp(2rem, 1.2rem + 3vw, 3.5rem);
+  --text-display-sm--line-height: 1.06;
+  --text-display-sm--letter-spacing: -0.025em;
 }
 
 * {
