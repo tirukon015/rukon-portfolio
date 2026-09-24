@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { BlogIndex } from "@/components/sections/blog-index";
 import { JsonLd } from "@/components/seo/json-ld";
 import { site } from "@/content/site";
-import { sortedPosts } from "@/content/posts";
+import { publishedAt, sortedPosts } from "@/content/posts";
 import {
   absoluteUrl,
   breadcrumbSchema,
