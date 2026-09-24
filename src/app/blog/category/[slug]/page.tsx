@@ -82,7 +82,9 @@ export default async function CategoryPage({ params }: { params: Params }) {
         "@type": "BlogPosting",
         headline: p.title,
         url: absoluteUrl(`/blog/${p.slug}`),
-        datePublished: p.date,
+        datePublished: publishedAt(p.date),
+        dateModified: publishedAt(p.updated ?? p.date),
+        author: { "@id": PERSON_ID },
       })),
     },
     breadcrumbSchema(crumbs)
