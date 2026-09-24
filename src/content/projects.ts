@@ -825,8 +825,43 @@ export const projects: Project[] = [
   },
 ];
 
+/**
+ * Work that has a name but no case study yet.
+ *
+ * These are listed after the projects with write-ups so the hierarchy is
+ * visible now and each one can be promoted to a full `Project` entry later.
+ * Nothing here is described beyond its name until there is verified content
+ * to describe it with.
+ */
+export type WorkListItem = {
+  name: string;
+  summary?: string;
+  meta?: string;
+  href?: string;
+  external?: boolean;
+};
+
+export const upcomingWork: WorkListItem[] = [
+  {
+    name: "SpendDrop",
+    meta: "Personal project · iOS",
+    summary:
+      "A native iOS expense tracker in Swift and SwiftUI: on-device OCR of Malaysian receipts and e-wallet screenshots, a share extension, and no cloud at all. In progress; not yet published.",
+  },
+  {
+    name: "DriveKeep",
+    meta: "Personal project · Web",
+    summary:
+      "A photo-first fuel, mileage and maintenance tracker for cars and motorcycles on Next.js, Prisma and Supabase, with OCR on receipt and odometer photos. In progress; not yet published.",
+  },
+];
+
 export function getProject(slug: string) {
   return projects.find((p) => p.slug === slug);
+}
+
+export function getProjectsByTier(tier: ProjectTier) {
+  return projects.filter((p) => p.tier === tier);
 }
 
 export function getOtherProjects(slug: string) {
