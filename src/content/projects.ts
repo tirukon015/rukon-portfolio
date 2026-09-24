@@ -65,6 +65,12 @@ export type Project = {
   affiliation: string;
   confidential: boolean;
   kind: ProjectKind;
+  tier: ProjectTier;
+  /** Set on a platform that has connected subsystems. */
+  ecosystem?: {
+    label: string;
+    systems: RelatedSystem[];
+  };
   /** Short list shown as chips on cards and the case-study header. */
   tech: string[];
   /** Full, grouped stack shown in the case-study body. */
