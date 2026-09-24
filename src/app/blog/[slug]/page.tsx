@@ -185,33 +185,36 @@ export default async function BlogPostPage({ params }: { params: Params }) {
           ))}
         </div>
 
-        <div className="mt-12 flex flex-col gap-10">
-          {post.sections.map((section, i) => (
-            <Reveal key={section.heading} delayMs={Math.min(i * 30, 150)}>
-              <h2 className="text-xl font-semibold text-text">{section.heading}</h2>
-              <div className="mt-3 flex flex-col gap-4">
-                {section.body.map((p) => (
-                  <p key={p} className="text-base leading-relaxed text-text-muted">
-                    {p}
-                  </p>
-                ))}
-              </div>
-            </Reveal>
-          ))}
-        </div>
+        {showToc ? (
+          <nav aria-label="In this article" className="mt-10 border-l-2 border-border pl-4">
+            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-text-faint">In this article</p>
+            <ol className="mt-2 flex flex-col gap-1.5">
+              {post.sections.map((section, i) => (
+                <li key={section.heading} className="flex gap-3 text-sm">
+                  <span className="font-mono text-xs text-text-faint">{String(i + 1).padStart(2, "0")}</span>
+                  <a
+                    href={`#${headingId(section.heading)}`}
+                    className="text-text-muted transition-colors hover:text-text"
+                  >
+                    {section.heading}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        ) : null}
+
+        <PostBody sections={post.sections} />
 
         {projectsBehind.length > 0 ? (
-          <Reveal className="mt-14 rounded-2xl border border-border-strong bg-bg-elevated p-6">
+          <Reveal className="mt-14 rounded-lg border border-border-strong bg-bg-elevated p-6">
             <h2 className="font-mono text-xs uppercase tracking-[0.14em] text-text-faint">
               The work behind this
             </h2>
             <ul className="mt-4 flex flex-col gap-4">
               {projectsBehind.map((p) => (
                 <li key={p.slug}>
-                  <Link
-                    href={`/work/${p.slug}`}
-                    className="group inline-flex flex-col gap-1 text-left"
-                  >
+                  <Link href={`/work/${p.slug}`} className="group inline-flex flex-col gap-1 text-left">
                     <span className="inline-flex items-center gap-1.5 text-sm font-medium text-accent-strong transition-colors group-hover:text-accent">
                       {p.name} case study <ArrowUpRight size={13} />
                     </span>
