@@ -1,12 +1,24 @@
 import Link from "next/link";
-import { FileText, Mail } from "lucide-react";
-import { GithubIcon, LinkedinIcon } from "@/components/icons";
+import { ArrowRight } from "lucide-react";
 import { CursorGrid } from "@/components/cursor-grid";
 import { HeroSpotlight } from "@/components/hero-spotlight";
 import { Container } from "@/components/ui/container";
 import { ButtonLink } from "@/components/ui/button";
 import { site } from "@/content/site";
 
+/**
+ * The hero.
+ *
+ * Statement first: the headline says what the work is, the paragraph says how
+ * it is done, and three checkable facts sit beneath in place of a badge. The
+ * name is deliberately not the headline; it is in the header, the title tag
+ * and the About section, and repeating it here would spend the largest type
+ * on the page on the least informative line.
+ *
+ * Composition is asymmetric: seven columns of type, five of portrait, with
+ * the portrait bleeding to the section's edge on large screens so it reads
+ * as part of the page rather than an image placed beside text.
+ */
 export function Hero() {
   return (
     <section
