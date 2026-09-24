@@ -108,6 +108,32 @@ export const projects: Project[] = [
     affiliation: "Blue Bee Technologies Sdn. Bhd., ERTH × Maxis programme",
     confidential: true,
     kind: "professional",
+    tier: "flagship",
+    /*
+     * Two related systems, described from their own repositories. RPOMS AI is
+     * a separate application for the same programme and shares no code or
+     * data with RPOMS; the print engine is built standalone with an explicit
+     * integration boundary and is intended to sit inside RPOMS once validated.
+     */
+    ecosystem: {
+      label: "RPOMS ecosystem",
+      systems: [
+        {
+          name: "RPOMS AI",
+          relation: "Related system, same programme",
+          summary:
+            "A router surface inspector: photo, quality gate, a vision model that only observes, and a deterministic rule engine that decides. Free open-source model, honestly evaluated.",
+          href: "/blog/a-vision-model-that-only-observes",
+        },
+        {
+          name: "RPOMS Print Engine",
+          relation: "Subsystem, integration pending",
+          summary:
+            "Scan-to-label printing to a NIIMBOT B1 Pro straight from the browser over Web Bluetooth. Built and tested standalone before it touches production RPOMS.",
+          href: "/blog/printing-labels-from-the-browser-over-web-bluetooth",
+        },
+      ],
+    },
     tech: [
       "Next.js 15 (App Router)",
       "React 19",
