@@ -234,30 +234,17 @@ export function HeroSpotlight() {
           The person behind the systems &rarr;
         </p>
         <p className="mt-1 pl-4 text-[11px] text-text-faint">
-          {coarsePointer ? "Tap to reveal" : "Move cursor to reveal"}
+          {coarsePointer ? "Tap to reveal" : "Move the cursor to reveal"}
         </p>
       </div>
 
-      <div
-        ref={maskedRef}
-        aria-hidden="true"
-        className="absolute inset-0"
-        style={{
-          maskRepeat: "no-repeat",
-          WebkitMaskRepeat: "no-repeat",
-          maskSize: "100% 100%",
-          WebkitMaskSize: "100% 100%",
-          maskImage: IDLE_MASK,
-          WebkitMaskImage: IDLE_MASK,
-          mixBlendMode: "screen",
-          opacity: 0,
-        }}
-      >
+      <div ref={layerRef} aria-hidden="true" className="hero-portrait absolute inset-0">
         <Image
           src="/images/hero-developer.png"
           alt=""
           fill
-          sizes="(min-width: 1024px) 42vw, 0px"
+          priority
+          sizes="(min-width: 1024px) 50vw, 100vw"
           className="object-contain object-center"
         />
       </div>
