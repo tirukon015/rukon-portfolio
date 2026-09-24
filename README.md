@@ -29,7 +29,9 @@ src/content/      all site copy, as typed data
 src/lib/          hooks, and seo.ts
 ```
 
-**Routes:** `/` · `/work` · `/work/[slug]` · `/blog` · `/blog/[slug]` · `/blog/category/[slug]` · `/api/contact`
+**Routes:** `/` · `/work` · `/work/[slug]` · `/blog` · `/blog/[slug]` · `/blog/category/[slug]` · `/cv` · `/api/contact` · `/api/cv/*`
+
+The homepage is the one route that is not fully static: it revalidates hourly because it renders the live GitHub contribution calendar.
 Plus generated `robots.txt`, `sitemap.xml`, `icon` and `opengraph-image`.
 
 ---
