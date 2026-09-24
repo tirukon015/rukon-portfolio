@@ -90,6 +90,7 @@ npm run build
 | `CV_DOCUMENT_URL` | `/api/cv/document` | Where the real CV PDF is fetched from. **Required in production** — the PDF is not in this repository. Any private, authenticated URL: a Vercel Blob private URL, a Supabase signed URL, or similar. Read server-side only and never sent to a browser. Without it the route returns 503. |
 | `CV_DOCUMENT_TOKEN` | `/api/cv/document` | Optional bearer token for `CV_DOCUMENT_URL`, when the storage provider needs one. |
 | `CV_ACCESS_SECRET` | `/api/cv/*` | Signs the CV access grant. **Required in production** — without it the request route returns 503 rather than issuing a grant it cannot verify. In development a per-process random secret is used, so no setup is needed locally. Any random string of 16+ characters. |
+| `GITHUB_TOKEN` | Homepage contribution calendar | Optional but recommended. A fine-grained personal access token with no repository permissions; the public contribution calendar is readable by any authenticated request. With it, the calendar comes from the GraphQL API. Without it, the site falls back to GitHub's public profile fragment, which is undocumented and may change. Read server-side only, in `src/lib/github/contributions.ts`, and cached for an hour. |
 
 ---
 
