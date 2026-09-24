@@ -51,38 +51,35 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" aria-label="Contact" className="py-20 sm:py-24 lg:py-28">
+    <section id="contact" aria-labelledby="contact-heading" className="py-20 sm:py-24 lg:py-32">
       <Container>
-        <div className="grid grid-cols-1 gap-14 lg:grid-cols-[1fr_1.2fr]">
-          <Reveal>
-            <span className="font-mono text-xs uppercase tracking-[0.18em] text-accent">
-              Contact
-            </span>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-text sm:text-4xl">
-              Have a system, website, or operational workflow that needs to be improved?
+        <div className="grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-10">
+          <Reveal className="lg:col-span-7">
+            <span className="font-mono text-xs uppercase tracking-[0.18em] text-accent">Contact</span>
+            <h2 id="contact-heading" className="mt-4 max-w-[16ch] text-display-sm font-semibold text-text text-balance">
+              Have something worth building?
             </h2>
-            <p className="mt-4 max-w-md text-base leading-relaxed text-text-muted">
-              I&apos;m open to internship and full-time software engineering opportunities. Reach out
-              directly, or use the form.
+            <p className="mt-6 max-w-md text-base leading-relaxed text-text-muted sm:text-lg">
+              I&apos;m open to roles across IT systems and operations, web development and software,
+              internship or full-time. Write to me directly, or use the form.
             </p>
 
-            <ul className="mt-8 flex flex-col gap-4">
-              <li>
-                <a
-                  href={site.emailHref}
-                  className="inline-flex items-center gap-3 text-sm text-text transition-colors hover:text-accent-strong"
-                >
-                  <Mail size={16} className="text-text-faint" /> {site.email}
-                </a>
-              </li>
+            <a
+              href={site.emailHref}
+              className="mt-8 inline-block text-xl font-medium tracking-tight text-text underline decoration-border-strong underline-offset-[8px] transition-colors hover:text-accent-strong hover:decoration-accent sm:text-2xl"
+            >
+              {site.email}
+            </a>
+
+            <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2">
               <li>
                 <a
                   href={site.links.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 text-sm text-text transition-colors hover:text-accent-strong"
+                  className="inline-flex items-center gap-1.5 text-sm text-text-muted transition-colors hover:text-text"
                 >
-                  <LinkedinIcon size={16} className="text-text-faint" /> LinkedIn
+                  LinkedIn <ArrowUpRight size={13} />
                 </a>
               </li>
               <li>
@@ -90,63 +87,62 @@ export function Contact() {
                   href={site.links.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 text-sm text-text transition-colors hover:text-accent-strong"
+                  className="inline-flex items-center gap-1.5 text-sm text-text-muted transition-colors hover:text-text"
                 >
-                  <GithubIcon size={16} className="text-text-faint" /> GitHub
+                  GitHub <ArrowUpRight size={13} />
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`${site.cvHref}?from=contact`}
+                  className="inline-flex items-center gap-1.5 text-sm text-text-muted transition-colors hover:text-text"
+                >
+                  Resume
                 </a>
               </li>
             </ul>
-
-            <div className="mt-8 flex flex-wrap gap-4">
-              <ButtonLink href="/#work" variant="secondary">
-                View My Work
-              </ButtonLink>
-              <ButtonLink href={`${site.cvHref}?from=contact`} variant="secondary">
-                View CV
-              </ButtonLink>
-            </div>
           </Reveal>
 
-          <Reveal delayMs={100}>
-            <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-5">
-              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                <Field label="Full Name" name="name" type="text" autoComplete="name" required />
-                <Field label="Email Address" name="email" type="email" autoComplete="email" required />
+          <Reveal delayMs={100} className="lg:col-span-5 lg:pt-2">
+            <p className="mb-6 font-mono text-[11px] uppercase tracking-[0.16em] text-text-faint">
+              Or send a note
+            </p>
+            <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-6">
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                <Field label="Name" name="name" type="text" autoComplete="name" required />
+                <Field label="Email" name="email" type="email" autoComplete="email" required />
               </div>
               <Field label="Subject" name="subject" type="text" required />
               <div>
-                <label htmlFor="message" className="block text-sm text-text-muted">
+                <label htmlFor="message" className="block font-mono text-[11px] uppercase tracking-[0.16em] text-text-faint">
                   Message
                 </label>
                 <textarea
                   id="message"
                   name="message"
-                  rows={6}
+                  rows={5}
                   required
                   maxLength={5000}
-                  className="mt-2 w-full rounded-xl border border-border-strong bg-bg-elevated px-4 py-3 text-sm text-text outline-none transition-colors focus:border-accent"
+                  className="mt-2 w-full resize-y border-b border-border-strong bg-transparent px-0 py-2.5 text-base text-text outline-none transition-colors focus:border-accent"
                 />
               </div>
 
-              <button
-                type="submit"
-                disabled={status === "sending"}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-medium text-accent-contrast transition-colors hover:bg-accent-strong disabled:opacity-60"
-              >
-                {status === "sending" ? (
-                  "Sending…"
-                ) : (
-                  <>
-                    <Send size={16} /> Send Message
-                  </>
-                )}
-              </button>
-
-              <div role="status" aria-live="polite" className="min-h-5 text-sm">
-                {status === "success" ? (
-                  <p className="text-accent-strong">Message sent. I&apos;ll get back to you soon.</p>
-                ) : null}
-                {status === "error" ? <p className="text-red-400">{errorMessage}</p> : null}
+              <div className="flex flex-wrap items-center gap-5">
+                <Button type="submit" disabled={status === "sending"}>
+                  {status === "sending" ? (
+                    "Sending…"
+                  ) : (
+                    <>
+                      Send message <Send size={15} />
+                    </>
+                  )}
+                </Button>
+                <div role="status" aria-live="polite" className="text-sm">
+                  {status === "success" ? (
+                    <p className="text-accent-strong">Sent. I&apos;ll get back to you soon.</p>
+                  ) : null}
+                  {status === "error" ? <p className="text-text">{errorMessage}</p> : null}
+                </div>
               </div>
             </form>
           </Reveal>
