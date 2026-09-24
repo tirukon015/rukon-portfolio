@@ -80,7 +80,7 @@ export function CursorGrid() {
 
     const target = { x: width / 2, y: height / 2 };
     const current = { x: target.x, y: target.y };
-    let intensity = 0; // 0 = idle, 1 = fully active
+    let intensity = 0;
     let targetIntensity = 0;
     let pointerInside = false;
     let rafId = 0;
