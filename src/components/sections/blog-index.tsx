@@ -1,33 +1,24 @@
-"use client";
-
-import { useMemo, useState } from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { Container } from "@/components/ui/container";
-import { Reveal } from "@/components/ui/reveal";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
-import { categories, postExcerpt, sortedPosts, type PostCategory } from "@/content/posts";
+import { PostList } from "@/components/blog/post-list";
+import { sortedPosts } from "@/content/posts";
 import { categoryMeta } from "@/content/categories";
-import { estimateReadingTime } from "@/lib/reading-time";
 import type { Crumb } from "@/lib/seo";
-import { cn } from "@/lib/utils";
 
-export function BlogIndex({
-  crumbs,
-  description,
-}: {
-  crumbs: Crumb[];
-  description: string;
-}) {
-  const [active, setActive] = useState<PostCategory | "All">("All");
-  const posts = useMemo(() => sortedPosts(), []);
-  const filtered = active === "All" ? posts : posts.filter((p) => p.category === active);
-
-  /** Category pages are only generated where posts exist, so only link those. */
-  const browsable = useMemo(
-    () => categoryMeta.filter((c) => posts.some((p) => p.category === c.name)),
-    [posts]
-  );
+/**
+ * The blog index.
+ *
+ * Server component: nothing here needs JavaScript. The category row is a set
+ * of real links to the category pages rather than an in-page filter, which is
+ * what makes every view of the library a crawlable URL with its own metadata,
+ * and what keeps the article bodies out of the client bundle.
+ */
+export function BlogIndex({ crumbs, description }: { crumbs: Crumb[]; description: string }) {
+  const posts = sortedPosts();
+  const browsable = categoryMeta
+    .map((c) => ({ ...c, count: posts.filter((p) => p.category === c.name).length }))
+    .filter((c) => c.count > 0);
 
   return (
     <div className="py-16 sm:py-20 lg:py-24">
