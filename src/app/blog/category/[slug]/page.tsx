@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const category = getCategoryBySlug(slug);
   if (!category) return {};
 
-  const title = `${category.title} Writing`;
+  const title = `${category.title}: Writing`;
   return {
     title,
     description: category.description,
