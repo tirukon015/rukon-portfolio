@@ -247,9 +247,7 @@ export default async function BlogPostPage({ params }: { params: Params }) {
 
       {related.length > 0 ? (
         <Container className="mt-20 max-w-3xl border-t border-border pt-14">
-          <h2 className="font-mono text-xs uppercase tracking-[0.14em] text-text-faint">
-            Keep reading
-          </h2>
+          <h2 className="font-mono text-xs uppercase tracking-[0.14em] text-text-faint">Keep reading</h2>
           <div className="mt-6 flex flex-col gap-6">
             {related.map((p) => (
               <Link
