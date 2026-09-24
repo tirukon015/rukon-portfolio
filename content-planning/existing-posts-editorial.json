@@ -1,0 +1,95 @@
+{
+  "note": "Editorial plan metadata that used to live inline in src/content/posts.ts. Moved here on 2026-09-24 so it no longer ships in the client bundle. Nothing here renders.",
+  "posts": [
+    {
+      "slug": "what-is-a-production-management-system",
+      "plan": "expand",
+      "mergeInto": null,
+      "planNote": "Best keyword fit in the set. Definitional pillar for the Operations cluster; needs mechanism-level depth."
+    },
+    {
+      "slug": "why-production-operations-need-digital-systems",
+      "plan": "merge",
+      "mergeInto": "common-problems-manual-production-tracking",
+      "planNote": "~70% overlap with common-problems-manual-production-tracking. Salvage the private-copies-of-a-shared-sheet signal."
+    },
+    {
+      "slug": "common-problems-manual-production-tracking",
+      "plan": "merge",
+      "mergeInto": null,
+      "planNote": "Merge target. Keeps its slug and absorbs why-production-operations-need-digital-systems."
+    },
+    {
+      "slug": "how-admin-panels-help-manage-operational-data",
+      "plan": "expand",
+      "mergeInto": null,
+      "planNote": "Eleven admin routes and a three-tier permission model are available as worked examples and currently unused."
+    },
+    {
+      "slug": "from-manual-workflow-to-digital-workflow",
+      "plan": "update",
+      "mergeInto": null,
+      "planNote": "Re-anchor on a manual distinction that had to survive digitisation. Also needs a factual correction: the module sequence described is the build order, not a completed production rollout."
+    },
+    {
+      "slug": "why-developers-should-understand-the-physical-process",
+      "plan": "expand",
+      "mergeInto": null,
+      "planNote": "Flagship essay. Several further floor-derived rules are verified in source and unused here."
+    },
+    {
+      "slug": "why-system-maintenance-matters-after-deployment",
+      "plan": "expand",
+      "mergeInto": null,
+      "planNote": "A dated changelog spanning several months is available as evidence. Do not publish the open credential-rotation item."
+    },
+    {
+      "slug": "designing-a-website-in-figma-before-development",
+      "plan": "update",
+      "mergeInto": null,
+      "planNote": "RETIREMENT WITHDRAWN (2026-09-02). The ERTH Figma prototype (ERTH V2.3) was supplied as evidence, so the design-first premise is supported and the article stays. One outstanding edit: the body claims sole design authorship, which the prototype alone does not establish, soften to design and prototyping involvement. Also still the shortest article in the set at 174 words."
+    },
+    {
+      "slug": "from-figma-design-to-production-website",
+      "plan": "keep",
+      "mergeInto": null,
+      "planNote": "Both outstanding edits applied (2026-09-06): sole authorship of the design is no longer claimed, and the stale 'still in progress' statement is replaced now the production build has shipped."
+    },
+    {
+      "slug": "translating-figma-components-into-reusable-code",
+      "plan": "update",
+      "mergeInto": null,
+      "planNote": "MERGE WITHDRAWN (2026-09-02). Component translation is a genuinely distinct topic, now evidenced by the ERTH Figma prototype plus the documented ten-component vocabulary. One outstanding edit: the body claims sole design authorship, which the prototype alone does not establish. Residual overlap with from-figma-design-to-production-website should be handled by differentiating the angle, not by merging."
+    },
+    {
+      "slug": "designing-for-desktop-and-mobile-before-development",
+      "plan": "update",
+      "mergeInto": null,
+      "planNote": "MERGE WITHDRAWN (2026-09-02). Planning responsive behaviour at design time is supported by the ERTH Figma prototype, and the documented pre-implementation responsive risk register gives it concrete evidence. One outstanding edit: the body claims sole design authorship, which the prototype alone does not establish."
+    },
+    {
+      "slug": "what-an-it-systems-role-actually-involves",
+      "plan": "expand",
+      "mergeInto": null,
+      "planNote": "Real local search demand. Expand across the full span of the role, from end-user support to owning a production system."
+    },
+    {
+      "slug": "replacing-repetitive-manual-work-with-software",
+      "plan": "update",
+      "mergeInto": null,
+      "planNote": "Both named examples, document generation from a template and automatic stock deduction, are verified in source. Keep them and go deeper."
+    },
+    {
+      "slug": "why-internal-software-needs-good-ux",
+      "plan": "expand",
+      "mergeInto": null,
+      "planNote": "Several concrete mechanisms are verified and unused: components that report their own problems, imports that surface duplicates before writing, add-only controls."
+    },
+    {
+      "slug": "reporting-from-operational-data",
+      "plan": "expand",
+      "mergeInto": null,
+      "planNote": "Four comparison modes and batch carry-over are verified. Expand into the mechanics rather than the principle alone."
+    }
+  ]
+}
