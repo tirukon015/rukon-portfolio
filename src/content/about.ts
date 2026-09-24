@@ -7,6 +7,16 @@ export const about = {
     "IT Support",
     "Business Workflows",
   ],
+  /**
+   * The homepage version: three paragraphs, chosen from `paragraphs` below,
+   * that say who I am rather than re-listing the projects the page has
+   * already shown. The full set is kept for the CV and About routes.
+   */
+  short: [
+    "I'm a hands-on technology professional in Cyberjaya, Malaysia. My work sits where three things meet: the operational problem a business actually has, the system built to solve it, and the day-to-day support that keeps it working once people depend on it.",
+    "That means I'm rarely doing only one of those jobs. I write the software, but I also gather the requirement from the floor rather than a specification, deploy it, support the users, troubleshoot the hardware and software around it, and keep improving it after launch. The technical work and the operational work are the same job.",
+    "I'm completing a B.Sc. in Information Technology at the University of Cyberjaya. My TypeScript and newer platform work is something I'm deliberately still deepening rather than treating as finished. I'm open to roles across IT systems and operations, web development and software.",
+  ],
   paragraphs: [
     "I'm a hands-on technology professional in Cyberjaya, Malaysia. My work sits where three things meet: the operational problem a business actually has, the system built to solve it, and the day-to-day support that keeps it working once people depend on it.",
     "That means I'm rarely doing only one of those jobs. I write the software, but I also gather the requirement from the floor rather than a specification, deploy it, support the users, troubleshoot the hardware and software around it, and keep improving it after launch. The technical work and the operational work are the same job.",
