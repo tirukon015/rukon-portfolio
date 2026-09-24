@@ -169,12 +169,8 @@ export function CursorGrid() {
       ensureRunning();
     };
 
-    // Idle paint so the base grid is visible before any interaction.
     ensureRunning();
 
-    // Re-read colors and force one repaint when the theme toggle changes
-    // data-theme, otherwise an idle (non-animating) grid would keep
-    // showing the previous theme's colors until the next pointer move.
     const themeObserver = new MutationObserver(() => {
       readThemeColors();
       ensureRunning();
