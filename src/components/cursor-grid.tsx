@@ -102,47 +102,29 @@ export function CursorGrid() {
     };
 
     const frame = () => {
-      // Ease current position and intensity toward their targets.
-      current.x += (target.x - current.x) * 0.18;
-      current.y += (target.y - current.y) * 0.18;
-      intensity += (targetIntensity - intensity) * 0.12;
+      current.x += (target.x - current.x) * 0.16;
+      current.y += (target.y - current.y) * 0.16;
+      intensity += (targetIntensity - intensity) * 0.1;
 
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, width, height);
 
       if (intensity > 0.002) {
-        // Soft color glow under the grid.
-        const glow = ctx.createRadialGradient(
-          current.x,
-          current.y,
-          0,
-          current.x,
-          current.y,
-          GLOW_RADIUS
-        );
-        glow.addColorStop(0, `rgba(${glowRgb}, ${0.1 * intensity})`);
+        const glow = ctx.createRadialGradient(current.x, current.y, 0, current.x, current.y, GLOW_RADIUS);
+        glow.addColorStop(0, `rgba(${glowRgb}, ${0.08 * intensity})`);
         glow.addColorStop(1, `rgba(${glowRgb}, 0)`);
         ctx.fillStyle = glow;
         ctx.fillRect(0, 0, width, height);
       }
 
-      // Base grid, always present, barely visible.
       drawGrid(ctx, BASE_ALPHA);
 
       if (intensity > 0.002) {
-        // Bright grid, masked to a radial falloff around the cursor.
         maskCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
         maskCtx.clearRect(0, 0, width, height);
         drawGrid(maskCtx, BRIGHT_ALPHA * intensity);
         maskCtx.globalCompositeOperation = "destination-in";
-        const falloff = maskCtx.createRadialGradient(
-          current.x,
-          current.y,
-          0,
-          current.x,
-          current.y,
-          GLOW_RADIUS
-        );
+        const falloff = maskCtx.createRadialGradient(current.x, current.y, 0, current.x, current.y, GLOW_RADIUS);
         falloff.addColorStop(0, "rgba(255,255,255,1)");
         falloff.addColorStop(1, "rgba(255,255,255,0)");
         maskCtx.fillStyle = falloff;
