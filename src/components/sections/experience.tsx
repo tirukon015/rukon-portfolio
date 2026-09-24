@@ -55,18 +55,18 @@ export function Experience() {
                         <Link
                           key={slug}
                           href={`/work/${slug}`}
-                          className="inline-flex items-center gap-1.5 text-sm text-accent-strong transition-colors hover:text-accent"
+                          className="inline-flex items-center gap-1.5 text-sm text-text transition-colors hover:text-accent-strong"
                         >
-                          {project.name} case study <ArrowUpRight size={13} />
+                          {project.name} case study <ArrowRight size={13} />
                         </Link>
                       );
                     })}
-                  </div>
+                  </p>
                 ) : null}
               </div>
             </Reveal>
           ))}
-        </div>
+        </ol>
       </Container>
     </section>
   );
