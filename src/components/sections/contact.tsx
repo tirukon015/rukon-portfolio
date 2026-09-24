@@ -1,15 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, Send } from "lucide-react";
-import { GithubIcon, LinkedinIcon } from "@/components/icons";
+import { ArrowUpRight, Send } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
-import { ButtonLink } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { site } from "@/content/site";
 
 type Status = "idle" | "sending" | "success" | "error";
 
+/**
+ * The closing section.
+ *
+ * A single question as the headline, the email address as the primary route,
+ * and the form beside it for anyone who prefers one. The form still posts to
+ * `/api/contact`; nothing about delivery changed here.
+ */
 export function Contact() {
   const [status, setStatus] = useState<Status>("idle");
   const [errorMessage, setErrorMessage] = useState("");
