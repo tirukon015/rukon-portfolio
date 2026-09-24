@@ -176,7 +176,7 @@ function Field({
         type={type}
         autoComplete={autoComplete}
         required={required}
-        className="mt-2 w-full rounded-xl border border-border-strong bg-bg-elevated px-4 py-3 text-sm text-text outline-none transition-colors focus:border-accent"
+        className="mt-2 w-full border-b border-border-strong bg-transparent px-0 py-2.5 text-base text-text outline-none transition-colors focus:border-accent"
       />
     </div>
   );
