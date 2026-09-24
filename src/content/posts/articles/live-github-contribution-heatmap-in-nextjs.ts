@@ -44,8 +44,8 @@ export const post: BlogPost = {
 }`,
           caption: "The login is read back and compared with the configured account, so a token for the wrong account renders nothing rather than someone else's year.",
         },
-        "The fallback is the HTML fragment GitHub renders for the profile calendar itself. It is public, needs no token, and it is undocumented: a table of `td` cells carrying `data-date` and `data-level`, with a separate `tool-tip` element per cell holding the human-readable count. Parsing it is a few regular expressions and a join on the cell id. It exists so the section works in development with no setup and degrades rather than disappears if the token is ever missing in production. I would not build on it alone, because GitHub can change that markup without telling anyone.",
-        "The selection is the same pattern the rest of my work uses: if `GITHUB_TOKEN` is set, use the API; otherwise use the fragment. Both fail soft. Any error returns `null` and the section renders nothing, which is better than an empty frame with a spinner in it.",
+        "An earlier version kept a second source: the HTML fragment GitHub renders for the profile calendar itself, public and tokenless but undocumented, parsed with a few regular expressions. It was removed once the token was in place. A calendar that claims to be live should have exactly one source of truth, and scraping markup that can change without notice is not a foundation for one. Now, if the token is missing or GitHub does not answer, the panel says the data is unavailable rather than showing anything else.",
+        "Every failure returns `null` from the data function: no token, a 401 or 403, a malformed reply, or a request that has not answered in eight seconds. The section then renders its unavailable state, which is a sentence, not a spinner and not a cached-looking grid of zeros.",
       ],
     },
     {
