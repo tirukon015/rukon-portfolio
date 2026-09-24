@@ -42,7 +42,7 @@ Plus generated `robots.txt`, `sitemap.xml`, `icon` and `opengraph-image`.
 | --- | --- |
 | `site.ts` | Name, role, statement, links, nav |
 | `projects.ts` | Case studies, in display order |
-| `posts.ts` | Blog posts |
+| `posts/` | Blog: `types.ts` is the content model, `index.ts` the list and helpers, one file per article under `posts/articles/` |
 | `experience.ts` · `education.ts` | Roles, study, certifications |
 | `skills.ts` | Capabilities, and the tiered stack |
 | `about.ts` · `faq.ts` · `process.ts` · `categories.ts` | Everything else |
