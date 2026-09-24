@@ -167,7 +167,7 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={name} className="block text-sm text-text-muted">
+      <label htmlFor={name} className="block font-mono text-[11px] uppercase tracking-[0.16em] text-text-faint">
         {label}
       </label>
       <input
