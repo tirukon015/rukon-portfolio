@@ -11,21 +11,32 @@ import { cn } from "@/lib/utils";
 
 const sectionIds = nav
   .map((item) => item.sectionId)
-  .filter((id): id is NonNullable<typeof id> => id !== null);
+  .filter((id): id is string => id !== null);
 
+/** A stable empty list, so the section observer is not re-created on every render off the homepage. */
+const NO_SECTIONS: string[] = [];
+
+/**
+ * Site header.
+ *
+ * One row: wordmark, five links, theme toggle. No progress bar, no pill
+ * button, no icon cluster; those belong in the footer and the contact
+ * section, where they are content rather than chrome.
+ *
+ * Active state has two sources. On the homepage the anchor links follow the
+ * section in view. Everywhere else a link is active when the pathname starts
+ * with its `match`, so "Work" is lit on a case study and "Writing" on a post.
+ */
 export function Header() {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const active = useActiveSection(sectionIds);
+  const firstLinkRef = useRef<HTMLAnchorElement>(null);
+  const activeSection = useActiveSection(isHome ? sectionIds : NO_SECTIONS);
 
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 8);
-      const doc = document.documentElement;
-      const max = doc.scrollHeight - doc.clientHeight;
-      setProgress(max > 0 ? Math.min(1, window.scrollY / max) : 0);
-    };
+    const onScroll = () => setScrolled(window.scrollY > 8);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
