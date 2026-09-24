@@ -172,62 +172,61 @@ export function HeroSpotlight() {
     const handleMove = (e: PointerEvent) => {
       if (e.pointerType !== "mouse" && e.pointerType !== "pen") return;
 
-      const rect = container.getBoundingClientRect();
-
-      // Distance to the nearest point on the box: zero while the pointer is
-      // inside it, growing once outside.
+      // Distance to the nearest point on the box: zero inside, growing outside.
       const dx = Math.max(rect.left - e.clientX, 0, e.clientX - rect.right);
       const dy = Math.max(rect.top - e.clientY, 0, e.clientY - rect.bottom);
-      const distance = Math.hypot(dx, dy);
+      const proximity = Math.max(0, 1 - Math.hypot(dx, dy) / PROXIMITY_RANGE);
 
-      // The reveal centre follows the pointer, clamped to the box, so an
-      // approach from the left lights the left edge first instead of jumping.
-      const clampedX = Math.min(Math.max(e.clientX, rect.left), rect.right);
-      const clampedY = Math.min(Math.max(e.clientY, rect.top), rect.bottom);
-
-      target.x = clampedX - rect.left;
-      target.y = clampedY - rect.top;
-      target.intensity = Math.max(0, Math.min(1, 1 - distance / PROXIMITY_RANGE));
+      target.x = Math.min(Math.max(e.clientX, rect.left), rect.right) - rect.left;
+      target.y = Math.min(Math.max(e.clientY, rect.top), rect.bottom) - rect.top;
+      target.strength = ENTRY_STRENGTH + (1 - ENTRY_STRENGTH) * proximity;
       ensureRunning();
     };
 
-    // Touch and stylus taps: no approach to read, so it is a toggle.
+    const handleLeave = () => {
+      target.strength = 0;
+      ensureRunning();
+    };
+
+    // Touch and stylus taps: no cursor to enter with, so it is a toggle.
     const handleTap = (e: PointerEvent) => {
       if (e.pointerType === "mouse") return;
-      const rect = container.getBoundingClientRect();
       tapRevealed = !tapRevealed;
-      target.x = e.clientX - rect.left;
-      target.y = e.clientY - rect.top;
-      target.intensity = tapRevealed ? 1 : 0;
+      if (tapRevealed) {
+        target.x = e.clientX - rect.left;
+        target.y = e.clientY - rect.top;
+        target.strength = 1;
+      } else {
+        target.strength = 0;
+      }
       ensureRunning();
     };
 
-    ensureRunning();
+    // Start hidden. No paint is needed until the pointer arrives.
+    setVars(current.x, current.y, diagonal * MIN_RADIUS, 0);
 
-    window.addEventListener("pointermove", handleMove, { passive: true });
+    surface.addEventListener("pointermove", handleMove, { passive: true });
+    surface.addEventListener("pointerleave", handleLeave);
     container.addEventListener("pointerdown", handleTap, { passive: true });
 
     return () => {
       cancelAnimationFrame(rafId);
-      window.removeEventListener("pointermove", handleMove);
+      resizeObserver.disconnect();
+      window.removeEventListener("scroll", measure);
+      surface.removeEventListener("pointermove", handleMove);
+      surface.removeEventListener("pointerleave", handleLeave);
       container.removeEventListener("pointerdown", handleTap);
     };
-  }, [interactive]);
-
-  if (!interactive) return null;
+  }, [coarsePointer, reducedMotion]);
 
   return (
-    <div ref={containerRef} className="relative h-full w-full overflow-hidden">
+    <div ref={containerRef} className="relative h-full w-full select-none overflow-hidden">
       {/*
         The prompt. Sits above the portrait's visual mass and never intercepts
         the pointer, so it cannot block the very hover it is asking for.
-
-        aria-hidden because it describes a pointer gesture that reveals a purely
-        decorative image (alt=""). A screen reader user gains nothing from the
-        instruction and loses nothing by not hearing it.
       */}
       <div
-        ref={ctaRef}
+        ref={hintRef}
         aria-hidden="true"
         className="pointer-events-none absolute left-0 top-1 z-10 select-none transition-opacity duration-300"
       >
