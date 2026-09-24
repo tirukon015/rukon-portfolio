@@ -3,10 +3,13 @@ import type { PostCategory } from "@/content/posts";
 /**
  * Category metadata.
  *
- * Categories were previously a bare string union used only as a client-side
- * filter. They now also back `/blog/category/[slug]`, so each one needs a URL
- * slug and copy of its own. The union in posts.ts stays the source of truth for
- * which categories exist; this file describes them.
+ * Six clusters, each with a URL slug and copy of its own, because each one
+ * backs `/blog/category/[slug]`. The union in posts/types.ts stays the source
+ * of truth for which categories exist; this file describes them.
+ *
+ * The earlier six categories (Operations, IT Systems, Software Engineering,
+ * Business Automation, Web Development, UI/UX) were folded into these on
+ * 2026-09-24. Their old URLs redirect permanently; see next.config.ts.
  *
  * Adding a category means adding it to `PostCategory` and adding an entry here.
  * A category with no posts is skipped when the routes are generated, so the
