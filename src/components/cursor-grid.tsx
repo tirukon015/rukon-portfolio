@@ -62,9 +62,10 @@ export function CursorGrid() {
     let width = 0;
     let height = 0;
     let dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let rect = container.getBoundingClientRect();
 
     const resize = () => {
-      const rect = container.getBoundingClientRect();
+      rect = container.getBoundingClientRect();
       width = rect.width;
       height = rect.height;
       dpr = Math.min(window.devicePixelRatio || 1, 2);
