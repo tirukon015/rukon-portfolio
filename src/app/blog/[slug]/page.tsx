@@ -6,7 +6,17 @@ import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { JsonLd } from "@/components/seo/json-ld";
-import { getPost, getRelatedPosts, postExcerpt, posts } from "@/content/posts";
+import { PostBody } from "@/components/blog/post-body";
+import { formatPostDate } from "@/components/blog/post-list";
+import {
+  getPost,
+  getRelatedPosts,
+  headingId,
+  postExcerpt,
+  posts,
+  postWordCount,
+  publishedAt,
+} from "@/content/posts";
 import { getCategoryMeta } from "@/content/categories";
 import { getProject } from "@/content/projects";
 import { estimateReadingTime } from "@/lib/reading-time";
