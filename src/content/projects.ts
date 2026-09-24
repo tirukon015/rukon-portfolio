@@ -29,6 +29,31 @@ export type ProjectStatusItem = {
 
 export type ProjectKind = "professional" | "university-project";
 
+/**
+ * Where a project sits in the portfolio's hierarchy.
+ *
+ * Not every project is an equal card. One flagship gets the large treatment,
+ * featured work gets a full block, and the rest read as an editorial list.
+ */
+export type ProjectTier = "flagship" | "featured" | "secondary";
+
+/**
+ * A system that belongs to a larger platform.
+ *
+ * `summary` is optional on purpose: a subsystem can be named before its
+ * write-up exists, and the homepage says so rather than inventing one.
+ */
+export type RelatedSystem = {
+  name: string;
+  /** How it relates to the parent, in a few words. */
+  relation: string;
+  summary?: string;
+  /** A case-study slug once one exists. */
+  slug?: string;
+  /** Somewhere to read more before a case study exists, such as an article. */
+  href?: string;
+};
+
 export type Project = {
   slug: string;
   name: string;
