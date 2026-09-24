@@ -124,8 +124,10 @@ export default async function BlogPostPage({ params }: { params: Params }) {
     breadcrumbSchema(crumbs)
   );
 
+  const showToc = post.sections.length >= 4;
+
   return (
-    <article className="py-20">
+    <article className="py-16 sm:py-20">
       <JsonLd data={schema} />
 
       <Container className="max-w-3xl">
