@@ -27,9 +27,37 @@ const securityHeaders = [
   },
 ];
 
+/**
+ * Old URLs, kept working.
+ *
+ * On 2026-09-24 the blog's six categories were folded into six clusters, and
+ * one article was merged into the one it duplicated. Every URL that existed
+ * before still answers, with a permanent redirect to where the content lives
+ * now, so nothing indexed or linked breaks.
+ */
+const permanentRedirects = [
+  { from: "/blog/category/operations", to: "/blog/category/building-real-systems" },
+  { from: "/blog/category/it-systems", to: "/blog/category/building-real-systems" },
+  { from: "/blog/category/software-engineering", to: "/blog/category/full-stack-development" },
+  { from: "/blog/category/web-development", to: "/blog/category/full-stack-development" },
+  { from: "/blog/category/business-automation", to: "/blog/category/ai-and-automation" },
+  { from: "/blog/category/ui-ux", to: "/blog/category/ui-ux-and-product" },
+  {
+    from: "/blog/why-production-operations-need-digital-systems",
+    to: "/blog/common-problems-manual-production-tracking",
+  },
+];
+
 const nextConfig: NextConfig = {
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
+  },
+  async redirects() {
+    return permanentRedirects.map(({ from, to }) => ({
+      source: from,
+      destination: to,
+      permanent: true,
+    }));
   },
 };
 
