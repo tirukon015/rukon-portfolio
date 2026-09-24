@@ -549,6 +549,7 @@ export const projects: Project[] = [
     affiliation: "University of Cyberjaya, BIT4543 Artificial Intelligence",
     confidential: false,
     kind: "university-project",
+    tier: "secondary",
     tech: [
       "Python 3.14",
       "FastAPI",
