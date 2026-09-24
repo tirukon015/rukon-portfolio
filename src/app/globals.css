@@ -177,6 +177,73 @@ button,
 }
 
 /*
+ * Hero portrait reveal.
+ *
+ * The mask is declared once here and driven by four custom properties that the
+ * spotlight component writes on each animation frame. Updating a property is
+ * cheaper than rebuilding a gradient string, and it keeps the gradient shape,
+ * which is design, in the stylesheet rather than in JavaScript.
+ *
+ * Dark is the foundation theme, where the portrait's own dark backdrop is
+ * blended with `screen` so it merges into the page. On light the backdrop
+ * would wash to white under `screen`, so the layer composites normally there.
+ */
+.hero-portrait {
+  --sx: 50%;
+  --sy: 50%;
+  --sr: 0px;
+  --so: 0;
+  opacity: var(--so);
+  mask-image: radial-gradient(
+    circle var(--sr) at var(--sx) var(--sy),
+    #000 0%,
+    #000 30%,
+    rgba(0, 0, 0, 0.72) 52%,
+    rgba(0, 0, 0, 0.28) 74%,
+    transparent 100%
+  );
+  -webkit-mask-image: radial-gradient(
+    circle var(--sr) at var(--sx) var(--sy),
+    #000 0%,
+    #000 30%,
+    rgba(0, 0, 0, 0.72) 52%,
+    rgba(0, 0, 0, 0.28) 74%,
+    transparent 100%
+  );
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+  mix-blend-mode: screen;
+  will-change: opacity;
+}
+
+:root[data-theme="light"] .hero-portrait {
+  mix-blend-mode: normal;
+}
+
+/*
+ * Contribution calendar cells.
+ *
+ * Five levels, the same scale GitHub uses, mapped onto the accent so the
+ * calendar reads as part of this site rather than an embed. Level 0 is a
+ * surface rather than a border so an empty year still shows a grid.
+ */
+.heat {
+  background: var(--color-bg-elevated-2);
+}
+.heat-1 {
+  background: color-mix(in oklab, var(--color-accent) 30%, var(--color-bg-elevated-2));
+}
+.heat-2 {
+  background: color-mix(in oklab, var(--color-accent) 55%, var(--color-bg-elevated-2));
+}
+.heat-3 {
+  background: color-mix(in oklab, var(--color-accent) 80%, var(--color-bg-elevated-2));
+}
+.heat-4 {
+  background: var(--color-accent-strong);
+}
+
+/*
  * Contact reveal.
  *
  * Plays once when a protected field's value arrives, so all three fill together
