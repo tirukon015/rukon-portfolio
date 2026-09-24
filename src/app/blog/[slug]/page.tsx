@@ -227,10 +227,8 @@ export default async function BlogPostPage({ params }: { params: Params }) {
         ) : null}
 
         {post.related && post.related.length > 0 ? (
-          <Reveal className="mt-6 rounded-2xl border border-border bg-bg-elevated p-6">
-            <h2 className="font-mono text-xs uppercase tracking-[0.14em] text-text-faint">
-              Related
-            </h2>
+          <Reveal className="mt-6 rounded-lg border border-border bg-bg-elevated p-6">
+            <h2 className="font-mono text-xs uppercase tracking-[0.14em] text-text-faint">Related</h2>
             <ul className="mt-3 flex flex-col gap-2">
               {post.related.map((link) => (
                 <li key={link.href}>
