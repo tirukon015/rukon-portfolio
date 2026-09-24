@@ -67,14 +67,27 @@ export const site = {
   workHref: "/work",
 } as const;
 
-export const nav = [
-  { label: "Work", href: "/#work", sectionId: "work" },
-  { label: "Experience", href: "/#experience", sectionId: "experience" },
-  { label: "Skills", href: "/#stack", sectionId: "stack" },
-  { label: "About", href: "/#about", sectionId: "about" },
-  { label: "Blog", href: site.blogHref, sectionId: null },
-  { label: "Contact", href: "/#contact", sectionId: "contact" },
-] as const;
+/**
+ * Primary navigation.
+ *
+ * `sectionId` drives the active state on the homepage, where the link is an
+ * anchor. `match` drives it on every other route, by pathname prefix, so
+ * "Work" lights up on /work/rpoms and "Writing" on /blog/anything.
+ */
+export type NavItem = {
+  label: string;
+  href: string;
+  sectionId: string | null;
+  match: string | null;
+};
+
+export const nav: readonly NavItem[] = [
+  { label: "Work", href: "/#work", sectionId: "work", match: site.workHref },
+  { label: "About", href: "/#about", sectionId: "about", match: null },
+  { label: "Blog", href: site.blogHref, sectionId: null, match: site.blogHref },
+  { label: "Resume", href: site.cvHref, sectionId: null, match: site.cvHref },
+  { label: "Contact", href: "/#contact", sectionId: "contact", match: null },
+];
 
 /**
  * Extra footer destinations that aren't part of the primary nav.
