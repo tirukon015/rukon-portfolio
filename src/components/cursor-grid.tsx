@@ -205,10 +205,10 @@ export function CursorGrid() {
         <canvas ref={canvasRef} className="absolute inset-0" />
       ) : (
         <div
-          className="absolute inset-0 opacity-[0.05]"
+          className="absolute inset-0 opacity-[0.035]"
           style={{
             backgroundImage:
-              "repeating-linear-gradient(90deg, rgb(var(--grid-line-rgb)) 0, rgb(var(--grid-line-rgb)) 1px, transparent 1px, transparent 44px), repeating-linear-gradient(0deg, rgb(var(--grid-line-rgb)) 0, rgb(var(--grid-line-rgb)) 1px, transparent 1px, transparent 44px)",
+              "repeating-linear-gradient(90deg, rgb(var(--grid-line-rgb)) 0, rgb(var(--grid-line-rgb)) 1px, transparent 1px, transparent 48px), repeating-linear-gradient(0deg, rgb(var(--grid-line-rgb)) 0, rgb(var(--grid-line-rgb)) 1px, transparent 1px, transparent 48px)",
           }}
         />
       )}
