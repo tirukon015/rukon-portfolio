@@ -156,7 +156,6 @@ export function CursorGrid() {
     };
 
     const handlePointerMove = (e: PointerEvent) => {
-      const rect = container.getBoundingClientRect();
       target.x = e.clientX - rect.left;
       target.y = e.clientY - rect.top;
       pointerInside = true;
