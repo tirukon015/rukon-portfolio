@@ -40,7 +40,7 @@ export default function BlogPage() {
       "@type": "Blog",
       "@id": absoluteUrl("/blog"),
       url: absoluteUrl("/blog"),
-      name: `${site.name} Blog`,
+      name: `${site.name}: Writing`,
       description,
       inLanguage: "en-MY",
       author: { "@id": PERSON_ID },
