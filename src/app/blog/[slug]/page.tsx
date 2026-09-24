@@ -92,25 +92,21 @@ export default async function BlogPostPage({ params }: { params: Params }) {
     { name: post.title, href: `/blog/${post.slug}` },
   ];
 
-  const wordCount = post.sections
-    .flatMap((s) => s.body)
-    .join(" ")
-    .split(/\s+/)
-    .filter(Boolean).length;
-
+  const url = absoluteUrl(`/blog/${post.slug}`);
   const schema = graph(
     {
       "@type": "BlogPosting",
-      "@id": absoluteUrl(`/blog/${post.slug}`),
-      mainEntityOfPage: { "@type": "WebPage", "@id": absoluteUrl(`/blog/${post.slug}`) },
-      url: absoluteUrl(`/blog/${post.slug}`),
+      "@id": url,
+      mainEntityOfPage: { "@type": "WebPage", "@id": url },
+      url,
       headline: post.title,
       description: post.seoDescription ?? post.description,
-      datePublished: post.date,
-      dateModified: post.updated ?? post.date,
+      image: [absoluteUrl(`/blog/${post.slug}/opengraph-image`)],
+      datePublished: publishedAt(post.date),
+      dateModified: publishedAt(post.updated ?? post.date),
       articleSection: post.category,
       keywords: post.tags.join(", "),
-      wordCount,
+      wordCount: postWordCount(post),
       inLanguage: "en-MY",
       author: { "@id": PERSON_ID },
       publisher: { "@id": PERSON_ID },
