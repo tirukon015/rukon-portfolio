@@ -146,22 +146,32 @@ export default async function BlogPostPage({ params }: { params: Params }) {
               <span className="font-mono uppercase tracking-wide text-accent">{post.category}</span>
             )}
             <span aria-hidden="true">&middot;</span>
-            <time dateTime={post.date}>
-              {new Date(post.date).toLocaleDateString("en-GB", {
-                month: "long",
-                day: "numeric",
-                year: "numeric",
-              })}
-            </time>
+            <time dateTime={post.date}>{formatPostDate(post.date, "long")}</time>
             <span aria-hidden="true">&middot;</span>
             <span>{estimateReadingTime(post.sections)}</span>
           </div>
 
-          <h1 className="mt-4 text-3xl font-semibold tracking-tight text-text sm:text-4xl">
+          <h1 className="mt-4 text-3xl font-semibold tracking-tight text-text text-balance sm:text-4xl">
             {post.title}
           </h1>
           <p className="mt-4 text-lg leading-relaxed text-text-muted">{post.description}</p>
-          <p className="mt-4 text-sm text-text-faint">By {site.name}</p>
+
+          <p className="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-text-faint">
+            <span>
+              By{" "}
+              <Link href="/#about" rel="author" className="text-text-muted transition-colors hover:text-text">
+                {site.name}
+              </Link>
+            </span>
+            {post.updated ? (
+              <>
+                <span aria-hidden="true">&middot;</span>
+                <span>
+                  Updated <time dateTime={post.updated}>{formatPostDate(post.updated, "long")}</time>
+                </span>
+              </>
+            ) : null}
+          </p>
         </Reveal>
 
         <div className="mt-4 flex flex-wrap gap-2">
