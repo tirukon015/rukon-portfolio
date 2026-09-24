@@ -53,6 +53,8 @@ Plus generated `robots.txt`, `sitemap.xml`, `icon` and `opengraph-image`.
 
 **`summary` is the card.** It appears on project cards and at the top of the case study, so keep it compact. Depth belongs in `sections`.
 
+**Articles are one file each, and a section body is a list of blocks.** A plain string is a paragraph; `list`, `code`, `callout`, `flow`, `image` and `table` blocks cover the rest (see `src/content/posts/types.ts`). Inside a paragraph, list item or callout, `[label](href)` is a link and backticks are inline code; nothing else is interpreted. Add an article by creating `src/content/posts/articles/<slug>.ts` and importing it in `src/content/posts/index.ts`. Six categories back `/blog/category/[slug]`; the earlier six redirect permanently from `next.config.ts`, as does one merged article. The blog also serves `/feed.xml` and a per-article share image at `/blog/<slug>/opengraph-image`. Editorial planning notes that used to live inline are in `content-planning/existing-posts-editorial.json` so they do not ship.
+
 **Honesty fields are load-bearing.** `status` marks each capability `implemented` / `available` / `not-connected`, `limitations` states what a project does not do, and a section's `note` qualifies a claim in place. They exist so a case study can be specific without overclaiming. Use them rather than softening the prose.
 
 **`canonicalHost`, not `domain`.** The apex 308-redirects to `www`, so every absolute URL is built from `site.canonicalHost` via `src/lib/seo.ts`. `site.domain` is display text only.
