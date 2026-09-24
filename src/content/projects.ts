@@ -312,6 +312,7 @@ export const projects: Project[] = [
     affiliation: "ERTH",
     confidential: false,
     kind: "professional",
+    tier: "featured",
     tech: [
       "HTML5",
       "CSS3",
