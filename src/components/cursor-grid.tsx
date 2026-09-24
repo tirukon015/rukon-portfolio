@@ -38,6 +38,10 @@ export function CursorGrid() {
     const canvas = canvasRef.current;
     if (!container || !canvas) return;
 
+    // The container is pointer-events:none so it can never intercept clicks;
+    // its parent, the hero section, is what receives the pointer.
+    const surface = container.parentElement ?? container;
+
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
