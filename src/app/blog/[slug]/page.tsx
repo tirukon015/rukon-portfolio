@@ -28,7 +28,6 @@ import {
   graph,
   openGraphFor,
   PERSON_ID,
-  twitterFor,
   WEBSITE_ID,
 } from "@/lib/seo";
 
