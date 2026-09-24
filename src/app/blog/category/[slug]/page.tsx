@@ -97,7 +97,7 @@ export default async function CategoryPage({ params }: { params: Params }) {
         <Breadcrumbs items={crumbs} />
 
         <Reveal className="mt-8 max-w-2xl">
-          <span className="font-mono text-xs uppercase tracking-[0.18em] text-accent">Category</span>
+          <span className="font-mono text-xs uppercase tracking-[0.18em] text-accent">Topic</span>
           <h1 className="mt-3 text-4xl font-semibold tracking-tight text-text sm:text-5xl">
             {category.title}
           </h1>
