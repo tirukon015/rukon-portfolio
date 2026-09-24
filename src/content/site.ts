@@ -28,6 +28,22 @@ export const site = {
   locale: "en_MY",
   statement:
     "I work across IT systems, operations, web and software: understanding an operational problem, designing the system for it, building and deploying it, then supporting and improving it once people depend on it daily. RPOMS, an ERP-style operational platform running a live router-refurbishment line, is the clearest example.",
+  /**
+   * The hero headline. A statement about the work rather than a greeting: the
+   * name is already in the header, the title tag and the About section.
+   */
+  headline: "I build the systems a business runs on.",
+  /**
+   * Three verifiable facts under the hero copy. Each one is backed elsewhere on
+   * the site (experience.ts, the RPOMS status table, about.ts).
+   */
+  now: [
+    { label: "Role", value: "IT Systems & Operations Lead, Blue Bee Technologies", href: null },
+    { label: "Shipped", value: "RPOMS, an operational system in daily use", href: "/work/rpoms" },
+    { label: "Status", value: "Open to opportunities", href: "/#contact" },
+  ] as readonly { label: string; value: string; href: string | null }[],
+  /** The GitHub login the contribution calendar is fetched for. */
+  githubLogin: "tirukon015",
   links: {
     github: "https://github.com/tirukon015",
     linkedin: "https://linkedin.com/in/tirukon015",
