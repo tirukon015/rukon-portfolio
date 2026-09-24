@@ -180,16 +180,18 @@ export function CursorGrid() {
       attributeFilter: ["data-theme"],
     });
 
-    window.addEventListener("pointermove", handlePointerMove, { passive: true });
-    container.addEventListener("pointerleave", handlePointerLeave);
+    surface.addEventListener("pointermove", handlePointerMove, { passive: true });
+    surface.addEventListener("pointerleave", handlePointerLeave);
     window.addEventListener("resize", resize);
+    window.addEventListener("scroll", resize, { passive: true });
 
     return () => {
       cancelAnimationFrame(rafId);
       themeObserver.disconnect();
-      window.removeEventListener("pointermove", handlePointerMove);
-      container.removeEventListener("pointerleave", handlePointerLeave);
+      surface.removeEventListener("pointermove", handlePointerMove);
+      surface.removeEventListener("pointerleave", handlePointerLeave);
       window.removeEventListener("resize", resize);
+      window.removeEventListener("scroll", resize);
     };
   }, [interactive]);
 
