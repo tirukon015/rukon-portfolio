@@ -2,21 +2,34 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-type Tip = { x: number; y: number; below: boolean; label: string };
+type Tip = { x: number; y: number; below: boolean; date: string; count: number };
+
+function longDate(iso: string) {
+  const [y, m, d] = iso.split("-").map(Number);
+  return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+}
 
 /**
  * The one piece of the contribution calendar that needs JavaScript.
  *
- * The grid itself is server-rendered. This wrapper does three things:
+ * The grid itself is server-rendered with the real date and count on every
+ * cell. This wrapper does three things:
  *
- * - Pointer: listens for the pointer over any cell carrying `data-label` and
- *   positions a single tooltip near it. One element, event delegation, no
- *   per-cell handlers, nothing rendered until a cell is actually hovered.
+ * - Pointer: listens for the pointer over any cell carrying `data-date` and
+ *   positions a single two-line tooltip (date, then count) near it. One
+ *   element, event delegation, no per-cell handlers, nothing rendered until
+ *   a cell is actually hovered.
  * - Keyboard: the scroller is one tab stop. Arrow keys move a focus marker
- *   across days (left/right by week, up/down by weekday), Home and End jump
- *   to the first and last day, and the tooltip follows. That gives keyboard
- *   users the per-day detail without turning 365 cells into 365 tab stops.
- *   The current label is also announced through a polite live region.
+ *   across days by calendar date (left and right a week, up and down a day),
+ *   Home and End jump to the first and last day, and the tooltip follows.
+ *   That gives keyboard users the per-day detail without turning 365 cells
+ *   into 365 tab stops. The current label is announced through a polite
+ *   live region.
  * - Layout: scrolls the calendar to its most recent week on mount, because on
  *   a narrow screen the grid overflows sideways and the interesting end is
  *   the right-hand one. The tooltip is clamped inside the wrapper and flips
@@ -35,7 +48,7 @@ export function HeatmapTooltip({ children }: { children: React.ReactNode }) {
   }, []);
 
   const cells = useCallback(
-    () => Array.from(wrapperRef.current?.querySelectorAll<HTMLElement>("[data-label]") ?? []),
+    () => Array.from(wrapperRef.current?.querySelectorAll<HTMLElement>("[data-date]") ?? []),
     []
   );
 
@@ -45,16 +58,17 @@ export function HeatmapTooltip({ children }: { children: React.ReactNode }) {
     const wrapperRect = wrapper.getBoundingClientRect();
     const rect = cell.getBoundingClientRect();
     const x = rect.left - wrapperRect.left + rect.width / 2;
-    // Keep the bubble inside the wrapper horizontally (it is ~220px wide).
-    const half = 120;
+    // Keep the bubble inside the wrapper horizontally (it is ~200px wide).
+    const half = 100;
     const clampedX = Math.min(Math.max(x, half), Math.max(half, wrapperRect.width - half));
     // Flip below the cell when the cell sits near the top of the viewport.
-    const below = rect.top < 56;
+    const below = rect.top < 72;
     setTip({
       x: clampedX,
       y: below ? rect.bottom - wrapperRect.top + 8 : rect.top - wrapperRect.top - 8,
       below,
-      label: cell.dataset.label ?? "",
+      date: cell.dataset.date ?? "",
+      count: Number(cell.dataset.count ?? 0),
     });
   }, []);
 
@@ -63,12 +77,12 @@ export function HeatmapTooltip({ children }: { children: React.ReactNode }) {
     if (!wrapper) return;
 
     const over = (e: Event) => {
-      const cell = (e.target as HTMLElement | null)?.closest<HTMLElement>("[data-label]");
+      const cell = (e.target as HTMLElement | null)?.closest<HTMLElement>("[data-date]");
       if (cell) showFor(cell);
     };
     const out = (e: Event) => {
       const next = (e as PointerEvent).relatedTarget as HTMLElement | null;
-      if (next?.closest("[data-label]")) return;
+      if (next?.closest("[data-date]")) return;
       if (document.activeElement === scrollerRef.current && focusIndex.current >= 0) return;
       setTip(null);
     };
@@ -152,7 +166,7 @@ export function HeatmapTooltip({ children }: { children: React.ReactNode }) {
         onKeyDown={onKeyDown}
         onFocus={onFocus}
         onBlur={onBlur}
-        className="overflow-x-auto rounded-md pb-2 outline-none [scrollbar-width:thin] focus-visible:outline-2 focus-visible:outline-accent"
+        className="heat-scroller overflow-x-auto pb-1 outline-none [scrollbar-width:thin] focus-visible:outline-2 focus-visible:outline-accent"
       >
         {children}
       </div>
@@ -164,12 +178,17 @@ export function HeatmapTooltip({ children }: { children: React.ReactNode }) {
       {tip ? (
         <div
           role="tooltip"
-          className={`pointer-events-none absolute z-20 -translate-x-1/2 whitespace-nowrap rounded-md border border-border-strong bg-bg-elevated px-2.5 py-1.5 text-xs text-text shadow-[var(--shadow-lift)] ${
+          className={`pointer-events-none absolute z-20 -translate-x-1/2 whitespace-nowrap rounded-md border border-border-strong bg-bg-elevated-2 px-3 py-2 text-xs shadow-[var(--shadow-lift)] ${
             tip.below ? "" : "-translate-y-full"
           }`}
           style={{ left: tip.x, top: tip.y }}
         >
-          {tip.label}
+          <p className="font-medium text-text">{longDate(tip.date)}</p>
+          <p className="mt-0.5 text-text-muted">
+            {tip.count === 0
+              ? "No contributions"
+              : `${tip.count.toLocaleString("en-US")} contribution${tip.count === 1 ? "" : "s"}`}
+          </p>
         </div>
       ) : null}
     </div>
