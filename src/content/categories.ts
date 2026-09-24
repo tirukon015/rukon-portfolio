@@ -28,51 +28,50 @@ export type CategoryMeta = {
 
 export const categoryMeta: CategoryMeta[] = [
   {
-    name: "Operations",
-    slug: "operations",
-    title: "Operations",
+    name: "Building Real Systems",
+    slug: "building-real-systems",
+    title: "Building Real Systems",
     description:
-      "Production and operations systems: modelling a physical process in software, and what happens when the model and the floor disagree.",
+      "Operational software for a physical process: modelling the floor in software, the data model, imports, paperwork and reporting, and what happens when the model and the floor disagree.",
     anchorProject: "rpoms",
   },
   {
-    name: "IT Systems",
-    slug: "it-systems",
-    title: "IT Systems",
+    name: "Full-Stack Development",
+    slug: "full-stack-development",
+    title: "Full-Stack Development",
     description:
-      "IT systems work as it actually runs day to day: supporting, maintaining and building the internal systems a business depends on.",
+      "Next.js, TypeScript, Python, PostgreSQL and the deployment path: how the pieces are wired, what broke in production, and what the fix taught.",
     anchorProject: "rpoms",
   },
   {
-    name: "Software Engineering",
-    slug: "software-engineering",
-    title: "Software Engineering",
+    name: "AI & Automation",
+    slug: "ai-and-automation",
+    title: "AI & Automation",
     description:
-      "Building and maintaining software that has to survive real, daily use: data models, access control, admin interfaces and the work that comes after launch.",
-    anchorProject: "rpoms",
+      "LLM and vision features that behave, and the plainer automation that removes retyping: schemas, fallbacks, deterministic rules, staged imports.",
+    anchorProject: "researchforge",
   },
   {
-    name: "Business Automation",
-    slug: "business-automation",
-    title: "Business Automation",
+    name: "UI/UX & Product",
+    slug: "ui-ux-and-product",
+    title: "UI/UX & Product",
     description:
-      "Turning manual, repetitive business processes into software, and knowing which ones are worth it.",
-    anchorProject: "rpoms",
-  },
-  {
-    name: "Web Development",
-    slug: "web-development",
-    title: "Web Development",
-    description:
-      "Front-end and full-stack web work: taking a design to a production build, and the decisions in between.",
+      "From a Figma prototype to a production build without losing the intent, and interfaces for internal tools that people are required to use rather than choose.",
     anchorProject: "erth",
   },
   {
-    name: "UI/UX",
-    slug: "ui-ux",
-    title: "UI/UX",
+    name: "Developer Journey",
+    slug: "developer-journey",
+    title: "Developer Journey",
     description:
-      "Interface and experience decisions, with an emphasis on internal tools, software people are required to use rather than choose to.",
+      "What the work is actually like: roles, learning, and the parts of a technical career a job title leaves out.",
+  },
+  {
+    name: "Malaysia & Cyberjaya",
+    slug: "malaysia-and-cyberjaya",
+    title: "Malaysia & Cyberjaya",
+    description:
+      "Building and running software from Cyberjaya: time zones, connectivity, local context, and the development environment behind the work.",
     anchorProject: "rpoms",
   },
 ];
