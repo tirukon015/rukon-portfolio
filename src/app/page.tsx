@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import { Hero } from "@/components/sections/hero";
 import { FeaturedWork } from "@/components/sections/featured-work";
 import { GithubActivity } from "@/components/sections/github-activity";
@@ -37,13 +36,12 @@ export default function Home() {
       <Hero />
       <FeaturedWork />
       {/*
-        The calendar is fetched on the server and cached for an hour. The
-        boundary keeps a slow or failed GitHub request from holding up the
-        rest of the page; the fallback is deliberately empty.
+        The calendar is fetched on the server, cached for an hour, and fails
+        soft inside its own data function, so it renders inline. A Suspense
+        boundary here made the prerender stream the section into a hidden
+        container that was never revealed.
       */}
-      <Suspense fallback={null}>
-        <GithubActivity />
-      </Suspense>
+      <GithubActivity />
       <Capabilities />
       <Experience />
       <About />
