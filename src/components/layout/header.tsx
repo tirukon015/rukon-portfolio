@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
-import { GithubIcon, LinkedinIcon } from "@/components/icons";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { site, nav } from "@/content/site";
 import { useActiveSection } from "@/lib/use-active-section";
