@@ -14,12 +14,15 @@ import {
 } from "@/lib/seo";
 
 const description =
-  "Notes on production and operations systems, IT systems, AI applications and web development, written from real project work rather than from tutorials.";
+  "Notes on production and operations systems, full-stack development, AI applications and web development, written from real project work in Cyberjaya rather than from tutorials.";
 
 export const metadata: Metadata = {
   title: "Blog",
   description,
-  alternates: { canonical: "/blog" },
+  alternates: {
+    canonical: "/blog",
+    types: { "application/rss+xml": "/feed.xml" },
+  },
   openGraph: openGraphFor({ title: "Blog", description, url: "/blog" }),
   twitter: twitterFor("Blog", description),
 };
