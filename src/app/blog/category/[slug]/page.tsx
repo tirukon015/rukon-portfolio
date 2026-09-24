@@ -6,10 +6,10 @@ import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { JsonLd } from "@/components/seo/json-ld";
-import { getPostsByCategory, postExcerpt, usedCategories } from "@/content/posts";
+import { PostList } from "@/components/blog/post-list";
+import { getPostsByCategory, publishedAt, usedCategories } from "@/content/posts";
 import { categoryMeta, getCategoryBySlug } from "@/content/categories";
 import { getProject } from "@/content/projects";
-import { estimateReadingTime } from "@/lib/reading-time";
 import { site } from "@/content/site";
 import {
   absoluteUrl,
