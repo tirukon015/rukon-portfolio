@@ -50,8 +50,6 @@ export function CursorGrid() {
     const maskCtx = mask.getContext("2d");
     if (!maskCtx) return;
 
-    // Read the current theme's grid colors from CSS custom properties so
-    // the effect matches light/dark mode instead of being hardcoded.
     let lineRgb = FALLBACK_LINE_RGB;
     let glowRgb = FALLBACK_GLOW_RGB;
     const readThemeColors = () => {
