@@ -3,10 +3,10 @@
 import { useEffect, useRef } from "react";
 import { useMediaQuery } from "@/lib/use-media-query";
 
-const CELL = 44; // grid spacing in CSS px
-const BASE_ALPHA = 0.05; // idle grid, almost invisible
-const BRIGHT_ALPHA = 0.34; // grid line brightness at the cursor
-const GLOW_RADIUS = 260; // px, how far the spotlight reaches
+const CELL = 48; // grid spacing in CSS px
+const BASE_ALPHA = 0.035; // idle grid, almost invisible
+const BRIGHT_ALPHA = 0.22; // grid line brightness at the cursor
+const GLOW_RADIUS = 280; // px, how far the spotlight reaches
 const FALLBACK_LINE_RGB = "148, 197, 224";
 const FALLBACK_GLOW_RGB = "79, 178, 224";
 
