@@ -1239,8 +1239,8 @@ export type UpcomingProject = {
 
 export const upcomingProjects: UpcomingProject[] = [
   {
-    slug: "spenddrop",
-    name: "SpendDrop",
+    slug: "spendrop",
+    name: "SpenDrop",
     category: "iOS / Mobile",
     categorySlug: "ios-mobile",
     categories: ["iOS / Mobile"],
@@ -1258,18 +1258,18 @@ export const upcomingProjects: UpcomingProject[] = [
   {
     slug: "drivekeep",
     name: "DriveKeep",
-    category: "Web Apps / Software",
-    categorySlug: "web-apps",
-    categories: ["Web Apps / Software"],
-    valueProposition: "Photo-first vehicle fuel, mileage, and maintenance tracker with automated odometer and receipt OCR.",
+    category: "iOS / Mobile",
+    categorySlug: "ios-mobile",
+    categories: ["iOS / Mobile"],
+    valueProposition: "Native iOS photo-first vehicle fuel, mileage, and maintenance tracker with on-device OCR for odometer readings and receipts.",
     role: "Sole Developer",
     context: "Personal project in active development",
     highlights: [
-      "Mobile-friendly operational web dashboard for tracking fuel economy, service milestones, and operating costs",
-      "Automated OCR extraction from gas pump receipts and dashboard odometer photos to eliminate manual typing",
-      "Relational vehicle profile architecture built on Next.js, Prisma, and Supabase",
+      "Native iOS photo-first tracker for vehicle fuel economy, maintenance logs, and operating expenses",
+      "100% on-device OCR using Apple VisionKit to extract odometer readings and fuel pump receipts with zero cloud lag",
+      "Engineered with Swift and SwiftUI following Apple HIG with privacy-first local persistence",
     ],
-    technologies: ["Next.js", "TypeScript", "Prisma", "Supabase", "Tailwind CSS", "OCR"],
+    technologies: ["Swift", "SwiftUI", "VisionKit", "iOS", "Local Persistence"],
     status: "In Progress",
   },
   {
@@ -1293,16 +1293,16 @@ export const upcomingProjects: UpcomingProject[] = [
 
 export const upcomingWork: WorkListItem[] = [
   {
-    name: "SpendDrop",
+    name: "SpenDrop",
     meta: "Personal project · iOS",
     summary:
       "A native iOS expense tracker in Swift and SwiftUI: on-device OCR of Malaysian receipts and e-wallet screenshots, a share extension, and no cloud at all. In progress; not yet published.",
   },
   {
     name: "DriveKeep",
-    meta: "Personal project · Web",
+    meta: "Personal project · iOS",
     summary:
-      "A photo-first fuel, mileage and maintenance tracker for cars and motorcycles on Next.js, Prisma and Supabase, with OCR on receipt and odometer photos. In progress; not yet published.",
+      "A native iOS fuel, mileage, and maintenance tracker for cars and motorcycles in Swift and SwiftUI, with on-device VisionKit OCR for receipt and odometer photos, and privacy-first local persistence. In progress; not yet published.",
   },
   {
     name: "LMS Platform",
