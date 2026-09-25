@@ -32,7 +32,7 @@ export function FeaturedWork() {
           <SectionHeading
             eyebrow="Selected Work"
             title="Real systems, not tutorials."
-            description="One operational platform running a live production line, a completed business website, and the work around them."
+            description="One operational platform running a live production line, the label-printing workstation built beside it, a completed business website, and the work around them."
           />
           <Link
             href={site.workHref}

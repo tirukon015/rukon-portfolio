@@ -1,3 +1,19 @@
+/**
+ * A screenshot placed under a section's copy.
+ *
+ * Only non-confidential projects use these, and only where a picture shows
+ * something the paragraphs cannot: a layout, a state, a piece of tooling.
+ * The caption says what the reader is looking at; the alt text is written
+ * for someone who cannot see it.
+ */
+export type CaseStudyFigure = {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  caption: string;
+};
+
 export type CaseStudySection = {
   heading: string;
   body: string[];
@@ -6,6 +22,7 @@ export type CaseStudySection = {
    * honest in place rather than qualifying it in a footnote nobody reads.
    */
   note?: string;
+  figures?: CaseStudyFigure[];
 };
 
 /** Grouped technology list, so a case study can show layers rather than a bag of chips. */
@@ -129,8 +146,8 @@ export const projects: Project[] = [
           name: "RPOMS Print Engine",
           relation: "Subsystem, integration pending",
           summary:
-            "Scan-to-label printing to a NIIMBOT B1 Pro straight from the browser over Web Bluetooth. Built and tested standalone before it touches production RPOMS.",
-          href: "/blog/printing-labels-from-the-browser-over-web-bluetooth",
+            "Scan-to-label printing to a NIIMBOT B1 Pro straight from the browser over Web Bluetooth, built as an offline-first workstation with its own case study. Standalone until it is validated on the line and wired into RPOMS.",
+          slug: "rpoms-print-engine",
         },
       ],
     },
@@ -300,6 +317,259 @@ export const projects: Project[] = [
     },
   },
 
+  {
+    slug: "rpoms-print-engine",
+    name: "RPOMS Print Engine",
+    fullName: "Offline-first label printing workstation for the RPOMS refurbishment line",
+    tagline: "Scan a router, and the right label prints: a browser app that drives a Bluetooth thermal printer with no server in the loop.",
+    summary:
+      "A TypeScript and React Progressive Web App that turns any PC with Chrome and Bluetooth into a label station for a NIIMBOT B1 Pro. A USB scanner reads a router serial, a prefix-and-length rule names the model, a fixed 50 by 30 mm template is rendered to the printer's raster and printed over one persistent Web Bluetooth session. The print path never touches the network, the app boots offline from cache and IndexedDB, and an optional backend adds Google sign-in, device provisioning and sync. 170 automated tests; one verified print session on the real printer.",
+    role: "Sole developer: protocol driver, renderer, queue, workflows, editor, offline layer, auth and sync, backend, tests and tooling",
+    period: "2026 (software complete; hardware validation in progress)",
+    affiliation: "Blue Bee Technologies Sdn. Bhd., ERTH × Maxis programme",
+    confidential: false,
+    kind: "professional",
+    tier: "featured",
+    tech: [
+      "TypeScript",
+      "React 19",
+      "Vite 8",
+      "Web Bluetooth",
+      "Canvas 2D",
+      "IndexedDB",
+      "Service worker (Workbox)",
+      "Node.js 24",
+      "PostgreSQL",
+      "Google OpenID Connect",
+      "Vitest",
+    ],
+    techGroups: [
+      {
+        label: "Workstation app",
+        items: ["TypeScript", "React 19", "Vite 8", "Tailwind CSS v4", "Lucide icons"],
+      },
+      {
+        label: "Print engine (framework-free core)",
+        items: ["Web Bluetooth", "NIIMBOT B1 Pro protocol", "Canvas 2D rendering", "Code 128 encoder", "qrcode", "Print queue", "Structured tracing"],
+      },
+      {
+        label: "Offline & storage",
+        items: ["IndexedDB", "Service worker (vite-plugin-pwa / Workbox)", "Web app manifest"],
+      },
+      {
+        label: "Backend (optional)",
+        items: ["Node.js 24 http", "PostgreSQL (pg)", "Google OIDC with PKCE", "HMAC-signed sessions", "Device tokens"],
+      },
+      {
+        label: "Verification",
+        items: ["Vitest", "fake-indexeddb", "Simulated printer", "Headless Chrome (DevTools protocol)", "GitHub Actions"],
+      },
+    ],
+    highlights: [
+      "One scan prints one label: Enter completes the scan, there is no second click, no preview in Fast mode and no lookup of the serial anywhere",
+      "Model detection is prefix plus length with the longest prefix winning; an unknown serial says so and nothing prints",
+      "One Bluetooth session for the whole shift: queued labels go out as one continuous printer job and each is marked complete as the printer's page counter passes it",
+      "A job the printer accepted but did not confirm is marked Uncertain and left to a person; nothing is ever reprinted automatically",
+      "The four shipped label templates are frozen by a test that hashes their JSON and rendered raster; a design change fails the build",
+      "A guard test fails if anything in scan → print makes a network request",
+      "Boots and renders from cache with the network unplugged, proven by an automated headless-Chrome test that cuts the connection and reloads",
+      "Google is the identity provider, RPOMS the authority: users start pending, administrators activate them, workstations are provisioned with revocable hashed device tokens",
+    ],
+    workflow: [
+      "Scan the router",
+      "Detect the model from the serial",
+      "Resolve and render the frozen template",
+      "Queue behind whatever is printing",
+      "Print over the open Bluetooth session",
+    ],
+    sections: [
+      {
+        heading: "Overview",
+        body: [
+          "On the refurbishment line that RPOMS runs, every processed router gets a sticker with its model name and its serial number as a barcode, and every packed box gets one with its number as a QR code. The printer is a NIIMBOT B1 Pro, a small Bluetooth thermal printer for 50 by 30 mm labels. The Print Engine is the workstation that produces those labels: a Progressive Web App that runs in Chrome or Edge, talks to the printer over Web Bluetooth, and keeps working when the internet does not.",
+          "It is built standalone, with an explicit boundary for RPOMS to supply data later, so the printer protocol, the label rendering and the queue could be tested and validated without touching a system in daily use.",
+        ],
+        figures: [
+          {
+            src: "/images/rpoms-print-engine/router-fast-print.png",
+            alt: "The Router page of the RPOMS Print Engine: a large scan field, a status card reading NIIMBOT B1 Pro Not connected with a Connect button, and an empty print queue beside it.",
+            width: 1440,
+            height: 900,
+            caption: "The worker's whole screen: a scan field, the printer state, the queue. Nothing technical.",
+          },
+        ],
+      },
+      {
+        heading: "Problem",
+        body: [
+          "The vendor's route to this printer is its own phone app, fed in practice by a spreadsheet that worked out the model from the serial. That is one interaction per label, on a phone, with the model logic living in a formula. It does not follow a worker who scans one router after another, and it puts the correctness of every label on transcription.",
+          "The requirement was blunt: scan a serial with the USB scanner, and the correct label comes out. Continuously, on an ordinary PC, without a vendor app, a spreadsheet or a server between the scan and the printer.",
+        ],
+      },
+      {
+        heading: "Constraints that shaped it",
+        body: [
+          "Web Bluetooth is the only way to reach a Bluetooth printer from a browser without an installer, and it comes with limits: Chromium browsers on desktop only, HTTPS or localhost, and a native device chooser that the page cannot style or open on its own. The app is designed around those limits rather than against them: the chooser is Chrome's, and everything before and after it is the app's.",
+          "The label design was locked from the start. The owner had a template that matched the labels already in use, and the brief for every later change was that the physical output must not move. That constraint became a test: the JSON and the rendered raster of each shipped template are hashed against a baseline, and any difference fails the suite.",
+          "Printing had to be independent of everything else. The line cannot stop because a server is down or the internet is out, so the critical path from scan to printer is local by construction, and a test proves it makes no network request.",
+        ],
+      },
+      {
+        heading: "How it works",
+        body: [
+          "A scanner service bound to one input field completes a scan on Enter, Tab, whitespace, an inserted line break or a short pause after machine-speed characters, so scanners with different suffix settings all work and a person typing is never auto-submitted. The workflow detects the model, resolves the template and renders it in a promise chain, so scans made while a label is printing are processed in order rather than lost.",
+          "Detection is a rule table: a serial prefix and an exact length name a model, and the longest matching prefix wins. There is no lookup of the serial in a database, deliberately; the line prints for any router that matches a rule, and an unknown serial produces the message “No matching detection rule.” and nothing else.",
+          "The queue keeps one printer session open. Labels waiting while the printer is busy are sent as one continuous printer job with two pages of look-ahead, which is what stops the paper feeding out and pulling back between labels. The driver polls the printer's page counter and reports it; the queue marks each label complete as the counter passes it. If a link drops after the printer accepted a job, the labels the counter did not reach are marked Uncertain and wait for a person to choose Reprint or Discard.",
+        ],
+        figures: [
+          {
+            src: "/images/rpoms-print-engine/detection-rules.png",
+            alt: "The Detection rules page: a form to add a rule with prefix, length and model name, a test field showing a serial matched to Kaon AR2140 with its prefix and length, and a table of the current rules.",
+            width: 1440,
+            height: 900,
+            caption: "Detection rules: prefix plus length, longest prefix wins. The test field shows what a scan would resolve to, without printing.",
+          },
+        ],
+      },
+      {
+        heading: "Template editor",
+        body: [
+          "Administrators edit templates in a canvas-first editor: the label fills the screen, a floating icon toolbar adds text, images, barcodes, QR codes, lines and rectangles, and layers and properties live in drawers that stay closed until asked for. A contextual toolbar above the selected element shows only that element's controls. Fields appear as human-readable chips, Serial number and Model, with the template's own syntax kept under Advanced.",
+          "The editor changes the administrator's draft only. The shipped templates cannot change unnoticed, because the freeze test compares their rendered raster with the accepted baseline on every run.",
+        ],
+        figures: [
+          {
+            src: "/images/rpoms-print-engine/templates-editor-canvas.png",
+            alt: "The template editor with the router label filling the canvas: Maxis logo, divider, model text, Code 128 barcode and serial text. A floating toolbar sits above the label and a zoom control below it.",
+            width: 1440,
+            height: 900,
+            caption: "The editor with nothing selected: the label is the product, the tools float.",
+          },
+          {
+            src: "/images/rpoms-print-engine/ui-drawers-open.png",
+            alt: "The template editor with the model text selected: a contextual toolbar with font, size, bold and alignment controls, the layers drawer open on the left, and the properties drawer open on the right showing the Model field as a chip.",
+            width: 1440,
+            height: 813,
+            caption: "Selecting the model text: a contextual toolbar, the layers drawer and the inspector with field chips rather than template syntax.",
+          },
+        ],
+      },
+      {
+        heading: "Offline by construction",
+        body: [
+          "The first online visit installs a service worker that caches the whole build, including the fonts and the logo the templates need. Templates, detection rules, settings, print history and pending changes live in the workstation's IndexedDB. After that, the employee opens the app and works; with the network unplugged, the app boots from cache, detects, renders and prints from local data.",
+          "An automated test proves it: headless Chrome loads the built app online, waits for the worker, cuts the network at the protocol level, reloads, and checks that the Router page boots, the template renders from cache and the diagnostics panel reports Offline Ready.",
+        ],
+        figures: [
+          {
+            src: "/images/rpoms-print-engine/system-offline-ready.png",
+            alt: "The administrator's System panel showing Offline Ready: YES, with rows for cached assets, service worker, local database, detection rules, templates, Bluetooth, pending sync and last sync, and an Offline indicator in the header.",
+            width: 1440,
+            height: 900,
+            caption: "The administrator's readiness check, captured with the network cut: everything the print path needs is local.",
+          },
+        ],
+      },
+      {
+        heading: "Identity, provisioning and sync",
+        body: [
+          "For a fleet of stations, an optional backend on the company's own Ubuntu server provides Google sign-in, RPOMS authorisation, device provisioning and synchronisation. Google is the identity provider; RPOMS decides who may print. A new user starts pending unless allow-listed, an administrator activates them, and the first active login silently provisions the workstation with a device identity and a revocable, hashed token. The local session then keeps the station usable offline for thirty days after its last online check.",
+          "Sync is local-first and runs on its own timer, never on the print path: local writes happen first, the engine pushes print history and edits, then pulls configuration when the server has a newer version. The conflict policy is written down: templates last-writer-wins by timestamp with the losing local edit kept beside the winner, rules server-wins with a local backup, settings never synced. Without a backend URL the app runs standalone, which is how the hardware work is done.",
+        ],
+        note:
+          "The backend is implemented and tested against a fake identity provider and an in-memory store. It has not yet been run against real Google credentials or a live PostgreSQL, and no production deployment exists; the deployment path is documented, not verified.",
+      },
+      {
+        heading: "Things that went wrong, and what they taught",
+        body: [
+          "The printer fed the paper out and pulled it back between labels. The cause was one printer job per label; the fix was multi-page jobs with look-ahead, and continuous printing became the default. Matching the device's own session model mattered more than any timing tweak.",
+          "A scanner did not send Enter, so six serials arrived as one value and were rejected. A scanner-test panel that records raw key events showed what the device actually sent, and the scan service now ends a scan on any of the suffixes scanners use.",
+          "The offline build cached nothing, silently. The worker was active, the cache was empty, and the reload showed Chrome's error page. Attaching to the service worker over the DevTools protocol exposed a Workbox error about a duplicate precache entry for the logo, listed once by a glob and once explicitly. Verify what the worker cached, not whether it registered.",
+          "A performance gate flagged regressions on metrics of a few milliseconds for identical code. Single runs of that size are timer jitter; the gate now compares medians of three runs and ignores anything under a ten-millisecond floor.",
+        ],
+      },
+      {
+        heading: "Testing and verification",
+        body: [
+          "170 automated tests run without a printer: a simulated B1 Pro speaks the documented protocol, so framing, identification, the print sequence, error codes, disconnect recovery, the queue, both workflows, storage, offline readiness, auth, sync and the backend are all exercised in Node. The template freeze test and the no-network guard run with them, and a GitHub Actions workflow fails if the freeze baseline changes.",
+          "Two headless-Chrome scripts check what unit tests cannot: the offline boot, and the editor's behaviour at desktop, tablet and phone widths. A benchmark tool runs the pipeline at the pre-build baseline and at the current tree and fails on regressions.",
+          "On the real printer, the B1 Pro connected, identified itself as model 4097 with a 576-dot head, and printed a router label with every acknowledgement in a session on 24 September 2026. The multi-label, scanner and offline runs on hardware are the next validation step, and the app records the timings for them itself.",
+        ],
+        figures: [
+          {
+            src: "/images/rpoms-print-engine/ui-desktop-collapsed.png",
+            alt: "The template editor with the template list collapsed to a narrow icon rail on the left, giving the label canvas the full width.",
+            width: 1440,
+            height: 900,
+            caption: "One of the states the headless UI check verifies: the template list collapsed to an icon-only rail, with the canvas reclaiming the width.",
+          },
+        ],
+      },
+    ],
+    status: [
+      {
+        label: "Scan-to-print, detection, queue, templates, editor",
+        state: "implemented",
+        detail:
+          "Complete and covered by the automated suite. Verified on the real printer once: connection, identification and one router label with every acknowledgement.",
+      },
+      {
+        label: "Continuous printing on the physical printer",
+        state: "available",
+        detail:
+          "Implemented and tested against the simulated printer. The 10, 25, 50 and 100-label runs and the scanner-order runs on the B1 Pro are the next validation step; the Hardware test page records their timings.",
+      },
+      {
+        label: "Offline boot and printing",
+        state: "available",
+        detail:
+          "Boot from cache and IndexedDB is proven by the automated headless test. The same run with the printer connected has not been recorded yet.",
+      },
+      {
+        label: "Google sign-in, provisioning and sync",
+        state: "available",
+        detail:
+          "Implemented and tested in software with a fake identity provider and an in-memory store. Not yet validated against real Google credentials or a live PostgreSQL.",
+      },
+      {
+        label: "Production deployment on the ERTH server",
+        state: "not-connected",
+        detail:
+          "The nginx, systemd and PostgreSQL deployment is documented; nothing is deployed. The workstation runs standalone today.",
+      },
+      {
+        label: "Integration into RPOMS",
+        state: "not-connected",
+        detail:
+          "The data-provider interfaces exist; RPOMS does not yet supply router or box data to the engine.",
+      },
+    ],
+    limitations: [
+      "Web Bluetooth means Chrome or Edge on desktop or Android; no Firefox and no iPhone.",
+      "The print engine has printed one real label so far; throughput on the physical printer is measured by the app but not yet recorded for a full run.",
+      "A device token in the workstation's IndexedDB can be read by anyone with local access to that PC; the mitigation is OS login and server-side revocation.",
+      "The admin pages are not role-gated in the app itself; only published changes are gated on the server.",
+      "Rate limiting on the sign-in routes and an administrator audit log are documented as open items.",
+      "The repository is private. Access can be granted on request.",
+    ],
+    image: {
+      src: "/images/rpoms-print-engine-mark.png",
+      srcDark: "/images/rpoms-print-engine-mark-dark.png",
+      alt: "RPOMS Print Engine wordmark",
+      variant: "mark",
+    },
+    links: [
+      {
+        label: "Repository on GitHub (private)",
+        href: "https://github.com/tirukon015/rpoms-print-engine",
+        external: true,
+      },
+      {
+        label: "Read the article",
+        href: "/blog/printing-labels-from-the-browser-over-web-bluetooth",
+      },
+    ],
+  },
   {
     slug: "erth",
     name: "ERTH",

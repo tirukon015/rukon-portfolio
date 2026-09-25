@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight, ArrowUpRight, Lock } from "lucide-react";
@@ -212,6 +213,27 @@ export default async function CaseStudyPage({ params }: { params: Params }) {
                     </p>
                   ))}
                 </div>
+                {section.figures && section.figures.length > 0 ? (
+                  <div className="mt-6 flex flex-col gap-6">
+                    {section.figures.map((figure) => (
+                      <figure key={figure.src}>
+                        <div className="overflow-hidden rounded-lg border border-border bg-bg-elevated shadow-[var(--shadow-card)]">
+                          <Image
+                            src={figure.src}
+                            alt={figure.alt}
+                            width={figure.width}
+                            height={figure.height}
+                            sizes="(min-width: 768px) 768px, 100vw"
+                            className="h-auto w-full"
+                          />
+                        </div>
+                        <figcaption className="mt-3 font-mono text-xs leading-relaxed text-text-faint">
+                          {figure.caption}
+                        </figcaption>
+                      </figure>
+                    ))}
+                  </div>
+                ) : null}
                 {section.note ? (
                   <p className="mt-5 border-l-2 border-border-strong pl-4 text-sm leading-relaxed text-text-faint">
                     {section.note}

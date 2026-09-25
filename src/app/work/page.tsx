@@ -21,7 +21,7 @@ import {
 
 const title = "Work";
 const description =
-  "Three projects: a production-operations platform for a router-refurbishment line, an AI research assistant that analyses academic PDFs, and requirement-driven SEO and content development on a production website.";
+  "Four projects: a production-operations platform for a router-refurbishment line, an offline-first label-printing workstation that drives a Bluetooth printer from the browser, an AI research assistant that analyses academic PDFs, and requirement-driven SEO and content development on a production website.";
 
 export const metadata: Metadata = {
   title,

@@ -10,7 +10,7 @@ export const post: BlogPost = {
   tags: ["Web Bluetooth", "TypeScript", "Hardware", "Vite", "Testing", "Barcode"],
   contentType: "Technical Guide",
   searchIntent: "problem-aware",
-  relatedProjects: ["rpoms"],
+  relatedProjects: ["rpoms-print-engine", "rpoms"],
   relatedPosts: [
     "staged-csv-import-for-operational-data",
     "verifying-a-static-site-you-built-by-hand",

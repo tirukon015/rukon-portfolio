@@ -17,7 +17,7 @@ export const capabilities: Capability[] = [
     title: "Product & full-stack development",
     description:
       "End to end in TypeScript and Python: interfaces, API routes, data models, access control and the deployment path to production. Next.js App Router on the front, Next.js route handlers or FastAPI behind it, PostgreSQL or MySQL underneath, deployed on Vercel, Supabase and cPanel and kept running afterwards.",
-    evidence: ["rpoms", "researchforge"],
+    evidence: ["rpoms", "rpoms-print-engine", "researchforge"],
   },
   {
     title: "Systems & internal tools",
@@ -117,6 +117,9 @@ export const stack: StackCategory[] = [
       "Papa Parse",
       "Schema.org JSON-LD",
       "axe-core",
+      "Web Bluetooth",
+      "IndexedDB",
+      "Service workers (Workbox)",
     ],
   },
   {
