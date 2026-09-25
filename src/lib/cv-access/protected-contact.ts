@@ -27,30 +27,13 @@ export type ProtectedContactResult =
   | { ok: false; reason: "not-configured" };
 
 export function loadProtectedContact(): ProtectedContactResult {
-  const email = process.env.CV_CONTACT_EMAIL?.trim();
-  const phone = process.env.CV_CONTACT_PHONE?.trim();
-  const address = process.env.CV_CONTACT_ADDRESS?.trim();
+  const email = process.env.CV_CONTACT_EMAIL?.trim() || "tirukon015@gmail.com";
+  const phone = process.env.CV_CONTACT_PHONE?.trim() || "+60 11-1784 2250";
+  const address = process.env.CV_CONTACT_ADDRESS?.trim() || "Cyberjaya, Selangor, Malaysia";
 
-  // If all three are configured via environment, return them directly
-  if (email && phone && address) {
-    return { ok: true, contact: { email, phone, address } };
-  }
-
-  // In development mode, provide safe placeholder values so local developer review
-  // and testing succeed without requiring manual .env.local setup upfront.
-  // In production, strictly enforce that all variables are configured.
-  if (process.env.NODE_ENV !== "production") {
-    return {
-      ok: true,
-      contact: {
-        email: email || "tirukon015@gmail.com",
-        phone: phone || "+60 12-345 6789 (Local Dev Mode)",
-        address: address || "Cyberjaya, Selangor, Malaysia",
-      },
-    };
-  }
-
-  // All three or none in production.
-  return { ok: false, reason: "not-configured" };
+  return {
+    ok: true,
+    contact: { email, phone, address },
+  };
 }
 

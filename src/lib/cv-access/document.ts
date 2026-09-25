@@ -32,10 +32,10 @@ export type CVDocument =
 
 export function getLocalCVPath(): string {
   const primaryPath = path.join(process.cwd(), "private", "cv", "Touhidul-Islam-Rukon-CV.pdf");
-  if (existsSync(primaryPath)) return primaryPath;
+  if (existsSync(/*turbopackIgnore: true*/ primaryPath)) return primaryPath;
 
   const nestedPath = path.join(process.cwd(), "rukon-portfolio-main", "private", "cv", "Touhidul-Islam-Rukon-CV.pdf");
-  if (existsSync(nestedPath)) return nestedPath;
+  if (existsSync(/*turbopackIgnore: true*/ nestedPath)) return nestedPath;
 
   return primaryPath;
 }
@@ -70,7 +70,7 @@ async function loadFromPrivateStorage(url: string): Promise<CVDocument> {
 async function loadFromLocalFile(): Promise<CVDocument> {
   const localPath = getLocalCVPath();
   try {
-    const bytes = await readFile(localPath);
+    const bytes = await readFile(/*turbopackIgnore: true*/ localPath);
     if (bytes.byteLength < 5 || String.fromCharCode(...bytes.slice(0, 5)) !== "%PDF-") {
       console.error("Local CV file is not a valid PDF document.");
       return { ok: false, reason: "fetch-failed" };
@@ -90,6 +90,6 @@ export async function loadCVDocument(): Promise<CVDocument> {
 /** True when this deployment has a document source available (remote URL or local PDF). */
 export function isDocumentSourceConfigured(): boolean {
   if (Boolean(process.env.CV_DOCUMENT_URL?.trim())) return true;
-  return existsSync(getLocalCVPath());
+  return existsSync(/*turbopackIgnore: true*/ getLocalCVPath());
 }
 
