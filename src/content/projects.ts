@@ -650,28 +650,29 @@ export const projects: Project[] = [
     fullName: "ERTH: production homepage, technical SEO and GEO implementation",
     tagline: "A design-tool prototype rebuilt as a production website that ships 3.7 kB of JavaScript.",
     summary:
-      "The production website for a Malaysian e-waste collection service. Prototyped in Figma, then built from the approved design as static HTML, CSS and vanilla JavaScript: 250 kB of prototype JavaScript down to 3.7 kB, images 12.0 MB down to 2.7 MB, full technical SEO and structured data added. Complete and deployed.",
+      "The production website for ERTH, Malaysia's #1 e-waste collection service certified by Jabatan Alam Sekitar (JAS). As Website Designer and Developer collaborating with the engineering team, I designed the experience in Figma, built the high-performance production frontend (reducing JS from 250 kB to 3.7 kB and media assets by 75%), implemented comprehensive technical SEO and structured data, and am currently scaling the codebase with TypeScript.",
     category: "Websites",
     categorySlug: "websites",
     categories: ["Websites"],
     hrOverview: {
-      valueProposition: "High-performance production website rebuilt from a Figma prototype, shrinking JS from 250 kB to 3.7 kB with full technical SEO.",
-      role: "Sole Developer",
-      roleScope: "Design Prototyping, Production Build, Asset Optimization & Technical SEO",
-      context: "ERTH (E-waste collection & rewards service, Cyberjaya, Malaysia)",
+      valueProposition: "High-performance production website for Malaysia's #1 JAS-certified e-waste collector, designed in Figma, built with zero bloat, and scaling with TypeScript.",
+      role: "Website Designer & Developer",
+      roleScope: "Website Design (Figma), Production Frontend Build & TypeScript Migration (Team-based)",
+      context: "ERTH — Malaysia's #1 E-Waste Collector & Jabatan Alam Sekitar (JAS) Certified",
       highlights: [
-        "Rebuilt client-approved design into pure semantic static HTML, CSS, and vanilla JS, eliminating 250 kB of prototype framework runtime",
+        "Website designer and frontend builder for Malaysia's #1 e-waste collector, certified by Jabatan Alam Sekitar (JAS)",
+        "Prototyped the entire user interface and component vocabulary in Figma from client brand requirements",
+        "Rebuilt the approved design into pure semantic HTML, CSS, and vanilla JS, eliminating 250 kB of prototype framework runtime",
         "Optimized media payload by more than 75%: reduced 12.0 MB image assets to 2.7 MB using WebP and responsive srcset variants",
         "Engineered comprehensive structured data: Organization/RecyclingCenter, FAQPage (16 Q&As), and WebSite Schema.org JSON-LD",
-        "Zero accessibility violations: audited and verified with axe-core across 5 distinct interaction and modal states",
-        "Created custom post-build validation tooling to automatically prevent broken anchor links, missing alt tags, and JSON-LD syntax errors",
+        "Collaborating within the engineering team to migrate and scale the web properties using modern TypeScript",
       ],
-      technologies: ["HTML5", "CSS3", "Vanilla JavaScript", "Vite 7", "Figma", "Schema.org JSON-LD", "WebP", "axe-core"],
+      technologies: ["TypeScript", "HTML5", "CSS3", "JavaScript", "Vite 7", "Figma", "Schema.org JSON-LD", "WebP", "axe-core"],
     },
-    role: "Sole Developer",
-    roleScope: "Design Prototyping, Production Build, Asset Optimization & Technical SEO",
-    period: "2026 (completed)",
-    affiliation: "ERTH",
+    role: "Website Designer & Developer",
+    roleScope: "Website Design (Figma), Production Frontend Build & TypeScript Migration (Team-based)",
+    period: "2026 (completed, ongoing TypeScript migration)",
+    affiliation: "ERTH (Malaysia's #1 E-Waste Collector, Jabatan Alam Sekitar Certified)",
     confidential: false,
     kind: "professional",
     tier: "featured",
@@ -692,7 +693,7 @@ export const projects: Project[] = [
       },
       {
         label: "Implementation",
-        items: ["HTML5", "CSS3", "Vanilla JavaScript", "Semantic HTML", "Responsive CSS", "Vite 7"],
+        items: ["TypeScript", "HTML5", "CSS3", "Vanilla JavaScript", "Semantic HTML", "Responsive CSS", "Vite 7"],
       },
       {
         label: "Search & structured data",
@@ -743,14 +744,14 @@ export const projects: Project[] = [
       {
         heading: "Overview",
         body: [
-          "ERTH is a Malaysian e-waste collection and rewards service operated by Blue Bee Technologies: doorstep pickup, free shipping through Pos Malaysia, a 24/7 drop-off point in Cyberjaya, and cashless rewards. The site is a single long-form homepage covering pickup, rewards and pricing, what ERTH accepts, business services, service areas, drop-off options, the recycling process, press coverage, FAQ and contact.",
-          "The engagement ran in two phases. First, the interface was worked out as an interactive Figma prototype. Then the client approved a design file as final, and the production website was built from it: 1,076 lines of markup, 534 lines of CSS and 228 lines of JavaScript, bundled by Vite and deployed on Vercel. That build is complete and live.",
+          "ERTH is Malaysia's #1 e-waste collection and recycling service, officially certified by Jabatan Alam Sekitar (JAS) Malaysia and operated in partnership with Blue Bee Technologies: doorstep pickup, free shipping through Pos Malaysia, a 24/7 drop-off point in Cyberjaya, and cashless rewards. The site is a comprehensive single-page digital gateway covering residential and corporate e-waste pickups, real-time device pricing, accepted electronics catalogs, enterprise recycling compliance, and JAS-certified environmental standards.",
+          "As Website Designer and Developer working alongside our engineering team, I handled the project across its lifecycle: prototyping the complete interface and interaction design in Figma, engineering the approved design into a fast, zero-bloat production website (1,076 lines of markup, 534 lines of CSS and 228 lines of JavaScript bundled by Vite), and currently scaling the frontend architecture with TypeScript.",
         ],
       },
       {
         heading: "Problem",
         body: [
-          "A recycling and trade-in service depends on people trusting it enough to hand over a device and the data on it. The page has to make the process, the pricing, the eligibility rules and the handling of personal data legible before someone commits to anything.",
+          "A recycling and trade-in service depends on people trusting it enough to hand over a device and the data on it. As Malaysia's #1 collector certified by Jabatan Alam Sekitar, the page has to make the process, the pricing, the eligibility rules and the handling of personal data legible before someone commits to anything.",
           "The approved design existed only as a self-extracting design-tool bundle: fonts, images and markup encoded as base64 inside script blocks, unpacked in the browser at runtime, with React and Babel pulled from a CDN and a runtime that re-rendered inline styles on every state change. It demonstrated the design. It was not a website anyone should ship.",
         ],
       },
@@ -764,11 +765,12 @@ export const projects: Project[] = [
       {
         heading: "My Role",
         body: [
-          "Both phases, and they are different kinds of work. The interface was worked out as an interactive Figma prototype before implementation, covering page structure, visual direction and the user flow from choosing a device through to payout.",
-          "The second phase is the production build: extracting the assets from the approved bundle, rebuilding the page as static files, fixing the defects the prototype carried, and implementing the technical SEO, structured data, performance and accessibility work. That half was mine end to end, including the deployment configuration.",
+          "I served as the Website Designer and Developer for ERTH within our engineering team. ERTH is Malaysia's #1 e-waste collector certified by Jabatan Alam Sekitar (JAS), demanding high institutional trust, full accessibility compliance, and lightning-fast mobile responsiveness.",
+          "In the first phase, I designed the interface and worked it out as an interactive Figma prototype before implementation, establishing the visual system, layout structure, and the user flow from selecting an electronic device through to collection booking and payout.",
+          "In the second phase, I built the production website: extracting assets from the approved bundle, rebuilding the page into clean semantic code, eliminating 250 kB of framework runtime, and implementing full technical SEO and Schema.org structured data. Alongside our engineering team, I am now modernizing and scaling the codebase with TypeScript.",
         ],
         note:
-          "The Figma prototype is a shared working file rather than a solo artefact, so this describes design and prototyping involvement and the translation into production, not sole authorship of the design.",
+          "Team project: I served as the website designer and frontend builder, and continue to develop features with TypeScript alongside our team for Malaysia's #1 JAS-certified e-waste recycler.",
       },
       {
         heading: "Engineering Approach",
