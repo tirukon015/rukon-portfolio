@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowUpRight, Lock } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
-import { Tag } from "@/components/ui/tag";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
-import { ProjectMark } from "@/components/ui/project-mark";
 import { JsonLd } from "@/components/seo/json-ld";
-import { projects } from "@/content/projects";
+import { WorkFilter } from "@/components/work/work-filter";
+import { projects, upcomingProjects } from "@/content/projects";
 import { getPostsForProject } from "@/content/posts";
 import { site } from "@/content/site";
 import {
@@ -21,7 +18,7 @@ import {
 
 const title = "Work";
 const description =
-  "Four projects: a production-operations platform for a router-refurbishment line, an offline-first label-printing workstation that drives a Bluetooth printer from the browser, an AI research assistant that analyses academic PDFs, and requirement-driven SEO and content development on a production website.";
+  "Real-world operational systems, offline workstations, full-stack software, and high-performance websites. Scan the Level 1 HR overviews below or dive into detailed case studies.";
 
 export const metadata: Metadata = {
   title,
@@ -57,6 +54,12 @@ export default function WorkIndexPage() {
     breadcrumbSchema(crumbs)
   );
 
+  // Precompute post counts for fast client rendering
+  const postCountsByProject: Record<string, number> = {};
+  for (const p of projects) {
+    postCountsByProject[p.slug] = getPostsForProject(p.slug).length;
+  }
+
   return (
     <div className="py-16 sm:py-20 lg:py-24">
       <JsonLd data={schema} />
@@ -64,73 +67,23 @@ export default function WorkIndexPage() {
         <Breadcrumbs items={crumbs} />
 
         <Reveal className="mt-8 max-w-3xl">
-          <span className="font-mono text-xs uppercase tracking-[0.18em] text-accent">Work</span>
+          <span className="font-mono text-xs uppercase tracking-[0.18em] text-accent">Work & Systems</span>
           <h1 className="mt-3 text-4xl font-semibold tracking-tight text-text sm:text-5xl">
             Real systems, not tutorials.
           </h1>
-          <p className="mt-4 text-base leading-relaxed text-text-muted">{description}</p>
+          <p className="mt-4 text-base leading-relaxed text-text-muted">
+            Every project has two levels: a <strong>quick HR-friendly overview</strong> below for rapid scanning (10–20 seconds), and a <strong>full technical case study</strong> with in-depth architecture, code, and verification proof.
+          </p>
         </Reveal>
 
-        <div className="mt-14 grid grid-cols-1 gap-6 lg:grid-cols-2">
-          {projects.map((project, i) => {
-            const writing = getPostsForProject(project.slug);
-            return (
-              <Reveal key={project.slug} delayMs={i * 80}>
-                <Link
-                  href={`/work/${project.slug}`}
-                  className="group flex h-full flex-col rounded-2xl border border-border bg-bg-elevated p-8 shadow-[var(--shadow-card)] transition-colors duration-300 hover:border-border-strong"
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex h-14 items-center">
-                      <ProjectMark
-                        project={project}
-                        width={140}
-                        height={40}
-                        className="h-8 w-auto object-contain object-left opacity-90"
-                        fallbackClassName="font-mono text-lg font-semibold tracking-tight text-text"
-                      />
-                    </div>
-                    <ArrowUpRight
-                      size={20}
-                      className="mt-1 shrink-0 text-text-faint transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent-strong"
-                    />
-                  </div>
-
-                  <h2 className="mt-6 text-2xl font-semibold text-text">{project.name}</h2>
-                  <p className="mt-1 text-sm text-text-faint">{project.fullName}</p>
-                  <p className="mt-4 flex-1 text-base leading-relaxed text-text-muted">
-                    {project.summary}
-                  </p>
-
-                  <div className="mt-6 flex flex-wrap gap-2">
-                    {project.tech.slice(0, 4).map((t) => (
-                      <Tag key={t}>{t}</Tag>
-                    ))}
-                  </div>
-
-                  <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-5 text-sm text-text-faint">
-                    <span>{project.affiliation}</span>
-                    <span className="flex items-center gap-3">
-                      {writing.length > 0 ? (
-                        <span>
-                          {writing.length} {writing.length === 1 ? "article" : "articles"}
-                        </span>
-                      ) : null}
-                      {project.confidential ? (
-                        <span className="inline-flex items-center gap-1.5">
-                          <Lock size={13} /> NDA-safe
-                        </span>
-                      ) : (
-                        <span>{project.period}</span>
-                      )}
-                    </span>
-                  </div>
-                </Link>
-              </Reveal>
-            );
-          })}
-        </div>
+        {/* Category Navigation & Level 1 HR Overviews */}
+        <WorkFilter
+          projects={projects}
+          upcomingProjects={upcomingProjects}
+          postCountsByProject={postCountsByProject}
+        />
       </Container>
     </div>
   );
 }
+

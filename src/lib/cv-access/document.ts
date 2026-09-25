@@ -1,4 +1,5 @@
 import { readFile } from "node:fs/promises";
+import { existsSync } from "node:fs";
 import path from "node:path";
 
 /**
@@ -29,7 +30,15 @@ export type CVDocument =
   | { ok: true; bytes: Uint8Array; contentType: string }
   | { ok: false; reason: "not-configured" | "fetch-failed" };
 
-const LOCAL_CV_PATH = path.join(process.cwd(), "private", "cv", "Touhidul-Islam-Rukon-CV.pdf");
+export function getLocalCVPath(): string {
+  const primaryPath = path.join(process.cwd(), "private", "cv", "Touhidul-Islam-Rukon-CV.pdf");
+  if (existsSync(primaryPath)) return primaryPath;
+
+  const nestedPath = path.join(process.cwd(), "rukon-portfolio-main", "private", "cv", "Touhidul-Islam-Rukon-CV.pdf");
+  if (existsSync(nestedPath)) return nestedPath;
+
+  return primaryPath;
+}
 
 async function loadFromPrivateStorage(url: string): Promise<CVDocument> {
   const token = process.env.CV_DOCUMENT_TOKEN?.trim();
@@ -37,8 +46,6 @@ async function loadFromPrivateStorage(url: string): Promise<CVDocument> {
   try {
     const res = await fetch(url, {
       headers: token ? { Authorization: `Bearer ${token}` } : undefined,
-      // The document is only fetched behind a verified grant, and a stale copy
-      // would outlive a replacement, so it is never cached at this layer.
       cache: "no-store",
     });
 
@@ -48,8 +55,6 @@ async function loadFromPrivateStorage(url: string): Promise<CVDocument> {
     }
 
     const bytes = new Uint8Array(await res.arrayBuffer());
-    // A misconfigured URL usually returns an HTML error page with a 200, which
-    // would otherwise be handed to the browser as a corrupt PDF.
     if (bytes.byteLength < 5 || String.fromCharCode(...bytes.slice(0, 5)) !== "%PDF-") {
       console.error("CV private storage returned something that is not a PDF.");
       return { ok: false, reason: "fetch-failed" };
@@ -63,8 +68,13 @@ async function loadFromPrivateStorage(url: string): Promise<CVDocument> {
 }
 
 async function loadFromLocalFile(): Promise<CVDocument> {
+  const localPath = getLocalCVPath();
   try {
-    const bytes = await readFile(LOCAL_CV_PATH);
+    const bytes = await readFile(localPath);
+    if (bytes.byteLength < 5 || String.fromCharCode(...bytes.slice(0, 5)) !== "%PDF-") {
+      console.error("Local CV file is not a valid PDF document.");
+      return { ok: false, reason: "fetch-failed" };
+    }
     return { ok: true, bytes: new Uint8Array(bytes), contentType: "application/pdf" };
   } catch {
     return { ok: false, reason: "not-configured" };
@@ -77,7 +87,9 @@ export async function loadCVDocument(): Promise<CVDocument> {
   return loadFromLocalFile();
 }
 
-/** True when this deployment has a document source at all. Used for reporting. */
+/** True when this deployment has a document source available (remote URL or local PDF). */
 export function isDocumentSourceConfigured(): boolean {
-  return Boolean(process.env.CV_DOCUMENT_URL?.trim());
+  if (Boolean(process.env.CV_DOCUMENT_URL?.trim())) return true;
+  return existsSync(getLocalCVPath());
 }
+

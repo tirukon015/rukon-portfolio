@@ -1,8 +1,18 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight, ArrowUpRight, Lock } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ArrowUpRight,
+  BookOpen,
+  CheckCircle2,
+  Lock,
+  User,
+  Calendar,
+  Building2,
+  FolderGit2,
+} from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
 import { Tag } from "@/components/ui/tag";
@@ -10,7 +20,7 @@ import { ButtonLink } from "@/components/ui/button";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { ProjectMark } from "@/components/ui/project-mark";
 import { JsonLd } from "@/components/seo/json-ld";
-import { getProject, getOtherProjects, projects, type CapabilityState } from "@/content/projects";
+import { getProject, getOtherProjects, projects } from "@/content/projects";
 import { getPostsForProject, postExcerpt } from "@/content/posts";
 import {
   absoluteUrl,
@@ -32,7 +42,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const project = getProject(slug);
   if (!project) return {};
 
-  const title = `${project.name}: Case Study`;
+  const title = `${project.name}: Project Overview`;
   return {
     title,
     description: project.summary,
@@ -47,19 +57,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   };
 }
 
-const stateLabel: Record<CapabilityState, string> = {
-  implemented: "Implemented",
-  available: "Built, not live",
-  "not-connected": "Not connected",
-};
-
-const stateClass: Record<CapabilityState, string> = {
-  implemented: "text-accent-strong border-accent",
-  available: "text-text-muted border-border-strong",
-  "not-connected": "text-text-faint border-border",
-};
-
-export default async function CaseStudyPage({ params }: { params: Params }) {
+export default async function ProjectOverviewPage({ params }: { params: Params }) {
   const { slug } = await params;
   const project = getProject(slug);
   if (!project) notFound();
@@ -67,6 +65,7 @@ export default async function CaseStudyPage({ params }: { params: Params }) {
   const others = getOtherProjects(project.slug);
   const next = others[0];
   const relatedPosts = getPostsForProject(project.slug);
+  const hasCaseStudy = Boolean(project.sections && project.sections.length > 0);
 
   const crumbs = [
     { name: "Home", href: "/" },
@@ -95,235 +94,238 @@ export default async function CaseStudyPage({ params }: { params: Params }) {
   );
 
   return (
-    <article>
+    <article className="scroll-smooth">
       <JsonLd data={schema} />
 
-      <header className="border-b border-border py-16 sm:py-20">
+      {/* =========================================================================
+          LEVEL 2: EXECUTIVE HR-FRIENDLY PROJECT OVERVIEW (THE HOOK)
+          Dedicated concise overview designed to be scanned in 10-20 seconds.
+          ========================================================================= */}
+      <section className="py-10 sm:py-14 lg:py-16">
         <Container>
-          <Breadcrumbs items={crumbs} />
+          {/* Breadcrumbs + Mode Indicator */}
+          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border/70 pb-4">
+            <Breadcrumbs items={crumbs} />
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1 font-mono text-[11px] font-medium uppercase tracking-wider text-text-muted">
+              <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+              HR Project Overview
+            </span>
+          </div>
 
-          <Reveal className="mt-8 flex flex-wrap items-center gap-4">
+          {/* Top Classification Bar */}
+          <Reveal className="mt-8 flex flex-wrap items-center justify-between gap-4">
+            <div className="flex flex-wrap items-center gap-2.5">
+              <span className="inline-flex items-center rounded-lg bg-accent/10 px-3 py-1 font-mono text-xs font-semibold uppercase tracking-wider text-accent">
+                {project.category}
+              </span>
+
+              {project.confidential ? (
+                <span className="inline-flex items-center gap-1.5 rounded-lg border border-border-strong px-2.5 py-0.5 font-mono text-xs text-text-faint">
+                  <Lock size={12} className="shrink-0" /> NDA-Safe Overview
+                </span>
+              ) : (
+                <span className="inline-flex items-center rounded-lg border border-border px-2.5 py-0.5 font-mono text-xs text-text-faint">
+                  {project.period}
+                </span>
+              )}
+
+              {project.kind === "university-project" && (
+                <span className="inline-flex items-center rounded-lg border border-border px-2.5 py-0.5 font-mono text-xs text-text-faint">
+                  University Project
+                </span>
+              )}
+
+              {hasCaseStudy && (
+                <span className="inline-flex items-center gap-1.5 rounded-lg border border-accent/30 bg-accent/[0.04] px-2.5 py-0.5 font-mono text-xs text-accent">
+                  <BookOpen size={11} /> Case Study Ready
+                </span>
+              )}
+            </div>
+
             <ProjectMark
               project={project}
               width={160}
-              height={48}
-              className="h-9 w-auto object-contain object-left"
-              fallbackClassName="font-mono text-xl font-semibold tracking-tight text-text"
+              height={44}
+              className="h-8 w-auto object-contain object-right"
+              fallbackClassName="font-mono text-lg font-semibold tracking-tight text-text"
             />
-            {project.confidential ? (
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-border-strong px-3 py-1 font-mono text-xs text-text-faint">
-                <Lock size={12} /> NDA-safe overview
-              </span>
-            ) : null}
-            {project.kind === "university-project" ? (
-              <span className="inline-flex items-center rounded-full border border-border-strong px-3 py-1 font-mono text-xs text-text-faint">
-                University project
-              </span>
-            ) : null}
           </Reveal>
 
-          <Reveal delayMs={60}>
-            <h1 className="mt-6 max-w-3xl text-4xl font-semibold tracking-tight text-text sm:text-5xl">
-              {project.tagline}
+          {/* Title & Subtitle */}
+          <Reveal delayMs={40} className="mt-6">
+            <h1 className="text-3xl font-bold tracking-tight text-text sm:text-5xl lg:text-6xl">
+              {project.name}
             </h1>
-            <p className="mt-4 max-w-2xl text-lg leading-relaxed text-text-muted">
+            <p className="mt-2 text-base text-text-muted sm:text-lg">{project.fullName}</p>
+
+            {/* High-Impact Value Proposition Callout */}
+            <div className="mt-6 rounded-2xl border-2 border-accent/30 bg-accent/[0.05] p-5 sm:p-6 shadow-sm">
+              <span className="font-mono text-[11px] font-bold uppercase tracking-wider text-accent block mb-1.5">
+                Core Value Proposition
+              </span>
+              <p className="text-lg sm:text-xl font-medium leading-relaxed text-text">
+                {project.hrOverview?.valueProposition || project.tagline}
+              </p>
+            </div>
+
+            {/* Short Executive Summary */}
+            <p className="mt-6 max-w-3xl text-base leading-relaxed text-text-muted sm:text-lg">
               {project.summary}
             </p>
           </Reveal>
 
-          <Reveal delayMs={100} className="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-4">
-            <div>
-              <dt className="font-mono text-xs uppercase tracking-wide text-text-faint">Role</dt>
-              <dd className="mt-1 text-sm text-text">{project.role}</dd>
+          {/* Scannable Metadata Grid: Role Prominently Stated */}
+          <Reveal delayMs={80} className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 rounded-2xl border border-border/80 bg-bg-elevated p-6 shadow-sm">
+            <div className="border-b border-border/60 pb-4 sm:border-b-0 sm:border-r sm:pr-4 sm:pb-0">
+              <div className="flex items-center gap-1.5 text-accent">
+                <User size={14} className="shrink-0" />
+                <dt className="font-mono text-[11px] uppercase tracking-wider font-bold">Role</dt>
+              </div>
+              <dd className="mt-2 text-base font-bold text-text">
+                {project.hrOverview?.role || "Sole Developer"}
+              </dd>
+              {project.hrOverview?.roleScope && (
+                <p className="mt-1 text-xs leading-normal text-text-muted">
+                  {project.hrOverview.roleScope}
+                </p>
+              )}
             </div>
-            <div>
-              <dt className="font-mono text-xs uppercase tracking-wide text-text-faint">Period</dt>
-              <dd className="mt-1 text-sm text-text">{project.period}</dd>
+
+            <div className="border-b border-border/60 pb-4 sm:border-b-0 lg:border-r lg:pr-4 lg:pb-0">
+              <div className="flex items-center gap-1.5 text-text-faint">
+                <Building2 size={14} className="shrink-0" />
+                <dt className="font-mono text-[11px] uppercase tracking-wider">Context / Client</dt>
+              </div>
+              <dd className="mt-2 text-sm font-semibold text-text">
+                {project.hrOverview?.context || project.affiliation}
+              </dd>
             </div>
-            <div className="col-span-2 sm:col-span-2">
-              <dt className="font-mono text-xs uppercase tracking-wide text-text-faint">
-                Affiliation
-              </dt>
-              <dd className="mt-1 text-sm text-text">{project.affiliation}</dd>
+
+            <div className="border-b border-border/60 pb-4 sm:border-b-0 sm:border-r sm:pr-4 sm:pb-0">
+              <div className="flex items-center gap-1.5 text-text-faint">
+                <Calendar size={14} className="shrink-0" />
+                <dt className="font-mono text-[11px] uppercase tracking-wider">Timeline / Period</dt>
+              </div>
+              <dd className="mt-2 text-sm font-semibold text-text">{project.period}</dd>
+            </div>
+
+            <div>
+              <div className="flex items-center gap-1.5 text-text-faint">
+                <FolderGit2 size={14} className="shrink-0" />
+                <dt className="font-mono text-[11px] uppercase tracking-wider">Category</dt>
+              </div>
+              <dd className="mt-2 text-sm font-bold text-accent">{project.category}</dd>
             </div>
           </Reveal>
 
-          <Reveal delayMs={140} className="mt-8 flex flex-wrap gap-2">
-            {project.tech.map((t) => (
-              <Tag key={t}>{t}</Tag>
-            ))}
-          </Reveal>
+          {/* Key Value Highlights Box */}
+          <Reveal delayMs={120} className="mt-8 rounded-2xl border border-border bg-bg-elevated p-6 sm:p-8 shadow-[var(--shadow-card)]">
+            <div className="flex items-center justify-between border-b border-border/80 pb-4">
+              <h2 className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-accent">
+                Key Highlights & Practical Impact
+              </h2>
+              <span className="font-mono text-xs text-text-faint">Executive Scan</span>
+            </div>
 
-          {project.links && project.links.length > 0 ? (
-            <Reveal delayMs={170} className="mt-8 flex flex-wrap gap-4">
-              {project.links.map((link) => (
-                <ButtonLink
-                  key={link.href}
-                  href={link.href}
-                  variant="secondary"
-                  external={link.external}
-                >
-                  {link.label} <ArrowUpRight size={15} />
-                </ButtonLink>
+            <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {(project.hrOverview?.highlights || project.highlights).map((highlight, idx) => (
+                <li key={idx} className="flex items-start gap-3 text-sm leading-relaxed text-text">
+                  <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-accent" />
+                  <span>{highlight}</span>
+                </li>
               ))}
-            </Reveal>
-          ) : null}
-        </Container>
-      </header>
+            </ul>
 
-      {project.workflow.length > 0 ? (
-        <section aria-label="Process" className="border-b border-border py-14">
-          <Container>
-            <Reveal>
-              <h2 className="font-mono text-xs uppercase tracking-[0.18em] text-text-faint">
-                How it flows
-              </h2>
-              <ol className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-4">
-                {project.workflow.map((step, i) => (
-                  <li key={step} className="flex items-center gap-3">
-                    <span className="flex items-center gap-2 rounded-full border border-border-strong bg-bg-elevated px-4 py-2 text-sm text-text">
-                      <span className="font-mono text-xs text-accent">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      {step}
-                    </span>
-                    {i < project.workflow.length - 1 ? (
-                      <ArrowRight size={14} className="shrink-0 text-text-faint" aria-hidden="true" />
-                    ) : null}
-                  </li>
-                ))}
-              </ol>
-            </Reveal>
-          </Container>
-        </section>
-      ) : null}
-
-      <section className="py-20">
-        <Container className="max-w-3xl">
-          <div className="flex flex-col gap-16">
-            {project.sections.map((section, i) => (
-              <Reveal key={section.heading} delayMs={Math.min(i * 40, 160)}>
-                <h2 className="text-2xl font-semibold tracking-tight text-text">
-                  {section.heading}
-                </h2>
-                <div className="mt-4 flex flex-col gap-4">
-                  {section.body.map((p) => (
-                    <p key={p} className="text-base leading-relaxed text-text-muted">
-                      {p}
-                    </p>
-                  ))}
-                </div>
-                {section.figures && section.figures.length > 0 ? (
-                  <div className="mt-6 flex flex-col gap-6">
-                    {section.figures.map((figure) => (
-                      <figure key={figure.src}>
-                        <div className="overflow-hidden rounded-lg border border-border bg-bg-elevated shadow-[var(--shadow-card)]">
-                          <Image
-                            src={figure.src}
-                            alt={figure.alt}
-                            width={figure.width}
-                            height={figure.height}
-                            sizes="(min-width: 768px) 768px, 100vw"
-                            className="h-auto w-full"
-                          />
-                        </div>
-                        <figcaption className="mt-3 font-mono text-xs leading-relaxed text-text-faint">
-                          {figure.caption}
-                        </figcaption>
-                      </figure>
-                    ))}
-                  </div>
-                ) : null}
-                {section.note ? (
-                  <p className="mt-5 border-l-2 border-border-strong pl-4 text-sm leading-relaxed text-text-faint">
-                    {section.note}
-                  </p>
-                ) : null}
-              </Reveal>
-            ))}
-          </div>
-
-          {project.status && project.status.length > 0 ? (
-            <Reveal className="mt-16">
-              <h2 className="text-2xl font-semibold tracking-tight text-text">
-                What&apos;s live, and what isn&apos;t
-              </h2>
-              <p className="mt-3 text-sm leading-relaxed text-text-muted">
-                &ldquo;It exists in the repository&rdquo; and &ldquo;it runs in production&rdquo; are
-                different claims. This is the difference, stated rather than left to be assumed.
-              </p>
-              <ul className="mt-6 flex flex-col divide-y divide-border border-t border-b border-border">
-                {project.status.map((item) => (
-                  <li key={item.label} className="flex flex-col gap-2 py-4 sm:flex-row sm:gap-6">
-                    <span
-                      className={`inline-flex h-fit shrink-0 items-center rounded-full border px-3 py-1 font-mono text-[11px] uppercase tracking-wide sm:w-36 sm:justify-center ${stateClass[item.state]}`}
-                    >
-                      {stateLabel[item.state]}
-                    </span>
-                    <span className="flex-1">
-                      <span className="block text-sm font-medium text-text">{item.label}</span>
-                      <span className="mt-1 block text-sm leading-relaxed text-text-muted">
-                        {item.detail}
-                      </span>
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-          ) : null}
-
-          {project.techGroups && project.techGroups.length > 0 ? (
-            <Reveal className="mt-16">
-              <h2 className="text-2xl font-semibold tracking-tight text-text">Technical stack</h2>
-              <div className="mt-6 grid grid-cols-1 gap-8 sm:grid-cols-2">
-                {project.techGroups.map((group) => (
-                  <div key={group.label}>
-                    <h3 className="font-mono text-xs uppercase tracking-[0.14em] text-text-faint">
-                      {group.label}
-                    </h3>
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      {group.items.map((item) => (
-                        <Tag key={item}>{item}</Tag>
-                      ))}
-                    </div>
-                  </div>
+            {/* Core Tech Stack */}
+            <div className="mt-8 border-t border-border pt-6">
+              <span className="block font-mono text-[11px] uppercase tracking-wider text-text-faint mb-3">
+                Technologies Used
+              </span>
+              <div className="flex flex-wrap gap-2">
+                {(project.hrOverview?.technologies || project.tech).map((t) => (
+                  <Tag key={t}>{t}</Tag>
                 ))}
               </div>
-            </Reveal>
-          ) : null}
+            </div>
+          </Reveal>
 
-          {project.limitations && project.limitations.length > 0 ? (
-            <Reveal className="mt-16">
-              <h2 className="text-2xl font-semibold tracking-tight text-text">Limitations</h2>
-              <ul className="mt-5 flex flex-col gap-3">
-                {project.limitations.map((item) => (
-                  <li key={item} className="flex gap-3 text-base leading-relaxed text-text-muted">
-                    <span
-                      aria-hidden="true"
-                      className="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-text-faint"
-                    />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-          ) : null}
+          {/* =========================================================================
+              STRONG VISUAL BOUNDARY: CLEAR SEPARATION TO ENTER FULL CASE STUDY
+              Visually communicates that the HR overview ends here, and the full
+              technical case study is a separate, intentional deep dive.
+              ========================================================================= */}
+          {hasCaseStudy ? (
+            <Reveal delayMs={160} className="mt-12 rounded-3xl border-2 border-accent/40 bg-gradient-to-br from-bg-elevated via-bg-elevated to-accent/[0.08] p-8 sm:p-12 shadow-lg">
+              <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+                <div className="max-w-2xl">
+                  <span className="inline-flex items-center gap-2 rounded-md bg-accent/15 px-3 py-1 font-mono text-xs font-bold uppercase tracking-wider text-accent">
+                    LEVEL 2 — DEEP TECHNICAL PROOF
+                  </span>
+                  <h2 className="mt-4 text-2xl font-bold tracking-tight text-text sm:text-3xl lg:text-4xl">
+                    Ready to explore the build?
+                  </h2>
+                  <p className="mt-3 text-base leading-relaxed text-text-muted sm:text-lg">
+                    A detailed look at the end-to-end architecture, process workflows, key engineering decisions, live production capabilities, challenges, and results.
+                  </p>
+                </div>
 
-          {project.confidential ? (
-            <Reveal className="mt-14 rounded-2xl border border-border-strong bg-bg-elevated p-6">
-              <p className="flex items-start gap-3 text-sm leading-relaxed text-text-muted">
-                <Lock size={16} className="mt-0.5 shrink-0 text-text-faint" />
-                This system is proprietary software built for a live business operation. This page
-                describes it at a level that&apos;s safe to share publicly: no internal screenshots,
-                data, or credentials.
+                <div className="flex flex-wrap items-center gap-4 shrink-0">
+                  <ButtonLink
+                    href={`/work/${project.slug}/case-study`}
+                    variant="primary"
+                    className="gap-3 text-base font-semibold px-8 py-4 shadow-md"
+                  >
+                    <span>View Full Case Study</span>
+                    <ArrowRight size={18} />
+                  </ButtonLink>
+
+                  {project.links && project.links.length > 0
+                    ? project.links.map((link) => (
+                        <ButtonLink
+                          key={link.href}
+                          href={link.href}
+                          variant="secondary"
+                          external={link.external}
+                        >
+                          {link.label} <ArrowUpRight size={15} />
+                        </ButtonLink>
+                      ))
+                    : null}
+                </div>
+              </div>
+            </Reveal>
+          ) : (
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              {project.links && project.links.length > 0
+                ? project.links.map((link) => (
+                    <ButtonLink
+                      key={link.href}
+                      href={link.href}
+                      variant="secondary"
+                      external={link.external}
+                    >
+                      {link.label} <ArrowUpRight size={15} />
+                    </ButtonLink>
+                  ))
+                : null}
+            </div>
+          )}
+
+          {/* Confidentiality Notice */}
+          {project.confidential && (
+            <Reveal delayMs={200} className="mt-8 rounded-xl border border-border bg-bg-elevated/30 p-4">
+              <p className="flex items-center gap-2.5 font-mono text-xs text-text-faint">
+                <Lock size={13} className="shrink-0 text-text-faint" />
+                This system is proprietary commercial software. Information presented here is scoped for public review without disclosing internal credentials or customer records.
               </p>
             </Reveal>
-          ) : null}
+          )}
         </Container>
       </section>
 
+      {/* Related Writing (if any) */}
       {relatedPosts.length > 0 ? (
-        <section aria-label="Related writing" className="border-t border-border py-16">
+        <section aria-label="Related writing" className="border-t border-border py-14">
           <Container className="max-w-3xl">
             <h2 className="font-mono text-xs uppercase tracking-[0.14em] text-text-faint">
               Writing from this work
@@ -350,33 +352,31 @@ export default async function CaseStudyPage({ params }: { params: Params }) {
         </section>
       ) : null}
 
-      <footer className="border-t border-border py-16">
+      {/* Navigation Footer */}
+      <footer className="border-t border-border py-14">
         <Container className="flex flex-col items-start justify-between gap-8 sm:flex-row sm:items-center">
+          <Link
+            href="/work"
+            className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-text-muted transition-colors hover:text-accent"
+          >
+            <ArrowLeft size={14} /> Back to all projects
+          </Link>
+
           {next ? (
             <Link
               href={`/work/${next.slug}`}
               className="group flex items-center gap-3 text-text-muted transition-colors hover:text-text"
             >
               <span className="text-xs uppercase tracking-wide text-text-faint">Next project</span>
-              <span className="flex items-center gap-1.5 text-lg font-medium text-text">
+              <span className="flex items-center gap-1.5 text-base font-medium text-text">
                 {next.name}
                 <ArrowRight
-                  size={16}
+                  size={15}
                   className="transition-transform duration-200 group-hover:translate-x-1"
                 />
               </span>
             </Link>
-          ) : (
-            <span />
-          )}
-          <div className="flex flex-wrap items-center gap-4">
-            <ButtonLink href="/work" variant="secondary">
-              All projects
-            </ButtonLink>
-            <ButtonLink href="/#contact" variant="secondary">
-              Get in touch
-            </ButtonLink>
-          </div>
+          ) : null}
         </Container>
       </footer>
     </article>

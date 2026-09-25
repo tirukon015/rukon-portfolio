@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useId, useRef, useState } from "react";
-import { Download, Lock, ShieldCheck } from "lucide-react";
+import { Download, FileText, Lock, ShieldCheck } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
 import { Button, ButtonLink } from "@/components/ui/button";
@@ -17,6 +17,7 @@ const SESSION_KEY = "cv-access-granted";
 export function CVAccess({ source = "direct" }: { source?: string }) {
   const [state, setState] = useState<State>("locked");
   const [contact, setContact] = useState<Contact | null>(null);
+  const [documentAvailable, setDocumentAvailable] = useState<boolean>(false);
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState<{ fullName?: string; email?: string }>({});
 
@@ -37,16 +38,23 @@ export function CVAccess({ source = "direct" }: { source?: string }) {
    * stays the authority on whether the values are released, and a returning
    * visitor inside the grant window does not fill the form twice.
    */
-  const fetchContact = useCallback(async (): Promise<boolean> => {
+  const fetchContact = useCallback(async (): Promise<{ ok: boolean; error?: string }> => {
     try {
       const res = await fetch("/api/cv/contact");
-      if (!res.ok) return false;
-      const json = await res.json();
-      if (!json?.contact) return false;
+      const json = await res.json().catch(() => null);
+      if (!res.ok) {
+        return { ok: false, error: json?.error ?? "Contact details are temporarily unavailable." };
+      }
+      if (!json?.contact) {
+        return { ok: false, error: "Invalid contact response from server." };
+      }
       setContact(json.contact as Contact);
-      return true;
+      if (typeof json.documentAvailable === "boolean") {
+        setDocumentAvailable(json.documentAvailable);
+      }
+      return { ok: true };
     } catch {
-      return false;
+      return { ok: false, error: "Network error loading contact details." };
     }
   }, []);
 
@@ -63,8 +71,8 @@ export function CVAccess({ source = "direct" }: { source?: string }) {
     if (!seen) return;
 
     void (async () => {
-      const ok = await fetchContact();
-      if (!ok && !cancelled) {
+      const res = await fetchContact();
+      if (!res.ok && !cancelled) {
         // The grant expired. Clear the hint so the next load does not retry.
         try {
           sessionStorage.removeItem(SESSION_KEY);
@@ -125,10 +133,10 @@ export function CVAccess({ source = "direct" }: { source?: string }) {
       }
 
       // One submission, then a single fetch that fills all three fields at once.
-      const ok = await fetchContact();
-      if (!ok) {
+      const contactRes = await fetchContact();
+      if (!contactRes.ok) {
         setState("form");
-        setError("Access was granted but the details could not be loaded. Please try again.");
+        setError(contactRes.error ?? "Access was granted but the details could not be loaded. Please try again.");
         return;
       }
 
@@ -371,33 +379,67 @@ export function CVAccess({ source = "direct" }: { source?: string }) {
 
               <div className="border-t border-border pt-6">
                 {granted ? (
-                  <>
-                    <p className="mb-4 inline-flex items-center gap-2 text-sm font-medium text-text">
+                  <div className="flex flex-col gap-4">
+                    <p className="inline-flex items-center gap-2 text-sm font-medium text-text">
                       <ShieldCheck size={16} className="text-accent" /> Access granted
                     </p>
-                    <ButtonLink
-                      href="/api/cv/document?disposition=attachment"
-                      variant="primary"
-                      external
-                      className="w-full"
-                    >
-                      <Download size={16} /> Download CV
-                    </ButtonLink>
-                  </>
+
+                    {documentAvailable ? (
+                      <div className="flex flex-col gap-2.5 sm:flex-row">
+                        <ButtonLink
+                          href="/api/cv/document?disposition=inline"
+                          variant="primary"
+                          external
+                          className="flex-1"
+                        >
+                          <FileText size={16} /> View CV
+                        </ButtonLink>
+                        <ButtonLink
+                          href="/api/cv/document?disposition=attachment"
+                          variant="secondary"
+                          external
+                          className="flex-1"
+                        >
+                          <Download size={16} /> Download CV
+                        </ButtonLink>
+                      </div>
+                    ) : (
+                      <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-3.5 text-xs text-text-muted">
+                        <p className="font-semibold text-amber-400">PDF Document Pending Setup</p>
+                        <p className="mt-1 leading-relaxed text-text-faint">
+                          Contact details have been unlocked above. The full CV PDF file can be placed at{" "}
+                          <code className="rounded bg-bg px-1 py-0.5 font-mono text-[11px] text-text">
+                            private/cv/Touhidul-Islam-Rukon-CV.pdf
+                          </code>{" "}
+                          or configured via <code className="rounded bg-bg px-1 py-0.5 font-mono text-[11px] text-text">CV_DOCUMENT_URL</code>.
+                        </p>
+                      </div>
+                    )}
+                  </div>
                 ) : (
                   <>
                     <p className="text-xs leading-relaxed text-text-faint">
-                      The full CV file includes these contact details, so the download opens with
+                      The full CV file includes these contact details, so viewing and downloading unlock together with
                       the same request.
                     </p>
-                    <Button
-                      type="button"
-                      variant="secondary"
-                      onClick={openForm}
-                      className="mt-4 w-full"
-                    >
-                      <Lock size={15} /> Download CV
-                    </Button>
+                    <div className="mt-4 flex flex-col gap-2.5 sm:flex-row">
+                      <Button
+                        type="button"
+                        variant="primary"
+                        onClick={openForm}
+                        className="flex-1"
+                      >
+                        <Lock size={15} /> View CV
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="secondary"
+                        onClick={openForm}
+                        className="flex-1"
+                      >
+                        <Download size={15} /> Download CV
+                      </Button>
+                    </div>
                   </>
                 )}
               </div>

@@ -71,13 +71,49 @@ export type RelatedSystem = {
   href?: string;
 };
 
+export type ProjectCategory =
+  | "Systems / ERP / WMS"
+  | "Web Apps / Software"
+  | "Websites"
+  | "iOS / Mobile"
+  | "Other";
+
+export type ProjectCategorySlug =
+  | "systems"
+  | "web-apps"
+  | "websites"
+  | "ios-mobile"
+  | "other";
+
+export type ProjectRole = "Sole Developer" | string;
+
+export type HROverview = {
+  /** One-line value proposition / hook */
+  valueProposition: string;
+  /** Actual professional / engineering role */
+  role: ProjectRole;
+  /** Specific scope of responsibility */
+  roleScope?: string;
+  /** Organization, client, or business context */
+  context: string;
+  /** Eye-catching scannable highlights emphasizing operational impact, architecture, automation */
+  highlights: string[];
+  /** Scannable technologies line */
+  technologies: string[];
+};
+
 export type Project = {
   slug: string;
   name: string;
   fullName: string;
   tagline: string;
   summary: string;
-  role: string;
+  category: ProjectCategory;
+  categorySlug: ProjectCategorySlug;
+  categories: ProjectCategory[];
+  hrOverview: HROverview;
+  role: ProjectRole;
+  roleScope?: string;
   period: string;
   affiliation: string;
   confidential: boolean;
@@ -120,7 +156,26 @@ export const projects: Project[] = [
     tagline: "A real-world WMS/ERP-like operational system running a live production line.",
     summary:
       "A WMS/ERP-style operational system that replaced the spreadsheets running a router-refurbishment line. Serial-level asset tracking, inventory deduction, packing, delivery and generated paperwork, workforce output and dashboards. Designed, built and maintained by me: 35,800 lines of TypeScript, ten admin modules, twenty-five API routes.",
-    role: "IT Systems & Operations Lead, RPOMS",
+    category: "Systems / ERP / WMS",
+    categorySlug: "systems",
+    categories: ["Systems / ERP / WMS", "Web Apps / Software"],
+    hrOverview: {
+      valueProposition: "Real-world operational WMS/ERP platform that replaced spreadsheets to run a live router-refurbishment production line.",
+      role: "Sole Developer",
+      roleScope: "End-to-End Architecture, Full-Stack Build, Database, Security & Deployment",
+      context: "Blue Bee Technologies × ERTH × Maxis programme (Cyberjaya, Malaysia)",
+      highlights: [
+        "Replaced manual spreadsheets with an end-to-end operational platform spanning intake, cleaning, packing, and delivery",
+        "Automated consumable inventory deduction (chargers, LAN cables, boxes) derived directly from daily production entries",
+        "Engineered serial-level asset traceability from intake scan through to numbered dispatch box and customer delivery paperwork",
+        "Built operational monitoring dashboards with comparative analytics, trend tracking, and English/Arabic RTL support",
+        "Architected a unified storage interface supporting PostgreSQL (Supabase), MySQL, and local persistence without code changes",
+        "Enforced enterprise security with 3-tier access control, HMAC-signed sessions, and deployment middleware write locks",
+      ],
+      technologies: ["Next.js 15", "TypeScript", "PostgreSQL", "Supabase", "MySQL", "Tailwind CSS v4", "Zod", "TanStack Table"],
+    },
+    role: "Sole Developer",
+    roleScope: "End-to-End Architecture, Full-Stack Build, Database, Security & Deployment",
     period: "2026 (ongoing)",
     affiliation: "Blue Bee Technologies Sdn. Bhd., ERTH × Maxis programme",
     confidential: true,
@@ -324,7 +379,26 @@ export const projects: Project[] = [
     tagline: "Scan a router, and the right label prints: a browser app that drives a Bluetooth thermal printer with no server in the loop.",
     summary:
       "A TypeScript and React Progressive Web App that turns any PC with Chrome and Bluetooth into a label station for a NIIMBOT B1 Pro. A USB scanner reads a router serial, a prefix-and-length rule names the model, a fixed 50 by 30 mm template is rendered to the printer's raster and printed over one persistent Web Bluetooth session. The print path never touches the network, the app boots offline from cache and IndexedDB, and an optional backend adds Google sign-in, device provisioning and sync. 170 automated tests; one verified print session on the real printer.",
-    role: "Sole developer: protocol driver, renderer, queue, workflows, editor, offline layer, auth and sync, backend, tests and tooling",
+    category: "Systems / ERP / WMS",
+    categorySlug: "systems",
+    categories: ["Systems / ERP / WMS", "Web Apps / Software"],
+    hrOverview: {
+      valueProposition: "Offline-first browser workstation that drives a thermal Bluetooth printer with zero server latency on the production line.",
+      role: "Sole Developer",
+      roleScope: "Hardware Protocol Driver, Canvas 2D Renderer, Offline PWA & Backend",
+      context: "Blue Bee Technologies × ERTH × Maxis programme (Hardware workstation)",
+      highlights: [
+        "Eliminated manual phone apps and spreadsheets with a single-scan-to-print browser workstation",
+        "Deterministic model identification from barcode serial prefix and length without network calls",
+        "Offline-by-construction PWA architecture booting and printing from service worker and IndexedDB",
+        "Continuous Web Bluetooth session management eliminating paper rewind and feed jitter between labels",
+        "Canvas-first template editor with automated raster hash freezing to guarantee physical label alignment",
+        "Rigorous verification: 170 automated tests with a simulated printer and headless Chrome validation",
+      ],
+      technologies: ["TypeScript", "React 19", "Web Bluetooth", "Canvas 2D", "IndexedDB", "Vite 8", "Workbox", "Vitest"],
+    },
+    role: "Sole Developer",
+    roleScope: "Hardware Protocol Driver, Canvas 2D Renderer, Offline PWA & Backend",
     period: "2026 (software complete; hardware validation in progress)",
     affiliation: "Blue Bee Technologies Sdn. Bhd., ERTH × Maxis programme",
     confidential: false,
@@ -577,7 +651,25 @@ export const projects: Project[] = [
     tagline: "A design-tool prototype rebuilt as a production website that ships 3.7 kB of JavaScript.",
     summary:
       "The production website for a Malaysian e-waste collection service. Prototyped in Figma, then built from the approved design as static HTML, CSS and vanilla JavaScript: 250 kB of prototype JavaScript down to 3.7 kB, images 12.0 MB down to 2.7 MB, full technical SEO and structured data added. Complete and deployed.",
-    role: "UI/UX and Web Developer: design prototyping, production build, technical SEO",
+    category: "Websites",
+    categorySlug: "websites",
+    categories: ["Websites"],
+    hrOverview: {
+      valueProposition: "High-performance production website rebuilt from a Figma prototype, shrinking JS from 250 kB to 3.7 kB with full technical SEO.",
+      role: "Sole Developer",
+      roleScope: "Design Prototyping, Production Build, Asset Optimization & Technical SEO",
+      context: "ERTH (E-waste collection & rewards service, Cyberjaya, Malaysia)",
+      highlights: [
+        "Rebuilt client-approved design into pure semantic static HTML, CSS, and vanilla JS, eliminating 250 kB of prototype framework runtime",
+        "Optimized media payload by more than 75%: reduced 12.0 MB image assets to 2.7 MB using WebP and responsive srcset variants",
+        "Engineered comprehensive structured data: Organization/RecyclingCenter, FAQPage (16 Q&As), and WebSite Schema.org JSON-LD",
+        "Zero accessibility violations: audited and verified with axe-core across 5 distinct interaction and modal states",
+        "Created custom post-build validation tooling to automatically prevent broken anchor links, missing alt tags, and JSON-LD syntax errors",
+      ],
+      technologies: ["HTML5", "CSS3", "Vanilla JavaScript", "Vite 7", "Figma", "Schema.org JSON-LD", "WebP", "axe-core"],
+    },
+    role: "Sole Developer",
+    roleScope: "Design Prototyping, Production Build, Asset Optimization & Technical SEO",
     period: "2026 (completed)",
     affiliation: "ERTH",
     confidential: false,
@@ -814,7 +906,25 @@ export const projects: Project[] = [
     tagline: "An AI research assistant built to say when the paper doesn't support the answer.",
     summary:
       "A university AI research-paper assistant, live on its own domain. Upload a paper and get a summary, a gap analysis carrying its own evidence, and a literature review, with the system declining rather than inventing where the paper does not support a section. Built end to end: planning documents through architecture, Next.js and FastAPI, PostgreSQL Row Level Security, 538 tests, deployment and maintenance.",
-    role: "Developer: end to end, from planning documents to a maintained deployment",
+    category: "Web Apps / Software",
+    categorySlug: "web-apps",
+    categories: ["Web Apps / Software"],
+    hrOverview: {
+      valueProposition: "Full-stack AI research assistant engineered with schema validation to decline unsupported queries rather than hallucinate.",
+      role: "Sole Developer",
+      roleScope: "End-to-End Planning, Dual-Service Architecture, AI Pipeline & Automated Tests",
+      context: "University of Cyberjaya (BIT4543 AI) — live application deployed on custom domain",
+      highlights: [
+        "Architected dual-service system on Vercel: FastAPI Python backend paired with Next.js frontend behind a single origin",
+        "Enforced 4-layer groundedness: explicit model decline paths, strict schema validation, and immediate discard of invalid outputs",
+        "Designed provider abstraction with automatic failover: Groq (qwen3.6-27b) primary with Anthropic (claude-opus-5) fallback",
+        "Implemented database-level data isolation via PostgreSQL Row Level Security (RLS) ensuring strict per-user boundaries",
+        "Engineered 538 automated tests (522 backend with pytest, 16 frontend with Vitest) running offline without API consumption",
+      ],
+      technologies: ["Python 3.14", "FastAPI", "Next.js 16", "React 19", "TypeScript", "PostgreSQL", "Supabase Auth & RLS", "Groq", "Anthropic", "pytest"],
+    },
+    role: "Sole Developer",
+    roleScope: "End-to-End Planning, Dual-Service Architecture, AI Pipeline & Automated Tests",
     period: "2026",
     affiliation: "University of Cyberjaya, BIT4543 Artificial Intelligence",
     confidential: false,
@@ -1111,6 +1221,74 @@ export type WorkListItem = {
   external?: boolean;
 };
 
+export type UpcomingProject = {
+  slug: string;
+  name: string;
+  category: ProjectCategory;
+  categorySlug: ProjectCategorySlug;
+  categories: ProjectCategory[];
+  valueProposition: string;
+  role: string;
+  context: string;
+  highlights: string[];
+  technologies: string[];
+  status: "In Progress" | "Planned";
+};
+
+export const upcomingProjects: UpcomingProject[] = [
+  {
+    slug: "spenddrop",
+    name: "SpendDrop",
+    category: "iOS / Mobile",
+    categorySlug: "ios-mobile",
+    categories: ["iOS / Mobile"],
+    valueProposition: "Native iOS expense tracker with on-device OCR for receipts and e-wallets, with zero cloud dependency.",
+    role: "Sole Developer",
+    context: "Personal project in active development",
+    highlights: [
+      "100% on-device processing using Apple VisionKit OCR without transmitting sensitive financial receipts",
+      "Native iOS share extension enabling instant receipt capture directly from mobile banking and e-wallet apps",
+      "Built with Swift and modern SwiftUI following Apple HIG with privacy-first local persistence",
+    ],
+    technologies: ["Swift", "SwiftUI", "VisionKit", "iOS", "Local Persistence"],
+    status: "In Progress",
+  },
+  {
+    slug: "drivekeep",
+    name: "DriveKeep",
+    category: "Web Apps / Software",
+    categorySlug: "web-apps",
+    categories: ["Web Apps / Software"],
+    valueProposition: "Photo-first vehicle fuel, mileage, and maintenance tracker with automated odometer and receipt OCR.",
+    role: "Sole Developer",
+    context: "Personal project in active development",
+    highlights: [
+      "Mobile-friendly operational web dashboard for tracking fuel economy, service milestones, and operating costs",
+      "Automated OCR extraction from gas pump receipts and dashboard odometer photos to eliminate manual typing",
+      "Relational vehicle profile architecture built on Next.js, Prisma, and Supabase",
+    ],
+    technologies: ["Next.js", "TypeScript", "Prisma", "Supabase", "Tailwind CSS", "OCR"],
+    status: "In Progress",
+  },
+  {
+    slug: "lms",
+    name: "LMS Platform",
+    category: "Web Apps / Software",
+    categorySlug: "web-apps",
+    categories: ["Web Apps / Software"],
+    valueProposition: "Modern learning management web platform with role-based access control for instructors, students, and course administration.",
+    role: "Sole Developer",
+    context: "Academic & educational platform in active development",
+    highlights: [
+      "Structured course and module management with role-based access control (Admin, Instructor, Student)",
+      "Interactive assessment and assignment submission pipeline with real-time feedback",
+      "Engineered with Next.js App Router, TypeScript, and relational PostgreSQL persistence",
+    ],
+    technologies: ["Next.js", "TypeScript", "PostgreSQL", "Prisma", "Tailwind CSS"],
+    status: "In Progress",
+  },
+];
+
 export const upcomingWork: WorkListItem[] = [
   {
     name: "SpendDrop",
@@ -1123,6 +1301,46 @@ export const upcomingWork: WorkListItem[] = [
     meta: "Personal project · Web",
     summary:
       "A photo-first fuel, mileage and maintenance tracker for cars and motorcycles on Next.js, Prisma and Supabase, with OCR on receipt and odometer photos. In progress; not yet published.",
+  },
+  {
+    name: "LMS Platform",
+    meta: "Academic project · Web",
+    summary:
+      "A modern learning management system with role-based access control, course module workflows, and student assessment tracking on Next.js and PostgreSQL. In progress.",
+  },
+];
+
+export type ProjectCategoryInfo = {
+  name: ProjectCategory;
+  slug: ProjectCategorySlug | "all";
+  label: string;
+  description: string;
+};
+
+export const projectCategories: ProjectCategoryInfo[] = [
+  {
+    name: "Systems / ERP / WMS",
+    slug: "systems",
+    label: "Systems / ERP / WMS",
+    description: "Operational platforms, warehouse & manufacturing logic, automation, and real-world workflow systems.",
+  },
+  {
+    name: "Web Apps / Software",
+    slug: "web-apps",
+    label: "Web Apps / Software",
+    description: "Full-stack software applications, API integrations, data isolation, and AI-assisted workflows.",
+  },
+  {
+    name: "Websites",
+    slug: "websites",
+    label: "Websites",
+    description: "High-performance production websites, design-to-code implementations, and technical SEO.",
+  },
+  {
+    name: "iOS / Mobile",
+    slug: "ios-mobile",
+    label: "iOS / Mobile",
+    description: "Native mobile applications, on-device intelligence, and offline-first mobile tools.",
   },
 ];
 
@@ -1137,3 +1355,18 @@ export function getProjectsByTier(tier: ProjectTier) {
 export function getOtherProjects(slug: string) {
   return projects.filter((p) => p.slug !== slug);
 }
+
+export function getProjectsByCategory(categorySlug: string) {
+  if (!categorySlug || categorySlug === "all") return projects;
+  const cat = projectCategories.find((c) => c.slug === categorySlug);
+  if (!cat) return projects;
+  return projects.filter((p) => p.categorySlug === categorySlug || p.categories.includes(cat.name));
+}
+
+export function getUpcomingProjectsByCategory(categorySlug: string) {
+  if (!categorySlug || categorySlug === "all") return upcomingProjects;
+  const cat = projectCategories.find((c) => c.slug === categorySlug);
+  if (!cat) return upcomingProjects;
+  return upcomingProjects.filter((p) => p.categorySlug === categorySlug || p.categories.includes(cat.name));
+}
+

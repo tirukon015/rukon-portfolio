@@ -32,6 +32,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
+  const caseStudyRoutes: MetadataRoute.Sitemap = projects
+    .filter((p) => p.sections && p.sections.length > 0)
+    .map((p) => ({
+      url: `${BASE_URL}/work/${p.slug}/case-study`,
+      lastModified: latest,
+      changeFrequency: "monthly",
+      priority: 0.75,
+    }));
+
   const used = new Set(usedCategories());
   const categoryRoutes: MetadataRoute.Sitemap = categoryMeta
     .filter((c) => used.has(c.name))
@@ -52,5 +61,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.5,
   }));
 
-  return [...staticRoutes, ...projectRoutes, ...categoryRoutes, ...postRoutes];
+  return [...staticRoutes, ...projectRoutes, ...caseStudyRoutes, ...categoryRoutes, ...postRoutes];
 }

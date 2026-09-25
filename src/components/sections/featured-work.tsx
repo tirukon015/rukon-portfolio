@@ -142,7 +142,7 @@ function Flagship({ project }: { project: Project }) {
               href={href}
               className="inline-flex items-center gap-2 text-sm font-medium text-text transition-colors hover:text-accent-strong"
             >
-              Read the case study <ArrowRight size={15} />
+              View Overview <ArrowRight size={15} />
             </Link>
             {writing.length > 0 ? (
               <span className="text-sm text-text-faint">
@@ -308,7 +308,7 @@ function Featured({ project }: { project: Project }) {
               href={href}
               className="inline-flex items-center gap-2 text-sm font-medium text-text transition-colors hover:text-accent-strong"
             >
-              Read the case study <ArrowRight size={15} />
+              View Overview <ArrowRight size={15} />
             </Link>
             {live ? (
               <a
@@ -367,7 +367,7 @@ function SecondaryList({ projects, upcoming }: { projects: Project[]; upcoming: 
                     href={href}
                     className="inline-flex items-center gap-1.5 text-sm text-text transition-colors hover:text-accent-strong"
                   >
-                    Case study <ArrowRight size={13} />
+                    Overview <ArrowRight size={13} />
                   </Link>
                   {external.map((link) => (
                     <a

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { isDocumentSourceConfigured } from "@/lib/cv-access/document";
 import { grantCookie, verifyGrantToken } from "@/lib/cv-access/grant";
 import { loadProtectedContact } from "@/lib/cv-access/protected-contact";
 
@@ -39,5 +40,10 @@ export async function GET(request: Request) {
     );
   }
 
-  return NextResponse.json({ ok: true, contact: result.contact }, { headers: NO_STORE });
+  const documentAvailable = isDocumentSourceConfigured();
+  return NextResponse.json(
+    { ok: true, contact: result.contact, documentAvailable },
+    { headers: NO_STORE }
+  );
 }
+
