@@ -36,6 +36,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 
   const title = `${project.name}: Full Case Study & Technical Architecture`;
   const description = `Detailed technical breakdown and architecture case study for ${project.name}: ${project.tagline}`;
+  const share = project.shareImage;
   return {
     title,
     description,
@@ -45,8 +46,9 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
       description,
       url: `/work/${project.slug}/case-study`,
       type: "article",
+      ...(share ? { image: { url: share.src, width: share.width, height: share.height, alt: share.alt } } : {}),
     }),
-    twitter: twitterFor(title, description),
+    twitter: twitterFor(title, description, share?.src),
   };
 }
 
@@ -246,6 +248,50 @@ export default async function FullCaseStudyPage({ params }: { params: Params }) 
         </section>
       ) : null}
 
+      {/* Related systems (if present) */}
+      {project.ecosystem && project.ecosystem.systems.length > 0 ? (
+        <section aria-label={project.ecosystem.label} className="border-b border-border py-12 sm:py-16">
+          <Container>
+            <Reveal>
+              <div className="flex items-center justify-between border-b border-border/70 pb-4">
+                <h2 className="font-mono text-xs font-bold uppercase tracking-[0.18em] text-accent">
+                  {project.ecosystem.label}
+                </h2>
+                <span className="font-mono text-xs text-text-faint">Separate systems</span>
+              </div>
+              <ul className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
+                {project.ecosystem.systems.map((system) => {
+                  const href = system.slug ? `/work/${system.slug}` : system.href;
+                  return (
+                    <li
+                      key={system.name}
+                      className="flex flex-col rounded-2xl border border-border bg-bg-elevated p-6"
+                    >
+                      <span className="font-mono text-[11px] uppercase tracking-wider text-text-faint">
+                        {system.relation}
+                      </span>
+                      <span className="mt-2 text-lg font-semibold text-text">{system.name}</span>
+                      {system.summary ? (
+                        <p className="mt-2 text-sm leading-relaxed text-text-muted">{system.summary}</p>
+                      ) : null}
+                      {href ? (
+                        <Link
+                          href={href}
+                          className="group mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-accent transition-colors hover:text-accent-strong"
+                        >
+                          {system.slug ? "Read its case study" : "Read more"}
+                          <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+                        </Link>
+                      ) : null}
+                    </li>
+                  );
+                })}
+              </ul>
+            </Reveal>
+          </Container>
+        </section>
+      ) : null}
+
       {/* Main Engineering Sections (Preserved Claude Content) */}
       <section className="py-16 sm:py-20 lg:py-24">
         <Container className="max-w-3xl">
@@ -270,19 +316,36 @@ export default async function FullCaseStudyPage({ params }: { params: Params }) 
                 </div>
 
                 {section.figures && section.figures.length > 0 ? (
-                  <div className="mt-8 flex flex-col gap-6">
+                  <div className="mt-8 flex flex-col gap-8">
                     {section.figures.map((figure) => (
-                      <figure key={figure.src}>
-                        <div className="overflow-hidden rounded-2xl border border-border bg-bg-elevated shadow-[var(--shadow-card)]">
+                      <figure
+                        key={figure.src}
+                        className={
+                          figure.wide
+                            ? "md:relative md:left-1/2 md:w-[min(72rem,calc(100vw-4rem))] md:-translate-x-1/2"
+                            : undefined
+                        }
+                      >
+                        <a
+                          href={figure.src}
+                          target="_blank"
+                          rel="noopener"
+                          aria-label={`Open full size: ${figure.alt}`}
+                          className="block overflow-hidden rounded-2xl border border-border bg-bg-elevated shadow-[var(--shadow-card)] transition-colors hover:border-border-strong"
+                        >
                           <Image
                             src={figure.src}
                             alt={figure.alt}
                             width={figure.width}
                             height={figure.height}
-                            sizes="(min-width: 768px) 768px, 100vw"
+                            sizes={
+                              figure.wide
+                                ? "(min-width: 1216px) 1152px, 100vw"
+                                : "(min-width: 768px) 768px, 100vw"
+                            }
                             className="h-auto w-full"
                           />
-                        </div>
+                        </a>
                         <figcaption className="mt-3 font-mono text-xs leading-relaxed text-text-faint">
                           {figure.caption}
                         </figcaption>
@@ -369,14 +432,54 @@ export default async function FullCaseStudyPage({ params }: { params: Params }) 
             </Reveal>
           ) : null}
 
+          {/* Roadmap */}
+          {project.roadmap && project.roadmap.length > 0 ? (
+            <Reveal className="mt-16 border-t border-border pt-16">
+              <h2 className="text-2xl font-bold tracking-tight text-text">What&apos;s next</h2>
+              <ol className="mt-5 flex flex-col gap-3">
+                {project.roadmap.map((item, i) => (
+                  <li key={item} className="flex gap-3 text-base leading-relaxed text-text-muted">
+                    <span className="mt-0.5 shrink-0 font-mono text-xs font-bold text-accent">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ol>
+            </Reveal>
+          ) : null}
+
+          {/* Source and links */}
+          {project.links && project.links.length > 0 ? (
+            <Reveal className="mt-16 border-t border-border pt-16">
+              <h2 className="text-2xl font-bold tracking-tight text-text">Source and further reading</h2>
+              <div className="mt-6 flex flex-wrap gap-3">
+                {project.links.map((link) => (
+                  <ButtonLink
+                    key={link.href}
+                    href={link.href}
+                    variant="secondary"
+                    external={link.external}
+                  >
+                    {link.label}
+                  </ButtonLink>
+                ))}
+              </div>
+            </Reveal>
+          ) : null}
+
           {/* Confidentiality Notice */}
           {project.confidential ? (
             <Reveal className="mt-14 rounded-2xl border border-border-strong bg-bg-elevated p-6">
               <p className="flex items-start gap-3 text-sm leading-relaxed text-text-muted">
                 <Lock size={16} className="mt-0.5 shrink-0 text-text-faint" />
-                This system is proprietary software built for a live business operation. This page
-                describes it at a level that&apos;s safe to share publicly: no internal screenshots,
-                data, or credentials.
+                {project.confidentialNotice ?? (
+                  <>
+                    This system is proprietary software built for a live business operation. This page
+                    describes it at a level that&apos;s safe to share publicly: no internal screenshots,
+                    data, or credentials.
+                  </>
+                )}
               </p>
             </Reveal>
           ) : null}

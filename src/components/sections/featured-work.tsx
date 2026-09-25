@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Lock } from "lucide-react";
 import { Container } from "@/components/ui/container";
@@ -32,7 +33,7 @@ export function FeaturedWork() {
           <SectionHeading
             eyebrow="Selected Work"
             title="Real systems, not tutorials."
-            description="One operational platform running a live production line, the label-printing workstation built beside it, a completed business website, and the work around them."
+            description="An operations platform running a live production line, the label-printing workstation built beside it, a production business website, a live AI research assistant, and native iOS and web products of my own. Every screenshot is the real application."
           />
           <Link
             href={site.workHref}
@@ -62,6 +63,13 @@ export function FeaturedWork() {
 
 /* -------------------------------------------------------------------------- */
 
+/** "University project" / "Personal project", or null for professional work. */
+function kindLabel(project: Project): string | null {
+  if (project.kind === "university-project") return "University project";
+  if (project.kind === "personal-project") return "Personal project";
+  return null;
+}
+
 function statusSummary(project: Project) {
   const live = project.status?.filter((s) => s.state === "implemented").map((s) => s.label) ?? [];
   const built = project.status?.filter((s) => s.state === "available").map((s) => s.label) ?? [];
@@ -73,8 +81,9 @@ function statusSummary(project: Project) {
  *
  * Seven columns of copy beside a five-column visual that is built from the
  * project's own data: its mark, the path a unit takes through it, and the
- * subsystems connected to it. No screenshot is shown because the system is
- * under NDA, and no figure is shown that the case study does not already state.
+ * subsystems connected to it. Beneath it sits the project's preview screenshot,
+ * which for a confidential system is captured on synthetic demo data only.
+ * No figure is shown that the case study does not already state.
  */
 function Flagship({ project }: { project: Project }) {
   const { live, built } = statusSummary(project);
@@ -131,11 +140,24 @@ function Flagship({ project }: { project: Project }) {
             ) : null}
             {built.length > 0 ? (
               <div>
-                <dt className="font-mono text-[11px] uppercase tracking-[0.16em] text-text-faint">Built, pending sign-off</dt>
+                <dt className="font-mono text-[11px] uppercase tracking-[0.16em] text-text-faint">Built, not yet live</dt>
                 <dd className="mt-1.5 text-sm text-text">{built.join(", ")}</dd>
               </div>
             ) : null}
           </dl>
+
+          {project.facts && project.facts.length > 0 ? (
+            <ul className="mt-8 grid max-w-xl grid-cols-2 gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-4">
+              {project.facts.map((fact) => (
+                <li key={fact.label} className="bg-bg-elevated px-4 py-3">
+                  <span className="block text-2xl font-semibold tracking-tight text-text">{fact.value}</span>
+                  <span className="mt-0.5 block font-mono text-[10px] uppercase tracking-[0.14em] text-text-faint">
+                    {fact.label}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : null}
 
           <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
             <Link
@@ -143,6 +165,12 @@ function Flagship({ project }: { project: Project }) {
               className="inline-flex items-center gap-2 text-sm font-medium text-text transition-colors hover:text-accent-strong"
             >
               View Overview <ArrowRight size={15} />
+            </Link>
+            <Link
+              href={`${href}/case-study`}
+              className="inline-flex items-center gap-2 text-sm text-text-muted transition-colors hover:text-text"
+            >
+              Full case study <ArrowRight size={15} />
             </Link>
             {writing.length > 0 ? (
               <span className="text-sm text-text-faint">
@@ -155,6 +183,28 @@ function Flagship({ project }: { project: Project }) {
         <div className="lg:col-span-6">
           <FlagshipVisual project={project} />
         </div>
+
+        {project.previewFigure ? (
+          <figure className="lg:col-span-12">
+            <Link
+              href={`${href}/case-study`}
+              aria-label={`${project.name} full case study`}
+              className="group block overflow-hidden rounded-lg border border-border bg-bg-elevated shadow-[var(--shadow-card)] transition-colors hover:border-border-strong"
+            >
+              <Image
+                src={project.previewFigure.src}
+                alt={project.previewFigure.alt}
+                width={project.previewFigure.width}
+                height={project.previewFigure.height}
+                sizes="(min-width: 1216px) 1152px, 100vw"
+                className="h-auto w-full transition-transform duration-500 ease-[var(--ease-out)] group-hover:scale-[1.01]"
+              />
+            </Link>
+            <figcaption className="mt-3 font-mono text-xs leading-relaxed text-text-faint">
+              {project.previewFigure.caption}
+            </figcaption>
+          </figure>
+        ) : null}
       </article>
     </Reveal>
   );
@@ -255,24 +305,43 @@ function Featured({ project }: { project: Project }) {
   return (
     <Reveal>
       <article aria-labelledby={`work-${project.slug}`} className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
-        <div className="order-2 lg:order-1 lg:col-span-6">
+        <div
+          className={`order-2 lg:order-1 lg:col-span-6 ${project.previewFigure ? "lg:flex lg:items-center" : ""}`}
+        >
           {/*
             A surface rather than a card: no border, no shadow, the mark at a
             scale that reads as the project's identity rather than a favicon.
           */}
-          <div className="relative flex h-full min-h-64 items-center justify-center overflow-hidden rounded-lg bg-bg-elevated p-10 sm:min-h-80">
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-accent-soft blur-3xl"
-            />
-            <ProjectMark
-              project={project}
-              width={360}
-              height={210}
-              className="relative h-28 w-auto object-contain sm:h-40"
-              fallbackClassName="relative font-mono text-3xl font-semibold tracking-tight text-text"
-            />
-          </div>
+          {project.previewFigure ? (
+            <Link
+              href={href}
+              aria-label={`${project.name} overview`}
+              className="group block w-full overflow-hidden rounded-lg border border-border bg-bg-elevated shadow-[var(--shadow-card)] transition-colors hover:border-border-strong"
+            >
+              <Image
+                src={project.previewFigure.src}
+                alt={project.previewFigure.alt}
+                width={project.previewFigure.width}
+                height={project.previewFigure.height}
+                sizes="(min-width: 1024px) 560px, 100vw"
+                className="h-auto w-full transition-transform duration-500 ease-[var(--ease-out)] group-hover:scale-[1.015]"
+              />
+            </Link>
+          ) : (
+            <div className="relative flex h-full min-h-64 items-center justify-center overflow-hidden rounded-lg bg-bg-elevated p-10 sm:min-h-80">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-accent-soft blur-3xl"
+              />
+              <ProjectMark
+                project={project}
+                width={360}
+                height={210}
+                className="relative h-28 w-auto object-contain sm:h-40"
+                fallbackClassName="relative font-mono text-3xl font-semibold tracking-tight text-text"
+              />
+            </div>
+          )}
         </div>
 
         <div className="order-1 lg:order-2 lg:col-span-6">
@@ -356,7 +425,7 @@ function SecondaryList({ projects, upcoming }: { projects: Project[]; upcoming: 
                     </Link>
                   </h3>
                   <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.14em] text-text-faint">
-                    {project.kind === "university-project" ? "University project" : project.affiliation}
+                    {kindLabel(project) ?? project.affiliation}
                     <span aria-hidden="true"> · </span>
                     {project.period}
                   </p>

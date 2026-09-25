@@ -5,7 +5,7 @@ import { capabilities, stack } from "@/content/skills";
 import { getProject } from "@/content/projects";
 
 /**
- * What I build: four areas as an editorial list, not twelve cards.
+ * What I build: five areas as an editorial list, not twelve cards.
  *
  * Each area names the project that backs it. The tools follow as one plain
  * sentence, so the stack is stated without becoming a wall of chips.
@@ -24,7 +24,7 @@ export function Capabilities() {
                 <span className="font-mono text-xs uppercase tracking-[0.18em] text-accent">
                   What I Build
                 </span>
-                <h2 className="mt-3 text-display-sm font-semibold text-text">Four kinds of work.</h2>
+                <h2 className="mt-3 text-display-sm font-semibold text-text">Five kinds of work.</h2>
                 <p className="mt-4 text-base leading-relaxed text-text-muted">
                   Grouped by the problem rather than the technology. Each one names the project it
                   comes from.

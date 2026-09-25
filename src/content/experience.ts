@@ -21,7 +21,7 @@ export const experience: ExperienceEntry[] = [
     primary: true,
     projects: ["rpoms", "erth"],
     bullets: [
-      "Lead RPOMS end to end: gathered the requirement from the production floor, designed the data model and three-tier access control, built ten admin modules and twenty-five API routes, took it to production, and remain its maintainer.",
+      "Lead RPOMS end to end: gathered the requirement from the production floor, designed the data model and four-role access control, built its 16 pages and 41 API route files with 895 automated tests, took it to production, and remain its maintainer.",
       "Built RPOMS as a real operational system rather than a reporting tool: serial-level asset tracking, inventory and consumable deduction tied to valid business events, packing and delivery validation, generated delivery paperwork, workforce output, and operational dashboards.",
       "Work directly with the operation the system serves, the ERTH x Maxis refurbishment line, its stock and the people running it, so the software's rules come from how the floor actually works rather than from an assumed process.",
       "Built the ERTH production homepage: prototyped in Figma, then implemented from the approved design as static HTML, CSS and vanilla JavaScript, with technical SEO, structured data, performance and accessibility delivered in the same pass.",

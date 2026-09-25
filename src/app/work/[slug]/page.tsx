@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
@@ -43,17 +44,29 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   if (!project) return {};
 
   const title = `${project.name}: Project Overview`;
+  // The summary is a paragraph; search and share snippets want one sentence.
+  const description = project.hrOverview?.valueProposition || project.tagline;
   return {
     title,
-    description: project.summary,
+    description,
     alternates: { canonical: `/work/${project.slug}` },
     openGraph: openGraphFor({
       title,
-      description: project.summary,
+      description,
       url: `/work/${project.slug}`,
       type: "article",
+      ...(project.shareImage
+        ? {
+            image: {
+              url: project.shareImage.src,
+              width: project.shareImage.width,
+              height: project.shareImage.height,
+              alt: project.shareImage.alt,
+            },
+          }
+        : {}),
     }),
-    twitter: twitterFor(title, project.summary),
+    twitter: twitterFor(title, description, project.shareImage?.src),
   };
 }
 
@@ -129,9 +142,9 @@ export default async function ProjectOverviewPage({ params }: { params: Params }
                 </span>
               )}
 
-              {project.kind === "university-project" && (
+              {project.kind !== "professional" && (
                 <span className="inline-flex items-center rounded-lg border border-border px-2.5 py-0.5 font-mono text-xs text-text-faint">
-                  University Project
+                  {project.kind === "university-project" ? "University Project" : "Personal Project"}
                 </span>
               )}
 
@@ -172,6 +185,24 @@ export default async function ProjectOverviewPage({ params }: { params: Params }
             <p className="mt-6 max-w-3xl text-base leading-relaxed text-text-muted sm:text-lg">
               {project.summary}
             </p>
+
+            {project.previewFigure ? (
+              <figure className="mt-8">
+                <div className="overflow-hidden rounded-2xl border border-border bg-bg-elevated shadow-[var(--shadow-card)]">
+                  <Image
+                    src={project.previewFigure.src}
+                    alt={project.previewFigure.alt}
+                    width={project.previewFigure.width}
+                    height={project.previewFigure.height}
+                    sizes="(min-width: 1216px) 1152px, 100vw"
+                    className="h-auto w-full"
+                  />
+                </div>
+                <figcaption className="mt-3 font-mono text-xs leading-relaxed text-text-faint">
+                  {project.previewFigure.caption}
+                </figcaption>
+              </figure>
+            ) : null}
           </Reveal>
 
           {/* Scannable Metadata Grid: Role Prominently Stated */}

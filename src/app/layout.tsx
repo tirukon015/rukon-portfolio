@@ -34,16 +34,16 @@ export const metadata: Metadata = {
     // Every other route supplies only its own name; this appends the rest.
     template: `%s | ${site.name}`,
   },
-  description: site.statement,
+  description: site.metaDescription,
   alternates: { canonical: "/" },
   authors: [{ name: site.name, url: BASE_URL }],
   creator: site.name,
   openGraph: {
-    ...openGraphFor({ title: site.role, description: site.statement, url: "/" }),
+    ...openGraphFor({ title: site.role, description: site.metaDescription, url: "/" }),
     // The homepage titles itself fully rather than using the "X | Name" form.
     title: siteTitle,
   },
-  twitter: twitterFor(siteTitle, site.statement),
+  twitter: twitterFor(siteTitle, site.metaDescription),
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -27,19 +27,23 @@ export const site = {
   /** Used for og:locale and the Person schema. */
   locale: "en_MY",
   statement:
-    "I work across IT systems, operations, web and software: understanding an operational problem, designing the system for it, building and deploying it, then supporting and improving it once people depend on it daily. RPOMS, an ERP-style operational platform running a live router-refurbishment line, is the clearest example.",
+    "I work across IT systems, operations, web and software: understanding an operational problem, designing the system for it, building and deploying it, then supporting and improving it once people depend on it daily. RPOMS, the operations system running a live router-refurbishment line, is the clearest example; alongside it sit a live AI research assistant, a browser-to-printer label engine and native iOS work.",
+  /** Search and share description: the statement, cut to snippet length. */
+  metaDescription:
+    "Operations systems, full-stack web apps, AI and native iOS work by Touhidul Islam Rukon in Cyberjaya. Flagship: RPOMS, the system running a live router-refurbishment line.",
   /**
    * The hero headline. A statement about the work rather than a greeting: the
    * name is already in the header, the title tag and the About section.
    */
   headline: "I build the systems a business runs on.",
   /**
-   * Three verifiable facts under the hero copy. Each one is backed elsewhere on
-   * the site (experience.ts, the RPOMS status table, about.ts).
+   * Verifiable facts under the hero copy. Each one is backed elsewhere on the
+   * site (experience.ts, the RPOMS and ResearchForge status tables, about.ts).
    */
   now: [
     { label: "Role", value: "IT Systems & Operations Lead, Blue Bee Technologies", href: null },
     { label: "Shipped", value: "RPOMS, an operational system in daily use", href: "/work/rpoms" },
+    { label: "Live", value: "ResearchForge, an AI research assistant", href: "/work/researchforge" },
     { label: "Status", value: "Open to opportunities", href: "/#contact" },
   ] as readonly { label: string; value: string; href: string | null }[],
   /** The GitHub login the contribution calendar is fetched for. */

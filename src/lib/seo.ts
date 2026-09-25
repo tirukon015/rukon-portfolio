@@ -132,6 +132,8 @@ type OgInput = {
   modifiedTime?: string;
   section?: string;
   tags?: string[];
+  /** Overrides the site default share image. */
+  image?: { url: string; width: number; height: number; alt: string };
 };
 
 /** Open Graph block with the site-wide defaults already applied. */
@@ -142,7 +144,7 @@ export function openGraphFor(input: OgInput): Metadata["openGraph"] {
     url: input.url,
     siteName: site.name,
     locale: site.locale,
-    images: [OG_IMAGE],
+    images: [input.image ?? OG_IMAGE],
     ...(input.type === "article"
       ? {
           type: "article" as const,
@@ -157,11 +159,15 @@ export function openGraphFor(input: OgInput): Metadata["openGraph"] {
 }
 
 /** Twitter block with the site-wide defaults already applied. */
-export function twitterFor(title: string, description: string): Metadata["twitter"] {
+export function twitterFor(
+  title: string,
+  description: string,
+  imageUrl: string = OG_IMAGE.url,
+): Metadata["twitter"] {
   return {
     card: "summary_large_image",
     title,
     description,
-    images: [OG_IMAGE.url],
+    images: [imageUrl],
   };
 }

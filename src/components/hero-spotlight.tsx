@@ -17,6 +17,13 @@ const MIN_RADIUS = 0.3;
 const MAX_RADIUS = 0.78;
 /** Peak layer opacity. Below ENTRY_STRENGTH the layer fades to fully hidden. */
 const MAX_OPACITY = 0.9;
+/**
+ * Where the reveal rests before and after any interaction: a soft, centred
+ * glimpse of the portrait. Fully hidden left half the hero empty on first load
+ * and on every touch device, which read as a missing image rather than an
+ * invitation to look closer.
+ */
+const RESTING_STRENGTH = 0.2;
 
 /**
  * The hero's portrait, hidden until the cursor finds it.
@@ -26,8 +33,8 @@ const MAX_OPACITY = 0.9;
  *   hidden  ->  pointer enters the hero  ->  revealed around the pointer
  *           <-  pointer leaves the hero  <-  follows the pointer while inside
  *
- * There is no idle reveal and no resting vignette. Before any interaction the
- * layer's opacity is zero; after the pointer leaves it returns to zero. While
+ * Before any interaction the layer rests at RESTING_STRENGTH, a soft centred
+ * glimpse; after the pointer leaves it eases back to that. While
  * the pointer is inside the hero the reveal centre tracks it (clamped to the
  * portrait's box, so an approach from the left lights the left edge first) and
  * the strength grows as the pointer nears the portrait.
@@ -89,7 +96,8 @@ export function HeroSpotlight() {
     if (reducedMotion) {
       const show = () =>
         setVars(rect.width / 2, rect.height * 0.46, diagonal * 0.62, MAX_OPACITY);
-      const hide = () => setVars(rect.width / 2, rect.height * 0.46, 0, 0);
+      const hide = () =>
+        setVars(rect.width / 2, rect.height * 0.46, diagonal * 0.42, MAX_OPACITY * 0.35);
       let shown = false;
       const toggle = () => {
         shown = !shown;
@@ -118,8 +126,8 @@ export function HeroSpotlight() {
     /* Full motion: eased follow while inside, eased fade-out on leave.    */
     /* ------------------------------------------------------------------ */
     const centre = () => ({ x: rect.width / 2, y: rect.height * 0.46 });
-    const target = { ...centre(), strength: 0 };
-    const current = { ...centre(), strength: 0 };
+    const target = { ...centre(), strength: RESTING_STRENGTH };
+    const current = { ...centre(), strength: RESTING_STRENGTH };
     let rafId = 0;
     let running = false;
     let tapRevealed = false;
@@ -135,7 +143,7 @@ export function HeroSpotlight() {
       const eased = Math.pow(s, 1.3);
 
       const radius = diagonal * (MIN_RADIUS + (MAX_RADIUS - MIN_RADIUS) * eased);
-      // Opacity reaches zero exactly when strength does: no resting state.
+      // Opacity reaches zero exactly when strength does.
       const opacity = Math.min(1, s / ENTRY_STRENGTH) * (0.55 + 0.45 * eased) * MAX_OPACITY;
       setVars(current.x, current.y, radius, opacity);
 
@@ -143,7 +151,7 @@ export function HeroSpotlight() {
       // thing that follows the pointer; the image stays exactly where it is.
 
       // The hint retires as the portrait arrives and returns when it goes.
-      if (hint) hint.style.opacity = String(Math.max(0, 1 - s * 1.6));
+      if (hint) hint.style.opacity = String(Math.max(0, 1 - Math.max(0, s - RESTING_STRENGTH) * 2));
 
       const settled =
         Math.abs(target.strength - current.strength) < 0.002 &&
@@ -184,7 +192,9 @@ export function HeroSpotlight() {
     };
 
     const handleLeave = () => {
-      target.strength = 0;
+      target.x = centre().x;
+      target.y = centre().y;
+      target.strength = RESTING_STRENGTH;
       ensureRunning();
     };
 
@@ -197,13 +207,13 @@ export function HeroSpotlight() {
         target.y = e.clientY - rect.top;
         target.strength = 1;
       } else {
-        target.strength = 0;
+        target.strength = RESTING_STRENGTH;
       }
       ensureRunning();
     };
 
-    // Start hidden. No paint is needed until the pointer arrives.
-    setVars(current.x, current.y, diagonal * MIN_RADIUS, 0);
+    // Start at rest: one paint settles the resting glimpse.
+    ensureRunning();
 
     surface.addEventListener("pointermove", handleMove, { passive: true });
     surface.addEventListener("pointerleave", handleLeave);

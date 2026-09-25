@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Lock, Building2, User, Layers } from "lucide-react";
 import { Tag } from "@/components/ui/tag";
@@ -46,9 +47,9 @@ export function HRProjectCard({ project, articleCount }: HRProjectCardProps) {
             </span>
           )}
 
-          {project.kind === "university-project" && (
+          {project.kind !== "professional" && (
             <span className="inline-flex items-center rounded-md border border-border px-2 py-0.5 font-mono text-[11px] text-text-faint">
-              University Project
+              {project.kind === "university-project" ? "University Project" : "Personal Project"}
             </span>
           )}
         </div>
@@ -63,6 +64,25 @@ export function HRProjectCard({ project, articleCount }: HRProjectCardProps) {
           />
         </div>
       </div>
+
+      {/* Thumbnail: the real application, when the project provides one */}
+      {project.previewFigure ? (
+        <Link
+          href={href}
+          tabIndex={-1}
+          aria-hidden="true"
+          className="mt-5 block overflow-hidden rounded-xl border border-border bg-bg"
+        >
+          <Image
+            src={project.previewFigure.src}
+            alt=""
+            width={project.previewFigure.width}
+            height={project.previewFigure.height}
+            sizes="(min-width: 1024px) 560px, 100vw"
+            className="aspect-[16/10] h-auto w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.015]"
+          />
+        </Link>
+      ) : null}
 
       {/* Title & Value Proposition */}
       <div className="mt-5">
@@ -109,7 +129,7 @@ export function HRProjectCard({ project, articleCount }: HRProjectCardProps) {
           Key Highlights
         </h3>
         <ul className="mt-3 flex flex-col gap-2.5">
-          {hrOverview.highlights.map((bullet, idx) => (
+          {hrOverview.highlights.slice(0, 5).map((bullet, idx) => (
             <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm leading-relaxed text-text-muted">
               <span className="mt-1 flex h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden="true" />
               <span>{bullet}</span>

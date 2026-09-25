@@ -20,7 +20,7 @@ export const faqs: FaqItem[] = [
   {
     question: "What is RPOMS?",
     answer:
-      "RPOMS is a Router Production Operations Management System built for a refurbishment programme run by Blue Bee Technologies. It covers the full path a unit takes, from intake and serial registry through cleaning, packing into numbered boxes, and delivery with matching paperwork, across ten admin modules and twenty-five API routes in TypeScript, with a storage layer that runs on PostgreSQL, MySQL or a local file store. I designed and built it and remain its maintainer.",
+      "RPOMS is a Router Production Operations Management System built for a refurbishment programme run by Blue Bee Technologies. It covers the full path a unit takes, from intake and serial registry through cleaning, packing into numbered boxes, and delivery with matching paperwork, across 16 pages and 41 API route files in TypeScript, with a storage layer that runs on PostgreSQL, MySQL or a local file store. I designed and built it and remain its maintainer.",
   },
   {
     question: "What is ResearchForge?",

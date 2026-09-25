@@ -1,8 +1,9 @@
 /**
- * A screenshot placed under a section's copy.
+ * A screenshot or diagram placed under a section's copy.
  *
- * Only non-confidential projects use these, and only where a picture shows
- * something the paragraphs cannot: a layout, a state, a piece of tooling.
+ * Used only where a picture shows something the paragraphs cannot: a layout,
+ * a state, a piece of tooling. A confidential project may carry figures only
+ * when they were captured on synthetic demo data (see `confidentialNotice`).
  * The caption says what the reader is looking at; the alt text is written
  * for someone who cannot see it.
  */
@@ -12,6 +13,11 @@ export type CaseStudyFigure = {
   width: number;
   height: number;
   caption: string;
+  /**
+   * Break out of the reading column to the page width on larger screens.
+   * For diagrams whose labels are unreadable at column width.
+   */
+  wide?: boolean;
 };
 
 export type CaseStudySection = {
@@ -44,7 +50,7 @@ export type ProjectStatusItem = {
   detail: string;
 };
 
-export type ProjectKind = "professional" | "university-project";
+export type ProjectKind = "professional" | "university-project" | "personal-project";
 
 /**
  * Where a project sits in the portfolio's hierarchy.
@@ -135,6 +141,22 @@ export type Project = {
   status?: ProjectStatusItem[];
   /** Stated plainly rather than omitted. */
   limitations?: string[];
+  /** What comes next, in the order the project's own backlog gives it. */
+  roadmap?: string[];
+  /**
+   * Replaces the default confidentiality notice on the case study, for a
+   * confidential project whose figures were captured on synthetic data.
+   */
+  confidentialNotice?: string;
+  /** Social preview for the project's pages (1200 x 630), instead of the site default. */
+  shareImage?: { src: string; width: number; height: number; alt: string };
+  /** One screenshot shown on the project overview, under the summary. */
+  previewFigure?: CaseStudyFigure;
+  /**
+   * A few checkable figures shown on the homepage card, each backed by the
+   * case study or the repository. Never an outcome metric nobody measured.
+   */
+  facts?: { value: string; label: string }[];
   image?: {
     src: string;
     /**
@@ -153,30 +175,32 @@ export const projects: Project[] = [
     slug: "rpoms",
     name: "RPOMS",
     fullName: "Router Production Operations Management System",
-    tagline: "A real-world WMS/ERP-like operational system running a live production line.",
+    tagline: "An operations system, WMS/ERP-like in shape, used on a live router-refurbishment line.",
     summary:
-      "A WMS/ERP-style operational system that replaced the spreadsheets running a router-refurbishment line. Serial-level asset tracking, inventory deduction, packing, delivery and generated paperwork, workforce output and dashboards. Designed, built and maintained by me: 35,800 lines of TypeScript, ten admin modules, twenty-five API routes.",
+      "The operations system that replaced the spreadsheets running a router-refurbishment line: a daily production report that deducts stock as it saves, serial-level tracking from acceptance into numbered boxes and out on deliveries, delivery paperwork generated from the office's own template, workforce output, and a stock-request portal for the Ecommerce team. Designed, built and maintained by me alone: about 59,600 lines of TypeScript, 16 pages, 41 API route files and 895 automated tests.",
     category: "Systems / ERP / WMS",
     categorySlug: "systems",
     categories: ["Systems / ERP / WMS", "Web Apps / Software"],
     hrOverview: {
-      valueProposition: "Real-world operational WMS/ERP platform that replaced spreadsheets to run a live router-refurbishment production line.",
+      valueProposition:
+        "One system for a live router-refurbishment line: the day's production entered once, stock that follows from it, and every router traceable by serial from acceptance to delivery.",
       role: "Sole Developer",
       roleScope: "End-to-End Architecture, Full-Stack Build, Database, Security & Deployment",
       context: "Blue Bee Technologies × ERTH × Maxis programme (Cyberjaya, Malaysia)",
       highlights: [
-        "Replaced manual spreadsheets with an end-to-end operational platform spanning intake, cleaning, packing, and delivery",
-        "Automated consumable inventory deduction (chargers, LAN cables, boxes) derived directly from daily production entries",
-        "Engineered serial-level asset traceability from intake scan through to numbered dispatch box and customer delivery paperwork",
-        "Built operational monitoring dashboards with comparative analytics, trend tracking, and English/Arabic RTL support",
-        "Architected a unified storage interface supporting PostgreSQL (Supabase), MySQL, and local persistence without code changes",
-        "Enforced enterprise security with 3-tier access control, HMAC-signed sessions, and deployment middleware write locks",
+        "Replaced spreadsheets with one system covering stock intake, acceptance, packing, delivery and daily reporting",
+        "Stock of routers, chargers, LAN cables and boxes derived from the daily report and a ledger, never kept as a hand-edited balance",
+        "Serial-level traceability from the acceptance scan to a numbered box, a delivery, and the Delivery Order generated for it",
+        "Dashboard with comparisons and trends, in English and Arabic (right to left), light and dark",
+        "One storage interface over PostgreSQL (Supabase), MySQL and local files, selected by environment",
+        "Four roles, signed sessions, a production write lock, and a guard that stops preview deployments touching production data",
+        "895 automated tests, including real SQL against in-process PostgreSQL, run in CI on every push",
       ],
-      technologies: ["Next.js 15", "TypeScript", "PostgreSQL", "Supabase", "MySQL", "Tailwind CSS v4", "Zod", "TanStack Table"],
+      technologies: ["Next.js 15", "React 19", "TypeScript", "PostgreSQL", "Supabase", "Tailwind CSS v4", "Zod", "Vitest"],
     },
     role: "Sole Developer",
     roleScope: "End-to-End Architecture, Full-Stack Build, Database, Security & Deployment",
-    period: "2026 (ongoing)",
+    period: "July 2026 – present",
     affiliation: "Blue Bee Technologies Sdn. Bhd., ERTH × Maxis programme",
     confidential: true,
     kind: "professional",
@@ -194,7 +218,7 @@ export const projects: Project[] = [
           name: "RPOMS AI",
           relation: "Related system, same programme",
           summary:
-            "A router surface inspector: photo, quality gate, a vision model that only observes, and a deterministic rule engine that decides. Free open-source model, honestly evaluated.",
+            "A router surface inspector: photo, quality gate, a vision model that only observes, and a deterministic rule engine that decides. Own repository and database; it never connects to RPOMS.",
           href: "/blog/a-vision-model-that-only-observes",
         },
         {
@@ -212,157 +236,447 @@ export const projects: Project[] = [
       "TypeScript",
       "Tailwind CSS v4",
       "PostgreSQL / Supabase",
-      "MySQL",
       "Zod",
-      "TanStack Table",
+      "Vitest + PGlite",
       "Recharts",
-      "ExcelJS / jsPDF",
+      "ExcelJS / JSZip / jsPDF",
     ],
     techGroups: [
       {
         label: "Application",
-        items: ["Next.js 15 (App Router)", "React 19", "TypeScript", "Tailwind CSS v4"],
+        items: ["Next.js 15 (App Router)", "React 19", "TypeScript", "Tailwind CSS v4", "Base UI / shadcn"],
       },
       {
         label: "Data & persistence",
-        items: ["PostgreSQL (Supabase)", "MySQL", "Local file store", "Zod"],
+        items: ["PostgreSQL (Supabase)", "postgres.js", "MySQL (report store)", "Local JSON file store", "Zod"],
       },
       {
         label: "Interface & reporting",
-        items: ["TanStack Table", "Recharts", "React Hook Form", "date-fns"],
+        items: ["Recharts", "next-themes", "Typed i18n (en / ar, RTL)", "sonner"],
       },
       {
         label: "Documents & import/export",
-        items: ["ExcelJS", "JSZip", "jsPDF", "Papa Parse"],
+        items: ["JSZip (DOCX template fill)", "ExcelJS", "jsPDF", "Papa Parse", "qrcode"],
       },
       {
-        label: "Platform",
-        items: ["Vercel", "cPanel", "Node.js", "Custom i18n (en / ar, RTL)"],
+        label: "Quality & platform",
+        items: ["Vitest", "PGlite", "ESLint", "GitHub Actions", "Vercel", "Node.js"],
       },
     ],
     highlights: [
-      "Covers the operational chain end to end: asset intake, inventory, production stages, packing, delivery and reporting, in one system",
-      "Serial-level traceability from intake through packing to a delivered box, so any unit can be accounted for after the fact",
-      "Consumable stock (chargers, LAN cables, packaging) deducts from the production figures entered once, rather than being counted a second time by hand",
+      "Covers the operational chain end to end: stock intake, acceptance, packing, delivery and daily reporting, in one system",
+      "Serial-level traceability from acceptance through packing to a delivered box, so any unit can be accounted for after the fact",
+      "Consumable stock deducts from the production figures entered once, rather than being counted a second time by hand",
       "One storage interface with three interchangeable backends, chosen by which environment variables are present",
-      "Three access tiers with server-side enforcement, HMAC-signed sessions, and no default passwords",
-      "Serial-level registry with configurable detection rules, so a new router model does not need a release",
+      "Four roles with server-side enforcement, signed sessions and no default passwords",
       "Delivery paperwork generated from the operations team's own Word document rather than redrawn",
-      "A day boundary resolved in Malaysian time, so a morning delivery cannot file itself under yesterday",
-      "Built and maintained by the same person who works with the production line it supports",
+      "895 automated tests and CI, with two audits' findings worked through in the code",
     ],
     workflow: [
-      "Unit arrives",
-      "Accepted into the registry (by serial number)",
-      "Cleaned",
+      "Stock booked in by model",
+      "Accept scan into the registry",
+      "Cleaned (daily count)",
       "Packed into a numbered box",
-      "Delivered with matching paperwork",
+      "Delivered against the scanned load",
+      "Delivery Order and tracker generated",
     ],
+    previewFigure: {
+      src: "/images/rpoms/dashboard-overview.png",
+      alt: "The RPOMS dashboard: accepted, retired, cleaned and packaged today with the change from yesterday, batch progress at 92 percent, and each worker's output against a per-person target.",
+      width: 1440,
+      height: 900,
+      caption: "The dashboard, running locally on synthetic demo data. Every name and figure is fictional.",
+    },
     sections: [
       {
         heading: "Overview",
         body: [
-          "RPOMS is an internal WMS/ERP-style operational system built for a router-refurbishment programme that Blue Bee Technologies runs in partnership with ERTH and Maxis. Before RPOMS, the operation was coordinated through spreadsheets. RPOMS models the whole path a unit takes, arriving, accepted, cleaned, packed into a numbered box, and delivered with the paperwork that goes with it, as one system.",
+          "RPOMS is the operations system for a router-refurbishment programme that Blue Bee Technologies runs with ERTH and Maxis. It records each day's production, tracks every router by serial number from acceptance into a numbered box and out on a delivery, keeps the stock of routers, chargers, cables and boxes, and produces the delivery paperwork the office already uses. A second, locked-down build of the same code gives the Ecommerce team a portal for requesting stock.",
           "The comparison to a warehouse or resource-planning system is about shape rather than scale. It is not a commercial ERP suite and does not try to be one: there is no finance, procurement or HR module. What it shares with that category is the structure, a single operational data model that inventory, production, delivery, workforce and reporting all read from, so a figure on a dashboard traces back to the event that produced it.",
-          "It runs to roughly 35,800 lines of TypeScript, across ten admin modules, twenty-five API route handlers, a viewer-gated monitoring dashboard, and a storage layer with three interchangeable backends.",
+          "It is one Next.js 15 application: about 59,600 lines of TypeScript across 16 pages and 41 API route files, with 895 automated tests. Every screenshot on this page was taken from that application running locally on synthetic data.",
+        ],
+        figures: [
+          {
+            src: "/images/rpoms/dashboard-overview.png",
+            alt: "The RPOMS dashboard showing today's accepted, retired, cleaned and packaged counts with the change from yesterday, today's notes, batch progress of 2,206 of 2,400, and the workforce assignment by department against per-person targets.",
+            width: 1440,
+            height: 900,
+            caption: "The read-only dashboard. Today's four figures against yesterday, batch progress, and each person's output against their per-person target.",
+            wide: true,
+          },
         ],
       },
       {
         heading: "Problem",
         body: [
-          "A physical production line (intake, cleaning, packing, delivery) was being coordinated through spreadsheets shared across a team. That made it hard to know, at any moment, what had actually happened on the floor: what stock remained, who did what, whether a delivery matched what was scanned, or whether a report was still current.",
-          "Spreadsheets do not validate. They have no single source of truth once someone keeps a private copy to be safe, and no audit trail once a number looks wrong. On a line where the count on the shelf has to match the count in the file, those are not inconveniences.",
+          "A physical production line (intake, acceptance, cleaning, packing, delivery) was being coordinated through spreadsheets shared across a team. That made it hard to know, at any moment, what had actually happened on the floor: what stock remained, who did what, which box a serial went into, whether a delivery matched what was scanned, or whether a report was still current.",
+          "Spreadsheets do not validate. They have no single source of truth once someone keeps a private copy to be safe, and no audit trail once a number looks wrong. The spreadsheet is still visible in the code: the model-detection rules were seeded from the team's Excel formula, and a registry row is described as the web equivalent of a row in the Excel ACCEPTED list.",
         ],
       },
       {
         heading: "Context",
         body: [
-          "The programme refurbishes routers returned from the field and returns them to service. That is a different problem from manufacturing: the units arrive in unknown condition, in unpredictable quantities, and each one has a serial number the system does not get to choose.",
-          "The operation runs on a physical floor in Malaysia, with a small team, a shared set of consumables, and delivery paperwork a customer already expects in a particular format. Those constraints shaped the software more than any specification did.",
+          "The programme refurbishes used routers in batches, each with a target. That is a different problem from manufacturing: units arrive in unknown condition and unpredictable quantities, and each one carries a serial number the system does not get to choose.",
+          "The operation runs on a physical floor in Malaysia, with a small team, a shared set of consumables, two warehouse sites, and delivery paperwork a customer already expects in a particular format. Those constraints shaped the software more than any specification did.",
+        ],
+      },
+      {
+        heading: "Approach",
+        body: [
+          "The first rule was that the software should fail in the safe direction. A missing password disables that login rather than falling back to a known value. A missing session secret stops the application in production. A missing deployment flag leaves production write-locked rather than silently live. A preview deployment pointed at the production database refuses to start serving.",
+          "The second rule was that a number should be traceable. Stock is derived from the full history of adjustments and consumption rather than stored as a running total, so a figure that looks wrong can be walked back to the day that produced it.",
+          "The third rule was that business rules belong in one place. The arithmetic that decides how many packaging boxes a day's output consumes lives in a single module that the report form, the inventory and the Ecommerce planner all call, so they cannot disagree about the same day.",
         ],
       },
       {
         heading: "My Role",
         body: [
-          "I work as IT Systems & Operations Lead around RPOMS, which means the role is not only writing the software. I designed and built the system end to end: the data model, access control, every module, and the deployment path to production. I remain its maintainer.",
-          "I also work directly with the operational side it supports: the production line, the stock it consumes, and the people running it day to day. That combination is the point. RPOMS models a physical process closely enough to run it, which only works if the person building it understands the process and not just the schema behind it.",
+          "I am the only developer on RPOMS. Of 284 commits on the current line, every one except an uploaded copyright file and a bot branch is mine: the data model, every module, authentication and access control, the storage layer, the tests and CI, the remediation of two code audits, and the deployment and staging runbooks.",
+          "I work as IT Systems & Operations Lead around RPOMS, so I also work directly with the side it supports: the production line, the stock it consumes, and the people running it day to day. RPOMS models a physical process closely enough to run it, which only works if the person building it understands the process and not just the schema behind it.",
         ],
       },
       {
-        heading: "Engineering Approach",
+        heading: "How the work flows",
         body: [
-          "The rule throughout was that the software should fail in the safe direction. A missing password disables that login tier rather than falling back to a known value. A missing session secret stops the application in production rather than signing cookies with a development key. A missing deployment flag leaves production locked rather than silently live.",
-          "The second rule was that a number should be traceable. Stock is derived from the full history of adjustments and consumption rather than stored as a running total, so a figure that looks wrong can be walked back to the day that produced it. Reporting compares against a target, a prior day, an average or a custom range, because a comparison supports a decision and a raw count does not.",
-          "The third rule was that business rules belong in one place. The arithmetic that decides how many packaging boxes a day's output consumes lives in a single module that both the confirmation dialog and the dashboard call, specifically so the two can never disagree about the same day.",
+          "Two things are tracked in parallel. The Daily Production Report records how many routers each person accepted, cleaned and packaged that day, and stock is deducted from those figures. Separately, the Registry, Pack and Delivery screens follow individual routers by serial number into boxes and onto deliveries.",
+          "Cleaning is recorded only as a daily count per person. There is no per-serial cleaning state, and the system does not pretend there is. Alongside the main line, the Ecommerce team requests stock, an admin approves it, stages the exact routers, and transfers them, and only that transfer deducts anything.",
+        ],
+        figures: [
+          {
+            src: "/images/rpoms/diagram-workflow.png",
+            alt: "Workflow diagram. Per-serial path: router arrives, accept scan, pack into a box, warehouse, delivery, paperwork. Below it the Daily Production Report feeding the dashboard and workforce reports, and an Ecommerce side flow: request, decision, stage routers, transfer, void or edit.",
+            width: 2100,
+            height: 1290,
+            caption: "The operational workflow as implemented. Only stages that exist in the code are drawn.",
+            wide: true,
+          },
+        ],
+      },
+      {
+        heading: "Daily Production Report",
+        body: [
+          "The day's figures are entered once. Saving updates the dashboard and deducts stock in the same step: routers by accepted plus retired, chargers and cables by packaging. Batch and target carry over from the previous report, and Completed is the batch so far plus today's packaging, so progress is continuous rather than restarting each day.",
+          "For a plain admin, the server does not trust the totals it is sent. It recomputes Accepted, Cleaned, Packaged and Completed from the workforce rows, freezes batch and target, and only lets an existing output grow. Two admins saving the same day no longer overwrite each other: each save carries the row's revision, and a stale one is refused with a message to reload.",
+        ],
+        figures: [
+          {
+            src: "/images/rpoms/daily-production-report.png",
+            alt: "The Daily Production Report form: date, batch number BATCH-07, target 2,400, and Completed marked Auto at 2,206 with the note 2,012 earlier in this batch plus 194 packaged today.",
+            width: 1440,
+            height: 900,
+            caption: "The report form. Completed is worked out from the batch so far plus today's packaging.",
+            wide: true,
+          },
+          {
+            src: "/images/rpoms/daily-report-workforce-rows.png",
+            alt: "Workforce rows on the daily report: task, person, output, a plus button to add to the output, an optional target and notes, for accepting, cleaning and packaging staff.",
+            width: 1440,
+            height: 900,
+            caption: "Workforce rows. The day's totals are summed from these; a plain admin can add to an output but not rewrite it.",
+            wide: true,
+          },
+        ],
+      },
+      {
+        heading: "Serial Registry and Packing",
+        body: [
+          "Every router is recorded by serial number, model, who accepted it and when. The model is detected from rules stored as data (a prefix and an optional length, longest prefix first), so a new model needs a rule rather than a release. A serial no rule recognises is kept, flagged and shown at the top of the list.",
+          "Packing scans serials into a numbered box. A serial that is unknown, not accepted or already in another box is flagged, and the box will not close around it unless the close is forced deliberately. A box closed short of its capacity says so on the list, and each box prints a label with a QR code of its number.",
+        ],
+        figures: [
+          {
+            src: "/images/rpoms/serial-registry.png",
+            alt: "The Router Registry list of accepted routers with serial, model, person, date and box columns. Two rows with unrecognised serials are highlighted and marked Invalid, with a badge reading 2 need attention.",
+            width: 1440,
+            height: 900,
+            caption: "The Serial Registry. The two serials no rule recognises are flagged rather than dropped.",
+            wide: true,
+          },
+          {
+            src: "/images/rpoms/packing-scan-into-box.png",
+            alt: "Packing a box: three scanned routers marked as Kaon AR2140 and two marked Not accepted, with a warning to remove the flagged rows or tick Close with issues.",
+            width: 1440,
+            height: 900,
+            caption: "Packing. Two of five scans are flagged, and the box will not close until they are dealt with.",
+            wide: true,
+          },
+          {
+            src: "/images/rpoms/packed-boxes.png",
+            alt: "The packed boxes list: box numbers with model, packed date, units, warehouse ERTH and a print button. The top box shows 7/10 incomplete.",
+            width: 1440,
+            height: 900,
+            caption: "Packed boxes. A box closed short reports itself; each one carries its warehouse and a printable label.",
+            wide: true,
+          },
+        ],
+      },
+      {
+        heading: "Delivery and paperwork",
+        body: [
+          "A delivery is built by scanning box numbers. The serials inside come from the registry and are never typed. The delivery cannot be saved until the scanned load matches the quantity it was raised for; the server enforces the same rule, and only a Super Admin can accept a short load. Saving writes the delivery, its boxes and each router's delivered state in one transaction.",
+          "The Delivery Order is generated from the office's own Word document with the details filled in, not redrawn. Word splits a line of text across several runs, so a placeholder can be broken in one place and intact in another; the generator does two passes for exactly that reason. The tracker exports to Excel in the column layout the customer's sheet expects.",
+        ],
+        figures: [
+          {
+            src: "/images/rpoms/delivery-scan-boxes.png",
+            alt: "Building a delivery to a demo customer: the customer and ship-to blocks filled from stored details, two scanned boxes of 10 Kaon AR2140 routers, a status of 20 of 250 routers, 230 short, and the Save delivery button disabled.",
+            width: 1440,
+            height: 900,
+            caption: "Building a delivery. Save stays disabled until the load matches the quantity; here it is 230 short.",
+            wide: true,
+          },
+          {
+            src: "/images/rpoms/delivery-history.png",
+            alt: "Delivery history with four demo deliveries; the oldest is expanded to show its boxes and the serial numbers inside each, with DO and Tracker download buttons.",
+            width: 1440,
+            height: 900,
+            caption: "Delivery history. Each delivery opens to its boxes and serials, with the Delivery Order and tracker one click away.",
+            wide: true,
+          },
+        ],
+      },
+      {
+        heading: "Inventory and workforce",
+        body: [
+          "Stock is never stored as a balance. Remaining is always what was booked in minus what was consumed, worked out when it is read, per item and per model, so editing or deleting a report cannot leave a stale figure behind. Every movement, including those written by an Ecommerce transfer, appears in one ledger.",
+          "Workforce output is measured against per-person targets that can be set by department, by day, or for one person on one day. Names are matched case-insensitively, and the spelling shown is the one a worker is recorded under most often.",
+        ],
+        figures: [
+          {
+            src: "/images/rpoms/inventory-ledger.png",
+            alt: "The Inventory page: cards for routers, chargers, LAN cables, small boxes and big packaging boxes, each with remaining, added and consumed, above a manual adjustment form and an adjustment history including two rows written by an Ecommerce transfer.",
+            width: 1440,
+            height: 900,
+            caption: "Inventory. Remaining is added minus consumed; the ledger includes the rows an Ecommerce transfer wrote.",
+            wide: true,
+          },
+          {
+            src: "/images/rpoms/workforce-performance.png",
+            alt: "The Workforce page: department cards with output against target, a top performer card, an employee ranking by total output, and recent report activity.",
+            width: 1440,
+            height: 900,
+            caption: "Workforce. Assignment against per-person targets, and a ranking built from every saved report.",
+            wide: true,
+          },
+        ],
+      },
+      {
+        heading: "Ecommerce stock requests",
+        body: [
+          "The Ecommerce team asks for routers or sealed boxes through a portal that shows them their own requests and nothing else: no stock levels, no admin screens. Each request gets a number of the form ECR/YYMM/R/CODE/NN from a per-month counter, and a network retry returns the request the first attempt created instead of raising a second one.",
+          "An admin approves or rejects it, stages the exact routers by serial or by box (each one checked against the registry), and transfers them from loose stock or a storeroom. The client never sends a charger or box quantity; the server derives them. The same deduction plan drives both the preview and the commit, and a void reverses a transfer.",
+        ],
+        figures: [
+          {
+            src: "/images/rpoms/ecommerce-request-portal.png",
+            alt: "The Ecommerce portal: a Router Stock Request header with a three-step request, review, transfer strip, summary cards, a new request form, and a request history table with pending, approved, rejected and transferred demo requests.",
+            width: 1440,
+            height: 900,
+            caption: "The Ecommerce portal, a separate build of the same code limited to this one job.",
+            wide: true,
+          },
+          {
+            src: "/images/rpoms/ecommerce-transferred-request.png",
+            alt: "An admin view of a transferred request: 20 routers requested, approved and transferred with 0 outstanding, 20 chargers and 20 small boxes derived, and a processing timeline of raised, approved and transferred.",
+            width: 1440,
+            height: 900,
+            caption: "A transferred request: the routers, the chargers and boxes the server derived from them, and who did what, when.",
+            wide: true,
+          },
+        ],
+      },
+      {
+        heading: "Dashboard and reporting",
+        body: [
+          "The dashboard answers how today went: the four figures against yesterday, batch progress, today's workforce against target, a trend, and a comparison against yesterday, a seven-day average, last week, this month or a custom range, because a comparison supports a decision and a raw count does not. It refreshes itself, and switches to Arabic with the whole layout mirrored right to left.",
+          "Report history is searchable by date and batch and exports to PDF.",
+        ],
+        figures: [
+          {
+            src: "/images/rpoms/dashboard-trend-comparison.png",
+            alt: "Production trend chart over seven days for accepted, retired, cleaned and packaged, above a comparison table of today against yesterday with differences.",
+            width: 834,
+            height: 753,
+            caption: "Trend and comparison, cropped from the dashboard.",
+          },
+          {
+            src: "/images/rpoms/dashboard-arabic-rtl.png",
+            alt: "The dashboard in Arabic with the layout mirrored right to left: KPI cards, workforce assignment, today's notes and batch progress.",
+            width: 1440,
+            height: 900,
+            caption: "The same dashboard in Arabic. The layout mirrors; names and figures stay as entered.",
+            wide: true,
+          },
         ],
       },
       {
         heading: "Architecture",
         body: [
-          "One storage interface, three backends, selected automatically by which environment variables are present: PostgreSQL via Supabase when a connection string is set, MySQL when the cPanel database variables are set, and a local file store otherwise. Nothing in the interface or the API changes between them, and a fresh deployment needs no migration step because tables and indexes are created on demand.",
-          "The Postgres client connects through the Supabase transaction pooler, which means prepared statements are disabled, because PgBouncer transaction pooling does not support them. The connection pool is sized against pages that ask several questions at once rather than against a single query.",
-          "Every read runs under a deadline. A query that blocks on a lock or a closed connection used to hold the page on its loading state indefinitely; reads now give up and let the page render without them. Where a fallback would be dishonest, an empty report meaning 'no report exists for that day' rather than 'the read failed', the caller receives a distinct value instead and decides for itself what an unanswered read means.",
-          "A single middleware sits in front of every request. It applies baseline security headers, and while the deployment lock is on it turns away anything that would write. That is one chokepoint rather than a check per route, so an endpoint added later is covered the moment it exists. Authentication is deliberately enforced separately, in the route, so the sign-in gate stays the single source of truth.",
+          "One Next.js application with no separate backend service. Pages are server components that read the store directly; writes go through route handlers that check the role and validate every body with Zod. A single middleware sits in front of every request: it refuses a preview or laptop pointed at the production database, applies the production write lock, scopes the Ecommerce build, and sets security headers. Authentication is deliberately decided in each page and route, not there.",
+          "One storage interface, three backends, selected by which environment variables are present: PostgreSQL on Supabase in production, MySQL for an earlier cPanel path (report store only), and atomic JSON files for local work. Postgres tables are created on demand behind per-store schema stamps, and only one cold-starting instance wins the build, which matters when several deployments share a database. Every read runs under a deadline, and where a fallback would be dishonest the caller gets a distinct 'could not read' value instead of an empty result.",
         ],
-      },
-      {
-        heading: "Key Features",
-        body: [
-          "Daily Production Report: the day's figures entered once. Saving updates the monitoring dashboard and deducts stock in the same step: routers by accepted plus retired, chargers and cables by packaging volume. Targets and batch figures carry over from the previous report, so a batch's progress is continuous rather than restarting each day.",
-          "Serial Registry: every unit by serial number, with who accepted it and when. Serial format is validated against configurable detection rules stored as data, with longer prefixes tried first so a specific rule beats a general one. Duplicate keys are compared case-insensitively, matching the behaviour of the spreadsheet the registry replaced.",
-          "Staged CSV import: both the registry and the daily report can be populated from a file, and the file is parsed and previewed before anything is written. Duplicates are surfaced for a row-by-row decision rather than discovered afterwards, which is the difference between an import someone trusts and one they re-check by hand.",
-          "Packing and Delivery: serials are scanned into numbered boxes, and a box reports its own problems rather than leaving them to be discovered later. A delivery cannot be saved unless the scanned load matches the quantity it was raised for.",
-          "Delivery Orders: generated from the office's own Word document with the details filled in, not redrawn. Word distributes a line of text across several runs, so a placeholder can be split in one place and intact in another; the generator does two passes for exactly that reason. Tracker lists export to Excel in the format the customer's sheet expects.",
-          "Workforce: per-person output against per-person targets. Names are matched case-insensitively, and the spelling displayed is the one the office uses most often rather than an invented capitalisation.",
-          "Dashboard: auto-refreshing daily figures, batch progress, inventory balance, a production trend chart, and comparison against yesterday, a seven-day average, last week or a custom range. Published in English and Arabic, with Arabic rendered right to left.",
+        figures: [
+          {
+            src: "/images/rpoms/diagram-architecture.png",
+            alt: "Architecture diagram: four roles, then the middleware chokepoint, then pages and 41 API route handlers, then domain logic modules, then one storage interface over PostgreSQL, MySQL and a local file store, with Vercel, CI and a planned staging database at the bottom.",
+            width: 2100,
+            height: 1470,
+            caption: "System architecture. Green is in the code today; dashed amber is planned; dotted blue is external.",
+            wide: true,
+          },
+          {
+            src: "/images/rpoms/diagram-data-flow.png",
+            alt: "Data flow diagram: daily report saves, the inventory ledger and Ecommerce transfers feed the consumption rules, which produce remaining stock read by the dashboard and inventory; below, the serial chain from registry to box to delivery to delivery order.",
+            width: 2100,
+            height: 1230,
+            caption: "How a saved day becomes stock, and how a scan becomes a delivery.",
+            wide: true,
+          },
         ],
       },
       {
         heading: "Technical Decisions",
         body: [
-          "Three access tiers, each with its own credentials. A tier whose password is not configured is switched off entirely: the login cannot succeed by any value. Sessions are a cookie carrying the role and an HMAC-SHA256 signature over it, compared with a timing-safe function, marked httpOnly and sameSite, and secure in production. An NDA viewer's session lapses after twenty-four hours; an admin's lasts seven days.",
-          "Consumable packaging is not calculated with a ceiling function. One big box per ten packaged units, plus one more once the remainder reaches seven, because a box near enough to full has already been opened and sent, while a smaller remainder will be finished by the next day's work and would otherwise be counted twice.",
-          "The business day is resolved in Asia/Kuala_Lumpur rather than from the server clock. A deployed server keeps UTC, which would not turn the day over until eight in the morning locally, long enough for a morning delivery to file itself under the previous day.",
-          "Translations are typed against English as the source, so a string added in English fails the build until every other dictionary supplies it. A language cannot go half-translated without anyone noticing.",
+          "Four roles (viewer, Ecommerce, admin, super admin), each with its own credentials. A role whose password is not configured is switched off entirely. Sessions are an HMAC-SHA256-signed cookie carrying the role, when it was issued and a session id, compared with a timing-safe function, httpOnly, sameSite and secure in production. A viewer's session lapses after twenty-four hours; staff sessions last seven days. Sign-in attempts are throttled per address.",
+          "Big packaging boxes are not calculated with a ceiling function. One box per ten packaged units, plus one more once the remainder reaches seven, because a box near enough to full has already been opened and sent, while a smaller remainder will be finished by the next day's work and would otherwise be counted twice.",
+          "The business day is resolved in Asia/Kuala_Lumpur rather than from the server clock. A deployed server keeps UTC, which would not turn the day over until eight in the morning locally, long enough for early packing to file itself under the previous day.",
+          "Translations are typed against English as the source, so a string added in English fails the build until every other dictionary supplies it.",
         ],
       },
       {
-        heading: "Outcome",
+        heading: "Engineering challenges",
         body: [
-          "The Daily Production Report is live and in daily use: the day's figures are entered for real, stock is deducted for real, and the monitoring dashboard reads back what was saved.",
-          "The registry, packing, delivery, workforce and inventory modules are complete and render live data, but they sit behind a deployment-level write lock while the programme works through sign-off. That was a deliberate choice: the lock is enforced at one middleware chokepoint, defaults to on in production, and names the modules that are allowed to write, so a module goes live by being named rather than by accident.",
+          "Most of these came out of two read-only audits of the codebase, the first of which recorded 44 findings, six of them rated P0.",
+          "Silent overwrites: two admins saving the same day meant the second replaced the first with no trace. Each save now carries the row's revision, and a stale save is refused with a 409.",
+          "A client-sent 'this came from a CSV' flag relaxed the add-only rules. The server now re-parses the attached worksheet and decides for itself which sections it supplied, and refuses a worksheet dated for a different day.",
+          "Every preview deployment was configured with the production database. A guard now makes a preview refuse the production database with a 503, work flows through a staging branch, and a one-way refresh script copies production to staging with names anonymised.",
+          "Deployments sharing one database raced to build schema on cold start, holding an exclusive lock. The build is now claimed with a single statement and a sentinel, and new columns sit behind their own marker keys so two versions of the code cannot keep undoing each other.",
+          "Box stock started mid-operation, with thousands of routers already packed. Counting them would have produced a deficit no correct booking-in could explain, so box stock starts from an opening figure on a fixed date and only later packing is counted.",
+        ],
+      },
+      {
+        heading: "Testing and verification",
+        body: [
+          "895 automated tests in 60 files, written with Vitest. Sixteen of those files run real SQL against PGlite, PostgreSQL compiled to WebAssembly and served in-process, so transactions, locking, concurrency and schema setup are tested with the production driver and no database server. CI runs typecheck, lint, the tests, a production build and a dependency audit on every push.",
+          "For this write-up the production build was run locally on synthetic data, every screen was exercised, and a Delivery Order and the Excel exports were generated. Typecheck and lint passed. The full test run passed 59 of 60 files; the remaining file hit a ten-second hook timeout under machine load and passed when run on its own.",
+        ],
+        note: "There is no browser end-to-end suite yet; a Playwright smoke test per role is on the backlog.",
+      },
+      {
+        heading: "Deployment and environments",
+        body: [
+          "The project deploys to Vercel from Git: pushing the main branch deploys production, and every other branch builds a preview. Production data lives in Supabase PostgreSQL. Work now flows from feature branches into a staging branch and then to main, and a data-preservation check compares every table's row count before and after a release.",
+          "A separate staging database is designed and its bootstrap SQL written, but it is blocked on hosting limits, so previews are protected by refusing the production database rather than by having their own. The current plan has no managed backups; a read-only JSON export is the backup path until that changes.",
+        ],
+        figures: [
+          {
+            src: "/images/rpoms/diagram-deployment.png",
+            alt: "Environments diagram: feature branches to staging to main, with an Ecommerce build from its own branch; a production database in use and a planned staging database; and the guards in code: environment guard, demo write lock and a data-preservation gate.",
+            width: 2100,
+            height: 960,
+            caption: "Environments and release path. The staging database is planned, not live.",
+            wide: true,
+          },
+        ],
+      },
+      {
+        heading: "Current result",
+        body: [
+          "In production, the dashboard and the Daily Production Report are live: the day's figures are entered for real, stock is deducted for real, and the dashboard reads back what was saved. The Ecommerce portal runs as its own build of the same code.",
+          "The registry, packing, delivery and paperwork, workforce and inventory modules are complete and render live data, but they sit behind a deployment-level write lock while the programme works through sign-off. The lock is enforced at one middleware chokepoint, is on by default in production, and names the modules allowed to write, so a module goes live by being named rather than by accident.",
+          "The newest work (the remediation of both audits, the audit log, the environment guard, the login throttle, the test suite and CI) is built and tested on the staging branch and has not yet been released: production deploys from main, which is 68 commits behind.",
+        ],
+        figures: [
+          {
+            src: "/images/rpoms/diagram-ecosystem.png",
+            alt: "Ecosystem diagram: staff, the Ecommerce team and stakeholders use RPOMS, which produces Delivery Orders, tracker exports, report PDFs and box labels; below, two separate projects, RPOMS Print Engine with integration planned and RPOMS AI which is not connected.",
+            width: 2100,
+            height: 1080,
+            caption: "RPOMS, what it produces, and the two related projects kept separate from it.",
+            wide: true,
+          },
         ],
       },
     ],
     status: [
+      {
+        label: "Dashboard (English / Arabic)",
+        state: "implemented",
+        detail: "Live in production. Reading is never blocked, so every figure and chart renders from real data.",
+      },
       {
         label: "Daily Production Report",
         state: "implemented",
         detail: "Live in production. Writes report data and deducts stock in the same step.",
       },
       {
-        label: "Monitoring dashboard",
+        label: "Ecommerce request portal",
         state: "implemented",
-        detail: "Live. Reading is never blocked, so every figure and chart renders from real data.",
+        detail:
+          "Runs as a separate build of the same code from its own branch. The newest Ecommerce features (registering unknown routers on transfer, stored model codes) are on staging and not yet in that build.",
       },
       {
-        label: "Serial registry, packing, delivery, workforce, inventory",
+        label: "Serial registry, packing, delivery and paperwork, workforce, inventory",
         state: "available",
         detail:
           "Complete and rendering live data, held behind a deployment-level write lock pending programme sign-off.",
       },
       {
-        label: "Automated test suite",
+        label: "Audit remediation, audit log, environment guard, login throttle",
+        state: "available",
+        detail:
+          "Built and tested on the staging branch. Production deploys from main, which does not include them yet.",
+      },
+      {
+        label: "Separate staging database and managed backups",
         state: "not-connected",
         detail:
-          "No test suite exists for RPOMS. Correctness is currently gated by build, typecheck and lint on each change, recorded per milestone. Tests are on the project's own backlog.",
+          "Designed and scripted, blocked on hosting limits. Previews refuse the production database instead; backups are a manual read-only export.",
+      },
+      {
+        label: "RPOMS Print Engine integration",
+        state: "not-connected",
+        detail: "The print engine is a separate, standalone project. Box labels in RPOMS print through the browser for now.",
       },
     ],
     limitations: [
-      "No automated tests. Verification is a manual build, typecheck and lint gate recorded per milestone.",
-      "Only the dashboard is translated; the admin panel is English-only.",
+      "Accounts are shared per role, so the audit trail records a role and a session, not a named person.",
+      "The login throttle is per server instance, and sessions cannot be revoked individually; both need shared tables that are designed but not written.",
+      "Some programme-wide baselines are still constants in code rather than settings.",
       "Employees and workforce rows are matched by name rather than linked by ID.",
-      "Navigation still differs by access tier, which reveals that a higher tier exists. Blocked actions themselves never name it.",
+      "Only the dashboard is translated; the admin panel is English-only.",
+      "The content security policy still allows inline scripts, and the daily report form is one very large component.",
+      "Navigation still differs by role, which reveals that a higher role exists. Blocked actions themselves never name it.",
+    ],
+    roadmap: [
+      "Release the staging line to production after the data-preservation check, starting with the session check on four read endpoints.",
+      "Back up the production database and prove a restore; move to a plan with managed backups.",
+      "Give previews and staging their own database.",
+      "Shared login throttle and server-side session revocation, then per-user accounts.",
+      "Foreign key from routers to boxes and a join table for Delivery Orders.",
+      "A Playwright smoke test for each role.",
+      "Integrate the RPOMS Print Engine once it is validated on the line.",
+    ],
+    facts: [
+      { value: "895", label: "automated tests" },
+      { value: "41", label: "API route files" },
+      { value: "4", label: "access roles" },
+      { value: "3", label: "storage backends" },
+    ],
+    confidentialNotice:
+      "RPOMS is proprietary software built for a live operation. The screenshots on this page were captured from the real application running locally on synthetic demo data: every name, serial, customer and figure in them is fictional, and the dashboard's programme-wide totals are left out. No production data, customer details or credentials appear.",
+    shareImage: {
+      src: "/images/rpoms/og-rpoms.png",
+      width: 1200,
+      height: 630,
+      alt: "The RPOMS dashboard on synthetic demo data",
+    },
+    links: [
+      {
+        label: "GitHub profile (RPOMS repository is private)",
+        href: "https://github.com/tirukon015",
+        external: true,
+      },
     ],
     image: {
       src: "/images/rpoms-mark.png",
@@ -634,8 +948,8 @@ export const projects: Project[] = [
     },
     links: [
       {
-        label: "Repository on GitHub (private)",
-        href: "https://github.com/tirukon015/rpoms-print-engine",
+        label: "GitHub profile (Print Engine repository is private)",
+        href: "https://github.com/tirukon015",
         external: true,
       },
       {
@@ -931,7 +1245,30 @@ export const projects: Project[] = [
     affiliation: "University of Cyberjaya, BIT4543 Artificial Intelligence",
     confidential: false,
     kind: "university-project",
-    tier: "secondary",
+    tier: "featured",
+    image: {
+      src: "/images/researchforge-mark.png",
+      alt: "ResearchForge mark",
+      variant: "mark",
+    },
+    previewFigure: {
+      src: "/images/researchforge/04_analysis_result_provenance.png",
+      alt: "A ResearchForge analysis of a fictional demonstration paper on the live site: the file name, page and character counts, provenance badges reading Claude, Fallback used and claude-opus-5, and tabs for Summary, Research Gaps, Literature Review and Paper Information above the summary text.",
+      width: 1398,
+      height: 631,
+      caption: "A real analysis on the live deployment, run on a clearly fictional demo paper. The badges record which provider actually wrote it and that the fallback was used.",
+    },
+    facts: [
+      { value: "538", label: "automated tests, none calling a paid API" },
+      { value: "3", label: "schema-validated model passes per paper" },
+      { value: "98.8 s", label: "median new analysis, 5-paper evaluation" },
+    ],
+    shareImage: {
+      src: "/images/researchforge/01_landing_hero.png",
+      width: 1440,
+      height: 900,
+      alt: "The ResearchForge landing page: Understand research faster with AI, with a preview of the summary, research gaps and literature review panels.",
+    },
     tech: [
       "Python 3.14",
       "FastAPI",
@@ -1007,6 +1344,17 @@ export const projects: Project[] = [
           "ResearchForge reads an academic PDF and produces three things: a structured summary covering the research problem, methodology, key findings and conclusion; a research-gap analysis where each gap is shown alongside the wording in the paper that supports calling it a gap; and a literature review of the prior work the paper itself discusses.",
           "It is deployed on its own subdomain as a single Vercel project running two services behind one origin, with email and Google sign-in and a research library private to each account.",
         ],
+        figures: [
+          {
+            src: "/images/researchforge/01_landing_hero.png",
+            alt: "The public ResearchForge landing page. The headline reads Understand research faster with AI, with Get Started and See How It Works buttons, three promises (private to your account, grounded in your paper, says when it cannot tell) and an illustrative panel of summary, research gaps and literature review.",
+            width: 1440,
+            height: 900,
+            caption: "The public landing page at researchforge.rukon.dev. Everything past it requires an account.",
+          },
+        ],
+        note:
+          "Every screenshot on this page was captured from the live deployment on 25 September 2026, using two short demonstration papers written for the purpose and labelled fictional on their first line. The analyses shown are the model's real output for those papers. The account name in the header is blurred.",
       },
       {
         heading: "Problem",
@@ -1033,11 +1381,52 @@ export const projects: Project[] = [
         ],
       },
       {
+        heading: "How it works",
+        body: [
+          "A signed-in user drops a PDF on the dashboard. The browser checks type, emptiness and size, then posts it to POST /api/analyze. The backend validates it again, extracts and cleans the text, checks whether that exact text has been analysed before, and if not makes three structured model calls: summary, research gaps, literature review. The result comes back as one validated JSON response and renders in tabs.",
+          "Nothing is stored until the user chooses Save to library. Saved papers can then be selected together in the Workspace to produce one literature review across several of them. That second step reads the stored analyses rather than re-reading the PDFs.",
+          "A new analysis takes one to three minutes; the interface says so and lists the steps the request performs, without pretending to know which one is running, because the backend does not report progress.",
+        ],
+        figures: [
+          {
+            src: "/images/researchforge/diagram-workflow.png",
+            alt: "Workflow diagram. Row one: sign in, upload a PDF, analyse, read the result, save to library. Beneath Analyse, three outcomes: rejected upload (422 or 413), same text seen before (cache hit, no model call) and provider problem (429, 502, 503). Row two: My Papers, select two or more, cross-paper review, read and copy. An owner-only settings box chooses the primary AI provider.",
+            width: 1600,
+            height: 1000,
+            caption: "The verified user workflow, traced from the Next.js routes and API calls. Search inside papers, notes, citation export and collaboration are not in the product.",
+            wide: true,
+          },
+          {
+            src: "/images/researchforge/03_analysis_in_progress.png",
+            alt: "The dashboard while a paper is being analysed: an Analysing paper progress bar with elapsed time, a note that analysis normally takes one to three minutes and that the backend does not report which step is running, and a list of five steps from uploading to preparing the literature review.",
+            width: 1398,
+            height: 713,
+            caption: "Analysis in progress. The steps are listed but none is marked complete, because the backend does not report which one is running.",
+          },
+        ],
+      },
+      {
         heading: "Engineering Approach",
         body: [
           "The founding principle is that every claim must be grounded in the uploaded paper, and it is enforced in four layers rather than requested once in a prompt. The prompt requires it, and the prompts live in version-controlled files rather than scattered through the code. The response schema carries explicit insufficient-evidence fields, giving the model a way to decline that is as easy as complying. Every reply is validated against that schema on return. And output that fails validation is discarded rather than repaired, which is the rule that makes the other three mean anything: a partially valid analysis that the system patched up would be an invented analysis.",
           "Structured output is the mechanism, not a convenience. Each response model is converted to a JSON Schema and handed to the model as the required output format, with additional properties forbidden. Every reply is validated on return, and a truncated or malformed answer is refused outright rather than partially rendered.",
           "The three analyses run as three separate model calls. They are different tasks with different evidence rules, so separating them means a failure in one does not corrupt the others, and each can be improved on its own. They run sequentially on purpose: running them in parallel would multiply the peak rate-limit burden for a latency win that does not matter on a single upload.",
+        ],
+        figures: [
+          {
+            src: "/images/researchforge/05_research_gaps_evidence.png",
+            alt: "The Research Gaps tab of a saved paper. Limitations stated by the authors are listed, followed by identified gap 1: no individual-level randomisation or clustering-adjusted analysis. Under it, why it matters, and an evidence block quoting the paper's own sentence about tutorial-section assignment.",
+            width: 1398,
+            height: 675,
+            caption: "Each gap carries the paper's own wording as evidence. Evidence is a required field in the response schema, so a gap returned without it fails validation.",
+          },
+          {
+            src: "/images/researchforge/06_single_paper_literature_review.png",
+            alt: "The Literature Review tab. A blue scope notice says the review covers only prior work discussed within the uploaded paper, which it identifies as a fictional demonstration paper, and that the cited works were not consulted. Below are major themes and relevant findings attributed to the authors the paper cites.",
+            width: 1398,
+            height: 698,
+            caption: "The single-paper review states its own scope: only the prior work this paper discusses, with the cited works not consulted. The model also noticed, unprompted, that the paper declares itself fictional.",
+          },
         ],
       },
       {
@@ -1047,15 +1436,58 @@ export const projects: Project[] = [
           "Generation sits behind a provider interface. The analysis service depends on that interface and never on a vendor SDK, each vendor's SDK is imported only inside its own provider module, and the concrete provider is built by a factory with a local import so adding one never forces every caller to import every SDK. An earlier version used Google Gemini; it is a historical provider only and produces none of the current analyses.",
           "Vendor errors are wrapped in project-owned exception types, with a missing API key separated out from the rest because it is a deployment problem rather than a user's fault and maps to a different status code. Status codes are chosen so the frontend can tell the cases apart without parsing message text: too large, unusable PDF, unusable model reply, no credentials configured. Nothing expected returns a 500.",
         ],
+        figures: [
+          {
+            src: "/images/researchforge/diagram-architecture.png",
+            alt: "System architecture diagram. The browser reaches one Vercel project at researchforge.rukon.dev, where vercel.json routes /api and /health to a FastAPI backend and everything else to a Next.js 16 frontend. The backend calls Supabase Auth to verify tokens, Supabase Postgres with the user's own token so Row Level Security applies, and the Anthropic and Groq APIs. Dashed boxes mark Jina embeddings and pgvector retrieval as planned scaffolding that nothing calls, and Google Gemini as retired.",
+            width: 1600,
+            height: 1080,
+            caption: "System architecture. Solid boxes run in production; dashed boxes are scaffolding nothing calls; Gemini is retired and kept only for historical rows.",
+            wide: true,
+          },
+          {
+            src: "/images/researchforge/diagram-data-flow.png",
+            alt: "Data flow diagram of one analysis: PDF bytes, validation, extraction and cleaning with pypdf, a SHA-256 content hash checked against the analysis cache, a 400,000-character decision between whole-document context and map-reduce digests, three structured model calls through the routed provider to Anthropic or Groq, Pydantic validation, and the response to the browser. The cache is written only on success, and the library is written only when the user saves.",
+            width: 1600,
+            height: 1270,
+            caption: "One analysis, end to end. There is no retrieval step: the whole paper is the context. The PDF itself is never stored.",
+            wide: true,
+          },
+        ],
       },
       {
         heading: "Providers and fallback",
         body: [
-          "The owner picks which of the two providers is primary, and the other automatically becomes the fallback. Groq running qwen3.6-27b is the configured primary; Anthropic claude-opus-5 is the fallback. There is no per-user model picker: the choice is an operational one, made once, and the interface does not pretend otherwise.",
+          "The owner picks which of the two providers is primary, and the other automatically becomes the fallback. Groq running qwen3.6-27b is the configured primary and Anthropic claude-opus-5 the fallback, as the live owner settings showed on 25 September 2026. There is no per-user model picker: the choice is an operational one, made once, and the interface does not pretend otherwise.",
           "Availability is enforced when the router is constructed rather than checked at call time, so a provider that has been switched off is never built and no code path can reach it.",
           "Fallback is deliberately narrow. It fires once per analysis, and only for a rate limit or a temporary provider failure, checked against a whitelist so a new error type does not become retryable by default. It does not fire for a malformed PDF, a schema validation failure or a missing key, because those fail identically on either vendor and retrying them just spends a second vendor's quota to produce the same error more slowly.",
           "One switch per analysis, not per call. An analysis makes at least three calls, and allowing each to fail over independently would let different sections be written by different models, which makes the recorded model identity meaningless.",
           "Every stored analysis records which provider and model actually produced it, whether the fallback was used, and how long the call took. Without that, a result whose quality looks off has no explanation attached to it, and 'which model wrote this' becomes unanswerable a week later.",
+          "The screenshots below show that working rather than asserted. Both demonstration papers were analysed with Groq as primary, and both records say Claude produced them with the fallback used. That is the behaviour the evaluation predicted, since the primary's free tier is smaller than one call over a whole paper.",
+        ],
+        figures: [
+          {
+            src: "/images/researchforge/diagram-ai-pipeline.png",
+            alt: "Provider routing flowchart. The router is built per request from the owner's primary and the enabled providers, then calls the primary. On success the primary is recorded. On error, a whitelist decides whether it is retryable: rate limits and transient errors are, credential and response errors are not. A retryable error switches to the fallback, which stays in place for the rest of the analysis. If the fallback also fails, one error names both vendors and there is no third attempt.",
+            width: 1600,
+            height: 820,
+            caption: "Routing and fallback, as implemented in src/rag/llm/router.py.",
+            wide: true,
+          },
+          {
+            src: "/images/researchforge/04_analysis_result_provenance.png",
+            alt: "The recent-analysis card on the dashboard for the second demonstration paper, with badges reading Claude, Fallback used and claude-opus-5, a Save to library button, and the summary tab open.",
+            width: 1398,
+            height: 631,
+            caption: "Provenance on a real result: Groq was primary, Claude wrote it, and the record says so.",
+          },
+          {
+            src: "/images/researchforge/10_owner_ai_settings.png",
+            alt: "The owner-only AI configuration panel in Settings. Primary AI model is set to Groq Qwen 3.6 27B, the fallback shows Claude (automatic), and an availability list shows Claude claude-opus-5 and Groq qwen/qwen3.6-27b both enabled, with Groq marked Primary.",
+            width: 1399,
+            height: 518,
+            caption: "The owner-only control. Choosing a primary makes the other provider the fallback; switching one off removes it from routing entirely. API keys are never stored or shown here.",
+          },
         ],
       },
       {
@@ -1066,6 +1498,71 @@ export const projects: Project[] = [
           "The mechanism is which credential the backend uses to reach the database. Requests are made as the signed-in user, so PostgreSQL resolves the authenticated identity and applies every policy automatically. A forgotten ownership filter then returns nothing rather than everything, which is the opposite of how that mistake usually fails. Ownership columns default to the authenticated identity, so a row cannot be inserted without an owner even if the application code omits it.",
           "Records created before authentication existed remain unowned. They were deliberately neither deleted nor assigned to an owner that could not be established, and they are unreachable because a null owner never matches an authenticated identity.",
           "Re-uploading a paper that has already been analysed reuses the stored analysis instead of paying for it again. Identity is a content hash of the extracted text, not the filename, so the same paper saved under a different name still matches.",
+        ],
+        figures: [
+          {
+            src: "/images/researchforge/diagram-database.png",
+            alt: "Database relationship diagram. Supabase auth.users owns papers, analyses and literature_reviews, each with user_id defaulting to auth.uid() and a Row Level Security policy. Analyses reference papers with cascade delete; literature_review_papers links reviews to papers and restricts deleting a reviewed paper. An analysis_cache table is keyed by content hash and analysis version. system_settings and app_owners hold the owner's AI configuration. A dashed chunks table with a 1024-dimension pgvector column is marked planned: nothing writes or reads it.",
+            width: 1600,
+            height: 960,
+            caption: "The schema built by six additive migrations. Every table has RLS enabled; the chunks table is scaffolding for retrieval that was never built.",
+            wide: true,
+          },
+        ],
+      },
+      {
+        heading: "Library and cross-paper review",
+        body: [
+          "A saved paper keeps its analysis, and the library can be searched by title or filename, filtered by status and sorted. Opening one shows the same four tabs as a fresh analysis, plus the document facts that were measured rather than generated: pages, characters extracted, file size, whether it was analysed whole, and the model recorded for it.",
+          "Selecting two or more saved papers in the Workspace builds one literature review across them. It deliberately reads each paper's stored summary, findings, limitations and themes rather than re-extracting the PDFs, which keeps the combined prompt inside the context window and avoids paying for the same reading twice. The trade-off is stated in the code: the cross-paper review cannot surface anything the original analyses missed.",
+          "Every paper in a review must still exist and carry a stored analysis, or the request is refused: 404 for a paper that is missing or belongs to someone else, 422 naming any paper with no stored analysis. A review that quietly covered four of the five papers the user picked would be worse than an error, because the interface would still say five.",
+        ],
+        figures: [
+          {
+            src: "/images/researchforge/08_workspace_selection.png",
+            alt: "The Research Workspace. The library is filtered to the two demonstration papers, both ticked. A Selected papers panel lists them in order with remove buttons and a Generate literature review button.",
+            width: 1399,
+            height: 620,
+            caption: "Choosing papers for a cross-paper review. The panel refuses to continue with fewer than two.",
+          },
+          {
+            src: "/images/researchforge/09_cross_paper_review.png",
+            alt: "A generated cross-paper review titled Review of 2 papers, 25 Sep 2026, based on 2 selected papers. It lists the papers included, a scope notice saying the review covers only the two supplied papers, both labelled fictional, and major themes that attribute each point to the paper it came from.",
+            width: 1399,
+            height: 695,
+            caption: "The cross-paper review names the papers it was built from and attributes each theme to its source paper.",
+          },
+          {
+            src: "/images/researchforge/07_paper_details_provenance.png",
+            alt: "A saved paper's Paper Details tab showing filename, 3 pages, 7,393 characters extracted, 6 KB file size, analysed as a single document, model claude-opus-5, saved date, and content truncated: No.",
+            width: 1398,
+            height: 600,
+            caption: "Measured document facts, kept apart from anything a model generated.",
+          },
+        ],
+        note:
+          "Saved cross-paper reviews are stored and counted on the dashboard, but no screen lists or reopens them yet. The API route exists; the interface does not call it.",
+      },
+      {
+        heading: "Interface",
+        body: [
+          "The frontend is Next.js 16 with React 19, TypeScript in strict mode and plain CSS rather than a component library. Light and dark themes follow a stored preference or the operating system, the navigation collapses to a menu on narrow screens, and empty and error states are written to say what happened, for example distinguishing an empty library from one that is not connected.",
+        ],
+        figures: [
+          {
+            src: "/images/researchforge/11_dark_mode_research_gaps.png",
+            alt: "The saved paper view in the dark theme, with the Research Gaps tab open showing seven limitations stated by the authors.",
+            width: 1399,
+            height: 713,
+            caption: "Dark theme. The limitations the authors state are listed separately from the gaps the analysis identifies.",
+          },
+          {
+            src: "/images/researchforge/13_mobile_landing_and_sign_in.png",
+            alt: "Two mobile screenshots side by side. Left: the landing page with the headline, full-width Get Started and See How It Works buttons, and three promises. Right: the sign-in screen with email and password fields, Sign In, Continue with Google, and a link to create an account.",
+            width: 1556,
+            height: 1120,
+            caption: "Landing and sign-in at mobile width. Google sign-in uses the PKCE flow, so no token ever appears in a URL.",
+          },
         ],
       },
       {
@@ -1176,6 +1673,24 @@ export const projects: Project[] = [
         detail: "Whole-document by default; map-reduce only above a configured character threshold.",
       },
       {
+        label: "Cross-paper literature review",
+        state: "implemented",
+        detail:
+          "Live. Built from the stored analyses of two or more saved papers in one model call, and saved with links to the papers it covers.",
+      },
+      {
+        label: "Reopening saved cross-paper reviews",
+        state: "available",
+        detail:
+          "Reviews are stored and an API route lists them, but no screen reads that route yet, so a saved review cannot be reopened from the interface.",
+      },
+      {
+        label: "Grounded Q&A chat and export",
+        state: "not-connected",
+        detail:
+          "Planned in the project plan (F8, F10). Not built. Results can be copied section by section; there is no file export.",
+      },
+      {
         label: "Embedding provider",
         state: "not-connected",
         detail:
@@ -1199,10 +1714,464 @@ export const projects: Project[] = [
       "Upstream provider rate limits are handled and surfaced with a retry hint, but the application does not rate-limit its own users.",
       "Papers are identified by filename and content hash: bibliographic metadata extraction is not implemented.",
       "Retrieval over a stored corpus is planned, not built.",
+      "The dashboard's How ResearchForge works panel still says the paper goes to Gemini, which is out of date since Gemini was retired from routing. A copy fix, not yet made.",
+    ],
+    roadmap: [
+      "Show saved cross-paper reviews in the interface, using the list and fetch routes that already exist.",
+      "Correct the stale Gemini wording on the dashboard.",
+      "Configure a primary provider whose limits accept a whole paper, so the fallback is redundancy rather than the normal path.",
+      "Planned in the project plan, not started: embeddings and retrieval over a stored library (F3), grounded question answering across papers (F8), page-level citations (F9) and Markdown or PDF export (F10).",
     ],
     links: [
       { label: "Live application", href: "https://researchforge.rukon.dev", external: true },
       { label: "Source on GitHub", href: "https://github.com/tirukon015/researchforge", external: true },
+    ],
+  },
+
+  {
+    slug: "drivekeep",
+    name: "DriveKeep",
+    fullName: "DriveKeep: photo-first fuel, mileage and maintenance log for iOS and the web",
+    tagline: "Log a refill from two photos, and never mistake a guess for a measurement.",
+    summary:
+      "A personal log for running a car and a motorcycle. A refill starts with a receipt photo and an odometer photo; extraction fills in the form and the owner confirms. Economy is only reported when it was measured between two full tanks, estimates are labelled as estimates, and a vehicle with nothing to measure from shows \"Not available\" rather than a default. One repository: a SwiftUI iOS app with on-device extraction and opt-in Supabase sync, a Next.js web app with server-side OCR, and a standalone Express backend. Personal project, not deployed.",
+    category: "iOS / Mobile",
+    categorySlug: "ios-mobile",
+    categories: ["iOS / Mobile", "Web Apps / Software"],
+    hrOverview: {
+      valueProposition:
+        "A vehicle log where a refill starts with two photos and every number is labelled as measured or estimated, built as an iOS app, a web app and an API.",
+      role: "Sole Developer",
+      roleScope: "Product, iOS App, Web App, Backend API, Database & Security, Tests",
+      context: "Personal project, built for the author's own car and motorcycle",
+      highlights: [
+        "iOS extraction on the device with Apple Vision, and Apple's Foundation Models returning structured results on iOS 27+",
+        "Google sign-in through Supabase without the Google SDK; credentials in the Keychain; sync to row-level-secured tables, off by default",
+        "Economy only from full tanks, estimates labelled, and \"Not available\" instead of any default figure",
+        "Next.js web app with server-side OCR (sharp + Tesseract.js) and guards for backwards odometers and duplicate refills",
+        "Express 5 API over PGlite with JWT auth, versioned migrations, sync tombstones and backup tooling",
+        "64 backend checks (database, API, security) and 21 engine checks passing on the latest commit",
+      ],
+      technologies: ["Swift", "SwiftUI", "Apple Vision", "Foundation Models", "Supabase", "Next.js 16", "TypeScript", "Express 5", "PostgreSQL"],
+    },
+    role: "Sole Developer",
+    roleScope: "Product, iOS App, Web App, Backend API, Database & Security, Tests",
+    period: "September 2026 (not deployed)",
+    affiliation: "Personal project",
+    confidential: false,
+    kind: "personal-project",
+    tier: "secondary",
+    facts: [
+      { value: "64 / 64", label: "backend checks passing" },
+      { value: "21 / 21", label: "calculation engine checks" },
+    ],
+    tech: ["Swift", "SwiftUI", "Apple Vision", "Foundation Models", "Supabase", "Next.js 16", "React 19", "TypeScript", "Tesseract.js", "Express 5", "PGlite", "Prisma"],
+    techGroups: [
+      { label: "iOS app", items: ["Swift", "SwiftUI", "Apple Vision", "Foundation Models (iOS 27+)", "AuthenticationServices", "Keychain", "UserNotifications"] },
+      { label: "Cloud (opt-in)", items: ["Supabase Auth (Google)", "PostgreSQL with row-level security", "PostgREST", "Supabase Storage"] },
+      { label: "Web app", items: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS v4", "Recharts", "Prisma", "Tesseract.js", "sharp"] },
+      { label: "Backend (standalone)", items: ["Express 5", "PGlite", "HS256 JWT", "SQL migrations", "OpenAPI"] },
+      { label: "Verification", items: ["Engine test script", "Database, API and security suites", "ESLint", "tsc"] },
+    ],
+    highlights: [
+      "A refill is two photos and a confirmation; extraction is a suggestion in an editable form, never saved on its own",
+      "Economy is stored only for a full tank with no missed refill, so a top-up can never produce a false figure",
+      "Without a full-tank refill, tank level, range and the refill target read \"Not available\" instead of a default",
+      "On iOS, receipts are read on the phone; an image quality gate runs first and odometers pass consensus and plausibility checks",
+      "Sign-in and sync exist but sync is off by default, and every synced row is restricted to its owner by RLS",
+      "Car and motorcycle are isolated, each with its own tank, units and service intervals",
+    ],
+    workflow: [
+      "Photograph the receipt",
+      "Photograph the odometer",
+      "Extraction fills the form",
+      "Check and confirm",
+      "Validate and compute",
+      "Dashboard recalculates",
+    ],
+    shareImage: {
+      src: "/images/drivekeep/og.png",
+      width: 1200,
+      height: 630,
+      alt: "DriveKeep: log a refill from two photos, and never mistake a guess for a measurement. Dashboard and refill review screenshots.",
+    },
+    previewFigure: {
+      src: "/images/drivekeep/dashboards.png",
+      alt: "Three phone screenshots of the DriveKeep web app: the car dashboard with odometer, estimated range and tank level; the motorcycle dashboard with its own 12 litre tank; and the vehicle spending card split into fuel, service and other costs.",
+      width: 1600,
+      height: 1200,
+      caption: "The web app's dashboards for the car and the motorcycle, and total cost of ownership. Real app, synthetic demo data.",
+    },
+    sections: [
+      {
+        heading: "Overview",
+        body: [
+          "DriveKeep is a log for the running costs of a car and a motorcycle: fuel, mileage, servicing and everything else a vehicle costs. It started from a spreadsheet of refills and repairs, and it is built around one rule the spreadsheet could not enforce: a number that was measured and a number that was estimated must never look the same, and a number that cannot be worked out is not shown at all.",
+          "The repository holds three parts. The iOS app is the most developed: extraction on the phone, local data by default, and Google sign-in with opt-in sync to Supabase. The Next.js web app applies the same rules with OCR on the server, and it is the part shown in the screenshots below. A standalone Express backend with its own database and tests is built but not yet connected to either app. Nothing is deployed.",
+        ],
+        figures: [
+          {
+            src: "/images/drivekeep/dashboards.png",
+            alt: "Three phone screenshots of the DriveKeep web app: the car dashboard with odometer 53,134 km, estimated range 451 km and tank level 79 percent; the motorcycle dashboard with a 12 litre tank; and the vehicle spending card showing fuel, service and other costs for both vehicles.",
+            width: 1600,
+            height: 1200,
+            caption: "Web app: car, motorcycle and total cost of ownership. Built from the latest commit, run locally with synthetic demo data.",
+          },
+        ],
+      },
+      {
+        heading: "Problem",
+        body: [
+          "Tracking fuel by hand fails in predictable ways. The odometer is not written down at the pump, a top-up gets treated as a full tank and the economy figure jumps, one mistyped reading makes every later distance wrong, and a second vehicle ends up in the same sheet. A spreadsheet also cannot say how much fuel is probably left or when a service is due.",
+        ],
+      },
+      {
+        heading: "Logging a refill from two photos",
+        body: [
+          "Add Refill asks for the receipt, then the odometer. On iOS both are read on the phone: an image check first rejects a photo that is not a receipt or an odometer, Apple's Vision framework reads the text, and on iOS 27 and later Apple's on-device Foundation Models return the litres, price and total as a structured result. Odometers go through their own path: the display is cropped, several readings are compared, and a reading has to be plausible against the previous one.",
+          "In the web app the photos go to the server, where sharp produces three or four preprocessed variants, Tesseract.js reads each, and the variant that parses into the most fields with the highest confidence wins. Either way nothing is saved from extraction alone: the values land in an editable form and only Confirm & Save sends them on. The web server then rejects an odometer lower than the last reading and flags a refill that looks like a duplicate.",
+        ],
+        figures: [
+          {
+            src: "/images/drivekeep/refill-flow.png",
+            alt: "Three phone screenshots of the web app: step 1 of the refill flow with a Choose from Gallery fallback; the review form after OCR with odometer 53261, fuel 22.45 litres, total RM 46.02 and price RM 2.05 filled in from a sample receipt and odometer image; and the refill history listing each refill with trip distance, cost and an ACTUAL km per litre badge.",
+            width: 1600,
+            height: 1200,
+            caption: "Web app: camera step with the gallery fallback, the review form after real OCR of a synthetic receipt and odometer, and the resulting history.",
+          },
+          {
+            src: "/images/drivekeep/refill-workflow.png",
+            alt: "Workflow diagram of the web app: receipt photo, odometer photo, server OCR, then a human review step; on save the server rejects a backwards odometer with 400 and flags duplicates with 409, computes distance and full-tank efficiency, and the dashboard recalculates ACTUAL and ESTIMATED figures.",
+            width: 1600,
+            height: 880,
+            caption: "The web refill path as implemented, including the server rules applied on save.",
+            wide: true,
+          },
+        ],
+      },
+      {
+        heading: "Measured, estimated, or not available",
+        body: [
+          "Fuel economy is stored only for a full tank with no missed refill before it; a partial fill makes distance divided by litres meaningless. The fuel probably in the tank is carried forward refill by refill (previous estimate, plus litres added, minus distance over average economy, clamped to the tank size) and range follows from it. Both are labelled ESTIMATED.",
+          "The last change to the project removed every default that stood in for missing data. Earlier, a new vehicle showed a 75% tank and a 10 or 25 km/L economy it had never measured, and those numbers flowed into range and the refill target. Now the engine returns nothing, the card says \"Not available\", and the app asks for a refill instead.",
+        ],
+      },
+      {
+        heading: "Accounts and sync on iOS",
+        body: [
+          "The iOS app works on local data with no account. Sign-in is Google through Supabase, run in the system's authentication session so no Google SDK or client secret ships in the app; tokens and the Supabase configuration are kept in the Keychain only. An earlier build derived a user id from the email address on the phone. That id existed in no database, so every row-level security policy would have rejected it, and it was replaced with the real Supabase identity.",
+          "Cloud sync is off by default, so sign-in can be checked without pushing a single record. When it is switched on, records go to Supabase tables whose policies limit every row to its owner, deletes travel as tombstones so a record removed offline does not come back, photos are uploaded once, and changes queue while the phone is offline.",
+        ],
+        note: "The iOS app could not be built or run for this write-up (the audit machine runs Windows), and the project has no automated iOS tests. The behaviour described here is from the source code.",
+      },
+      {
+        heading: "Architecture",
+        body: [
+          "The three parts do not share a live data path yet. The iOS app keeps its data on the phone and optionally syncs to Supabase. The web app calls ten REST routes backed by Prisma and PostgreSQL when a database is configured, or an in-memory store otherwise. The Express backend is an API on its own PostgreSQL, run in-process with PGlite so it needs no database server, with JWT auth, versioned migrations, an audit log, sync tombstones, and backup, restore and backup-verification scripts.",
+        ],
+        figures: [
+          {
+            src: "/images/drivekeep/architecture.png",
+            alt: "Architecture diagram: a native iOS app with SwiftUI views, a local data store, on-device extraction and an auth and sync manager that optionally talks to Supabase Auth, PostgreSQL with row-level security and Storage; a Next.js web app with REST routes and server-side OCR; and a standalone Express and PGlite backend marked built and tested but not connected to either client.",
+            width: 1600,
+            height: 1090,
+            caption: "What each part does, what is optional, and what is not connected yet.",
+            wide: true,
+          },
+          {
+            src: "/images/drivekeep/data-model.png",
+            alt: "Data model diagram of the web app: a Vehicle has many Refills, OdometerChecks, Expenses and Maintenance items, all deleted with the vehicle.",
+            width: 1600,
+            height: 760,
+            caption: "The web app's five models. Range, fuel balance and due status are computed, not stored.",
+            wide: true,
+          },
+        ],
+      },
+      {
+        heading: "Servicing and reports",
+        body: [
+          "Each vehicle has its own service items with an interval in kilometres, in months, or both; an item is overdue when either limit is passed, so tyres can be overdue by time while still well inside their distance. Reports show monthly fuel against other spending and the economy trend, and the web app exports refills, expenses and the service schedule to CSV.",
+        ],
+        figures: [
+          {
+            src: "/images/drivekeep/maintenance-reports.png",
+            alt: "Two phone screenshots of the web app: the maintenance schedule with an engine oil change overdue by 34 km and a tyre rotation overdue by date; and the reports page for the motorcycle with a monthly spending bar chart and a fuel efficiency line chart.",
+            width: 1600,
+            height: 1200,
+            caption: "Web app: service items due by distance or by date, and reports for the motorcycle.",
+          },
+        ],
+      },
+      {
+        heading: "What went wrong, and what it taught",
+        body: [
+          "Defaults are claims. A 75% tank and a 10 km/L economy looked harmless as placeholders, but on screen they read as measurements and fed every estimate after them. Removing them made new vehicles look emptier and the app more honest.",
+          "Odometer digits confuse OCR. In a test of the web pipeline on a synthetic odometer display, the digits-only pass read 053261 as 953261. The plausibility check against the previous reading discarded it and 53,261 was used. Reading more than once and letting domain knowledge choose is what made the result usable.",
+          "Tests that depend on state are fragile. The backend's API and security suites pass 64 of 64, but only after the database has been migrated and seeded; on a fresh checkout they fail. The next step is for the suite to create its own database.",
+        ],
+      },
+      {
+        heading: "Testing and verification",
+        body: [
+          "On a fresh clone of the latest commit: the web calculation engine's test script passes 21 of 21 (12 scenarios and 9 regression checks); TypeScript, ESLint on the web source and the production build pass; the backend passes 12 database, 35 API and 17 security checks after migrate and seed. The security checks cover missing, forged and expired tokens, access to another user's records, SQL injection in paths and bodies, malformed JSON and invalid identifiers. The web screens here come from a local production build of that commit, including a real OCR call on a synthetic receipt.",
+          "Not verified: the iOS app (no macOS machine and no XCTest target), the Supabase sign-in and row-level security in a live project, and ESLint across the whole repository, which reports 30 errors in the backend's CommonJS scripts because the root configuration does not exclude them.",
+        ],
+      },
+    ],
+    status: [
+      {
+        label: "Web app: photo-first refill, OCR, engine, guards, maintenance, reports",
+        state: "available",
+        detail: "Working in a local production build of the latest commit and covered by the engine tests. Not deployed.",
+      },
+      {
+        label: "iOS app with on-device extraction",
+        state: "available",
+        detail: "Source complete for the main screens; not built or run during this audit, and no automated iOS tests.",
+      },
+      {
+        label: "iOS sign-in and cloud sync (Supabase, RLS)",
+        state: "available",
+        detail: "Implemented and off by default. Not verified against a live Supabase project here.",
+      },
+      {
+        label: "Express backend with PGlite",
+        state: "available",
+        detail: "64 of 64 checks pass after migrate and seed. Not connected to either app.",
+      },
+      {
+        label: "Web sign-in, one shared backend, deployment",
+        state: "not-connected",
+        detail: "Not built yet.",
+      },
+    ],
+    limitations: [
+      "Nothing is deployed.",
+      "The web app has no sign-in; its API is open to anyone who can reach it.",
+      "The three parts keep separate data: the iOS app uses Supabase, the web app its own database, and the backend is not used by either.",
+      "No automated iOS tests, and the iOS app was not built for this write-up.",
+      "The backend's tests need a migrated and seeded database.",
+      "Web: refills and expenses cannot be edited or deleted, and the Reports total leaves out servicing while the dashboard includes it.",
+      "The repository is private. Access can be granted on request.",
+    ],
+    roadmap: [
+      "One backend for both apps",
+      "Sign-in for the web app",
+      "Unit tests for the iOS calculation engine and extraction",
+      "Backend tests that create their own database",
+      "Edit and delete for refills and expenses",
+      "Deployment",
+    ],
+    links: [
+      {
+        label: "GitHub profile (DriveKeep repository is private)",
+        href: "https://github.com/tirukon015",
+        external: true,
+      },
+    ],
+  },
+
+  {
+    slug: "spendrop",
+    name: "SpenDrop",
+    fullName: "SpenDrop: on-device expense capture from Malaysian payment screenshots",
+    tagline: "Share a payment screenshot, get an expense. Read on the phone, never sent anywhere.",
+    summary:
+      "A native iOS expense tracker for Malaysian daily spending. Share a payment confirmation from Touch 'n Go, a bank app or Apple Pay, or pick a receipt photo, and SpenDrop reads the amount, merchant, provider, category, date and reference on the phone with Apple's Vision framework and a rule-based parser, then asks you to confirm. A Share Extension and the app share one on-device store; there is no server, no network code and no third-party package. Personal project, run on the simulator and the developer's iPhone; not on the App Store.",
+    category: "iOS / Mobile",
+    categorySlug: "ios-mobile",
+    categories: ["iOS / Mobile"],
+    hrOverview: {
+      valueProposition:
+        "An iOS expense tracker that turns a shared payment screenshot into a checked expense, entirely on the phone.",
+      role: "Sole Developer",
+      roleScope: "Product, iOS App & Share Extension, OCR Parser, Data Model, Tests",
+      context: "Personal project, built for everyday Malaysian payments",
+      highlights: [
+        "Share Extension: any payment screenshot goes from the iOS share sheet to a filled-in review form",
+        "On-device OCR with Apple Vision and a Malaysian transaction parser covering 16 payment providers",
+        "Every RM value is classified (total, fee, balance, cashback, advertisement) so an advert's price is never chosen as the payment",
+        "Duplicate protection by transaction reference, or same merchant and amount on the same day",
+        "App and extension share one SwiftData store through an App Group",
+        "No server, no network calls and no third-party packages: Apple frameworks only",
+      ],
+      technologies: ["Swift", "SwiftUI", "SwiftData", "Apple Vision", "Share Extension", "App Groups", "Swift Charts"],
+    },
+    role: "Sole Developer",
+    roleScope: "Product, iOS App & Share Extension, OCR Parser, Data Model, Tests",
+    period: "September 2026 (not published)",
+    affiliation: "Personal project",
+    confidential: false,
+    kind: "personal-project",
+    tier: "secondary",
+    facts: [
+      { value: "48 / 48", label: "in-app parser and persistence tests" },
+      { value: "0", label: "network calls or third-party packages" },
+    ],
+    tech: ["Swift", "SwiftUI", "SwiftData", "Apple Vision", "Share Extension", "App Groups", "Swift Charts"],
+    techGroups: [
+      { label: "App", items: ["Swift", "SwiftUI", "SwiftData", "Swift Charts", "PhotosUI"] },
+      { label: "Capture", items: ["Share Extension (UIKit host + SwiftUI)", "App Group shared container", "Apple Vision (VNRecognizeTextRequest)"] },
+      { label: "Parsing", items: ["Rule-based Malaysian transaction parser", "Monetary candidate classification", "Provider, merchant and category detection", "Duplicate detector"] },
+      { label: "Verification", items: ["48-case in-app test runner", "Image pipeline diagnostics", "Simulator builds with xcodebuild"] },
+    ],
+    highlights: [
+      "Sharing a screenshot to SpenDrop opens a review form already filled in: amount, merchant, provider, category, date and reference",
+      "Receipts are read on the phone with Apple Vision; the app contains no networking code at all",
+      "Each RM value gets a label, and advertisement, balance, fee and cashback amounts are excluded from the payment",
+      "Sender and recipient banks are told apart in interbank transfers, and Apple Pay is linked to the underlying bank",
+      "The same screenshot shared twice is caught before it is saved, with an explicit Add Anyway",
+      "PayBook keeps frequent transfer payees with their account numbers masked",
+    ],
+    workflow: [
+      "Share a payment screenshot",
+      "OCR on the phone",
+      "Classify amounts and detect provider",
+      "Check for duplicates",
+      "Confirm on the review form",
+      "Save to the shared store",
+    ],
+    shareImage: {
+      src: "/images/spendrop/og.png",
+      width: 1200,
+      height: 630,
+      alt: "SpenDrop: share a payment screenshot, get an expense, read on the phone. Share Extension review and in-app review screenshots.",
+    },
+    previewFigure: {
+      src: "/images/spendrop/share-flow.png",
+      alt: "Three iPhone screenshots of SpenDrop: the dashboard with today, week and month totals; the iOS share sheet with SpenDrop in the app row; and the Share Extension's review form showing Payment Detected, RM 18.50, McDonald's, Food, Touch 'n Go.",
+      width: 1600,
+      height: 1200,
+      caption: "Dashboard, the share sheet, and the extension's filled-in review. iPhone 17 simulator, synthetic data.",
+    },
+    sections: [
+      {
+        heading: "Overview",
+        body: [
+          "Most everyday payments in Malaysia now end with a confirmation screen: Touch 'n Go, a bank app, DuitNow QR, Apple Pay. SpenDrop turns that screen into an expense. Take a screenshot, share it to SpenDrop, check the form it fills in, and save. Cash spending goes in by hand with Quick Cash.",
+          "It is a native iOS app with a Share Extension, written in Swift and SwiftUI with SwiftData for storage and Apple's Vision framework for OCR. Everything runs on the phone: there is no server, no networking code and no third-party package. It runs on the simulator and on the developer's iPhone; it is not on the App Store.",
+        ],
+        figures: [
+          {
+            src: "/images/spendrop/share-flow.png",
+            alt: "Three iPhone screenshots of SpenDrop: the dashboard with today, week and month totals and provider-tagged rows; the iOS share sheet with SpenDrop in the app row; and the Share Extension review form showing Payment Detected, RM 18.50, paid to McDonald's, category Food, payment Touch 'n Go, 16 September 2026.",
+            width: 1600,
+            height: 1200,
+            caption: "From dashboard to share sheet to a filled-in expense. Real app on an iPhone 17 simulator; the shared screenshot is synthetic.",
+          },
+        ],
+      },
+      {
+        heading: "Problem",
+        body: [
+          "Expense apps ask you to type what your phone already shows you. The payment screen has the amount, the merchant, the provider and a reference number, but copying them by hand is slow enough that most people stop doing it. And a payment confirmation is financial data: sending it to a server to be read is a poor trade for convenience.",
+        ],
+      },
+      {
+        heading: "From screenshot to expense",
+        body: [
+          "The Share Extension receives the image from any app's share sheet. Vision reads the text on the phone, on an image downsampled to 1280 pixels to stay inside the extension's memory limit, and the lines are sorted into rows. A rule-based parser then works out what the screen is: which provider, which merchant, which category, the date and time, and the reference number. The extension shows the result as a review form; nothing is saved until the user confirms.",
+          "The app and the extension are two separate processes, so they share one SwiftData store through an App Group. An expense saved from the share sheet is on the dashboard the next time the app opens, and the duplicate check in the extension can see everything the app has saved.",
+        ],
+        figures: [
+          {
+            src: "/images/spendrop/architecture.png",
+            alt: "Architecture diagram: the Share Extension and the app both feed a shared on-device engine of Vision OCR, amount candidate classification, provider and merchant detection, a duplicate detector and a review screen, which saves to an App Group SwiftData store read by the dashboard, analytics and PayBook.",
+            width: 1600,
+            height: 900,
+            caption: "Two targets compile the same engine and share one store. No server and no network calls.",
+            wide: true,
+          },
+        ],
+      },
+      {
+        heading: "Choosing the right amount",
+        body: [
+          "A payment screen rarely has one number on it. A Touch 'n Go confirmation can carry an advert for an RM 450 air conditioner under an RM 18.50 payment; a receipt lists a subtotal, a service charge and a total; a bank screen shows the balance. The parser labels every RM value it finds (total, fee, balance, cashback, discount, advertisement) and chooses from the valid candidates only. When several remain, the review form shows them as one-tap alternatives; when one remains, the row is hidden.",
+          "Screens that are not payments at all, such as a balance, a credit limit or reward points, are recognised and are not saved as expenses, or are flagged for review. Sharing the same screenshot twice is caught by its reference number, or by the same merchant and amount on the same day within a 48-hour window, and the user decides whether to add it anyway.",
+        ],
+        figures: [
+          {
+            src: "/images/spendrop/parsing.png",
+            alt: "Three iPhone screenshots: a receipt review with RM 19.08 selected as the total and other amounts offered as possible amounts; the Touch 'n Go review with RM 18.50 chosen and no advertisement price offered; and a Possible Duplicate Expense alert for the same transaction reference with Cancel and Add Anyway.",
+            width: 1600,
+            height: 1200,
+            caption: "The total wins and the alternatives stay one tap away; the advert's RM 450 is never offered; a repeated share is caught.",
+          },
+        ],
+      },
+      {
+        heading: "The rest of the app",
+        body: [
+          "Around capture sits a small expense app: a dashboard with today, week and month totals, a searchable and filterable history with edit and delete, analytics by category and payment source built with Swift Charts, and PayBook, a list of frequent bank-transfer payees with account numbers masked by default and a one-tap copy. A settings screen includes a self-test runner that executes the app's 48 parser and persistence checks on the device.",
+        ],
+        figures: [
+          {
+            src: "/images/spendrop/app.png",
+            alt: "Three iPhone screenshots: analytics with a category donut chart and top category and payment source; the in-app test runner reporting All Tests Passed 48 of 48; and PayBook listing payees with masked account numbers.",
+            width: 1600,
+            height: 1200,
+            caption: "Analytics, the in-app test run (48 of 48), and PayBook with masked account numbers.",
+          },
+        ],
+      },
+      {
+        heading: "What went wrong, and what it taught",
+        body: [
+          "Adverts looked like payments. A Touch 'n Go confirmation can show an RM 450 air-conditioner banner under an RM 22.00 transfer, and any pattern for an RM amount matches both. The fix gives every amount a meaning before any is chosen: advertisement keywords, the words on neighbouring lines, and position, using Vision's bounding boxes, since adverts sit in the bottom of the screen. Layout turned out to be a stronger signal than the text alone.",
+          "Interbank transfers name two banks. A CIMB to Maybank receipt mentions both, and the expense belongs to CIMB. Keyword matching alone was ambiguous, so the parser now reads the screen as a document: it collects the banks named after a recipient label first, then reads the from-block, and never attributes a payment to a bank that only appears as the recipient. Apple Pay is treated the same way, as a wrapper around the bank behind it.",
+          "Column-aligned receipts still break it. On a synthetic receipt with the label and the amount far apart, Vision returned \"TOTAL\" and \"RM 19.08\" as separate observations, the total lost its label, and a line item won. The review screen correctly downgraded to \"Possible Expense Detected\", and the case is recorded as a known limitation rather than hidden.",
+        ],
+      },
+      {
+        heading: "Testing and verification",
+        body: [
+          "The app carries its own test runner: 48 cases covering provider and merchant parsing, amount selection, false positives, duplicates and persistence, provider detection, ten reference screenshots from real layouts, and PayBook. The repository records a run on 25 September 2026 on an iPhone 17 simulator with iOS 27: both targets built and 48 of 48 passed. The suite feeds synthetic OCR text, so it tests the parser, not Vision's recognition quality.",
+          "For this write-up the source was checked directly: 42 Swift files, two targets (app and extension), 48 registered test cases, and no networking code. The tests were not re-run here because the machine used runs Windows. There is no XCTest target and no CI.",
+        ],
+        note: "Every screenshot on this page is from the real app on a simulator. The payment screenshot and the receipt it reads are synthetic images made for testing; PayBook shows the app's built-in sample payees.",
+      },
+    ],
+    status: [
+      {
+        label: "Capture, parsing, review, duplicates, history, analytics, PayBook",
+        state: "available",
+        detail: "Working on the simulator and, per the repository, on the developer's iPhone. Not published on the App Store or TestFlight.",
+      },
+      {
+        label: "In-app test suite",
+        state: "available",
+        detail: "48 of 48 recorded on 25 September 2026; not re-run for this write-up.",
+      },
+      {
+        label: "Camera capture, currency setting, CI",
+        state: "not-connected",
+        detail: "Not implemented yet: capture is from screenshots and Photos, and all amounts are in RM.",
+      },
+    ],
+    limitations: [
+      "The parser is keyword-driven: an unfamiliar layout falls back to \"Unknown\" with low confidence.",
+      "Column-aligned paper receipts can lose the label on the total, so a line item may be proposed instead.",
+      "One synthetic screenshot read 9:42 PM as 9:42 AM.",
+      "Save errors are swallowed rather than shown, and deleting an expense leaves its receipt image on disk.",
+      "The extension's diagnostic log is not size-capped and contains transaction details.",
+      "iPhone only, portrait only, English only; no XCTest target and no CI.",
+      "The repository is private. Access can be granted on request.",
+    ],
+    roadmap: [
+      "Report save errors instead of swallowing them",
+      "Cap the diagnostic log and keep it to debug builds",
+      "An XCTest target around the parser suite, run in CI",
+      "Camera capture and the currency setting",
+      "Delete receipt images with their expenses",
+    ],
+    links: [
+      {
+        label: "GitHub profile (SpenDrop repository is private)",
+        href: "https://github.com/tirukon015",
+        external: true,
+      },
     ],
   },
 ];
@@ -1238,78 +2207,9 @@ export type UpcomingProject = {
 };
 
 export const upcomingProjects: UpcomingProject[] = [
-  {
-    slug: "spendrop",
-    name: "SpenDrop",
-    category: "iOS / Mobile",
-    categorySlug: "ios-mobile",
-    categories: ["iOS / Mobile"],
-    valueProposition: "Native iOS expense tracker with on-device OCR for receipts and e-wallets, with zero cloud dependency.",
-    role: "Sole Developer",
-    context: "Personal project in active development",
-    highlights: [
-      "100% on-device processing using Apple VisionKit OCR without transmitting sensitive financial receipts",
-      "Native iOS share extension enabling instant receipt capture directly from mobile banking and e-wallet apps",
-      "Built with Swift and modern SwiftUI following Apple HIG with privacy-first local persistence",
-    ],
-    technologies: ["Swift", "SwiftUI", "VisionKit", "iOS", "Local Persistence"],
-    status: "In Progress",
-  },
-  {
-    slug: "drivekeep",
-    name: "DriveKeep",
-    category: "iOS / Mobile",
-    categorySlug: "ios-mobile",
-    categories: ["iOS / Mobile"],
-    valueProposition: "Native iOS photo-first vehicle fuel, mileage, and maintenance tracker with on-device OCR for odometer readings and receipts.",
-    role: "Sole Developer",
-    context: "Personal project in active development",
-    highlights: [
-      "Native iOS photo-first tracker for vehicle fuel economy, maintenance logs, and operating expenses",
-      "100% on-device OCR using Apple VisionKit to extract odometer readings and fuel pump receipts with zero cloud lag",
-      "Engineered with Swift and SwiftUI following Apple HIG with privacy-first local persistence",
-    ],
-    technologies: ["Swift", "SwiftUI", "VisionKit", "iOS", "Local Persistence"],
-    status: "In Progress",
-  },
-  {
-    slug: "lms",
-    name: "LMS Platform",
-    category: "Web Apps / Software",
-    categorySlug: "web-apps",
-    categories: ["Web Apps / Software"],
-    valueProposition: "Modern learning management web platform with role-based access control for instructors, students, and course administration.",
-    role: "Sole Developer",
-    context: "Academic & educational platform in active development",
-    highlights: [
-      "Structured course and module management with role-based access control (Admin, Instructor, Student)",
-      "Interactive assessment and assignment submission pipeline with real-time feedback",
-      "Engineered with Next.js App Router, TypeScript, and relational PostgreSQL persistence",
-    ],
-    technologies: ["Next.js", "TypeScript", "PostgreSQL", "Prisma", "Tailwind CSS"],
-    status: "In Progress",
-  },
 ];
 
 export const upcomingWork: WorkListItem[] = [
-  {
-    name: "SpenDrop",
-    meta: "Personal project · iOS",
-    summary:
-      "A native iOS expense tracker in Swift and SwiftUI: on-device OCR of Malaysian receipts and e-wallet screenshots, a share extension, and no cloud at all. In progress; not yet published.",
-  },
-  {
-    name: "DriveKeep",
-    meta: "Personal project · iOS",
-    summary:
-      "A native iOS fuel, mileage, and maintenance tracker for cars and motorcycles in Swift and SwiftUI, with on-device VisionKit OCR for receipt and odometer photos, and privacy-first local persistence. In progress; not yet published.",
-  },
-  {
-    name: "LMS Platform",
-    meta: "Academic project · Web",
-    summary:
-      "A modern learning management system with role-based access control, course module workflows, and student assessment tracking on Next.js and PostgreSQL. In progress.",
-  },
 ];
 
 export type ProjectCategoryInfo = {

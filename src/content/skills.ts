@@ -6,7 +6,7 @@ export type Capability = {
 };
 
 /**
- * What I build, in four areas rather than a wall of twelve.
+ * What I build, in five areas rather than a wall of twelve.
  *
  * Each area folds together the narrower capabilities it replaced, and keeps
  * the same rule: every entry names the project it comes from, because a
@@ -30,6 +30,12 @@ export const capabilities: Capability[] = [
     description:
       "LLM features that behave: groundedness enforced in layers rather than requested in a prompt, output validated against a declared schema and discarded rather than repaired, and a provider abstraction with a narrow automatic fallback. And the plainer automation that matters more often: one entry that updates everything downstream, staged imports that surface problems before anything is written, paperwork generated rather than retyped.",
     evidence: ["researchforge", "rpoms"],
+  },
+  {
+    title: "Native iOS",
+    description:
+      "Swift and SwiftUI with the work kept on the device: text recognition with Apple Vision instead of a cloud OCR service, SwiftData persistence shared between an app and its Share Extension, and a rule-based parser with its own test runner. No backend and no third-party dependencies where none are needed.",
+    evidence: ["spendrop", "drivekeep"],
   },
   {
     title: "UI/UX engineering",
@@ -108,9 +114,12 @@ export const stack: StackCategory[] = [
       "pytest",
       "Vitest",
       "ruff",
-      "TanStack Table",
       "Recharts",
-      "React Hook Form",
+      "Prisma",
+      "Tesseract.js",
+      "Swift / SwiftUI",
+      "SwiftData",
+      "Apple Vision",
       "ExcelJS",
       "jsPDF",
       "JSZip",

@@ -18,7 +18,7 @@ import {
 
 const title = "Work";
 const description =
-  "Real-world operational systems, offline workstations, full-stack software, and high-performance websites. Scan the Level 1 HR overviews below or dive into detailed case studies.";
+  "Case studies of real systems: a production-line operations platform, a Web Bluetooth label engine, a production website, a live AI research assistant and iOS apps.";
 
 export const metadata: Metadata = {
   title,
