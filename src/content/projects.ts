@@ -177,7 +177,7 @@ export const projects: Project[] = [
     fullName: "Router Production Operations Management System",
     tagline: "An operations system, WMS/ERP-like in shape, used on a live router-refurbishment line.",
     summary:
-      "The operations system that replaced the spreadsheets running a router-refurbishment line: a daily production report that deducts stock as it saves, serial-level tracking from acceptance into numbered boxes and out on deliveries, delivery paperwork generated from the office's own template, workforce output, and a stock-request portal for the Ecommerce team. Designed, built and maintained by me alone: about 59,600 lines of TypeScript, 16 pages, 41 API route files and 895 automated tests.",
+      "The operations system that replaced the spreadsheets running a router-refurbishment line: a daily production report that deducts stock as it saves, serial-level tracking from acceptance into numbered boxes and out on deliveries, delivery paperwork generated from the office's own template, workforce output, and a stock-request portal for the Ecommerce team. Designed, built, deployed and maintained by me alone as a Next.js, TypeScript and PostgreSQL (Supabase) application: about 61,400 lines of TypeScript, 16 pages, 41 API route files and 958 automated tests.",
     category: "Systems / ERP / WMS",
     categorySlug: "systems",
     categories: ["Systems / ERP / WMS", "Web Apps / Software"],
@@ -194,7 +194,8 @@ export const projects: Project[] = [
         "Dashboard with comparisons and trends, in English and Arabic (right to left), light and dark",
         "One storage interface over PostgreSQL (Supabase), MySQL and local files, selected by environment",
         "Four roles, signed sessions, a production write lock, and a guard that stops preview deployments touching production data",
-        "895 automated tests, including real SQL against in-process PostgreSQL, run in CI on every push",
+        "One router-model configuration shared by inventory, the serial registry and Ecommerce, with derived health checks that flag a broken rule before it causes a wrong scan",
+        "958 automated tests, including real SQL against in-process PostgreSQL, run in CI on every push",
       ],
       technologies: ["Next.js 15", "React 19", "TypeScript", "PostgreSQL", "Supabase", "Tailwind CSS v4", "Zod", "Vitest"],
     },
@@ -218,8 +219,8 @@ export const projects: Project[] = [
           name: "RPOMS AI",
           relation: "Related system, same programme",
           summary:
-            "A router surface inspector: photo, quality gate, a vision model that only observes, and a deterministic rule engine that decides. Own repository and database; it never connects to RPOMS.",
-          href: "/blog/a-vision-model-that-only-observes",
+            "A router surface inspector: photo, quality gate, a vision model that only observes, and a deterministic rule engine that decides. Own repository and database; it never connects to RPOMS. Deployed, with no model active in production yet.",
+          slug: "rpoms-ai",
         },
         {
           name: "RPOMS Print Engine",
@@ -270,7 +271,7 @@ export const projects: Project[] = [
       "One storage interface with three interchangeable backends, chosen by which environment variables are present",
       "Four roles with server-side enforcement, signed sessions and no default passwords",
       "Delivery paperwork generated from the operations team's own Word document rather than redrawn",
-      "895 automated tests and CI, with two audits' findings worked through in the code",
+      "958 automated tests and CI, with both audits' findings worked through in the code and released to production",
     ],
     workflow: [
       "Stock booked in by model",
@@ -293,7 +294,7 @@ export const projects: Project[] = [
         body: [
           "RPOMS is the operations system for a router-refurbishment programme that Blue Bee Technologies runs with ERTH and Maxis. It records each day's production, tracks every router by serial number from acceptance into a numbered box and out on a delivery, keeps the stock of routers, chargers, cables and boxes, and produces the delivery paperwork the office already uses. A second, locked-down build of the same code gives the Ecommerce team a portal for requesting stock.",
           "The comparison to a warehouse or resource-planning system is about shape rather than scale. It is not a commercial ERP suite and does not try to be one: there is no finance, procurement or HR module. What it shares with that category is the structure, a single operational data model that inventory, production, delivery, workforce and reporting all read from, so a figure on a dashboard traces back to the event that produced it.",
-          "It is one Next.js 15 application: about 59,600 lines of TypeScript across 16 pages and 41 API route files, with 895 automated tests. Every screenshot on this page was taken from that application running locally on synthetic data.",
+          "It is one Next.js 15 application: about 61,400 lines of TypeScript across 16 pages and 41 API route files, with 958 automated tests. Every screenshot on this page was taken from that application running locally on synthetic data.",
         ],
         figures: [
           {
@@ -331,7 +332,7 @@ export const projects: Project[] = [
       {
         heading: "My Role",
         body: [
-          "I am the only developer on RPOMS. Of 284 commits on the current line, every one except an uploaded copyright file and a bot branch is mine: the data model, every module, authentication and access control, the storage layer, the tests and CI, the remediation of two code audits, and the deployment and staging runbooks.",
+          "I am the only developer on RPOMS. Of 292 commits on the production branch, every one except an uploaded copyright file is mine: the data model, every module, authentication and access control, the storage layer, the tests and CI, the remediation of two code audits, the deployment and staging runbooks, and the production releases.",
           "I work as IT Systems & Operations Lead around RPOMS, so I also work directly with the side it supports: the production line, the stock it consumes, and the people running it day to day. RPOMS models a physical process closely enough to run it, which only works if the person building it understands the process and not just the schema behind it.",
         ],
       },
@@ -461,6 +462,13 @@ export const projects: Project[] = [
         ],
       },
       {
+        heading: "Router-model configuration",
+        body: [
+          "A router model used to be described in several places: a stock variant in inventory, detection rules in the registry, a request code in Ecommerce. They could drift apart, and a second spelling of the same model quietly became a second model. The model is now one record that all three modules read. A new name is matched against the existing models first, so a variant spelling links to the model that already exists instead of duplicating it, and detection rules point at the model by ID rather than by name.",
+          "Configuration health is computed on every request and never stored: a model with no serial prefix or length, an orphaned or conflicting rule, or a request code that is missing, invalid or not yet confirmed is flagged on the Super Admin tabs, on a strip in each affected module and in a Needs attention list with the fix beside it. Request codes print only after a Super Admin confirms them, a model that still has rules cannot be deleted from under them, and every configuration write is Super Admin only. The schema change is additive, and a test builds a production-shaped database to prove the migration changes no existing value.",
+        ],
+      },
+      {
         heading: "Ecommerce stock requests",
         body: [
           "The Ecommerce team asks for routers or sealed boxes through a portal that shows them their own requests and nothing else: no stock levels, no admin screens. Each request gets a number of the form ECR/YYMM/R/CODE/NN from a per-month counter, and a network retry returns the request the first attempt created instead of raising a second one.",
@@ -552,20 +560,21 @@ export const projects: Project[] = [
           "Every preview deployment was configured with the production database. A guard now makes a preview refuse the production database with a 503, work flows through a staging branch, and a one-way refresh script copies production to staging with names anonymised.",
           "Deployments sharing one database raced to build schema on cold start, holding an exclusive lock. The build is now claimed with a single statement and a sentinel, and new columns sit behind their own marker keys so two versions of the code cannot keep undoing each other.",
           "Box stock started mid-operation, with thousands of routers already packed. Counting them would have produced a deficit no correct booking-in could explain, so box stock starts from an opening figure on a fixed date and only later packing is counted.",
+          "A production incident, written up as one: for about six minutes the admin panel showed an error page. The cause was not the code but connection-pool exhaustion, because production and a preview shared Supabase's session-mode pooler, which allows fifteen connections. Production now connects through the transaction pooler, which its public health endpoint reports, and the code detects which pooler a deployment is on from the host and port alone, warns when production is on the wrong one, and fails the environment check for it.",
         ],
       },
       {
         heading: "Testing and verification",
         body: [
-          "895 automated tests in 60 files, written with Vitest. Sixteen of those files run real SQL against PGlite, PostgreSQL compiled to WebAssembly and served in-process, so transactions, locking, concurrency and schema setup are tested with the production driver and no database server. CI runs typecheck, lint, the tests, a production build and a dependency audit on every push.",
-          "For this write-up the production build was run locally on synthetic data, every screen was exercised, and a Delivery Order and the Excel exports were generated. Typecheck and lint passed. The full test run passed 59 of 60 files; the remaining file hit a ten-second hook timeout under machine load and passed when run on its own.",
+          "958 automated tests in 66 files, written with Vitest. Seventeen of those files run real SQL against PGlite, PostgreSQL compiled to WebAssembly and served in-process, so transactions, locking, concurrency and schema setup are tested with the production driver and no database server. CI runs typecheck, lint, the tests, a production build and a dependency audit on every push.",
+          "The 28 September release commit records all 958 tests passing and a clean production build. For the original write-up the production build was run locally on synthetic data, every screen was exercised, and a Delivery Order and the Excel exports were generated. Typecheck and lint passed. The full run at that point passed 59 of 60 files; the remaining file hit a ten-second hook timeout under machine load and passed when run on its own.",
         ],
         note: "There is no browser end-to-end suite yet; a Playwright smoke test per role is on the backlog.",
       },
       {
         heading: "Deployment and environments",
         body: [
-          "The project deploys to Vercel from Git: pushing the main branch deploys production, and every other branch builds a preview. Production data lives in Supabase PostgreSQL. Work now flows from feature branches into a staging branch and then to main, and a data-preservation check compares every table's row count before and after a release.",
+          "The project deploys to Vercel from Git: pushing the main branch deploys production, and every other branch builds a preview. Production data lives in Supabase PostgreSQL. Work flows through feature branches and a staging branch before it reaches main, and a data-preservation check compares every table's row count before and after a release. The September release went out as one verified branch: main was fast-forwarded to it, following a written release plan that lists the additive schema steps a first cold start runs, the release order and the rollback.",
           "A separate staging database is designed and its bootstrap SQL written, but it is blocked on hosting limits, so previews are protected by refusing the production database rather than by having their own. The current plan has no managed backups; a read-only JSON export is the backup path until that changes.",
         ],
         figures: [
@@ -584,7 +593,7 @@ export const projects: Project[] = [
         body: [
           "In production, the dashboard and the Daily Production Report are live: the day's figures are entered for real, stock is deducted for real, and the dashboard reads back what was saved. The Ecommerce portal runs as its own build of the same code.",
           "The registry, packing, delivery and paperwork, workforce and inventory modules are complete and render live data, but they sit behind a deployment-level write lock while the programme works through sign-off. The lock is enforced at one middleware chokepoint, is on by default in production, and names the modules allowed to write, so a module goes live by being named rather than by accident.",
-          "The newest work (the remediation of both audits, the audit log, the environment guard, the login throttle, the test suite and CI) is built and tested on the staging branch and has not yet been released: production deploys from main, which is 68 commits behind.",
+          "On 28 September 2026 the staging line was released to production: the remediation of both audits, the audit log, the environment guard, the login throttle, the test suite and CI, the full Ecommerce module, the centralised model configuration and the connection-pooler diagnostics. Production deploys from main on Vercel, and that release is what it runs today.",
         ],
         figures: [
           {
@@ -613,7 +622,13 @@ export const projects: Project[] = [
         label: "Ecommerce request portal",
         state: "implemented",
         detail:
-          "Runs as a separate build of the same code from its own branch. The newest Ecommerce features (registering unknown routers on transfer, stored model codes) are on staging and not yet in that build.",
+          "Runs as a separate, locked-down build of the same code. The full Ecommerce module, including registering unknown routers on transfer and stored model codes, is in the production release of 28 September 2026.",
+      },
+      {
+        label: "Centralised router-model configuration",
+        state: "available",
+        detail:
+          "In the production release of 28 September 2026: one model record shared by inventory, the registry and Ecommerce, Super Admin-confirmed request codes, and derived configuration-health checks. Its writes sit behind the same deployment-level write lock as the registry.",
       },
       {
         label: "Serial registry, packing, delivery and paperwork, workforce, inventory",
@@ -622,10 +637,16 @@ export const projects: Project[] = [
           "Complete and rendering live data, held behind a deployment-level write lock pending programme sign-off.",
       },
       {
-        label: "Audit remediation, audit log, environment guard, login throttle",
-        state: "available",
+        label: "Transaction pooler and connection diagnostics",
+        state: "implemented",
         detail:
-          "Built and tested on the staging branch. Production deploys from main, which does not include them yet.",
+          "Production connects to Supabase through the transaction pooler, confirmed by the live health endpoint, after a session-pooler exhaustion incident on 26 September 2026.",
+      },
+      {
+        label: "Audit remediation, audit log, environment guard, login throttle",
+        state: "implemented",
+        detail:
+          "Released to production on 28 September 2026, with CI passing on main and a successful Vercel production deployment.",
       },
       {
         label: "Separate staging database and managed backups",
@@ -649,7 +670,6 @@ export const projects: Project[] = [
       "Navigation still differs by role, which reveals that a higher role exists. Blocked actions themselves never name it.",
     ],
     roadmap: [
-      "Release the staging line to production after the data-preservation check, starting with the session check on four read endpoints.",
       "Back up the production database and prove a restore; move to a plan with managed backups.",
       "Give previews and staging their own database.",
       "Shared login throttle and server-side session revocation, then per-user accounts.",
@@ -658,7 +678,7 @@ export const projects: Project[] = [
       "Integrate the RPOMS Print Engine once it is validated on the line.",
     ],
     facts: [
-      { value: "895", label: "automated tests" },
+      { value: "958", label: "automated tests" },
       { value: "41", label: "API route files" },
       { value: "4", label: "access roles" },
       { value: "3", label: "storage backends" },
@@ -692,7 +712,7 @@ export const projects: Project[] = [
     fullName: "Offline-first label printing workstation for the RPOMS refurbishment line",
     tagline: "Scan a router, and the right label prints: a browser app that drives a Bluetooth thermal printer with no server in the loop.",
     summary:
-      "A TypeScript and React Progressive Web App that turns any PC with Chrome and Bluetooth into a label station for a NIIMBOT B1 Pro. A USB scanner reads a router serial, a prefix-and-length rule names the model, a fixed 50 by 30 mm template is rendered to the printer's raster and printed over one persistent Web Bluetooth session. The print path never touches the network, the app boots offline from cache and IndexedDB, and an optional backend adds Google sign-in, device provisioning and sync. 170 automated tests; one verified print session on the real printer.",
+      "A TypeScript and React Progressive Web App that turns any PC with Chrome and Bluetooth into a label station for a NIIMBOT B1 Pro. A USB scanner reads a router serial, a prefix-and-length rule names the model, a fixed 50 by 30 mm template is rendered to the printer's raster and printed over one persistent Web Bluetooth session. The print path never touches the network, the app boots offline from cache and IndexedDB, and a Node.js and PostgreSQL backend adds Google sign-in, device provisioning and sync. Deployed on a self-hosted Ubuntu server behind nginx, with a second module that prints QR device labels for BBTech's inventory system, ITMS. My own independent project: 218 app tests and 26 backend tests.",
     category: "Systems / ERP / WMS",
     categorySlug: "systems",
     categories: ["Systems / ERP / WMS", "Web Apps / Software"],
@@ -707,17 +727,31 @@ export const projects: Project[] = [
         "Offline-by-construction PWA architecture booting and printing from service worker and IndexedDB",
         "Continuous Web Bluetooth session management eliminating paper rewind and feed jitter between labels",
         "Canvas-first template editor with automated raster hash freezing to guarantee physical label alignment",
-        "Rigorous verification: 170 automated tests with a simulated printer and headless Chrome validation",
+        "Deployed and running on a self-hosted Ubuntu server (nginx, systemd, PostgreSQL) with Google sign-in, role-gated admin pages, sign-in rate limiting and an audit log",
+        "A relay page lets another web application send a label to the open, connected workstation, which is how BBTech's ITMS prints device labels",
+        "Rigorous verification: 218 app tests and 26 backend tests, a simulated printer, headless Chrome checks and PostgreSQL store tests in CI",
       ],
       technologies: ["TypeScript", "React 19", "Web Bluetooth", "Canvas 2D", "IndexedDB", "Vite 8", "Workbox", "Vitest"],
     },
     role: "Sole Developer",
     roleScope: "Hardware Protocol Driver, Canvas 2D Renderer, Offline PWA & Backend",
-    period: "2026 (software complete; hardware validation in progress)",
+    period: "September 2026 – present (deployed; hardware validation in progress)",
     affiliation: "Blue Bee Technologies Sdn. Bhd., ERTH × Maxis programme",
     confidential: false,
     kind: "professional",
     tier: "featured",
+    ecosystem: {
+      label: "Related systems",
+      systems: [
+        {
+          name: "ITMS",
+          relation: "BBTech inventory system, integration in progress",
+          summary:
+            "BBTech's inventory management system, developed by another developer and supported by me. It prints device labels through this engine's relay.",
+          slug: "itms",
+        },
+      ],
+    },
     tech: [
       "TypeScript",
       "React 19",
@@ -729,6 +763,7 @@ export const projects: Project[] = [
       "Node.js 24",
       "PostgreSQL",
       "Google OpenID Connect",
+      "nginx / Ubuntu",
       "Vitest",
     ],
     techGroups: [
@@ -738,7 +773,7 @@ export const projects: Project[] = [
       },
       {
         label: "Print engine (framework-free core)",
-        items: ["Web Bluetooth", "NIIMBOT B1 Pro protocol", "Canvas 2D rendering", "Code 128 encoder", "qrcode", "Print queue", "Structured tracing"],
+        items: ["Web Bluetooth", "NIIMBOT B1 Pro protocol", "Canvas 2D rendering", "Code 128 encoder", "qrcode", "Print queue", "Web Worker timers", "BroadcastChannel relay", "Structured tracing"],
       },
       {
         label: "Offline & storage",
@@ -747,6 +782,10 @@ export const projects: Project[] = [
       {
         label: "Backend (optional)",
         items: ["Node.js 24 http", "PostgreSQL (pg)", "Google OIDC with PKCE", "HMAC-signed sessions", "Device tokens"],
+      },
+      {
+        label: "Hosting",
+        items: ["Self-hosted Ubuntu server", "nginx", "systemd", "Deploy, backup and restore scripts"],
       },
       {
         label: "Verification",
@@ -865,7 +904,16 @@ export const projects: Project[] = [
           "Sync is local-first and runs on its own timer, never on the print path: local writes happen first, the engine pushes print history and edits, then pulls configuration when the server has a newer version. The conflict policy is written down: templates last-writer-wins by timestamp with the losing local edit kept beside the winner, rules server-wins with a local backup, settings never synced. Without a backend URL the app runs standalone, which is how the hardware work is done.",
         ],
         note:
-          "The backend is implemented and tested against a fake identity provider and an in-memory store. It has not yet been run against real Google credentials or a live PostgreSQL, and no production deployment exists; the deployment path is documented, not verified.",
+          "The backend was built and tested against a fake identity provider and an in-memory store, then deployed: it now runs on a self-hosted Ubuntu server behind nginx and systemd, with a PostgreSQL store and Google sign-in configured, and its health endpoint reports both. The PostgreSQL store tests also run in CI against a real Postgres 16. A complete production sign-in, activation and provisioning round trip has not yet been recorded.",
+      },
+      {
+        heading: "Device labels and a print relay for other applications",
+        body: [
+          "A second module came from a different problem. Label printing had become an issue for ITMS, BBTech's inventory management system, and my manager asked me to solve it. The module prints a QR code of each device's barcode SKU with its group SKU and logo. It has its own dashboard, quick and direct print pages, job history, printers, templates and settings, and access to each module is approved per user by a super admin and enforced on the server.",
+          "Other web applications print through a relay page rather than talking to the printer. The calling site opens the relay with the label data, the relay hands the job over a same-origin BroadcastChannel to the Print Engine tab that already holds the Bluetooth connection, and a Web Lock makes sure exactly one open tab answers. The relay waits for the printer's actual result and reports it back, and it refuses outright when no printer is connected or the queue is paused, rather than reporting a queued job as printed.",
+          "I am also building the other side of that integration in ITMS, a Next.js and Supabase application developed by another BBTech developer, which I support and maintain: a small print service that validates the SKUs and opens the relay, and print buttons on the new-device form, the device details and the device drawer. The Print Engine itself, including this module, is my own independent development.",
+        ],
+        note: "The ITMS changes are on a branch and have not been merged or deployed in ITMS yet.",
       },
       {
         heading: "Things that went wrong, and what they taught",
@@ -874,12 +922,13 @@ export const projects: Project[] = [
           "A scanner did not send Enter, so six serials arrived as one value and were rejected. A scanner-test panel that records raw key events showed what the device actually sent, and the scan service now ends a scan on any of the suffixes scanners use.",
           "The offline build cached nothing, silently. The worker was active, the cache was empty, and the reload showed Chrome's error page. Attaching to the service worker over the DevTools protocol exposed a Workbox error about a duplicate precache entry for the logo, listed once by a glob and once explicitly. Verify what the worker cached, not whether it registered.",
           "A performance gate flagged regressions on metrics of a few milliseconds for identical code. Single runs of that size are timer jitter; the gate now compares medians of three runs and ignores anything under a ten-millisecond floor.",
+          "Labels slowed from about four seconds to thirteen or more whenever the workstation's tab was in the background. Chrome throttles timers in hidden tabs, and the Bluetooth pacing and status polls were plain timers. Those waits now run in a dedicated Web Worker, which is not throttled the same way: fifty ten-millisecond waits in a hidden tab went from 49.5 seconds to 0.84, and labels returned to about four seconds.",
         ],
       },
       {
         heading: "Testing and verification",
         body: [
-          "170 automated tests run without a printer: a simulated B1 Pro speaks the documented protocol, so framing, identification, the print sequence, error codes, disconnect recovery, the queue, both workflows, storage, offline readiness, auth, sync and the backend are all exercised in Node. The template freeze test and the no-network guard run with them, and a GitHub Actions workflow fails if the freeze baseline changes.",
+          "218 app tests and 26 backend tests run without a printer: a simulated B1 Pro speaks the documented protocol, so framing, identification, the print sequence, error codes, disconnect recovery, the queue, both workflows, storage, offline readiness, auth, sync and the backend are all exercised in Node. The template freeze test and the no-network guard run with them, a GitHub Actions workflow fails if the freeze baseline changes, and the PostgreSQL store tests run against a Postgres 16 service in CI.",
           "Two headless-Chrome scripts check what unit tests cannot: the offline boot, and the editor's behaviour at desktop, tablet and phone widths. A benchmark tool runs the pipeline at the pre-build baseline and at the current tree and fails on regressions.",
           "On the real printer, the B1 Pro connected, identified itself as model 4097 with a 576-dot head, and printed a router label with every acknowledgement in a session on 24 September 2026. The multi-label, scanner and offline runs on hardware are the next validation step, and the app records the timings for them itself.",
         ],
@@ -917,13 +966,25 @@ export const projects: Project[] = [
         label: "Google sign-in, provisioning and sync",
         state: "available",
         detail:
-          "Implemented and tested in software with a fake identity provider and an in-memory store. Not yet validated against real Google credentials or a live PostgreSQL.",
+          "Deployed with a PostgreSQL store and Google sign-in configured, and tested in CI against Postgres 16. A full production sign-in, activation and provisioning round trip has not been recorded yet.",
       },
       {
-        label: "Production deployment on the ERTH server",
-        state: "not-connected",
+        label: "Device-label module and print relay",
+        state: "implemented",
         detail:
-          "The nginx, systemd and PostgreSQL deployment is documented; nothing is deployed. The workstation runs standalone today.",
+          "Deployed with the engine: QR device labels, per-module access approved by a super admin, and a relay page that reports the printer's real result back to the calling site.",
+      },
+      {
+        label: "ITMS printing integration",
+        state: "available",
+        detail:
+          "Built on a branch of the ITMS repository: print from the new-device form, device details and the device drawer. Not yet merged or deployed there.",
+      },
+      {
+        label: "Production deployment",
+        state: "implemented",
+        detail:
+          "Live since 29 September 2026 at print.rukon.dev on a self-hosted Ubuntu server: nginx, a systemd service and PostgreSQL, with deploy, backup and restore scripts. The health endpoint reports the PostgreSQL store and Google sign-in.",
       },
       {
         label: "Integration into RPOMS",
@@ -934,10 +995,8 @@ export const projects: Project[] = [
     ],
     limitations: [
       "Web Bluetooth means Chrome or Edge on desktop or Android; no Firefox and no iPhone.",
-      "The print engine has printed one real label so far; throughput on the physical printer is measured by the app but not yet recorded for a full run.",
+      "Real labels have been printed on the B1 Pro, but no 10, 25, 50 or 100-label run, scanner run or offline run on the hardware is recorded yet.",
       "A device token in the workstation's IndexedDB can be read by anyone with local access to that PC; the mitigation is OS login and server-side revocation.",
-      "The admin pages are not role-gated in the app itself; only published changes are gated on the server.",
-      "Rate limiting on the sign-in routes and an administrator audit log are documented as open items.",
       "The repository is private. Access can be granted on request.",
     ],
     image: {
@@ -964,29 +1023,29 @@ export const projects: Project[] = [
     fullName: "ERTH: production homepage, technical SEO and GEO implementation",
     tagline: "A design-tool prototype rebuilt as a production website that ships 3.7 kB of JavaScript.",
     summary:
-      "The production website for ERTH, Malaysia's #1 e-waste collection service certified by Jabatan Alam Sekitar (JAS). As Website Designer and Developer collaborating with the engineering team, I designed the experience in Figma, built the high-performance production frontend (reducing JS from 250 kB to 3.7 kB and media assets by 75%), implemented comprehensive technical SEO and structured data, and am currently scaling the codebase with TypeScript.",
+      "A production homepage for ERTH, an e-waste collection and recycling service in Malaysia that presents itself as the country's #1 authorised collector, recognised by Jabatan Alam Sekitar (JAS). I built it from the client-approved design file, a self-extracting design-tool bundle, as static HTML, CSS and vanilla JavaScript on Vite: JavaScript cut from about 250 kB to 3.7 kB and images from 12.0 MB to 2.7 MB, with technical SEO, Schema.org structured data and accessibility, deployed on Vercel. I have since rebuilt the page in Next.js 16 and strict TypeScript; that rebuild is not yet deployed.",
     category: "Websites",
     categorySlug: "websites",
     categories: ["Websites"],
     hrOverview: {
-      valueProposition: "High-performance production website for Malaysia's #1 JAS-certified e-waste collector, designed in Figma, built with zero bloat, and scaling with TypeScript.",
-      role: "Website Designer & Developer",
-      roleScope: "Website Design (Figma), Production Frontend Build & TypeScript Migration (Team-based)",
-      context: "ERTH — Malaysia's #1 E-Waste Collector & Jabatan Alam Sekitar (JAS) Certified",
+      valueProposition: "A fast, accessible, search-ready homepage for a Malaysian e-waste collector, built from the client-approved design with 3.7 kB of JavaScript, and since rebuilt in Next.js and TypeScript.",
+      role: "Web Developer",
+      roleScope: "Production Build from an Approved Design, Technical SEO, Accessibility & Performance; Next.js / TypeScript Rebuild",
+      context: "ERTH, e-waste collection and recycling (Cyberjaya, Malaysia)",
       highlights: [
-        "Website designer and frontend builder for Malaysia's #1 e-waste collector, certified by Jabatan Alam Sekitar (JAS)",
-        "Prototyped the entire user interface and component vocabulary in Figma from client brand requirements",
+        "Built and deployed the production homepage for an e-waste collection and recycling service in Malaysia",
+        "Implemented the client-approved design file exactly, under a design lock, rather than redesigning it",
         "Rebuilt the approved design into pure semantic HTML, CSS, and vanilla JS, eliminating 250 kB of prototype framework runtime",
         "Optimized media payload by more than 75%: reduced 12.0 MB image assets to 2.7 MB using WebP and responsive srcset variants",
         "Engineered comprehensive structured data: Organization/RecyclingCenter, FAQPage (16 Q&As), and WebSite Schema.org JSON-LD",
-        "Collaborating within the engineering team to migrate and scale the web properties using modern TypeScript",
+        "Rebuilt the page as a Next.js 16, React 19 and strict TypeScript application of 21 section components with typed content and structured data (not yet deployed)",
       ],
-      technologies: ["TypeScript", "HTML5", "CSS3", "JavaScript", "Vite 7", "Figma", "Schema.org JSON-LD", "WebP", "axe-core"],
+      technologies: ["HTML5", "CSS3", "JavaScript", "Vite 7", "Schema.org JSON-LD", "WebP", "axe-core", "Next.js 16", "TypeScript"],
     },
-    role: "Website Designer & Developer",
-    roleScope: "Website Design (Figma), Production Frontend Build & TypeScript Migration (Team-based)",
-    period: "2026 (completed, ongoing TypeScript migration)",
-    affiliation: "ERTH (Malaysia's #1 E-Waste Collector, Jabatan Alam Sekitar Certified)",
+    role: "Web Developer",
+    roleScope: "Production Build from an Approved Design, Technical SEO, Accessibility & Performance; Next.js / TypeScript Rebuild",
+    period: "September 2026 (homepage deployed; Next.js rebuild in progress)",
+    affiliation: "ERTH (e-waste collection and recycling, Malaysia)",
     confidential: false,
     kind: "professional",
     tier: "featured",
@@ -995,19 +1054,22 @@ export const projects: Project[] = [
       "CSS3",
       "JavaScript",
       "Vite 7",
-      "Figma",
       "Schema.org JSON-LD",
       "WebP / srcset",
       "Responsive CSS",
     ],
     techGroups: [
       {
-        label: "Design & prototyping",
-        items: ["Figma", "Interactive prototype", "Component vocabulary"],
+        label: "Source",
+        items: ["Client-approved design-tool bundle", "Design lock", "Asset extraction"],
       },
       {
         label: "Implementation",
-        items: ["TypeScript", "HTML5", "CSS3", "Vanilla JavaScript", "Semantic HTML", "Responsive CSS", "Vite 7"],
+        items: ["HTML5", "CSS3", "Vanilla JavaScript", "Semantic HTML", "Responsive CSS", "Vite 7"],
+      },
+      {
+        label: "Rebuild (in progress)",
+        items: ["Next.js 16 (App Router)", "React 19", "TypeScript (strict)", "Tailwind CSS v4"],
       },
       {
         label: "Search & structured data",
@@ -1048,7 +1110,7 @@ export const projects: Project[] = [
       "Zero third-party requests: every font and image is self-hosted",
     ],
     workflow: [
-      "Prototype in Figma",
+      "Receive the approved design file",
       "Audit the approved design",
       "Rebuild as static HTML/CSS/JS",
       "Verify the build",
@@ -1058,14 +1120,14 @@ export const projects: Project[] = [
       {
         heading: "Overview",
         body: [
-          "ERTH is Malaysia's #1 e-waste collection and recycling service, officially certified by Jabatan Alam Sekitar (JAS) Malaysia and operated in partnership with Blue Bee Technologies: doorstep pickup, free shipping through Pos Malaysia, a 24/7 drop-off point in Cyberjaya, and cashless rewards. The site is a comprehensive single-page digital gateway covering residential and corporate e-waste pickups, real-time device pricing, accepted electronics catalogs, enterprise recycling compliance, and JAS-certified environmental standards.",
-          "As Website Designer and Developer working alongside our engineering team, I handled the project across its lifecycle: prototyping the complete interface and interaction design in Figma, engineering the approved design into a fast, zero-bloat production website (1,076 lines of markup, 534 lines of CSS and 228 lines of JavaScript bundled by Vite), and currently scaling the frontend architecture with TypeScript.",
+          "ERTH is an e-waste collection and recycling service in Malaysia, operated in partnership with Blue Bee Technologies, which presents itself as the country's #1 authorised collector, recognised by Jabatan Alam Sekitar (JAS): doorstep pickup, free shipping through Pos Malaysia, a 24/7 drop-off point in Cyberjaya, and cashless rewards. The site is a comprehensive single-page digital gateway covering residential and corporate e-waste pickups, real-time device pricing, accepted electronics catalogs, enterprise recycling compliance, and its environmental credentials.",
+          "I built the production website from the design file the client approved as final: a fast, zero-bloat static page (1,076 lines of markup, 534 lines of CSS and 228 lines of JavaScript bundled by Vite), and then rebuilding it as a typed Next.js application.",
         ],
       },
       {
         heading: "Problem",
         body: [
-          "A recycling and trade-in service depends on people trusting it enough to hand over a device and the data on it. As Malaysia's #1 collector certified by Jabatan Alam Sekitar, the page has to make the process, the pricing, the eligibility rules and the handling of personal data legible before someone commits to anything.",
+          "A recycling and trade-in service depends on people trusting it enough to hand over a device and the data on it. For a service that leans on its standing with Jabatan Alam Sekitar, the page has to make the process, the pricing, the eligibility rules and the handling of personal data legible before someone commits to anything.",
           "The approved design existed only as a self-extracting design-tool bundle: fonts, images and markup encoded as base64 inside script blocks, unpacked in the browser at runtime, with React and Babel pulled from a CDN and a runtime that re-rendered inline styles on every state change. It demonstrated the design. It was not a website anyone should ship.",
         ],
       },
@@ -1079,12 +1141,11 @@ export const projects: Project[] = [
       {
         heading: "My Role",
         body: [
-          "I served as the Website Designer and Developer for ERTH within our engineering team. ERTH is Malaysia's #1 e-waste collector certified by Jabatan Alam Sekitar (JAS), demanding high institutional trust, full accessibility compliance, and lightning-fast mobile responsiveness.",
-          "In the first phase, I designed the interface and worked it out as an interactive Figma prototype before implementation, establishing the visual system, layout structure, and the user flow from selecting an electronic device through to collection booking and payout.",
-          "In the second phase, I built the production website: extracting assets from the approved bundle, rebuilding the page into clean semantic code, eliminating 250 kB of framework runtime, and implementing full technical SEO and Schema.org structured data. Alongside our engineering team, I am now modernizing and scaling the codebase with TypeScript.",
+          "I was the developer of the ERTH homepage build, working from a design the client had approved as final. The site had to earn trust quickly, meet the client's accessibility requirements and hold up on mobile.",
+          "I built the production website: extracting assets from the approved bundle, rebuilding the page into clean semantic code, eliminating 250 kB of framework runtime, and implementing full technical SEO and Schema.org structured data. Afterwards I rebuilt the page in Next.js 16, React 19, strict TypeScript and Tailwind CSS: 21 section components, typed content and structured-data modules, a booking dialog with focus management, and a main landmark the original design file lacked. That rebuild is complete as a page and checked visually at five widths, but it is not deployed yet.",
         ],
         note:
-          "Team project: I served as the website designer and frontend builder, and continue to develop features with TypeScript alongside our team for Malaysia's #1 JAS-certified e-waste recycler.",
+          "Built while employed at Blue Bee Technologies, which operates ERTH. The design was supplied and approved before the build; the static build is the deployed one, and the Next.js and TypeScript rebuild is local and not deployed.",
       },
       {
         heading: "Engineering Approach",
@@ -1153,7 +1214,7 @@ export const projects: Project[] = [
       {
         label: "Production homepage build",
         state: "implemented",
-        detail: "Complete and deployed. Static HTML, CSS and vanilla JavaScript bundled by Vite 7.",
+        detail: "Complete and deployed on Vercel. Static HTML, CSS and vanilla JavaScript bundled by Vite 7; the source is public on GitHub.",
       },
       {
         label: "Title, meta description, canonical, robots",
@@ -1190,6 +1251,12 @@ export const projects: Project[] = [
           "Runs on every build and fails it on a missing asset, dead in-page link, missing head tag, unparseable JSON-LD, image without alt or intrinsic size, or a surviving prototype artefact.",
       },
       {
+        label: "Next.js and TypeScript rebuild",
+        state: "available",
+        detail:
+          "The whole page rebuilt in Next.js 16, React 19 and strict TypeScript, with typed content and structured data. Complete locally; not deployed and not yet pushed.",
+      },
+      {
         label: "Free-pickup eligibility wording",
         state: "not-connected",
         detail:
@@ -1203,7 +1270,7 @@ export const projects: Project[] = [
       },
     ],
     limitations: [
-      "The content and SEO strategy was supplied by the client. This engagement was the design prototyping, the production build and the compliance implementation, not the strategy.",
+      "The content and SEO strategy was supplied by the client. This engagement was the production build and the requirements-compliance implementation, not the design or the strategy.",
       "Two sections are placeholders in the approved design pending client-supplied photography, and are carried through rather than invented.",
       "One eligibility rule is stated two ways in the approved copy and remains a client content decision.",
     ],
@@ -1212,7 +1279,10 @@ export const projects: Project[] = [
       alt: "ERTH mark",
       variant: "mark",
     },
-    links: [{ label: "Live website", href: "https://erth.app", external: true }],
+    links: [
+      { label: "Deployed build", href: "https://erth-homepage.vercel.app", external: true },
+      { label: "Source on GitHub", href: "https://github.com/tirukon015/erth-homepage", external: true },
+    ],
   },
 
   {
@@ -1729,12 +1799,328 @@ export const projects: Project[] = [
   },
 
   {
+    slug: "rpoms-ai",
+    name: "RPOMS AI",
+    fullName: "RPOMS AI: router cosmetic inspection where the AI observes and rules decide",
+    tagline: "A photo inspection where a vision model describes the damage and a deterministic rule engine makes the call.",
+    summary:
+      "An AI-assisted visual inspection system for refurbished routers, built for the same ERTH × Maxis programme as RPOMS but kept fully separate from it. A photo of a router casing passes a quality gate, a self-hosted vision model (Qwen2.5-VL 7B on Ollama) reports only what it sees, and a versioned, deterministic rule engine applies the programme's written cosmetic criteria to answer Acceptable, Not acceptable or Unclear. A qualification gate stops it issuing any verdict it has not proved on the reference set. Next.js 16 and PostgreSQL on Supabase, 247 automated tests. The public checker is deployed; no model is active in production yet, and it has not been used on real line photos.",
+    category: "Web Apps / Software",
+    categorySlug: "web-apps",
+    categories: ["Web Apps / Software", "Systems / ERP / WMS"],
+    hrOverview: {
+      valueProposition:
+        "Turns a client's photo-based cosmetic criteria into a traceable inspection decision, with an AI that observes and never decides.",
+      role: "Sole Developer",
+      roleScope: "Architecture, Vision Pipeline, Rule Engine, Evaluation, Self-hosted Inference & Deployment",
+      context: "Blue Bee Technologies × ERTH × Maxis programme (Cyberjaya, Malaysia)",
+      highlights: [
+        "Vision model output has no verdict field: it reports kind, count, extent and visibility, and a pure, versioned rule engine decides",
+        "Qualification gate: a model may only issue the verdicts it proved on the thirteen reference photos, and everything else is Unclear",
+        "Quality gate rejects blurred, dark, over-exposed, glare-filled or off-frame photos before any model is called",
+        "Free, self-hosted inference: Ollama behind a token-checked gateway and a tunnel, reached from a Vercel deployment",
+        "Evaluated honestly: under the gate, 2 correct and 0 wrong verdicts on the references, with the other 11 left Unclear",
+        "247 automated tests with Vitest and in-process PostgreSQL (PGlite)",
+      ],
+      technologies: ["Next.js 16", "React 19", "TypeScript", "PostgreSQL", "Supabase", "Ollama", "Qwen2.5-VL", "Zod", "Vitest"],
+    },
+    role: "Sole Developer",
+    roleScope: "Architecture, Vision Pipeline, Rule Engine, Evaluation, Self-hosted Inference & Deployment",
+    period: "September 2026 (deployed; model not yet active)",
+    affiliation: "Blue Bee Technologies Sdn. Bhd., ERTH × Maxis programme",
+    confidential: true,
+    kind: "professional",
+    tier: "secondary",
+    facts: [
+      { value: "247", label: "automated tests" },
+      { value: "0", label: "wrong verdicts under the gate, 13 references" },
+    ],
+    tech: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS v4", "PostgreSQL / Supabase", "Ollama", "Qwen2.5-VL 7B", "Zod", "Vitest + PGlite"],
+    techGroups: [
+      { label: "Application", items: ["Next.js 16 (App Router)", "React 19", "TypeScript", "Tailwind CSS v4", "Zod"] },
+      { label: "Data", items: ["PostgreSQL (Supabase)", "postgres.js", "PGlite for local work and tests", "Row Level Security", "Immutable reference tables"] },
+      { label: "Vision & decision", items: ["Qwen2.5-VL 7B (Apache-2.0)", "Ollama", "Observation-only output contract", "Deterministic rule engine", "Qualification gate", "Image quality gate"] },
+      { label: "Inference hosting", items: ["Self-hosted GPU/iGPU (Vulkan)", "Token-checked inference gateway", "Cloudflare tunnel", "Vercel"] },
+      { label: "Security & quality", items: ["scrypt and Google OAuth admin sign-in", "HMAC-signed sessions", "Rate limiting", "Vitest", "GitHub"] },
+    ],
+    highlights: [
+      "The model is asked what it sees, never whether the router passes: its output schema has no field for a verdict",
+      "ERTH's criteria are applied by a pure rule engine, versioned with every decision, so any verdict can be traced to the rule and observation behind it",
+      "No numeric thresholds were invented: where the written criteria are vague, the answer is Unclear by design",
+      "A qualification gate turns what the model has proved into what it is allowed to say, and removing it would have passed six damaged routers",
+      "Photos are downscaled and re-encoded in the browser, which strips location data, and are only ever served to an administrator",
+      "Inference costs nothing: an open-weight model on local hardware, reached through a gateway that checks a token",
+    ],
+    workflow: [
+      "Photograph one face of the router",
+      "Quality gate",
+      "Vision model observes",
+      "ERTH rules decide",
+      "Qualification gate",
+      "Acceptable, Not acceptable or Unclear",
+    ],
+    sections: [
+      {
+        heading: "Overview",
+        body: [
+          "RPOMS AI checks the cosmetic condition of a refurbished router from a photo. Someone photographs one face of the casing, and the system answers ACCEPTABLE, NOT ACCEPTABLE or UNCLEAR, with a short explanation, against the programme's written acceptance criteria. An admin area, not linked from the public page, covers inspections and reviews, the reference set, model configuration and lifecycle, settings and an audit log.",
+          "It belongs to the RPOMS ecosystem but shares nothing with RPOMS: its own repository, its own database and its own deployment. I built it alone, from the design of the decision pipeline to the evaluation and the inference setup.",
+        ],
+      },
+      {
+        heading: "Problem",
+        body: [
+          "The programme's cosmetic acceptance criteria exist only as thirteen annotated example photos in a spreadsheet, each with a note and a yes or no. The notes use words like long, multiple, minimal and small, with no numbers behind them.",
+          "Handing that to a vision model and asking whether a router passes would produce confident verdicts with nothing traceable behind them. The goal was a decision that can be explained, reproduced and audited, and that says Unclear rather than guessing.",
+        ],
+      },
+      {
+        heading: "How a decision is made",
+        body: [
+          "One pipeline function is shared by the public check and the evaluation runs. First a quality gate, with no model involved, rejects a photo that is too small, blurred, dark, over-exposed, full of glare, or where no router or no plain surface is visible. Then the vision model reports observations only: the kind of mark, how many, how large and how visible. Its output contract has no verdict field.",
+          "A deterministic rule engine applies ERTH's categories to those observations, and every decision records the rule version it was made under. Finally a qualification gate compares the verdict with what the active model has proved on the reference set: a model may accept only if it made no false accepts and at least two correct accepts there. Anything it has not earned becomes UNCLEAR, which the public sees as a request to check manually.",
+          "The thirteen references are pinned by hash and protected by database triggers that refuse updates and deletes. Because their original images carry drawn annotations, annotation-free copies are derived for evaluation, also hash-pinned.",
+        ],
+      },
+      {
+        heading: "Self-hosted inference",
+        body: [
+          "The application runs on Vercel; the model does not. Inference runs on local hardware through Ollama, behind a small gateway that checks a token, reached through a Cloudflare tunnel. The model is Qwen2.5-VL 7B, open-weight and Apache-2.0 licensed, so the inspection itself costs nothing.",
+          "The cost that replaced money was time. On the CPU a new photo took 119 seconds. Enabling the integrated GPU through Vulkan brought the median to 41 seconds (38 to 82), and capping the image the model sees at 896 pixels, the scale it was evaluated at, kept a full-size phone photo inside the 60-second function limit.",
+        ],
+      },
+      {
+        heading: "Evaluation",
+        body: [
+          "On the thirteen references with annotations removed, the model's raw observations run through the rules give 3 correct, 6 false accepts, 1 false reject and 3 unclear. That is not good enough to accept a unit, and the system says so rather than hiding it.",
+          "Under the qualification gate, the latest run (22 September 2026) gives 2 correct rejections, 0 wrong verdicts and 11 Unclear. Removing the gate would have turned six damaged routers into passes to gain one correct acceptance. Four degraded control photos (glare, blur, a very dark frame and a blank frame) were all stopped by the quality gate before reaching the model.",
+        ],
+        note: "Thirteen references are a floor, not statistical evidence, so no accuracy figure is claimed. The reference photos are client material and are not shown here.",
+      },
+      {
+        heading: "Security and data",
+        body: [
+          "The public check needs no account. It accepts JPEG or PNG only, checked by magic bytes, up to 4 MB, from the same origin, with burst and hourly rate limits keyed by an HMAC of the address. The browser downscales and re-encodes each photo before upload, which strips EXIF and location data.",
+          "Photos are stored in PostgreSQL and served only through an admin-guarded route. Admins sign in with a scrypt-hashed password or Google on an allow-list; sessions are HMAC-signed, HttpOnly cookies that expire after twelve hours, the role is re-read on every request, and an unauthorised request gets a 404. Row Level Security is enabled on every table.",
+        ],
+      },
+      {
+        heading: "Testing",
+        body: [
+          "247 automated tests with Vitest across 16 files, using PGlite, PostgreSQL compiled to WebAssembly, so the schema, triggers and queries are tested without a database server. Two further tests call a live model and skip themselves when no model endpoint is configured.",
+        ],
+      },
+    ],
+    status: [
+      {
+        label: "Public checker and admin area",
+        state: "implemented",
+        detail: "Deployed on Vercel with PostgreSQL on Supabase.",
+      },
+      {
+        label: "Quality gate, rule engine, qualification gate",
+        state: "implemented",
+        detail: "In the deployed code and covered by the test suite.",
+      },
+      {
+        label: "Self-hosted inference through the gateway",
+        state: "available",
+        detail: "Verified end to end on local hardware on 20 and 22 September 2026. Available only while the inference machine and tunnel are running.",
+      },
+      {
+        label: "Active model in production",
+        state: "not-connected",
+        detail: "No model is activated in the production database yet, so a production check currently answers that the AI check is unavailable.",
+      },
+      {
+        label: "Use on the refurbishment line",
+        state: "not-connected",
+        detail: "Not used on real line photos yet; no real inspection photo with a verified verdict has been evaluated.",
+      },
+      {
+        label: "Training and a permanent inference host",
+        state: "not-connected",
+        detail: "Dataset versioning and model lifecycle are scaffolded; training is deliberately not wired, and the move to a dedicated server has not started.",
+      },
+    ],
+    limitations: [
+      "The model is weak at this task: on the references it never reported a dent or tape residue.",
+      "Inference is available only while the local machine and tunnel are up, and handles one analysis at a time.",
+      "Thirteen low-resolution references are a floor, not statistical evidence; no accuracy figure is claimed.",
+      "The model sees photos at 896 pixels on the long edge, which can hide small marks.",
+      "The repository is private. Access can be granted on request.",
+    ],
+    roadmap: [
+      "Activate a model in production and move inference to a dedicated, always-on server.",
+      "Collect real workshop photos with verdicts from an ERTH-trained reviewer, and re-evaluate on them.",
+      "Train or fine-tune only once there are enough verified examples per verdict.",
+    ],
+    confidentialNotice:
+      "RPOMS AI is proprietary work for a client programme. The ERTH reference photos it is evaluated on are client material and do not appear on this page.",
+    links: [
+      {
+        label: "GitHub profile (RPOMS AI repository is private)",
+        href: "https://github.com/tirukon015",
+        external: true,
+      },
+      {
+        label: "Read the article",
+        href: "/blog/a-vision-model-that-only-observes",
+      },
+    ],
+  },
+
+  {
+    slug: "itms",
+    name: "ITMS",
+    fullName: "ITMS: BBTech's inventory management system, from an Excel workflow to a web application",
+    tagline: "An inventory workflow that started in Excel, moved to the web, and gained label printing along the way.",
+    summary:
+      "BBTech's inventory management system for its refurbished-laptop operation, and how it evolved. It began as the BBTech Stock Tracker, an Excel workbook I worked on and maintained: live from July 2025 and developed through a versioned change log, with automatic barcode and group SKUs, a receiving-to-sold pipeline across hardware, software, quality-check and e-commerce stages, VBA macros that log every status change with its time and author, and a written user guide. The team ran the operation on it and submitted it weekly. When BBTech moved the workflow into a web application in 2026, another BBTech developer built it while I was committed to other projects. Since its release I troubleshoot, fix and improve it with the developer. Label printing, already part of the Excel workflow, became a problem I was asked to solve: I built the RPOMS Print Engine independently and am integrating it with ITMS.",
+    category: "Systems / ERP / WMS",
+    categorySlug: "systems",
+    categories: ["Systems / ERP / WMS", "Web Apps / Software"],
+    hrOverview: {
+      valueProposition:
+        "An inventory system that grew from a macro-enabled Excel stock tracker into a web application: I worked on and maintained the tracker, support the web system, and am building its label printing.",
+      role: "Contributor: Excel Workflow, Maintenance & Printing Integration",
+      roleScope: "Excel workflow and automation; troubleshooting, maintenance and improvements of the web system; Print Engine integration",
+      context: "BBTech (Blue Bee Technologies), Cyberjaya. The web application was developed by another BBTech developer.",
+      highlights: [
+        "Worked on and maintained the BBTech Stock Tracker, the macro-enabled Excel workflow the operation ran on from July 2025: SKU generation, a department pipeline, a VBA status log and a user guide",
+        "The tracker's concepts (barcode and group SKUs, receiving, department stages, sold and warranty tracking, an audit trail) became the core of the web ITMS, built by another BBTech developer",
+        "Troubleshoot, fix and improve the web system in use, working with its developer when changes are needed",
+        "Asked to solve label printing: built the RPOMS Print Engine independently, as my own project",
+        "Integrating it into ITMS: print buttons on the new-device form, device details and device drawer (not yet merged)",
+      ],
+      technologies: ["Microsoft Excel / MS365", "VBA", "Next.js", "TypeScript", "Supabase", "Web Bluetooth (via Print Engine)"],
+    },
+    role: "Contributor: Excel Workflow, Maintenance & Printing Integration",
+    roleScope: "Excel workflow and automation; troubleshooting, maintenance and improvements of the web system; Print Engine integration",
+    period: "2025 – present (Excel tracker live July 2025; web application 2026; printing integration in progress)",
+    affiliation: "BBTech (Blue Bee Technologies Sdn. Bhd.)",
+    confidential: true,
+    kind: "professional",
+    tier: "secondary",
+    ecosystem: {
+      label: "Related systems",
+      systems: [
+        {
+          name: "RPOMS Print Engine",
+          relation: "My independent project, integrating with ITMS",
+          summary:
+            "The Web Bluetooth label-printing workstation I built on my own. Its device-label module and print relay are what ITMS prints through.",
+          slug: "rpoms-print-engine",
+        },
+      ],
+    },
+    tech: ["Microsoft Excel / MS365", "VBA macros", "Dynamic formulas", "Next.js", "React", "TypeScript", "Supabase", "Web Bluetooth (via Print Engine)"],
+    techGroups: [
+      { label: "Excel phase (my work)", items: ["Microsoft Excel / MS365", "Dynamic formulas (LET, lookups, TEXTJOIN)", "VBA macros", "Data validation", "Conditional formatting", "User documentation"] },
+      { label: "Web application (built by another developer)", items: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Supabase"] },
+      { label: "Printing (my work)", items: ["RPOMS Print Engine", "Print relay page", "ITMS print service and buttons"] },
+    ],
+    highlights: [
+      "The operation first ran on the BBTech Stock Tracker, a macro-enabled Excel workbook I worked on and maintained, live from 1 July 2025 and developed through a versioned change log",
+      "Its formulas generate barcode and group SKUs, count stock by department stage and compute warranty dates; its VBA macros log every status change with the time spent and who made it",
+      "The web ITMS was built from that operational process by another BBTech developer in 2026, while I was committed to other projects",
+      "Since its release I troubleshoot, fix and improve it, and work with the developer whenever issues or changes are needed",
+      "Asked by my manager to solve label printing, I built the RPOMS Print Engine independently rather than patching around the problem",
+      "The ITMS side of the integration validates each device's SKUs and hands the label to the Print Engine; ITMS never talks to the printer itself",
+    ],
+    workflow: [
+      "Excel stock tracker in daily use",
+      "Moved to a web application",
+      "ITMS released and in use",
+      "Troubleshooting, maintenance and improvements",
+      "Label printing through the Print Engine",
+    ],
+    sections: [
+      {
+        heading: "Overview",
+        body: [
+          "ITMS is the inventory management system for BBTech's refurbished-device operation: devices are received, identified by barcode and group SKUs, moved through their stages, and sold or handled under warranty. This page is about how it got there and what my part in it has been, which changed from phase to phase.",
+        ],
+        note: "The web application's code was written by another BBTech developer. The contributions described on this page are mine; the system's internals are not shown because it is internal company software.",
+      },
+      {
+        heading: "The Excel workflow",
+        body: [
+          "Before any web application, the operation ran on the BBTech Stock Tracker, a macro-enabled Excel workbook that went live on 1 July 2025. I worked on it as a small product, and its own change history records versions from June 2025 to January 2026: splitting receiving, technician and e-commerce work into separate sheets; generating barcode SKUs from the serial, model and specification; group SKUs so e-commerce could list variants together on Easystore; switching long SKUs to QR codes; and tracking cost, sell price, sold date and warranty end date.",
+          "The automation lived in formulas and VBA. A macro logs each status change with the timestamp, the time spent in the previous stage and the person who made the change, so the time each department took could be measured. An Update button lets staff scan a SKU and edit its record without touching formula-driven cells. A user guide explains which columns are formulated, which are drop-downs and which are free text, and how to extend the drop-down lists, and several versions were changes users asked for. Labels were printed from it on a NIIMBOT printer, the same printer the Print Engine later drives.",
+          "The team ran the operation on it and shared it as a weekly submission. It is also where I learned the process itself, which is what still makes me useful when the web system misbehaves.",
+        ],
+      },
+      {
+        heading: "The web application",
+        body: [
+          "BBTech then moved the workflow into a web application. I was committed to other BBTech projects at the time, so another developer built the web ITMS: a Next.js, TypeScript and Supabase application covering devices, SKU generation, sales, warranty, members, audit history and reporting.",
+          "I did not write that application, and this portfolio does not claim it.",
+        ],
+      },
+      {
+        heading: "Supporting it in use",
+        body: [
+          "Once the web ITMS was released and the team started using it, I became actively involved again. I troubleshoot problems as they come up, fix issues, and make improvements, working with the developer whenever something needs changing in the application itself.",
+          "Recent examples in the code: the Excel export library is now loaded only when someone exports, so pages with tables no longer ship it, and a duplicate fetch of the device list on first load was removed.",
+        ],
+      },
+      {
+        heading: "Solving label printing",
+        body: [
+          "Label printing was one of the problems I took on, and my manager asked me to solve it. Rather than patch around it inside ITMS, I built the RPOMS Print Engine: my own, independently developed browser workstation that drives a NIIMBOT B1 Pro thermal printer over Web Bluetooth, with a device-label module for BBTech's QR labels and a relay page that other applications print through.",
+          "I am now building the ITMS side of that integration: a small print service that validates a device's barcode and group SKUs and opens the relay, and print buttons on the new-device form, the device details and the device drawer, plus a printer-setup button in the devices header. ITMS never talks to the printer; the open, connected Print Engine does, and reports the real result back.",
+        ],
+        note: "The integration and the fixes above are on a branch and have not yet been merged into ITMS.",
+      },
+    ],
+    status: [
+      {
+        label: "BBTech Stock Tracker (Excel)",
+        state: "implemented",
+        detail: "Live from 1 July 2025 and used operationally, including weekly submissions; superseded by the web ITMS.",
+      },
+      {
+        label: "Web ITMS",
+        state: "implemented",
+        detail: "In use at BBTech. Developed by another BBTech developer; I troubleshoot, maintain and improve it.",
+      },
+      {
+        label: "RPOMS Print Engine device-label module",
+        state: "implemented",
+        detail: "Live as part of my independently developed Print Engine.",
+      },
+      {
+        label: "ITMS printing integration and recent fixes",
+        state: "available",
+        detail: "Built on a branch of the ITMS repository; not yet merged or deployed.",
+      },
+    ],
+    limitations: [
+      "ITMS is internal company software, so there is no public link or screenshot.",
+      "The Excel tracker is internal and contains operational data, so it is described rather than shown.",
+    ],
+    confidentialNotice:
+      "ITMS is BBTech's internal software. The web application was developed by another BBTech developer; this page describes the Excel tracker I worked on and my contributions to the web system at a level that is safe to share publicly, with no internal screenshots, data or credentials.",
+    roadmap: [
+      "Merge the printing integration into ITMS with the developer.",
+      "Validate label printing on the line with the real printer across a full batch.",
+    ],
+    links: [
+      {
+        label: "RPOMS Print Engine case study",
+        href: "/work/rpoms-print-engine",
+      },
+    ],
+  },
+
+  {
     slug: "drivekeep",
     name: "DriveKeep",
     fullName: "DriveKeep: photo-first fuel, mileage and maintenance log for iOS and the web",
     tagline: "Log a refill from two photos, and never mistake a guess for a measurement.",
     summary:
-      "A personal log for running a car and a motorcycle. A refill starts with a receipt photo and an odometer photo; extraction fills in the form and the owner confirms. Economy is only reported when it was measured between two full tanks, estimates are labelled as estimates, and a vehicle with nothing to measure from shows \"Not available\" rather than a default. One repository: a SwiftUI iOS app with on-device extraction and opt-in Supabase sync, a Next.js web app with server-side OCR, and a standalone Express backend. Personal project, not deployed.",
+      "A personal log for running a car and a motorcycle. A refill starts with a receipt photo and an odometer photo; extraction fills in the form and the owner confirms. Economy is only reported when it was measured between two full tanks, estimates are labelled as estimates, and a vehicle with nothing to measure from shows \"Not available\" rather than a default. One repository: a SwiftUI iOS app with on-device extraction and opt-in Supabase sync, a Next.js web app with server-side OCR, and a standalone Express backend. Personal project; the web app is deployed on Vercel, the iOS app is not published.",
     category: "iOS / Mobile",
     categorySlug: "ios-mobile",
     categories: ["iOS / Mobile", "Web Apps / Software"],
@@ -1756,7 +2142,7 @@ export const projects: Project[] = [
     },
     role: "Sole Developer",
     roleScope: "Product, iOS App, Web App, Backend API, Database & Security, Tests",
-    period: "September 2026 (not deployed)",
+    period: "September 2026 (web app on Vercel; iOS unpublished)",
     affiliation: "Personal project",
     confidential: false,
     kind: "personal-project",
@@ -1807,7 +2193,7 @@ export const projects: Project[] = [
         heading: "Overview",
         body: [
           "DriveKeep is a log for the running costs of a car and a motorcycle: fuel, mileage, servicing and everything else a vehicle costs. It started from a spreadsheet of refills and repairs, and it is built around one rule the spreadsheet could not enforce: a number that was measured and a number that was estimated must never look the same, and a number that cannot be worked out is not shown at all.",
-          "The repository holds three parts. The iOS app is the most developed: extraction on the phone, local data by default, and Google sign-in with opt-in sync to Supabase. The Next.js web app applies the same rules with OCR on the server, and it is the part shown in the screenshots below. A standalone Express backend with its own database and tests is built but not yet connected to either app. Nothing is deployed.",
+          "The repository holds three parts. The iOS app is the most developed: extraction on the phone, local data by default, and Google sign-in with opt-in sync to Supabase. The Next.js web app applies the same rules with OCR on the server, and it is the part shown in the screenshots below. A standalone Express backend with its own database and tests is built but not yet connected to either app. The web app is deployed on Vercel from the main branch; the iOS app is not published.",
         ],
         figures: [
           {
@@ -1922,8 +2308,8 @@ export const projects: Project[] = [
     status: [
       {
         label: "Web app: photo-first refill, OCR, engine, guards, maintenance, reports",
-        state: "available",
-        detail: "Working in a local production build of the latest commit and covered by the engine tests. Not deployed.",
+        state: "implemented",
+        detail: "Live on Vercel at drivekeep-gamma.vercel.app, deployed from the main branch and covered by the engine tests. It has no sign-in yet.",
       },
       {
         label: "iOS app with on-device extraction",
@@ -1941,14 +2327,14 @@ export const projects: Project[] = [
         detail: "64 of 64 checks pass after migrate and seed. Not connected to either app.",
       },
       {
-        label: "Web sign-in, one shared backend, deployment",
+        label: "Web sign-in and one shared backend",
         state: "not-connected",
         detail: "Not built yet.",
       },
     ],
     limitations: [
-      "Nothing is deployed.",
-      "The web app has no sign-in; its API is open to anyone who can reach it.",
+      "The iOS app is not published on the App Store or TestFlight.",
+      "The deployed web app has no sign-in; its API is open to anyone who can reach it.",
       "The three parts keep separate data: the iOS app uses Supabase, the web app its own database, and the backend is not used by either.",
       "No automated iOS tests, and the iOS app was not built for this write-up.",
       "The backend's tests need a migrated and seeded database.",
@@ -1961,9 +2347,13 @@ export const projects: Project[] = [
       "Unit tests for the iOS calculation engine and extraction",
       "Backend tests that create their own database",
       "Edit and delete for refills and expenses",
-      "Deployment",
     ],
     links: [
+      {
+        label: "Live web app",
+        href: "https://drivekeep-gamma.vercel.app",
+        external: true,
+      },
       {
         label: "GitHub profile (DriveKeep repository is private)",
         href: "https://github.com/tirukon015",
@@ -1976,9 +2366,9 @@ export const projects: Project[] = [
     slug: "spendrop",
     name: "SpenDrop",
     fullName: "SpenDrop: on-device expense capture from Malaysian payment screenshots",
-    tagline: "Share a payment screenshot, get an expense. Read on the phone, never sent anywhere.",
+    tagline: "Share a payment screenshot, get an expense. Read on the phone, local-first, with shared bills and optional cloud backup.",
     summary:
-      "A native iOS expense tracker for Malaysian daily spending. Share a payment confirmation from Touch 'n Go, a bank app or Apple Pay, or pick a receipt photo, and SpenDrop reads the amount, merchant, provider, category, date and reference on the phone with Apple's Vision framework and a rule-based parser, then asks you to confirm. A Share Extension and the app share one on-device store; there is no server, no network code and no third-party package. Personal project, run on the simulator and the developer's iPhone; not on the App Store.",
+      "A native iOS expense tracker for Malaysian daily spending. Share a payment confirmation from Touch 'n Go, a bank app or Apple Pay, or pick a receipt photo, and SpenDrop reads the amount, merchant, provider, category, date and reference on the phone with Apple's Vision framework and a rule-based parser, then asks you to confirm. Version 1.4.0 adds shared bills and splits, money in and out, person balances and accounts on a versioned SwiftData schema with safe migrations and backups, plus optional Google or email sign-in with cloud backup to Supabase. Local-first, with no third-party packages. Personal project, verified on the iOS simulator; not on the App Store.",
     category: "iOS / Mobile",
     categorySlug: "ios-mobile",
     categories: ["iOS / Mobile"],
@@ -1990,13 +2380,16 @@ export const projects: Project[] = [
       context: "Personal project, built for everyday Malaysian payments",
       highlights: [
         "Share Extension: any payment screenshot goes from the iOS share sheet to a filled-in review form",
-        "On-device OCR with Apple Vision and a Malaysian transaction parser covering 16 payment providers",
+        "On-device OCR with Apple Vision and a Malaysian transaction parser covering 11 banks and e-wallets, plus card, QR, cash and bank-transfer payments",
         "Every RM value is classified (total, fee, balance, cashback, advertisement) so an advert's price is never chosen as the payment",
-        "Duplicate protection by transaction reference, or same merchant and amount on the same day",
+        "Each payment records how it was paid (Payment Channel) separately from where the money came from (Funding Account), and a reconciliation engine merges an Apple Pay record with its later bank record instead of counting it twice",
         "App and extension share one SwiftData store through an App Group",
-        "No server, no network calls and no third-party packages: Apple frameworks only",
+        "Shared bills, splits, money in and out and person balances, with all money maths in integer sen so splits always add up",
+        "Local-first: works offline with no account; optional Supabase sign-in adds an append-only cloud backup with Row Level Security policies",
+        "Versioned SwiftData schema (V1 to V3) with a copy taken before every upgrade and a safe mode that never deletes data",
+        "274 in-app checks and 6 XCUITest flows passing on the iOS simulator; no third-party packages",
       ],
-      technologies: ["Swift", "SwiftUI", "SwiftData", "Apple Vision", "Share Extension", "App Groups", "Swift Charts"],
+      technologies: ["Swift", "SwiftUI", "SwiftData", "Apple Vision", "Share Extension", "App Groups", "Swift Charts", "Supabase", "XCUITest"],
     },
     role: "Sole Developer",
     roleScope: "Product, iOS App & Share Extension, OCR Parser, Data Model, Tests",
@@ -2006,23 +2399,27 @@ export const projects: Project[] = [
     kind: "personal-project",
     tier: "secondary",
     facts: [
-      { value: "48 / 48", label: "in-app parser and persistence tests" },
-      { value: "0", label: "network calls or third-party packages" },
+      { value: "274 / 274", label: "in-app checks" },
+      { value: "6 / 6", label: "UI test flows" },
+      { value: "0", label: "third-party packages" },
     ],
-    tech: ["Swift", "SwiftUI", "SwiftData", "Apple Vision", "Share Extension", "App Groups", "Swift Charts"],
+    tech: ["Swift", "SwiftUI", "SwiftData", "Apple Vision", "Share Extension", "App Groups", "Swift Charts", "App Intents", "Supabase (optional)", "XCUITest"],
     techGroups: [
       { label: "App", items: ["Swift", "SwiftUI", "SwiftData", "Swift Charts", "PhotosUI"] },
       { label: "Capture", items: ["Share Extension (UIKit host + SwiftUI)", "App Group shared container", "Apple Vision (VNRecognizeTextRequest)"] },
       { label: "Parsing", items: ["Rule-based Malaysian transaction parser", "Monetary candidate classification", "Provider, merchant and category detection", "Duplicate detector"] },
-      { label: "Verification", items: ["48-case in-app test runner", "Image pipeline diagnostics", "Simulator builds with xcodebuild"] },
+      { label: "Data & money", items: ["SwiftData VersionedSchema (V1 to V3)", "SchemaMigrationPlan", "Integer-sen money maths", "Local backups and JSON export"] },
+      { label: "Accounts & cloud (optional)", items: ["Supabase Auth, Storage and Postgres (RLS)", "Google sign-in with OAuth PKCE", "ASWebAuthenticationSession", "Keychain"] },
+      { label: "Verification", items: ["274-check in-app test runner", "6 XCUITest flows", "Image pipeline diagnostics", "Simulator builds with xcodebuild"] },
     ],
     highlights: [
       "Sharing a screenshot to SpenDrop opens a review form already filled in: amount, merchant, provider, category, date and reference",
-      "Receipts are read on the phone with Apple Vision; the app contains no networking code at all",
+      "Receipts are read on the phone with Apple Vision; nothing leaves the device unless the user turns on cloud backup",
       "Each RM value gets a label, and advertisement, balance, fee and cashback amounts are excluded from the payment",
       "Sender and recipient banks are told apart in interbank transfers, and Apple Pay is linked to the underlying bank",
       "The same screenshot shared twice is caught before it is saved, with an explicit Add Anyway",
-      "PayBook keeps frequent transfer payees with their account numbers masked",
+      "PayBook keeps people and their payment details, shows who owes whom, and records repayments",
+      "Splits equally, by parts or by exact amounts, whoever paid, and always add up to the sen",
     ],
     workflow: [
       "Share a payment screenshot",
@@ -2050,7 +2447,7 @@ export const projects: Project[] = [
         heading: "Overview",
         body: [
           "Most everyday payments in Malaysia now end with a confirmation screen: Touch 'n Go, a bank app, DuitNow QR, Apple Pay. SpenDrop turns that screen into an expense. Take a screenshot, share it to SpenDrop, check the form it fills in, and save. Cash spending goes in by hand with Quick Cash.",
-          "It is a native iOS app with a Share Extension, written in Swift and SwiftUI with SwiftData for storage and Apple's Vision framework for OCR. Everything runs on the phone: there is no server, no networking code and no third-party package. It runs on the simulator and on the developer's iPhone; it is not on the App Store.",
+          "It is a native iOS app with a Share Extension, written in Swift and SwiftUI with SwiftData for storage and Apple's Vision framework for OCR. Reading and parsing run on the phone, and the app is local-first: it works offline with no account, and there is no third-party package. Version 1.4.0 adds optional sign-in with cloud backup to Supabase. It is verified on the simulator; it is not on the App Store.",
         ],
         figures: [
           {
@@ -2080,7 +2477,7 @@ export const projects: Project[] = [
             alt: "Architecture diagram: the Share Extension and the app both feed a shared on-device engine of Vision OCR, amount candidate classification, provider and merchant detection, a duplicate detector and a review screen, which saves to an App Group SwiftData store read by the dashboard, analytics and PayBook.",
             width: 1600,
             height: 900,
-            caption: "Two targets compile the same engine and share one store. No server and no network calls.",
+            caption: "Two targets compile the same engine and share one store. Reading and parsing never leave the phone.",
             wide: true,
           },
         ],
@@ -2102,9 +2499,17 @@ export const projects: Project[] = [
         ],
       },
       {
+        heading: "Payment channels, accounts and reconciliation",
+        body: [
+          "A payment answers two separate questions, and the app keeps them separate. The Payment Channel is how it was paid: Apple Pay, QR payment, DuitNow QR, bank transfer, online banking, card, e-wallet or cash. The Funding Account is where the money came from, a bank, an e-wallet or cash. Detection is conservative: when the screen does not say, the channel stays Unknown rather than being guessed. Since 1.4.0 funding accounts are real records, with money recorded in and out per account, and deliberately no balance field, because the app records activity rather than reading a bank.",
+          "The same purchase often arrives twice: once as an Apple Pay tap and again, days later, as the bank's own record. Before saving, a reconciliation engine looks for an existing expense with the same amount within 48 hours. When it finds one it merges the two, filling in whatever the first record lacked (channel, funding account, merchant, reference) instead of adding a second expense. Separate duplicate checks warn on a repeated reference, or the same merchant and amount close together, for both expenses and money records, and never delete anything on their own.",
+          "Categories learn from use: saving or correcting an expense teaches the app, on the device, which category a merchant belongs to.",
+        ],
+      },
+      {
         heading: "The rest of the app",
         body: [
-          "Around capture sits a small expense app: a dashboard with today, week and month totals, a searchable and filterable history with edit and delete, analytics by category and payment source built with Swift Charts, and PayBook, a list of frequent bank-transfer payees with account numbers masked by default and a one-tap copy. A settings screen includes a self-test runner that executes the app's 48 parser and persistence checks on the device.",
+          "Around capture sits the rest of the app, in five tabs. Home shows today, week and month spending, with cash flow and balances when they apply. Transactions is one filterable timeline of expenses, money in, money out and transfers. PayBook holds people and their payment details, with calculated balances and recorded repayments. Breakdown, built with Swift Charts, splits spending and cash flow by category, payment channel, account and merchant. More holds accounts, settings and a self-test runner that executes the app's in-app checks on the device. A Shortcuts action, Log Apple Pay Purchase, lets the Wallet transaction automation hand an Apple Pay tap straight to SpenDrop.",
         ],
         figures: [
           {
@@ -2112,8 +2517,15 @@ export const projects: Project[] = [
             alt: "Three iPhone screenshots: analytics with a category donut chart and top category and payment source; the in-app test runner reporting All Tests Passed 48 of 48; and PayBook listing payees with masked account numbers.",
             width: 1600,
             height: 1200,
-            caption: "Analytics, the in-app test run (48 of 48), and PayBook with masked account numbers.",
+            caption: "Analytics, the in-app test run and PayBook, from a build before version 1.4.0, when the suite had 48 checks (it now has 274).",
           },
+        ],
+      },
+      {
+        heading: "Version 1.4: shared money, safe data and optional backup",
+        body: [
+          "Version 1.4.0 turns the expense log into a small personal-finance model without making normal entry any longer. Each number answers one question: an expense's amount is always the full bill, spending is my share of it, money in and money out cover income, refunds, loans and repayments, net cash flow is the difference, and a person's balance says who owes whom. A bill can be split equally, by parts or by exact amounts, whoever paid, and all of this arithmetic runs in integer sen so a split always adds up exactly. Balances are calculated when they are shown, never stored.",
+          "The data is protected before any of that ships. The SwiftData store moved to an explicit versioned schema with a migration plan, a copy is taken before every upgrade, and a store that cannot be opened puts the app into a safe mode that deletes nothing. Local backups keep a dated history and export to JSON. Sign-in is optional: Google through OAuth PKCE or email, with the session in the Keychain, and it adds an append-only cloud backup to Supabase, with Row Level Security policies written to restrict each row to its owner. A restore merges by record and takes a local safety copy first.",
         ],
       },
       {
@@ -2127,48 +2539,172 @@ export const projects: Project[] = [
       {
         heading: "Testing and verification",
         body: [
-          "The app carries its own test runner: 48 cases covering provider and merchant parsing, amount selection, false positives, duplicates and persistence, provider detection, ten reference screenshots from real layouts, and PayBook. The repository records a run on 25 September 2026 on an iPhone 17 simulator with iOS 27: both targets built and 48 of 48 passed. The suite feeds synthetic OCR text, so it tests the parser, not Vision's recognition quality.",
-          "For this write-up the source was checked directly: 42 Swift files, two targets (app and extension), 48 registered test cases, and no networking code. The tests were not re-run here because the machine used runs Windows. There is no XCTest target and no CI.",
+          "The app carries its own test runner, run in memory or in temporary folders so the real database is never opened. It has grown to 274 checks across twelve suites: parsing, providers and real reference screenshots; data safety, from safe mode to frozen schemas and backups; the money model, splits and migrations; accounts and money in and out; shared expenses and PayBook balances; the unified timeline; and sign-in and cloud backup against a simulated Supabase server. Six XCUITest flows drive the app itself: tabs, adding an expense, a split with its PayBook balance, accounts with money in and a transfer, the cash-flow views and the account screen.",
+          "The repository records the run on 29 September 2026 on the iOS 27 simulator: 274 of 274 in-app checks and 6 of 6 UI tests passed, and both the app and the Share Extension built. The parser checks feed synthetic OCR text, so they test the parser, not Vision's recognition quality. There is no CI yet, and version 1.4.0 has not yet been verified on a physical iPhone.",
         ],
-        note: "Every screenshot on this page is from the real app on a simulator. The payment screenshot and the receipt it reads are synthetic images made for testing; PayBook shows the app's built-in sample payees.",
+        note: "Every screenshot on this page is from the real app on a simulator, captured before version 1.4.0. The payment screenshot and the receipt it reads are synthetic images made for testing; PayBook shows the app's built-in sample payees.",
       },
     ],
     status: [
       {
         label: "Capture, parsing, review, duplicates, history, analytics, PayBook",
         state: "available",
-        detail: "Working on the simulator and, per the repository, on the developer's iPhone. Not published on the App Store or TestFlight.",
+        detail: "Working on the simulator; earlier builds also ran on the developer's iPhone. Not published on the App Store or TestFlight.",
       },
       {
-        label: "In-app test suite",
+        label: "In-app checks and UI tests",
         state: "available",
-        detail: "48 of 48 recorded on 25 September 2026; not re-run for this write-up.",
+        detail: "274 of 274 in-app checks and 6 of 6 XCUITest flows recorded on 29 September 2026 on the iOS 27 simulator. Version 1.4.0 not yet verified on a physical iPhone.",
       },
       {
-        label: "Camera capture, currency setting, CI",
+        label: "Splits, money in and out, PayBook balances, accounts",
+        state: "available",
+        detail: "In version 1.4.0, verified on the simulator by the in-app checks and UI tests.",
+      },
+      {
+        label: "Optional sign-in and cloud backup (Supabase)",
+        state: "available",
+        detail: "Implemented with Google (OAuth PKCE) or email sign-in and an append-only backup with Row Level Security policies. Tested against a simulated server; the policies have not yet been run on a live Supabase project.",
+      },
+      {
+        label: "Camera capture, multi-currency amounts, CI",
         state: "not-connected",
-        detail: "Not implemented yet: capture is from screenshots and Photos, and all amounts are in RM.",
+        detail: "Not implemented yet: capture is from screenshots and Photos, and the currency preference is stored but all amounts are in RM.",
       },
     ],
     limitations: [
       "The parser is keyword-driven: an unfamiliar layout falls back to \"Unknown\" with low confidence.",
       "Column-aligned paper receipts can lose the label on the total, so a line item may be proposed instead.",
       "One synthetic screenshot read 9:42 PM as 9:42 AM.",
-      "Save errors are swallowed rather than shown, and deleting an expense leaves its receipt image on disk.",
-      "The extension's diagnostic log is not size-capped and contains transaction details.",
-      "iPhone only, portrait only, English only; no XCTest target and no CI.",
+      "Some local saves still ignore errors, and deleting an expense leaves its receipt image on disk.",
+      "Cloud backups are protected by HTTPS, sign-in and Row Level Security but are not end-to-end encrypted, and receipt images are not backed up.",
+      "Account totals are recorded activity, not live bank balances.",
+      "iPhone only, portrait only, English only; no CI.",
       "The repository is private. Access can be granted on request.",
     ],
     roadmap: [
-      "Report save errors instead of swallowing them",
-      "Cap the diagnostic log and keep it to debug builds",
-      "An XCTest target around the parser suite, run in CI",
-      "Camera capture and the currency setting",
-      "Delete receipt images with their expenses",
+      "Verify sign-in and cloud backup on a live Supabase project and a physical iPhone",
+      "Replace the remaining ignored saves with handled errors",
+      "CI running the build, the in-app checks and the UI tests",
+      "Camera capture, transfers from the Share Extension, and currency support",
+      "Optional receipt images in backups, and deleting them with their expenses",
     ],
     links: [
       {
         label: "GitHub profile (SpenDrop repository is private)",
+        href: "https://github.com/tirukon015",
+        external: true,
+      },
+    ],
+  },
+
+  {
+    slug: "rukon-link",
+    name: "rukon-link",
+    fullName: "rukon-link: QR link hub with gated contact details and first-party analytics",
+    tagline: "A link page for a QR code that shares social links openly and contact details only on request.",
+    summary:
+      "A personal link hub built for a QR code: public social links, and email, phone and WhatsApp released only after a visitor asks through a validated, rate-limited form. It carries its own privacy-first analytics (no third-party trackers, no cookies, no stored IP addresses) and a private admin dashboard with a contact-request inbox and data-retention settings. Next.js 16, TypeScript and Supabase PostgreSQL, deployed on Vercel at link.rukon.dev.",
+    category: "Web Apps / Software",
+    categorySlug: "web-apps",
+    categories: ["Web Apps / Software"],
+    hrOverview: {
+      valueProposition:
+        "One QR code for every profile, without putting private contact details in the page.",
+      role: "Sole Developer",
+      roleScope: "Product, Full-Stack Build, Database, Security & Analytics",
+      context: "Personal project",
+      highlights: [
+        "Contact details live only in server-side environment variables and are released per request, never shipped in the page",
+        "Contact form with same-site checks, a honeypot, a minimum fill time, validation and a database-backed rate limit",
+        "First-party analytics with no cookies or third-party trackers; addresses are stored only as a daily-rotating salted hash",
+        "Admin dashboard: traffic, sources, devices and locations, per-link clicks, and a contact-request inbox",
+        "Retention settings with a scheduled purge that rolls old events up into daily totals",
+      ],
+      technologies: ["Next.js 16", "React 19", "TypeScript", "Supabase", "PostgreSQL", "Tailwind CSS v4"],
+    },
+    role: "Sole Developer",
+    roleScope: "Product, Full-Stack Build, Database, Security & Analytics",
+    period: "October 2026 (live)",
+    affiliation: "Personal project",
+    confidential: false,
+    kind: "personal-project",
+    tier: "secondary",
+    tech: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS v4", "Supabase Auth", "PostgreSQL", "pg_cron"],
+    techGroups: [
+      { label: "Application", items: ["Next.js 16 (App Router)", "React 19", "TypeScript", "Tailwind CSS v4", "Server actions"] },
+      { label: "Data", items: ["Supabase PostgreSQL", "Row Level Security (deny by default)", "SQL aggregate functions", "pg_cron retention job"] },
+      { label: "Security", items: ["Supabase Auth (admin)", "HMAC-signed reveal tokens", "Same-site checks", "Rate limiting", "Security headers"] },
+    ],
+    highlights: [
+      "Private contact details are server-only and released per request, with a signed token that lets the same visitor see them again for 24 hours",
+      "The contact form checks same-site origin, a honeypot, fill time and every field, and is rate-limited per hashed address in the database",
+      "Analytics without cookies or third parties: page views and link clicks sent by beacon, bots filtered, IP addresses never stored",
+      "One SQL function returns every dashboard figure in a single round trip",
+      "Old events are rolled up into daily totals and deleted on a schedule, with retention set from the admin panel",
+    ],
+    workflow: [
+      "Scan the QR code",
+      "Open a social link, or ask for contact details",
+      "Validate and rate-limit the request",
+      "Release only the methods asked for",
+      "Review requests and traffic in the admin panel",
+    ],
+    sections: [
+      {
+        heading: "Overview",
+        body: [
+          "rukon-link is the page behind a personal QR code. It lists social profiles and links to this portfolio openly, while email, phone and WhatsApp are kept off the page and released only when a visitor asks. Behind it is a private admin panel for the requests and for the page's own analytics.",
+        ],
+      },
+      {
+        heading: "Contact details on request",
+        body: [
+          "The private details exist only in server-side environment variables, so they are never in the HTML or the JavaScript a visitor downloads. A visitor who wants them fills in a short form with their name, email and consent. The server checks that the request came from the same site, rejects a filled honeypot or a form completed implausibly fast, validates and cleans every field, and applies a rate limit stored in the database against a hashed address: three requests in ten minutes, ten a day.",
+          "It then returns only the methods the visitor asked for, with a signed token, compared in constant time, that lets them see the details again for 24 hours without asking twice. Every request lands in the admin inbox, where it can be marked contacted or handled, or deleted.",
+        ],
+      },
+      {
+        heading: "Privacy-first analytics",
+        body: [
+          "Page views and link clicks are recorded by the site itself, with no third-party tracker and no cookies. The raw IP address is never stored: only a hash of it with a secret salt and the date, which changes daily and cannot be linked across days. Country and city come from the hosting edge, and bot traffic is filtered out.",
+          "The admin dashboard shows views, visits, unique visitors, link clicks and contact requests for today, yesterday, seven or thirty days, this month or a custom range, with a traffic chart and breakdowns by source, device, operating system, browser and location. A single SQL function computes the whole dashboard in one round trip. Events older than the retention period, 90 days by default and adjustable from the admin panel, are rolled up into daily totals and deleted by a scheduled job.",
+        ],
+      },
+      {
+        heading: "Architecture and security",
+        body: [
+          "One Next.js 16 application on Vercel with Supabase PostgreSQL behind it. Four tables, all prefixed and with Row Level Security enabled and no policies, so only the server can read or write them. Admin access is Supabase email sign-in restricted to one confirmed address, checked in every admin page and API route; the request proxy only refreshes the session and marks admin responses private and not indexable.",
+          "The site sends a standard set of security headers, generates its own social share images, and keeps the admin area and API out of search engines.",
+        ],
+      },
+    ],
+    status: [
+      {
+        label: "Public link page, contact requests, analytics, admin panel",
+        state: "implemented",
+        detail: "Live at link.rukon.dev on Vercel, with the admin area and API excluded from search engines.",
+      },
+      {
+        label: "Notifications for new contact requests",
+        state: "not-connected",
+        detail: "Not built: new requests appear only in the admin inbox.",
+      },
+    ],
+    limitations: [
+      "No automated tests or CI; lint and type checks only.",
+      "No Content Security Policy yet, and the analytics endpoint's rate limit is per server instance.",
+      "One admin account.",
+      "The repository is private. Access can be granted on request.",
+    ],
+    links: [
+      {
+        label: "Live site",
+        href: "https://link.rukon.dev",
+        external: true,
+      },
+      {
+        label: "GitHub profile (rukon-link repository is private)",
         href: "https://github.com/tirukon015",
         external: true,
       },

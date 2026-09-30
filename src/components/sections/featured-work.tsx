@@ -81,9 +81,9 @@ function statusSummary(project: Project) {
  *
  * Seven columns of copy beside a five-column visual that is built from the
  * project's own data: its mark, the path a unit takes through it, and the
- * subsystems connected to it. Beneath it sits the project's preview screenshot,
- * which for a confidential system is captured on synthetic demo data only.
- * No figure is shown that the case study does not already state.
+ * subsystems connected to it. The preview screenshot is deliberately not shown
+ * here (removed at the owner's request on 2026-10-01); it stays on the project
+ * overview and in the case study.
  */
 function Flagship({ project }: { project: Project }) {
   const { live, built } = statusSummary(project);
@@ -183,28 +183,6 @@ function Flagship({ project }: { project: Project }) {
         <div className="lg:col-span-6">
           <FlagshipVisual project={project} />
         </div>
-
-        {project.previewFigure ? (
-          <figure className="lg:col-span-12">
-            <Link
-              href={`${href}/case-study`}
-              aria-label={`${project.name} full case study`}
-              className="group block overflow-hidden rounded-lg border border-border bg-bg-elevated shadow-[var(--shadow-card)] transition-colors hover:border-border-strong"
-            >
-              <Image
-                src={project.previewFigure.src}
-                alt={project.previewFigure.alt}
-                width={project.previewFigure.width}
-                height={project.previewFigure.height}
-                sizes="(min-width: 1216px) 1152px, 100vw"
-                className="h-auto w-full transition-transform duration-500 ease-[var(--ease-out)] group-hover:scale-[1.01]"
-              />
-            </Link>
-            <figcaption className="mt-3 font-mono text-xs leading-relaxed text-text-faint">
-              {project.previewFigure.caption}
-            </figcaption>
-          </figure>
-        ) : null}
       </article>
     </Reveal>
   );

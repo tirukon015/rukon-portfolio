@@ -12,7 +12,7 @@ export const post: BlogPost = {
     searchIntent: "informational",
     relatedProjects: ["erth"],
     relatedPosts: ["translating-figma-components-into-reusable-code", "designing-for-desktop-and-mobile-before-development"],
-    updated: "2026-09-06",
+    updated: "2026-10-01",
     sections: [
       {
         heading: "What is it?",
@@ -29,7 +29,7 @@ export const post: BlogPost = {
       {
         heading: "Real-world perspective",
         body: [
-          "I took the ERTH homepage through this whole path. The interface was worked out as an interactive Figma prototype first, and the production website was then built from the approved design file: static HTML, CSS and vanilla JavaScript bundled by Vite. That build is finished and deployed.",
+          "On ERTH I did the second half of this path. The client approved a design file as final, and I built the production website from it: static HTML, CSS and vanilla JavaScript bundled by Vite. That build is finished and deployed on Vercel.",
           "The gap between the two was larger than the design suggested. Rebuilding element by element surfaced four defects nobody had noticed in the prototype, including a wrapper that closed early and left one heading rendering black on a near-black background. A design file can look complete and still be some distance from a page a browser handles correctly.",
         ],
       },

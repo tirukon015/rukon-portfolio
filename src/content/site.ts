@@ -27,10 +27,16 @@ export const site = {
   /** Used for og:locale and the Person schema. */
   locale: "en_MY",
   statement:
-    "I work across IT systems, operations, web and software: understanding an operational problem, designing the system for it, building and deploying it, then supporting and improving it once people depend on it daily. RPOMS, the operations system running a live router-refurbishment line, is the clearest example; alongside it sit a live AI research assistant, a browser-to-printer label engine and native iOS work.",
+    "I work across IT systems, operations, web and software: understanding an operational problem, designing the system for it, building and deploying it, then supporting and improving it once people depend on it daily. RPOMS, the operations system running a live router-refurbishment line, is the clearest example; alongside it sit a deployed browser-to-printer label engine, an AI photo-inspection system, a live AI research assistant and native iOS apps.",
   /** Search and share description: the statement, cut to snippet length. */
   metaDescription:
-    "Operations systems, full-stack web apps, AI and native iOS work by Touhidul Islam Rukon in Cyberjaya. Flagship: RPOMS, the system running a live router-refurbishment line.",
+    "Full-stack developer in Cyberjaya, Malaysia: operations systems, Next.js and TypeScript web apps, PostgreSQL and Supabase backends, AI tools and native iOS apps.",
+  /**
+   * The homepage <title>. Separate from `role`, which is also drawn into the
+   * share image: this names what a search for the work would use, while the
+   * visible role line stays as it is.
+   */
+  seoTitle: "Touhidul Islam Rukon | Full-Stack Developer & IT Systems Lead, Cyberjaya",
   /**
    * The hero headline. A statement about the work rather than a greeting: the
    * name is already in the header, the title tag and the About section.

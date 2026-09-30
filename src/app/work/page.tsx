@@ -18,7 +18,7 @@ import {
 
 const title = "Work";
 const description =
-  "Case studies of real systems: a production-line operations platform, a Web Bluetooth label engine, a production website, a live AI research assistant and iOS apps.";
+  "Case studies of real systems: a Next.js and PostgreSQL operations platform, a Web Bluetooth label engine, an AI inspection system, an inventory management system, a production website, a live AI research assistant and iOS apps.";
 
 export const metadata: Metadata = {
   title,

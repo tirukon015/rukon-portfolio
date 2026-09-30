@@ -17,30 +17,30 @@ export const capabilities: Capability[] = [
     title: "Product & full-stack development",
     description:
       "End to end in TypeScript and Python: interfaces, API routes, data models, access control and the deployment path to production. Next.js App Router on the front, Next.js route handlers or FastAPI behind it, PostgreSQL or MySQL underneath, deployed on Vercel, Supabase and cPanel and kept running afterwards.",
-    evidence: ["rpoms", "rpoms-print-engine", "researchforge"],
+    evidence: ["rpoms", "rpoms-print-engine", "researchforge", "rukon-link"],
   },
   {
     title: "Systems & internal tools",
     description:
-      "Turning a physical operation into one system: serial and asset tracking, inventory and consumable deduction, production stages, delivery paperwork, workforce output and reporting, all reading from a single data model so a dashboard figure traces back to the event behind it. Requirements gathered from the floor, not from a specification.",
-    evidence: ["rpoms"],
+      "Turning a physical operation into one system: serial and asset tracking, inventory and consumable deduction, production stages, delivery paperwork, workforce output and reporting, all reading from a single data model so a dashboard figure traces back to the event behind it. Requirements gathered from the floor, not from a specification, and sometimes proved first in a macro-enabled Excel workflow before they become a web application.",
+    evidence: ["rpoms", "itms", "rpoms-print-engine"],
   },
   {
     title: "AI & automation",
     description:
-      "LLM features that behave: groundedness enforced in layers rather than requested in a prompt, output validated against a declared schema and discarded rather than repaired, and a provider abstraction with a narrow automatic fallback. And the plainer automation that matters more often: one entry that updates everything downstream, staged imports that surface problems before anything is written, paperwork generated rather than retyped.",
-    evidence: ["researchforge", "rpoms"],
+      "LLM features that behave: groundedness enforced in layers rather than requested in a prompt, output validated against a declared schema and discarded rather than repaired, and a provider abstraction with a narrow automatic fallback. For vision, a self-hosted model that only reports what it sees while deterministic rules make the decision. And the plainer automation that matters more often: one entry that updates everything downstream, staged imports that surface problems before anything is written, paperwork generated rather than retyped.",
+    evidence: ["researchforge", "rpoms-ai", "rpoms"],
   },
   {
     title: "Native iOS",
     description:
-      "Swift and SwiftUI with the work kept on the device: text recognition with Apple Vision instead of a cloud OCR service, SwiftData persistence shared between an app and its Share Extension, and a rule-based parser with its own test runner. No backend and no third-party dependencies where none are needed.",
+      "Swift and SwiftUI with the work kept on the device: text recognition with Apple Vision instead of a cloud OCR service, SwiftData persistence shared between an app and its Share Extension, a versioned schema with safe migrations, and a rule-based parser with its own test runner. Local-first, with optional Supabase sign-in and backup protected by Row Level Security, and no third-party packages.",
     evidence: ["spendrop", "drivekeep"],
   },
   {
     title: "UI/UX engineering",
     description:
-      "From a Figma prototype to a production build without losing the intent: semantic HTML, CSS that holds from 320px, only the JavaScript a page needs, technical SEO and structured data implemented in the same pass, and accessibility checked with axe rather than assumed.",
+      "From an approved design to a production build without losing the intent: semantic HTML, CSS that holds from 320px, only the JavaScript a page needs, technical SEO and structured data implemented in the same pass, and accessibility checked with axe rather than assumed.",
     evidence: ["erth"],
   },
 ];
@@ -129,6 +129,7 @@ export const stack: StackCategory[] = [
       "Web Bluetooth",
       "IndexedDB",
       "Service workers (Workbox)",
+      "Ollama / Qwen2.5-VL",
     ],
   },
   {
@@ -137,6 +138,8 @@ export const stack: StackCategory[] = [
     note: "Part of the work, at a maintenance, operational or foundational level.",
     items: [
       "cPanel",
+      "Ubuntu server, nginx, systemd",
+      "Excel / VBA automation",
       "Resend",
       "WordPress",
       "Elementor",

@@ -6,7 +6,7 @@ export const post: BlogPost = {
     description:
       "Why doing the design work in Figma first, rather than designing in the browser, changes how the build goes.",
     date: "2026-07-21",
-    updated: "2026-09-24",
+    updated: "2026-10-01",
     category: "UI/UX & Product",
     tags: ["Figma", "UI/UX", "Design"],
     contentType: "Explainer",
@@ -29,7 +29,7 @@ export const post: BlogPost = {
       {
         heading: "Real-world perspective",
         body: [
-          "The ERTH homepage was worked out as an interactive Figma prototype before any of it was built, and I was part of that work: the page structure, the visual direction, and the user flow from choosing a device through to payout. The prototype was a shared working file rather than a solo artefact, so this is design and prototyping involvement, not sole authorship.",
+          "On ERTH, the design was worked out and approved as a single file before the build started, and my part began with that approved file. Having the page structure, the visual direction and the user flow from choosing a device through to payout settled up front is what made a faithful build possible.",
           "That groundwork is what the production build was then made from. The client approved one design file as final, and the site was built from it as static HTML, CSS and vanilla JavaScript. Working through the approved design element by element surfaced four defects the prototype had carried unnoticed, including a wrapper element that closed early and left a heading black on a near-black background. Design-first did not prevent those; it did mean every one of them was found against a reference everyone had already agreed on, rather than argued about.",
         ],
       },

@@ -35,7 +35,7 @@ export const faqs: FaqItem[] = [
   {
     question: "What was your role on the ERTH website?",
     answer:
-      "Two phases, and the work is complete. The interface was prototyped in Figma before implementation. The production homepage was then built from the client-approved design as static HTML, CSS and vanilla JavaScript bundled by Vite, which replaced roughly 250 kB of prototype JavaScript with 3.7 kB, cut the image payload from 12.0 MB to 2.7 MB, and fixed four real defects the prototype carried. Technical SEO, structured data, performance and accessibility were implemented in the same pass: the head block went from no canonical, no Open Graph and no structured data to all three, with three JSON-LD blocks, and axe-core reports zero violations across five interaction states.",
+      "The work is complete. The client approved a single design file as final, and the production homepage was built from the client-approved design as static HTML, CSS and vanilla JavaScript bundled by Vite, which replaced roughly 250 kB of prototype JavaScript with 3.7 kB, cut the image payload from 12.0 MB to 2.7 MB, and fixed four real defects the prototype carried. Technical SEO, structured data, performance and accessibility were implemented in the same pass: the head block went from no canonical, no Open Graph and no structured data to all three, with three JSON-LD blocks, and axe-core reports zero violations across five interaction states.",
   },
   {
     question: "Is Touhidul Islam Rukon a web developer or an IT operations lead?",

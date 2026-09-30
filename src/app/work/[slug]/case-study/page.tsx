@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   if (!project) return {};
 
   const title = `${project.name}: Full Case Study & Technical Architecture`;
-  const description = `Detailed technical breakdown and architecture case study for ${project.name}: ${project.tagline}`;
+  const description = `${project.name} technical case study. ${project.tagline} Architecture, stack, status and limitations.`;
   const share = project.shareImage;
   return {
     title,

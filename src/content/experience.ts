@@ -19,15 +19,18 @@ export const experience: ExperienceEntry[] = [
     summary:
       "One role covering the whole chain: operational requirement, system design, web and software implementation, deployment, daily support, and ongoing maintenance. Lead for RPOMS, the ERP-style operational system running the company's router-refurbishment programme.",
     primary: true,
-    projects: ["rpoms", "erth"],
+    projects: ["rpoms", "rpoms-print-engine", "rpoms-ai", "itms", "erth"],
     bullets: [
-      "Lead RPOMS end to end: gathered the requirement from the production floor, designed the data model and four-role access control, built its 16 pages and 41 API route files with 895 automated tests, took it to production, and remain its maintainer.",
+      "Lead RPOMS end to end: gathered the requirement from the production floor, designed the data model and four-role access control, built its 16 pages and 41 API route files with 958 automated tests, took it to production on Vercel and Supabase, and remain its maintainer and release owner.",
       "Built RPOMS as a real operational system rather than a reporting tool: serial-level asset tracking, inventory and consumable deduction tied to valid business events, packing and delivery validation, generated delivery paperwork, workforce output, and operational dashboards.",
+      "Built the RPOMS Print Engine, a Web Bluetooth label-printing workstation for the line, and deployed it with its Node.js and PostgreSQL backend on a self-hosted Ubuntu server behind nginx; it is my own independent project.",
+      "Contributed to ITMS, BBTech's inventory management system, across its evolution: worked on and maintained the BBTech Stock Tracker, the macro-enabled Excel workbook the operation ran on from July 2025 (SKU generation, a department pipeline, a VBA status log and a user guide); since another developer built the web application, troubleshoot, fix and improve it with them; and, asked to solve label printing, am integrating my Print Engine into it.",
+      "Built RPOMS AI, a photo inspection system in which a self-hosted vision model only reports what it sees and a deterministic rule engine applies the client's cosmetic criteria, evaluated against the client's reference photos before any model is trusted.",
       "Work directly with the operation the system serves, the ERTH x Maxis refurbishment line, its stock and the people running it, so the software's rules come from how the floor actually works rather than from an assumed process.",
-      "Built the ERTH production homepage: prototyped in Figma, then implemented from the approved design as static HTML, CSS and vanilla JavaScript, with technical SEO, structured data, performance and accessibility delivered in the same pass.",
+      "Built the ERTH production homepage from the client-approved design as static HTML, CSS and vanilla JavaScript, with technical SEO, structured data, performance and accessibility delivered in the same pass, and since rebuilt it in Next.js and TypeScript.",
       "Maintain company web properties, including WordPress development, Elementor page design and WooCommerce setup, from requirement through to deployment and ongoing upkeep.",
       "Provide day-to-day IT support and operations: troubleshooting the internal business tracking system and other software, hardware diagnosis and repair, system installation, and maintenance of PCs and IT equipment.",
-      "Handle deployment and environment work across Vercel, Supabase and cPanel hosting, including configuration, environment and secret management, and resolving production issues as they surface.",
+      "Handle deployment and environment work across Vercel, Supabase, cPanel and a self-hosted Ubuntu server, including configuration, environment and secret management, and resolving production issues as they surface.",
     ],
   },
   {

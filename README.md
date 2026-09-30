@@ -4,6 +4,12 @@ Portfolio and blog for **Touhidul Islam Rukon** — IT Systems & Operations Lead
 
 Live: **[www.rukon.dev](https://www.rukon.dev)**
 
+**Maintaining this site?** Start with `docs/`: [PROJECT_SPEC](docs/PROJECT_SPEC.md)
+(what it does, what must not change), [DESIGN_SYSTEM](docs/DESIGN_SYSTEM.md),
+[ARCHITECTURE](docs/ARCHITECTURE.md), [COMPONENT_MAP](docs/COMPONENT_MAP.md)
+(where things live), [FEATURES](docs/FEATURES.md) and [CHANGELOG](docs/CHANGELOG.md).
+The change workflow is in `AGENTS.md`.
+
 ---
 
 ## Stack
@@ -96,6 +102,13 @@ npm run build
 
 ## Featured work
 
-- **[RPOMS](https://www.rukon.dev/work/rpoms)** — WMS/ERP-style operational system running a live router-refurbishment line. NDA-safe overview.
-- **[ERTH](https://www.rukon.dev/work/erth)** — production homepage for a Malaysian e-waste service. Complete and deployed.
+- **[RPOMS](https://www.rukon.dev/work/rpoms)** — WMS/ERP-style operational system running a live router-refurbishment line. Case study with screenshots on synthetic demo data.
+- **[RPOMS Print Engine](https://www.rukon.dev/work/rpoms-print-engine)** — browser-to-printer label workstation over Web Bluetooth, deployed on a self-hosted Ubuntu server.
+- **[ERTH](https://www.rukon.dev/work/erth)** — production homepage for a Malaysian e-waste service. Deployed on Vercel; Next.js/TypeScript rebuild in progress.
 - **[ResearchForge](https://www.rukon.dev/work/researchforge)** — deployed AI research paper assistant. University project, taken from planning documents to a maintained deployment.
+- **[RPOMS AI](https://www.rukon.dev/work/rpoms-ai)** — photo inspection: a vision model observes, deterministic rules decide. Deployed; no model active yet.
+- **[ITMS](https://www.rukon.dev/work/itms)** — BBTech inventory system: Excel workflow → web app (built by another developer) → maintenance and Print Engine integration.
+- **[DriveKeep](https://www.rukon.dev/work/drivekeep)** and **[SpenDrop](https://www.rukon.dev/work/spendrop)** — personal web and native iOS products (DriveKeep web on Vercel; SpenDrop not published).
+- **[rukon-link](https://www.rukon.dev/work/rukon-link)** — QR link hub with gated contact details and first-party analytics (not yet deployed).
+
+Full list and status: `src/content/projects.ts` and `docs/FEATURES.md`.

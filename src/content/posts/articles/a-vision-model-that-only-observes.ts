@@ -6,6 +6,7 @@ export const post: BlogPost = {
   description:
     "A router surface inspector where the vision model reports what it sees and a deterministic rule engine decides. Why the split, what a 7B open model actually scored, the blank-image control that changed the prompt, and a safety gate that turns most answers into \"check manually\".",
   date: "2026-09-24",
+  updated: "2026-10-01",
   category: "AI & Automation",
   tags: ["Computer Vision", "LLM", "Ollama", "Qwen2.5-VL", "Next.js", "Evaluation"],
   contentType: "AI Engineering",
@@ -47,7 +48,7 @@ export const post: BlogPost = {
     {
       heading: "What the model actually scored",
       body: [
-        "The model is Qwen2.5-VL 7B under Ollama, Apache-2.0 licensed. Measured on the thirteen references with annotations removed, the shipped prompt scores 3 correct, 6 false accepts, 1 false reject and 3 unclear. An earlier prompt on an Apple M4 scored 4 correct and 5 false accepts. The difference is inside the noise of thirteen examples, and neither is good. Across three prompts the model reported \"scratch\" eighteen times and never once reported a dent or tape residue. That is a perception limit, and no change to the rules can fix it.",
+        "The model is Qwen2.5-VL 7B under Ollama, Apache-2.0 licensed. Measured on the thirteen references with annotations removed, the shipped prompt scores 3 correct, 6 false accepts, 1 false reject and 3 unclear. An earlier prompt on an Apple M4 scored 4 correct and 5 false accepts. The difference is inside the noise of thirteen examples, and neither is good. On the thirteen references it reported \"scratch\" eighteen times, and across three prompts it never once reported a dent or tape residue. That is a perception limit, and no change to the rules can fix it.",
         {
           type: "table",
           head: ["Experiment", "Outcome"],
@@ -59,7 +60,7 @@ export const post: BlogPost = {
           ],
           caption: "Everything tried is recorded, including what did not work, because the next person will otherwise try it again.",
         },
-        "So no free model is currently fit to accept a unit, and the qualification gate encodes exactly that: this model may answer ACCEPTABLE never, and NOT ACCEPTABLE only for the two criteria it applied without error, multiple visible scratches and a long visible scratch. Under that gate its behaviour on the references is 3 correct rejections, 10 UNCLEAR and 0 wrong verdicts. Those ten are not the system being timid. Removing the gate would turn eight of them into six damaged routers passed, to gain one correct acceptance.",
+        "So no free model is currently fit to accept a unit, and the qualification gate encodes exactly that: this model may answer ACCEPTABLE never, and NOT ACCEPTABLE only for the two criteria it applied without error, multiple visible scratches and a long visible scratch. Under that gate, in the latest evaluation on 22 September, its behaviour on the references is 2 correct rejections, 11 UNCLEAR and 0 wrong verdicts. Those eleven are not the system being timid. Removing the gate would turn eight of them into six damaged routers passed, to gain one correct acceptance.",
       ],
     },
     {

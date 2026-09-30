@@ -6,7 +6,7 @@ export const post: BlogPost = {
     description:
       "How design components in Figma map to reusable UI components in code, and where that mapping gets harder than it looks.",
     date: "2026-08-04",
-    updated: "2026-09-24",
+    updated: "2026-10-01",
     category: "UI/UX & Product",
     tags: ["Figma", "Web Development", "Components"],
     contentType: "Technical Guide",
@@ -29,7 +29,7 @@ export const post: BlogPost = {
       {
         heading: "Real-world perspective",
         body: [
-          "Having been part of the ERTH prototype work before building the site meant the intent behind each component was already familiar, which makes it easier to decide what should be one reusable component with variants versus two genuinely different ones. That is the practical argument for keeping design and build close, whoever holds the pen in Figma: the person translating a component into code should know why it looks the way it does.",
+          "On ERTH the design came as an approved file, so the intent behind each component had to be read from the file itself before deciding what should be one reusable component with variants versus two genuinely different ones. That is the practical argument for keeping design and build close, whoever holds the pen in Figma: the person translating a component into code should know why it looks the way it does.",
           "On ERTH the translation was unusual, because the approved design shipped with its own inline styles as the specification. Rather than rewrite a thousand style attributes into a class system and risk drift, the markup was preserved and only what a static page cannot express moved into CSS: hover states, open and closed state, and the desktop and mobile split. The component thinking still applied. It decided which repeated patterns got one rule and which only looked alike.",
         ],
       },

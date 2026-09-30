@@ -6,7 +6,7 @@ export const post: BlogPost = {
     description:
       "Planning responsive behavior as part of the design phase, instead of leaving it as a problem for development to solve alone.",
     date: "2026-08-11",
-    updated: "2026-09-24",
+    updated: "2026-10-01",
     category: "UI/UX & Product",
     tags: ["UI/UX", "Responsive Design"],
     contentType: "Technical Guide",
@@ -29,7 +29,7 @@ export const post: BlogPost = {
       {
         heading: "Real-world perspective",
         body: [
-          "On ERTH, being involved in the prototype and then doing the production build meant responsive behaviour was not a separate handoff. The thinking about how the four-step flow should read on desktop carried straight into how it collapses on mobile during the build, without a document in between.",
+          "On ERTH the approved design already defined a desktop and a mobile layout, split at 1080px in JavaScript; the build's job was to carry that intent over faithfully, including how the four-step flow collapses on mobile.",
           "It still had to be checked rather than assumed. Rebuilding the approved design found two grid definitions that forced horizontal scrolling below 400px, fixed with a minimum column size and a released column span, and the prototype's desktop-or-mobile decision, which it computed in JavaScript from the window width, became a media query at the same breakpoint so the correct layout paints on the first frame. A responsive plan made at design time is what made both of those quick to resolve; it did not make them disappear.",
         ],
       },

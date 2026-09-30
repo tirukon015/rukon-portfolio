@@ -25,7 +25,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const siteTitle = `${site.name}, ${site.role}`;
+const siteTitle = site.seoTitle;
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),

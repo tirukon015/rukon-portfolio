@@ -56,7 +56,7 @@ export const categoryMeta: CategoryMeta[] = [
     slug: "ui-ux-and-product",
     title: "UI/UX & Product",
     description:
-      "From a Figma prototype to a production build without losing the intent, and interfaces for internal tools that people are required to use rather than choose.",
+      "From an approved design to a production build without losing the intent, and interfaces for internal tools that people are required to use rather than choose.",
     anchorProject: "erth",
   },
   {
