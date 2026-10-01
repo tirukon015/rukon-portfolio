@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Stopping Vercel Preview Deployments From Touching the Production Database",
   description:
     "Every preview of RPOMS carried the production connection string. A guard in code now refuses the pairing, answers 503 with the reason, and can be checked from outside.",
-  date: "2026-10-29",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Vercel", "Supabase", "Environments", "Preview Deployments", "Next.js Middleware", "Security"],
   contentType: "Technical Guide",
