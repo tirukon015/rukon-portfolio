@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Enforcing Architecture Boundaries in a Next.js App With One Test File",
   description:
     "A Vitest file that reads the source tree and fails when a client component imports server code, an admin route skips its auth guard, or a minifier hazard creeps back in.",
-  date: "2026-12-23",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Next.js", "Vitest", "Architecture Tests", "TypeScript", "Security", "Testing"],
   contentType: "Technical Guide",
