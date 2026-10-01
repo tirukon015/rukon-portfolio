@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Testing Without Paid APIs or Hardware, and the Places Fakes Lied",
   description:
     "Fake LLM providers, a simulated label printer and an in-process Postgres keep my test suites free and offline. What each proved, and three places a fake fell short.",
-  date: "2026-11-10",
+  date: "2026-10-02",
   category: "Building Real Systems",
   tags: ["Testing", "Test Doubles", "PGlite", "LLM", "Web Bluetooth", "Supabase"],
   contentType: "Experience-led",
