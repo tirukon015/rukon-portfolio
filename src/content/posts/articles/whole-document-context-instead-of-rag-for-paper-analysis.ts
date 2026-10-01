@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "The Plan Said RAG. The Papers Said Send the Whole Thing.",
   description:
     "ResearchForge was planned as a retrieval pipeline. Measured papers fit whole in the context window, so it sends the full text and only chunks a genuinely oversized document.",
-  date: "2026-10-03",
+  date: "2026-10-02",
   category: "AI & Automation",
   tags: ["LLM", "RAG", "Chunking", "Long Context", "Python", "AI Engineering"],
   contentType: "AI Engineering",
