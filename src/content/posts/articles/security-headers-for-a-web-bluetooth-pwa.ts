@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Security Headers for a Web Bluetooth PWA, Pinned by a Test",
   description:
     "The CSP, Permissions-Policy and COOP for a PWA that drives a Bluetooth printer, why each source is there, a separate policy for the API, and a test that keeps nginx and the app in step.",
-  date: "2026-12-16",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Content Security Policy", "Permissions-Policy", "Web Bluetooth", "nginx", "PWA", "Security"],
   contentType: "Technical Guide",
