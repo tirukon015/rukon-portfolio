@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Designing a Delivery Module: Scan Boxes, Never Type Serials, Freeze What Left",
   description:
     "How the RPOMS delivery module works: scanned boxes instead of typed serials, a load that must match its quantity, and a snapshot of what actually left.",
-  date: "2026-11-19",
+  date: "2026-10-02",
   category: "Building Real Systems",
   tags: ["Warehouse", "Delivery", "Data Integrity", "Transactions", "Operations"],
   contentType: "Case Study",
