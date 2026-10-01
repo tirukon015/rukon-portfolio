@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "The SwiftData Store I Configured Was Never the One Being Used",
   description:
     "Renaming an iOS app opened an empty database. The App Group store URL I had configured had never worked; SwiftData's fallback had been doing the job.",
-  date: "2026-10-09",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["SwiftData", "App Groups", "iOS", "Share Extension", "Debugging", "Data Safety"],
   contentType: "Problem/Solution",
