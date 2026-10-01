@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Blank Is Not Zero: Small Input Decisions That Decide Whether a Report Is Right",
   description:
     "Three bugs from RPOMS's daily report: a target of 0 read as unset, a running output collapsed into one number, and one worker split by capitalisation.",
-  date: "2026-12-03",
+  date: "2026-10-02",
   category: "UI/UX & Product",
   tags: ["Forms", "Data Entry", "Validation", "TypeScript", "Operations"],
   contentType: "Problem/Solution",
