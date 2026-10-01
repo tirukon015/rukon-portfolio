@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "First-Party Analytics Without Cookies: A Daily-Rotating Salted IP Hash",
   description:
     "Page views and link clicks recorded by the site itself, with no third-party tracker and no cookies. A salted IP hash that changes daily, beacons that survive navigation, and what is still stored.",
-  date: "2027-01-06",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Analytics", "Privacy", "Next.js", "Supabase", "sendBeacon", "Vercel"],
   contentType: "Technical Guide",
