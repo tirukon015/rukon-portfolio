@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Sorting Apple Vision Text Into Lines Without Crashing Swift's Sort",
   description:
     "VNRecognizeTextRequest returns boxes, not lines. Sorting them top to bottom and left to right with a comparator Swift's sort can trust.",
-  date: "2026-11-23",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Apple Vision", "Swift", "OCR", "iOS", "Sorting", "VNRecognizeTextRequest"],
   contentType: "Technical Guide",
