@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Structured Receipt Extraction With Apple's Foundation Models and @Generable: A Code Walkthrough",
   description:
     "How DriveKeep's iOS code asks Apple's on-device Foundation Models for typed receipt fields and fuses them with Vision OCR. A walkthrough of unverified code.",
-  date: "2026-12-30",
+  date: "2026-10-02",
   category: "AI & Automation",
   tags: ["Foundation Models", "Apple Intelligence", "Swift", "On-Device AI", "Structured Output", "iOS 27", "OCR"],
   contentType: "AI Engineering",
