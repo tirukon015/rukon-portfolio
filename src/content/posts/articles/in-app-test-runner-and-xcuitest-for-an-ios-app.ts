@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Testing an iOS App With an In-App Test Runner, Launch Flags and XCUITest",
   description:
     "274 logic checks run inside the app from a launch flag, a final check proves no test opened the real database, and six XCUITest flows drive the UI.",
-  date: "2026-12-14",
+  date: "2026-10-02",
   category: "Developer Journey",
   tags: ["iOS", "Testing", "XCUITest", "Swift", "simctl", "SwiftData", "Test Isolation"],
   contentType: "Experience-led",
