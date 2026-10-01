@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Yesterday Is Not Enough: Choosing Comparison Baselines for an Operations Dashboard",
   description:
     "The five baselines the RPOMS dashboard compares today against, how each is computed, why one rising metric is red, and why missing data shows N/A.",
-  date: "2026-12-10",
+  date: "2026-10-02",
   category: "Building Real Systems",
   tags: ["Dashboard", "KPIs", "Data Visualisation", "React", "Operations"],
   contentType: "Technical Guide",
