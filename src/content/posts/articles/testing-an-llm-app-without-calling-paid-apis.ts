@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Testing an LLM App Without Calling a Paid API",
   description:
     "538 tests for an LLM application, none of which call a paid model. FastAPI dependency overrides, a fake provider, generated PDFs, opt-in live tests, and where fakes stop telling the truth.",
-  date: "2026-12-15",
+  date: "2026-10-02",
   category: "AI & Automation",
   tags: ["Testing", "pytest", "FastAPI", "LLM", "Dependency Injection", "Python"],
   contentType: "Technical Guide",
