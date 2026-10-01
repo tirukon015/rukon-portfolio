@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "A Stock Request Portal With a State Machine and an Event Log",
   description:
     "The lifecycle behind the RPOMS Ecommerce portal: a transition table, terminal states, a void that reverses, version-checked edits and an event per step.",
-  date: "2026-11-25",
+  date: "2026-10-02",
   category: "Building Real Systems",
   tags: ["Workflow", "State Machine", "Audit Trail", "Inventory", "TypeScript"],
   contentType: "Case Study",
