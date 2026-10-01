@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Chrome Throttled My Bluetooth Printer: Moving Timers Into a Web Worker",
   description:
     "Labels slowed from about 4 seconds to 13 or more whenever the print tab was in the background. The cause was Chrome's timer throttling; the fix was a tiny Web Worker that owns the waits.",
-  date: "2026-10-12",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Chrome", "Web Worker", "setTimeout", "Web Bluetooth", "Performance", "TypeScript"],
   contentType: "Problem/Solution",
