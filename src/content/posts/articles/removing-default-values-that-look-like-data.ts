@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Defaults Are Claims: Removing Placeholder Numbers That Looked Like Measurements",
   description:
     "A 75% tank, a 10 km/L economy, a hardcoded user id: defaults in DriveKeep that rendered as real data, what replaced them, and the same rule in SpenDrop.",
-  date: "2026-12-24",
+  date: "2026-10-02",
   category: "UI/UX & Product",
   tags: ["Data Quality", "Empty States", "Product Design", "Swift", "TypeScript", "Null Handling"],
   contentType: "Experience-led",
