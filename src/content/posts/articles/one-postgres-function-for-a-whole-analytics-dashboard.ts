@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "One SQL Function for a Whole Analytics Dashboard",
   description:
     "Every figure on a small analytics dashboard, totals, a gap-free time series and ranked breakdowns, returned as one JSON document by one PostgreSQL function, in the owner's time zone.",
-  date: "2027-01-12",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["PostgreSQL", "SQL", "Supabase", "Analytics", "JSONB", "Time Zones"],
   contentType: "Technical Guide",
