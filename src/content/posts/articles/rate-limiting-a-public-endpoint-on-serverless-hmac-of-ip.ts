@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Rate Limiting a Public Endpoint on Serverless, Keyed by an HMAC of the Address",
   description:
     "Two layers for an anonymous upload endpoint on Vercel: an honest in-memory burst limiter, and a durable hourly count in Postgres keyed by an HMAC so the address is never stored.",
-  date: "2026-11-28",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Rate Limiting", "Serverless", "Vercel", "PostgreSQL", "HMAC", "Privacy"],
   contentType: "Problem/Solution",
