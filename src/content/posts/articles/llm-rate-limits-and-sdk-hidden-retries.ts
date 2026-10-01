@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "The Retries You Didn't Write: LLM Rate Limits and SDK Hidden Retries",
   description:
     "A client library's default retries turned one rate-limited analysis into twelve requests against a free tier of twenty. Removing requests, telling limits apart, and returning 429 with Retry-After.",
-  date: "2026-11-24",
+  date: "2026-10-02",
   category: "AI & Automation",
   tags: ["LLM", "Rate Limits", "Retry-After", "FastAPI", "CORS", "Python"],
   contentType: "Problem/Solution",
