@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "What Survives When an Excel Tracker Becomes a Web App",
   description:
     "Mapping an Excel stock tracker's sheets, formulas and macros onto the tables of the web system that replaced it: what carried over unchanged, and what had to become explicit.",
-  date: "2026-11-06",
+  date: "2026-10-02",
   category: "Building Real Systems",
   tags: ["Excel", "Database Design", "Migration", "Inventory", "Supabase", "Internal Tools"],
   contentType: "Explainer",
