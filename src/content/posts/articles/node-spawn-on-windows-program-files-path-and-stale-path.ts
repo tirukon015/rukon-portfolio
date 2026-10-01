@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Two Windows Bugs in a Node Launcher: \"C:\\Program\" and a PATH That Hadn't Updated",
   description:
     "A one-command launcher for Ollama, a gateway and cloudflared broke on Windows twice: shell: true split the node path at its space, and a fresh install was not on the open terminal's PATH.",
-  date: "2026-12-26",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Node.js", "Windows", "child_process", "cloudflared", "Ollama", "Debugging"],
   contentType: "Problem/Solution",
