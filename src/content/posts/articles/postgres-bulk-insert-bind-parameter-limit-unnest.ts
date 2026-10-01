@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Bulk Inserts Past PostgreSQL's 65,535 Bind-Parameter Limit: unnest and Chunks",
   description:
     "A multi-row VALUES insert with six parameters per row failed outright above 10,922 rows. Replacing it with unnest over array parameters, chunked, and why the import is not one transaction.",
-  date: "2026-12-22",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["PostgreSQL", "postgres.js", "Bulk Insert", "CSV Import", "Performance"],
   contentType: "Problem/Solution",
