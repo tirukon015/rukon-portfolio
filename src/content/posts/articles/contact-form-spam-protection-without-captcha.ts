@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Contact Form Spam Protection Without a CAPTCHA, and Its Honest Limits",
   description:
     "A honeypot, a minimum fill time, a same-site check, strict validation and a database-backed rate limit on a Next.js contact form. What each layer stops, and which ones a script can walk past.",
-  date: "2027-01-11",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Spam Protection", "Forms", "Rate Limiting", "Next.js", "Supabase", "Security"],
   contentType: "Technical Guide",
