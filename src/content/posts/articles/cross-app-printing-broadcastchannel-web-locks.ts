@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Letting Another Web App Print Through an Open Tab: BroadcastChannel, Web Locks and COOP",
   description:
     "How a tiny relay page lets another web application print on a Bluetooth printer held by an already-open tab, with one tab answering via a Web Lock and the printer's real result reported back.",
-  date: "2026-11-06",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["BroadcastChannel", "Web Locks API", "Web Bluetooth", "COOP", "Browser APIs", "TypeScript"],
   contentType: "Technical Guide",
