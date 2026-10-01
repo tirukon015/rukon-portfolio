@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Spending, Cash Flow and Who Owes Whom: Modelling Shared Bills in a Personal Finance App",
   description:
     "When a bill is shared, 'how much did I spend?' has three honest answers. SpenDrop's rules for spending, cash flow, refunds and balances.",
-  date: "2026-10-25",
+  date: "2026-10-02",
   category: "Building Real Systems",
   tags: ["Data Modelling", "Personal Finance", "Swift", "SwiftData", "Shared Expenses", "Product Design"],
   contentType: "Explainer",
