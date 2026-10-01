@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Writing a Page an AI Answer Engine Can Quote Correctly: GEO on a Locked Design",
   description:
     "Implementing a GEO requirement on a locked design: test the questions visitors ask, make answers self-contained, attribute claims, and escalate contradictions.",
-  date: "2026-10-16",
+  date: "2026-10-02",
   category: "UI/UX & Product",
   tags: ["GEO", "AI Search", "Content Accuracy", "Technical SEO", "Local Business", "Malaysia"],
   contentType: "SEO/GEO",
