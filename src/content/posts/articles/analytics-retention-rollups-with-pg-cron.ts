@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Keeping Analytics for 90 Days: Roll Up, Then Delete, With pg_cron",
   description:
     "Detailed analytics events kept for a set period, then summarised into daily totals and deleted by a scheduled PostgreSQL function. The retention setting, the job, and the time-zone trade-offs.",
-  date: "2027-01-13",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["PostgreSQL", "pg_cron", "Data Retention", "Supabase", "Privacy", "Analytics"],
   contentType: "Technical Guide",
