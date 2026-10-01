@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "A Qualification Gate: Computing What a Model Is Allowed to Decide From Its Own Results",
   description:
     "Instead of trusting a model or not, RPOMS AI computes per verdict and per criterion what the model has earned the right to say, from a reference run. The policy, the code and the trade-off.",
-  date: "2026-11-02",
+  date: "2026-10-02",
   category: "AI & Automation",
   tags: ["AI Engineering", "Model Evaluation", "AI Safety", "TypeScript", "Vision Models", "Qwen2.5-VL"],
   contentType: "AI Engineering",
