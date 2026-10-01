@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Versioning an Operational Spreadsheet Like Software",
   description:
     "A stock tracker's Change History sheet as a release log: eight iterations before go-live, a 1.x line after, user-requested versions, and what an in-file changelog cannot give you.",
-  date: "2026-10-24",
+  date: "2026-10-02",
   category: "Building Real Systems",
   tags: ["Excel", "Change Management", "Versioning", "Internal Tools", "Operations"],
   contentType: "Case Study",
