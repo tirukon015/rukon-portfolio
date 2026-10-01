@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Proving a PWA Boots Offline: A Headless Chrome Test Over the DevTools Protocol",
   description:
     "An automated test that installs a PWA under production headers, cuts the network at the protocol level, reloads, and checks the app still works, with no test framework beyond a WebSocket.",
-  date: "2026-10-23",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["PWA", "Chrome DevTools Protocol", "Offline", "Testing", "Service worker", "CI"],
   contentType: "Technical Guide",
