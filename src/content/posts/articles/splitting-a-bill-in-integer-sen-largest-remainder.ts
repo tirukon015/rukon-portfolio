@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Splitting RM 10 Three Ways: Integer Sen and the Largest-Remainder Method",
   description:
     "Floating-point money drifts and naive splits lose a sen. Integer sen at one boundary and the largest-remainder method, so shares always add up.",
-  date: "2026-10-20",
+  date: "2026-10-02",
   category: "Building Real Systems",
   tags: ["Swift", "Money", "Rounding", "Bill Splitting", "Integer Arithmetic", "Testing"],
   contentType: "Technical Guide",
