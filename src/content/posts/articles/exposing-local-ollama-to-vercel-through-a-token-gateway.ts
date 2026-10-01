@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Exposing a Local Ollama to a Vercel App: A 90-Line Token Gateway and a Cloudflare Quick Tunnel",
   description:
     "Ollama has no authentication, so its port must never face the internet. The small Node gateway RPOMS AI puts in front of it, the tunnel, and how each hop is diagnosed.",
-  date: "2026-10-20",
+  date: "2026-10-02",
   category: "AI & Automation",
   tags: ["Ollama", "Cloudflare Tunnel", "Vercel", "Node.js", "Security", "Self-hosted AI"],
   contentType: "Technical Guide",
