@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Vercel or a Self-Hosted Ubuntu Box? How I Chose Hosting App by App",
   description:
     "Eight deployed apps, three hosting shapes: Vercel for pages and serverless APIs, a self-hosted Ubuntu box for a stateful API, and a hybrid for a model Vercel can't run.",
-  date: "2026-10-28",
+  date: "2026-10-02",
   category: "Building Real Systems",
   tags: ["Vercel", "Self-Hosting", "Ubuntu", "nginx", "systemd", "Deployment"],
   contentType: "Comparison",
