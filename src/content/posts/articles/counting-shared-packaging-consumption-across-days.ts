@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "When Two Days Fill One Box: Counting Shared Consumables Without Double-Counting",
   description:
     "A packaging box filled across two days must be charged once. How RPOMS derives each day's big-box usage from a running total, and how the rule evolved.",
-  date: "2026-10-12",
+  date: "2026-10-02",
   category: "Building Real Systems",
   tags: ["Inventory", "Business Rules", "TypeScript", "Operations", "Data Modelling"],
   contentType: "Problem/Solution",
