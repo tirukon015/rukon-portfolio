@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "A Production Write Lock That Fails Safe: Only Named Modules May Write",
   description:
     "How RPOMS keeps finished modules from writing in production until sign-off: a middleware lock that is on by default in production and an allowlist matched by path segment.",
-  date: "2026-11-05",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Next.js", "Middleware", "Feature Flags", "Read-Only Mode", "Security", "Vercel"],
   contentType: "Technical Guide",
