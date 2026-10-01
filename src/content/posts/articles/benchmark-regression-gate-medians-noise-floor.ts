@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "A Performance Gate That Stopped Crying Wolf: Medians and a Noise Floor",
   description:
     "A baseline-versus-current benchmark flagged regressions on identical code. Medians of three runs and a rule that ignores tiny metrics made it a gate worth trusting.",
-  date: "2026-12-03",
+  date: "2026-10-02",
   category: "Building Real Systems",
   tags: ["Benchmarking", "Performance testing", "CI", "Vitest", "Git worktree", "Regression testing"],
   contentType: "Problem/Solution",
