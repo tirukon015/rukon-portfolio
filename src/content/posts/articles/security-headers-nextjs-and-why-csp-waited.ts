@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Baseline Security Headers in Next.js, and Why the CSP Waited",
   description:
     "Adding five response headers to a Next.js site that served none, why the Content-Security-Policy was deliberately deferred, and a nonce-free CSP on another app.",
-  date: "2026-12-07",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Next.js", "Security Headers", "Content Security Policy", "HSTS", "Web Security"],
   contentType: "Problem/Solution",
