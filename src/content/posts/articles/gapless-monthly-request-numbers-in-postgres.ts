@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Monthly Request Numbers That Never Skip: Counters, Voids and Retries in PostgreSQL",
   description:
     "How RPOMS issues monthly request numbers with no gaps: a locked counter row, number and row in one transaction, voids given back, retries made safe.",
-  date: "2026-10-22",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["PostgreSQL", "Idempotency", "Document Numbering", "Transactions", "TypeScript"],
   contentType: "Technical Guide",
