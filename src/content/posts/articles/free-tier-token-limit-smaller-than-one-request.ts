@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "When a Per-Minute Token Limit Is Smaller Than One Request",
   description:
     "A free-tier limit of 7,000 input tokens per minute, and research papers needing 7,920 to 20,362 tokens per call. Why waiting cannot fix that, and how a working fallback hid it.",
-  date: "2026-10-26",
+  date: "2026-10-02",
   category: "AI & Automation",
   tags: ["LLM", "Groq", "Rate Limits", "Free Tier", "AI Engineering"],
   contentType: "Problem/Solution",
