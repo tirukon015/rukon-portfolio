@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Logging Apple Pay Taps Automatically With an App Intent and a Wallet Automation",
   description:
     "An App Intent lets the Shortcuts Wallet automation hand each Apple Pay purchase to SpenDrop. The intent, its duplicate guard, and what iOS lets apps see.",
-  date: "2027-01-10",
+  date: "2026-10-02",
   category: "AI & Automation",
   tags: ["App Intents", "Shortcuts", "Apple Pay", "iOS", "Swift", "Automation"],
   contentType: "Technical Guide",
