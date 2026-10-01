@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Testing Real PostgreSQL SQL in Vitest With PGlite and the Real Driver",
   description:
     "No Postgres server, no Docker, and production off limits. PGlite behind a loopback socket let the real postgres.js driver run real SQL in Vitest and in CI.",
-  date: "2026-10-11",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["PGlite", "Vitest", "PostgreSQL", "postgres.js", "Testing", "CI"],
   contentType: "Technical Guide",
