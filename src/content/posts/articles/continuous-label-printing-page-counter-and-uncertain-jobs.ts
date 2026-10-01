@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Continuous Label Printing Without Duplicates: Page Counters and \"Uncertain\" Jobs",
   description:
     "Why one printer job per label made the paper feed and rewind, how multi-page jobs fixed it, and how a print queue decides between a safe retry and a label that may already exist.",
-  date: "2026-10-06",
+  date: "2026-10-02",
   category: "Building Real Systems",
   tags: ["Print queue", "Thermal printer", "Web Bluetooth", "Retry semantics", "Idempotency", "TypeScript"],
   contentType: "Problem/Solution",
