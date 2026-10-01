@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Choosing an Embedding Model Under pgvector's 2,000-Dimension Index Limit",
   description:
     "A decision record: how ResearchForge picked an embedding model and dimension around pgvector's index limit, cost and reversibility. The choice was made and wired up; no embedding was ever produced.",
-  date: "2027-01-03",
+  date: "2026-10-02",
   category: "AI & Automation",
   tags: ["pgvector", "Embeddings", "PostgreSQL", "Supabase", "Decision Log", "AI Engineering"],
   contentType: "AI Engineering",
