@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "SwiftData Migrations That Can't Lose Data: VersionedSchema, Pre-Upgrade Copies and a Safe Mode",
   description:
     "SwiftData's inferred migration silently dropped a table. How SpenDrop moved to VersionedSchemas, pre-upgrade copies and a safe mode that never deletes.",
-  date: "2026-10-03",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["SwiftData", "iOS", "Swift", "Data Migration", "Backups", "Data Safety"],
   contentType: "Case Study",
