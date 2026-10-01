@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Google Sign-In for Shared Workstations: PKCE, Pending Users and Revocable Device Tokens",
   description:
     "Google OIDC with PKCE on a framework-free Node server, users keyed by sub, accounts that start pending, and workstations provisioned with hashed, revocable device tokens that keep working offline.",
-  date: "2026-11-12",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["OpenID Connect", "Google sign-in", "PKCE", "Node.js", "Device tokens", "Authentication"],
   contentType: "Technical Guide",
