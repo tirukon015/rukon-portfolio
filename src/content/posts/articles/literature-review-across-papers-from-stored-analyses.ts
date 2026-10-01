@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "A Cross-Paper Literature Review Built From Stored Analyses, Not PDFs",
   description:
     "Building one LLM literature review across several saved papers by reading their stored analyses instead of re-sending every PDF. The trade-off, the size guards, and why partial results are refused.",
-  date: "2026-12-24",
+  date: "2026-10-02",
   category: "AI & Automation",
   tags: ["LLM", "Literature Review", "Context Window", "API Design", "FastAPI"],
   contentType: "AI Engineering",
