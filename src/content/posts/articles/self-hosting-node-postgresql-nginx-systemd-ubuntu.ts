@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Self-Hosting a Node and PostgreSQL Service With nginx and systemd on Ubuntu",
   description:
     "The deployment behind print.rukon.dev: one origin for a PWA and API, a hardened systemd unit, atomic releases, nginx header gotchas and a backup design.",
-  date: "2026-11-26",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["nginx", "systemd", "PostgreSQL", "Node.js", "Ubuntu", "Deployment", "Backups"],
   contentType: "Technical Guide",
