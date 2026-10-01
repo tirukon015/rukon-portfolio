@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Evaluating an LLM App When Your Own System Hides the Result",
   description:
     "Evaluating a deployed LLM app with no labelled data, and the three things that produced plausible but wrong measurements: a content-keyed cache, a CDN and a fallback that worked too well.",
-  date: "2026-10-21",
+  date: "2026-10-02",
   category: "AI & Automation",
   tags: ["LLM", "Evaluation", "Caching", "Observability", "AI Engineering", "Testing"],
   contentType: "AI Engineering",
