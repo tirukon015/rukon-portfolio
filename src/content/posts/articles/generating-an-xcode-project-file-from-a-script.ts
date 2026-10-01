@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Generating an Xcode Project File From a Script, With Stable IDs",
   description:
     "Both of my iOS apps write project.pbxproj from a script. How the object IDs are made, why hashing names beats a counter, and what it costs.",
-  date: "2027-01-09",
+  date: "2026-10-02",
   category: "Developer Journey",
   tags: ["Xcode", "pbxproj", "Python", "Node.js", "iOS", "Build Tooling"],
   contentType: "Technical Guide",
