@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Shadow-Testing a Replacement Model With Next.js after(), Without the User Waiting",
   description:
     "How RPOMS AI is built to run a candidate model on real requests after the response is sent, record whether it agreed, and never show it. The lifecycle around it, and its limits.",
-  date: "2026-11-07",
+  date: "2026-10-02",
   category: "AI & Automation",
   tags: ["Next.js", "after()", "Shadow Testing", "MLOps", "Model Lifecycle", "PostgreSQL"],
   contentType: "Technical Guide",
