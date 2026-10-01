@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "A Postgres-Backed Express 5 API With No Database Server: PGlite, JWT and Security Tests",
   description:
     "DriveKeep's backend runs PostgreSQL in-process with PGlite, signs HS256 tokens and has 17 security checks. What it does well and what must change first.",
-  date: "2027-01-03",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Express 5", "PGlite", "PostgreSQL", "JWT", "API Security", "Node.js", "Testing"],
   contentType: "Technical Guide",
