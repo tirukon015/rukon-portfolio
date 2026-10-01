@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "A Written Conflict Policy for a Local-First Workstation App",
   description:
     "How an offline-first PWA writes locally first, syncs on its own timer with backoff, and resolves conflicts with a rule per data type: last writer wins, server wins, append-only, never synced.",
-  date: "2026-11-20",
+  date: "2026-10-02",
   category: "Building Real Systems",
   tags: ["Local-first", "Sync", "IndexedDB", "Offline", "Conflict resolution", "PWA"],
   contentType: "Technical Guide",
