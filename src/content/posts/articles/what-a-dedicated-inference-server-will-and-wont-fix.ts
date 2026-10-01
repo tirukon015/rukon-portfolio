@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "What Moving Self-Hosted Inference to a Server Will and Won't Fix",
   description:
     "A migration plan, not a result: why moving RPOMS AI's model from a laptop to a dedicated server would improve availability but not accuracy, and the gates it must pass first.",
-  date: "2026-12-28",
+  date: "2026-10-02",
   category: "AI & Automation",
   tags: ["Self-hosted AI", "Ollama", "Infrastructure", "Planning", "Inference", "Benchmarking"],
   contentType: "Problem/Solution",
