@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Dependent Drop-Downs With INDIRECT and Named Ranges, and What They Cost to Maintain",
   description:
     "A Brand → Model drop-down built with INDIRECT and one named range per brand works well on day one. The two update procedures, orphaned #REF! names and fixed ranges are what it costs later.",
-  date: "2026-10-13",
+  date: "2026-10-02",
   category: "Building Real Systems",
   tags: ["Excel", "Data Validation", "INDIRECT", "Named Ranges", "Reference Data", "Maintenance"],
   contentType: "Technical Guide",
