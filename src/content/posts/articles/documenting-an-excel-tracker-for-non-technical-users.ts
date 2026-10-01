@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Writing a User Guide Into the Spreadsheet Itself",
   description:
     "A stock tracker's in-workbook guide: a colour legend for formula, drop-down and free-text columns, a sheet-by-sheet purpose list, and how the guide drifted from the formulas it described.",
-  date: "2026-10-19",
+  date: "2026-10-02",
   category: "UI/UX & Product",
   tags: ["Excel", "Documentation", "Internal Tools", "User Guide", "Data Quality"],
   contentType: "Experience-led",
