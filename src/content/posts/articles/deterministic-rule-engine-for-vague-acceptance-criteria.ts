@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Encoding Vague Acceptance Criteria Without Inventing Thresholds",
   description:
     "Criteria that said long, multiple and small with no numbers: how a pure rule engine applies vague words as categories, orders checks for safety and answers UNCLEAR.",
-  date: "2026-12-17",
+  date: "2026-10-02",
   category: "Building Real Systems",
   tags: ["Rule Engine", "TypeScript", "Business Rules", "Pure Functions", "AI Engineering", "Versioning"],
   contentType: "Problem/Solution",
