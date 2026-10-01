@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Measured or Estimated: Calculating Fuel Economy Only From Full Tanks",
   description:
     "Dividing a top-up into the distance driven gives a meaningless economy figure. How DriveKeep measures km/L only from full tanks and labels estimates.",
-  date: "2026-12-18",
+  date: "2026-10-02",
   category: "Building Real Systems",
   tags: ["Fuel Economy", "TypeScript", "Next.js", "Calculation Engine", "Data Quality", "Vehicle Log"],
   contentType: "Technical Guide",
