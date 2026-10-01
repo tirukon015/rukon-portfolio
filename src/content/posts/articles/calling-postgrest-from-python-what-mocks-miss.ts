@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Calling Supabase's PostgREST Directly From FastAPI: The Details a Mock Won't Tell You",
   description:
     "A Python backend talking to Supabase's PostgREST over plain httpx. Embedded ordering, counts in headers, deletes that return 200, reserved characters, and what mock tests can and cannot prove.",
-  date: "2026-11-09",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["PostgREST", "Supabase", "Python", "httpx", "FastAPI", "Testing"],
   contentType: "Technical Guide",
