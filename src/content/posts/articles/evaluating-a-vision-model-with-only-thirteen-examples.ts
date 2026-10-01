@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Evaluating a Vision Model When You Only Have Thirteen Examples",
   description:
     "Thirteen labelled photos are not a test set, but they can still be an honest evaluation. Separating what is known from what is assumed, removing leaked annotations, and controls built on purpose.",
-  date: "2026-12-12",
+  date: "2026-10-02",
   category: "AI & Automation",
   tags: ["Model Evaluation", "Vision Models", "AI Engineering", "Data Leakage", "Qwen2.5-VL", "Testing"],
   contentType: "AI Engineering",
