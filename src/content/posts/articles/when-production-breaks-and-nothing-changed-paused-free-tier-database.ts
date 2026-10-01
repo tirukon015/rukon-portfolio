@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Production Broke and Nothing Had Changed: A Paused Free-Tier Database",
   description:
     "Admin sign-in returned 503 and nothing was being saved, with no deploy and no config change. One credential-free request that tells a database outage from wrong credentials.",
-  date: "2027-01-02",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Supabase", "PostgreSQL", "Incident", "Vercel", "Runbook", "Debugging"],
   contentType: "Problem/Solution",
