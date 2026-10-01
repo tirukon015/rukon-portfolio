@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Why Supabase Google Sign-In Landed on localhost With a Token in the URL",
   description:
     "Google sign-in on a custom domain returned users to localhost:3000 with an access token in the address bar. Two separate causes, the Site URL fallback and the implicit flow, and the fixes.",
-  date: "2026-12-07",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Supabase Auth", "OAuth", "PKCE", "Google Sign-In", "Next.js", "Security"],
   contentType: "Problem/Solution",
