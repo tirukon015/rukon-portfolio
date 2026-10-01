@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Configuration Health You Compute, Not Store: One Model Record Across Three Modules",
   description:
     "How RPOMS merged three definitions of a router model into one record, and flags broken configuration with a pure function instead of an issue table.",
-  date: "2026-11-11",
+  date: "2026-10-02",
   category: "Building Real Systems",
   tags: ["Master Data", "Data Quality", "Configuration", "TypeScript", "PostgreSQL"],
   contentType: "Case Study",
