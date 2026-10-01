@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "An Append-Only Audit Log That Keeps What Was Deleted",
   description:
     "RPOMS's audit log records who acted, from the signed session, and a snapshot of what each destructive action removed, which turns irreversible deletes into recoverable ones.",
-  date: "2026-12-16",
+  date: "2026-10-02",
   category: "Building Real Systems",
   tags: ["Audit Log", "PostgreSQL", "Data Integrity", "Security", "Database Design"],
   contentType: "Technical Guide",
