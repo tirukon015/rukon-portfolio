@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Preview and Commit From the Same Plan: Stock Transfers You Can Reverse Exactly",
   description:
     "In RPOMS one pure function plans a stock transfer: the preview shows it, the commit re-runs it, and a void inverts the frozen executed plan exactly.",
-  date: "2026-10-29",
+  date: "2026-10-02",
   category: "Building Real Systems",
   tags: ["Inventory", "Pure Functions", "Transactions", "TypeScript", "Business Rules"],
   contentType: "Problem/Solution",
