@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Why Every Real Photo Timed Out: Capping Vision Input at 896 px to Fit a 60-Second Function",
   description:
     "Full-size phone photos never got an answer from RPOMS AI's vision model. Encoding cost grew faster than pixel count; capping at the evaluated scale took 114 s down to 38 s.",
-  date: "2026-10-14",
+  date: "2026-10-02",
   category: "AI & Automation",
   tags: ["Vision Models", "Qwen2.5-VL", "Latency", "Vercel Functions", "Image Processing", "Timeouts"],
   contentType: "Problem/Solution",
