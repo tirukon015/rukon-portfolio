@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Promise.race Timeouts Don't Cancel Queries, and That Emptied My Connection Pool",
   description:
     "A read deadline built on Promise.race walks away from a query that keeps running and keeps its pooled connection. How that fed on itself on Vercel, and the bounds that fixed it.",
-  date: "2026-12-08",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["PostgreSQL", "postgres.js", "Connection Pooling", "Vercel", "Timeouts", "Node.js"],
   contentType: "Problem/Solution",
