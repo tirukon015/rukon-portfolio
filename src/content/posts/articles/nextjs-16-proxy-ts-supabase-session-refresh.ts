@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Refreshing a Supabase Session in Next.js 16's proxy.ts, and Not Authorising There",
   description:
     "Next.js 16 renamed Middleware to Proxy. Using proxy.ts only to refresh a Supabase session cookie for admin routes, while every page and API route checks authorisation itself.",
-  date: "2027-01-13",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Next.js 16", "proxy.ts", "Supabase Auth", "Cookies", "Authorization", "TypeScript"],
   contentType: "Technical Guide",
