@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "When the Code Ships Before the Migration: Degrading One Schema Level at a Time",
   description:
     "Selecting a column that a pending migration adds made PostgREST fail every library read. The fix degrades one migration tier at a time, so deploy order stops mattering.",
-  date: "2026-11-04",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["PostgreSQL", "PostgREST", "Supabase", "Migrations", "Deployment", "Python"],
   contentType: "Problem/Solution",
