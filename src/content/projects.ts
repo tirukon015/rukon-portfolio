@@ -592,7 +592,7 @@ export const projects: Project[] = [
         heading: "Current result",
         body: [
           "In production, the dashboard and the Daily Production Report are live: the day's figures are entered for real, stock is deducted for real, and the dashboard reads back what was saved. The Ecommerce portal runs as its own build of the same code.",
-          "The registry, packing, delivery and paperwork, workforce and inventory modules are complete and render live data, but they sit behind a deployment-level write lock while the programme works through sign-off. The lock is enforced at one middleware chokepoint, is on by default in production, and names the modules allowed to write, so a module goes live by being named rather than by accident.",
+          "The registry, packing, delivery and paperwork, workforce and inventory modules are complete, but they sit behind a deployment-level write lock while the programme works through sign-off: while the lock is on, those screens show an under-development notice in production rather than their data. The lock is enforced at one middleware chokepoint, is on by default in production, and names the modules allowed to write, so a module goes live by being named rather than by accident.",
           "On 28 September 2026 the staging line was released to production: the remediation of both audits, the audit log, the environment guard, the login throttle, the test suite and CI, the full Ecommerce module, the centralised model configuration and the connection-pooler diagnostics. Production deploys from main on Vercel, and that release is what it runs today.",
         ],
         figures: [
@@ -634,7 +634,7 @@ export const projects: Project[] = [
         label: "Serial registry, packing, delivery and paperwork, workforce, inventory",
         state: "available",
         detail:
-          "Complete and rendering live data, held behind a deployment-level write lock pending programme sign-off.",
+          "Complete, held behind a deployment-level write lock pending programme sign-off; while it is on, these screens show an under-development notice in production.",
       },
       {
         label: "Transaction pooler and connection diagnostics",

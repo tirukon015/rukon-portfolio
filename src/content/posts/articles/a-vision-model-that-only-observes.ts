@@ -11,7 +11,7 @@ export const post: BlogPost = {
   tags: ["Computer Vision", "LLM", "Ollama", "Qwen2.5-VL", "Next.js", "Evaluation"],
   contentType: "AI Engineering",
   searchIntent: "problem-aware",
-  relatedProjects: ["rpoms", "researchforge"],
+  relatedProjects: ["rpoms-ai", "rpoms", "researchforge"],
   relatedPosts: [
     "making-an-llm-admit-the-paper-does-not-say",
     "when-not-to-fall-back-to-another-ai-provider",

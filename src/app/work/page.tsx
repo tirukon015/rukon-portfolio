@@ -16,6 +16,13 @@ import {
   twitterFor,
 } from "@/lib/seo";
 
+
+/**
+ * Articles are released on an editorial schedule (see `publishedPosts`), so
+ * this route re-renders hourly to pick up an article on its publication day.
+ */
+export const revalidate = 3600;
+
 const title = "Work";
 const description =
   "Case studies of real systems: a Next.js and PostgreSQL operations platform, a Web Bluetooth label engine, an AI inspection system, an inventory management system, a production website, a live AI research assistant and iOS apps.";

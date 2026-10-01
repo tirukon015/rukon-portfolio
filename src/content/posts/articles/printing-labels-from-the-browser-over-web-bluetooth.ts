@@ -6,6 +6,7 @@ export const post: BlogPost = {
   description:
     "A scan-to-label workflow that drives a NIIMBOT B1 Pro directly from Chrome, with no vendor app and no backend. What the protocol work looked like, how 116 tests run without a printer, and what the first real print taught.",
   date: "2026-09-24",
+  updated: "2026-10-01",
   category: "Full-Stack Development",
   tags: ["Web Bluetooth", "TypeScript", "Hardware", "Vite", "Testing", "Barcode"],
   contentType: "Technical Guide",
@@ -76,9 +77,16 @@ export const post: BlogPost = {
     {
       heading: "The boundary with RPOMS",
       body: [
-        "Production RPOMS is untouched while this is validated. The integration boundary is two read-only data providers: given a serial, return the router's print data or a not-found result; given a box number, return the box. Not-found is a normal result, not an exception: the worker sees a message, nothing prints, and the scan field is ready again. Authentication, and who may edit templates, belongs to RPOMS, which is why the standalone app has no login and stays on an internal host until it is behind one.",
+        "Production RPOMS is untouched while this is validated. The integration boundary is two read-only data providers: given a serial, return the router's print data or a not-found result; given a box number, return the box. Not-found is a normal result, not an exception: the worker sees a message, nothing prints, and the scan field is ready again. Authentication, and who may edit templates, belongs to RPOMS, which is why the standalone app had no login at the time of writing.",
         "The whole thing is a few thousand lines of framework-free TypeScript plus a thin UI. If you are driving hardware from a browser, the two decisions I would repeat are keeping the protocol layer free of anything that knows what a label is, and writing down for every protocol fact where you learned it.",
         "The system it serves is described in the [RPOMS case study](/work/rpoms).",
+      ],
+    },
+    {
+      heading: "Update: what changed after this was written",
+      body: [
+        "This article describes the engine as it stood in late September 2026, when the print path was verified with 116 tests and one real label. Since then the engine has gained an optional Node.js and PostgreSQL backend with Google sign-in, device provisioning and sync, a second module for device labels, and a relay page that lets another web application print through an open workstation. It is deployed on a self-hosted Ubuntu server at print.rukon.dev, and the suite has grown to 218 app tests and 26 backend tests.",
+        "What has not changed: the scan-to-print path still makes no network request, and RPOMS still does not supply data to the engine. The current state, with what is live and what is not, is in the [Print Engine case study](/work/rpoms-print-engine).",
       ],
     },
   ],

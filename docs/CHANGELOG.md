@@ -3,6 +3,34 @@
 Significant changes, newest first. Keep entries short: what changed for a
 visitor, and anything a future developer must know. Git history has the detail.
 
+## 2026-10-01 (technical knowledge base)
+
+### Added
+- 133 new articles (about 133,000 words) written from the repositories and
+  documentation of the projects themselves, in eight clusters: RPOMS engineering
+  (20) and operations (13), RPOMS Print Engine (14), RPOMS AI (18), ITMS and the
+  Excel stock tracker (10), SpenDrop and DriveKeep (21), ResearchForge and
+  rukon-link (25), web / SEO / infrastructure (12). Every article has an SEO
+  title, description, tags, related projects and related posts; 403 internal
+  body links connect articles to each other and to the case studies.
+- Scheduled publishing. An article's `date` is its publication date and is
+  never back-dated: `publishedPosts()` hides future-dated articles from every
+  listing, route, feed and sitemap until that day (Malaysia time), and the
+  blog and work routes revalidate hourly to release them. 12 new articles are
+  published on 2026-10-01; the rest are released through 2027-01-14. A body link
+  only ever points to an article already published on its own date.
+
+### Changed
+- RPOMS case study and two articles: write-locked modules show an
+  under-development notice in production (verified in the code), rather than
+  "rendering live data".
+- The Web Bluetooth article gained a dated update (backend, deployment, tests).
+- The RPOMS AI article now lists `rpoms-ai` as its project.
+
+### Not published (owner's decision)
+- An article on working with an AI coding assistant, which would disclose the
+  AI co-author trailers in the repositories.
+
 ## 2026-10-01
 
 Content and SEO audit against the current state of every project repository.

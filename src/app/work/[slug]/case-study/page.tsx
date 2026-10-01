@@ -21,6 +21,13 @@ import {
   twitterFor,
 } from "@/lib/seo";
 
+
+/**
+ * Articles are released on an editorial schedule (see `publishedPosts`), so
+ * this route re-renders hourly to pick up an article on its publication day.
+ */
+export const revalidate = 3600;
+
 export function generateStaticParams() {
   return projects
     .filter((p) => p.sections && p.sections.length > 0)

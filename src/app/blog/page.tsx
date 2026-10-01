@@ -13,6 +13,13 @@ import {
   WEBSITE_ID,
 } from "@/lib/seo";
 
+
+/**
+ * Articles are released on an editorial schedule (see `publishedPosts`), so
+ * this route re-renders hourly to pick up an article on its publication day.
+ */
+export const revalidate = 3600;
+
 const description =
   "Notes on production and operations systems, full-stack development, AI applications and web development, written from real project work in Cyberjaya rather than from tutorials.";
 

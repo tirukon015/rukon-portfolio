@@ -12,6 +12,7 @@ export const post: BlogPost = {
     searchIntent: "problem-aware",
     relatedProjects: ["erth"],
     relatedPosts: [
+    "porting-a-static-page-to-nextjs-without-visual-drift",
       "verifying-a-static-site-you-built-by-hand",
       "from-figma-design-to-production-website",
     ],

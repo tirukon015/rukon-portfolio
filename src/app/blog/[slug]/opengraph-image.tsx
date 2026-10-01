@@ -1,12 +1,19 @@
 import { ImageResponse } from "next/og";
-import { getPost, posts } from "@/content/posts";
+import { getPost, publishedPosts } from "@/content/posts";
 import { site } from "@/content/site";
+
+
+/**
+ * Articles are released on an editorial schedule (see `publishedPosts`), so
+ * this route re-renders hourly to pick up an article on its publication day.
+ */
+export const revalidate = 3600;
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export function generateStaticParams() {
-  return posts.map((p) => ({ slug: p.slug }));
+  return publishedPosts().map((p) => ({ slug: p.slug }));
 }
 
 /**

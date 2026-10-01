@@ -6,7 +6,7 @@ export const post: BlogPost = {
     description:
       "What actually changes when a manual, paper-or-spreadsheet process becomes software, and what shouldn't change.",
     date: "2026-06-30",
-    updated: "2026-09-24",
+    updated: "2026-10-01",
     category: "Building Real Systems",
     tags: ["Automation", "Digital Transformation"],
     contentType: "Experience-led",
@@ -29,7 +29,7 @@ export const post: BlogPost = {
       {
         heading: "Real-world perspective",
         body: [
-          "RPOMS was built for the router-refurbishment operation I support one module at a time, registry, then packing, then delivery, so each piece could be checked against how the floor actually works before the next was started. The rollout is staged the same way but is not the same thing as the build order: today the Daily Production Report is the module in daily use, while the registry, packing, delivery, workforce and inventory modules are complete and render live data but sit behind a deployment-level write lock until the programme signs them off. A module goes live by being named, not by accident.",
+          "RPOMS was built for the router-refurbishment operation I support one module at a time, registry, then packing, then delivery, so each piece could be checked against how the floor actually works before the next was started. The rollout is staged the same way but is not the same thing as the build order: today the Daily Production Report is the module in daily use, while the registry, packing, delivery, workforce and inventory modules are complete but sit behind a deployment-level write lock until the programme signs them off; until then, production shows those screens as under development. A module goes live by being named, not by accident.",
           "One manual distinction had to survive digitisation intact. On the floor, accepting a router and packing it are different jobs done by different people, so the system never records the packer as a router's acceptor, however convenient a single field would have been. Preserving that distinction is the difference between a system that models the process and one that flattens it.",
         ],
       },

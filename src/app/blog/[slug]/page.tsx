@@ -13,7 +13,7 @@ import {
   getRelatedPosts,
   headingId,
   postExcerpt,
-  posts,
+  publishedPosts,
   postWordCount,
   publishedAt,
 } from "@/content/posts";
@@ -31,8 +31,15 @@ import {
   WEBSITE_ID,
 } from "@/lib/seo";
 
+
+/**
+ * Articles are released on an editorial schedule (see `publishedPosts`), so
+ * this route re-renders hourly to pick up an article on its publication day.
+ */
+export const revalidate = 3600;
+
 export function generateStaticParams() {
-  return posts.map((p) => ({ slug: p.slug }));
+  return publishedPosts().map((p) => ({ slug: p.slug }));
 }
 
 type Params = Promise<{ slug: string }>;

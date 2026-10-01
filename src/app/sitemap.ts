@@ -1,8 +1,15 @@
 import type { MetadataRoute } from "next";
 import { projects } from "@/content/projects";
-import { posts, sortedPosts, usedCategories } from "@/content/posts";
+import { publishedPosts, sortedPosts, usedCategories } from "@/content/posts";
 import { categoryMeta } from "@/content/categories";
 import { BASE_URL } from "@/lib/seo";
+
+
+/**
+ * Articles are released on an editorial schedule (see `publishedPosts`), so
+ * this route re-renders hourly to pick up an article on its publication day.
+ */
+export const revalidate = 3600;
 
 /**
  * The newest post date, used as the last-modified stamp for the pages whose
@@ -54,7 +61,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       };
     });
 
-  const postRoutes: MetadataRoute.Sitemap = posts.map((p) => ({
+  const postRoutes: MetadataRoute.Sitemap = publishedPosts().map((p) => ({
     url: `${BASE_URL}/blog/${p.slug}`,
     lastModified: p.updated ?? p.date,
     changeFrequency: "yearly",

@@ -2,6 +2,13 @@ import { sortedPosts, postExcerpt, publishedAt } from "@/content/posts";
 import { site } from "@/content/site";
 import { absoluteUrl, BASE_URL } from "@/lib/seo";
 
+
+/**
+ * Articles are released on an editorial schedule (see `publishedPosts`), so
+ * this route re-renders hourly to pick up an article on its publication day.
+ */
+export const revalidate = 3600;
+
 /**
  * RSS 2.0 feed of the blog.
  *
