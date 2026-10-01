@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Proving a Release Deleted Nothing: Row-Count Gates and a Whole-Database Preservation Test",
   description:
     "How RPOMS checks that a release or migration lost no business data: a row-count gate that fails on any decrease, read-only scripts, and a test that compares every row of every table.",
-  date: "2026-12-02",
+  date: "2026-10-02",
   category: "Building Real Systems",
   tags: ["PostgreSQL", "Migrations", "Data Integrity", "Release Engineering", "PGlite", "Node.js"],
   contentType: "Technical Guide",
