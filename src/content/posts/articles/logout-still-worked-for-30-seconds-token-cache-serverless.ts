@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Logout Still Worked for 30 Seconds: Token Caches on Serverless",
   description:
     "A token verification cache meant a signed-out session kept working for up to 30 seconds. Why evicting on sign-out does not fix it on serverless, and why the answer was a small measured bound.",
-  date: "2026-12-27",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Authentication", "Caching", "Serverless", "Supabase Auth", "FastAPI", "Security"],
   contentType: "Problem/Solution",
