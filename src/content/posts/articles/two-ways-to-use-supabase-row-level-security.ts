@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Two Ways I Use Supabase Row Level Security: Deny-All Behind a Server, or Per-Owner Policies",
   description:
     "Across five projects, RLS does one of two jobs: close the Data API while a trusted server does the work, or let Postgres enforce who owns each row. When to pick which.",
-  date: "2026-11-04",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Supabase", "Row Level Security", "PostgreSQL", "Security", "Next.js", "FastAPI"],
   contentType: "Comparison",
