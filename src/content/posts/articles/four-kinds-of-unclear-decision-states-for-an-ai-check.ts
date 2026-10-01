@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "\"Unclear\" Is Not One Answer: Five Decision States for an AI Inspection",
   description:
     "An AI check that cannot decide can fail for four very different reasons. How RPOMS AI records which one, maps it to what the public sees, and makes a missing mapping a type error.",
-  date: "2026-10-24",
+  date: "2026-10-02",
   category: "AI & Automation",
   tags: ["AI Engineering", "TypeScript", "Human in the Loop", "UX", "Error States", "Decision Engine"],
   contentType: "Explainer",
