@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "One Checked Value Instead of Two Booleans: Making a Bad Config Unrepresentable",
   description:
     "Two on/off flags allow a state with no correct behaviour: both off. Storing the enabled set as one CHECK-constrained value and validating the resulting state instead.",
-  date: "2026-12-31",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["PostgreSQL", "Data Modelling", "Validation", "Configuration", "FastAPI"],
   contentType: "Technical Guide",
