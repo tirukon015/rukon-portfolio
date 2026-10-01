@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "CSV Formula Injection in Exports: The One-Apostrophe Fix",
   description:
     "A name typed as =HYPERLINK(...) runs when someone opens a CSV export in a spreadsheet. The small cell guard RPOMS uses on both client and server exports, and what it leaves alone.",
-  date: "2027-01-05",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["CSV", "Security", "Excel", "Formula Injection", "TypeScript"],
   contentType: "Technical Guide",
