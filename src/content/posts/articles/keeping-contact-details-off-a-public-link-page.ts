@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Keeping Your Email and Phone Off a Public Link Page Until Someone Asks",
   description:
     "A QR link page that never ships private contact details in its HTML or JavaScript. Server-only values, a short request form, only the asked-for methods returned, and a 24-hour signed re-reveal.",
-  date: "2027-01-09",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Next.js", "Privacy", "Server-Only", "HMAC", "Supabase", "Forms"],
   contentType: "Technical Guide",
