@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Maintaining a Web System I Didn't Build: Small, Scoped Fixes",
   description:
     "Three small fixes to a Next.js inventory app another developer built: a lazily loaded Excel library, a duplicate fetch on first load, and a reset-password redirect, kept reviewable.",
-  date: "2026-11-22",
+  date: "2026-10-02",
   category: "Developer Journey",
   tags: ["Next.js", "React", "Maintenance", "Code Review", "Dynamic Import", "Supabase Auth"],
   contentType: "Experience-led",
