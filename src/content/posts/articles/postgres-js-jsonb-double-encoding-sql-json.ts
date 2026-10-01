@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "postgres.js Stored My JSON Arrays as Strings in a jsonb Column",
   description:
     "Writing JSON.stringify(x)::jsonb through postgres.js encodes the value twice, so a jsonb column holds a string, not an array. The symptom, the sql.json() fix, and handling rows already stored.",
-  date: "2026-12-25",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["PostgreSQL", "postgres.js", "jsonb", "Node.js", "Debugging"],
   contentType: "Problem/Solution",
