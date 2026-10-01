@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Porting a Static Page to Next.js Without Visual Drift",
   description:
     "Rebuilding a finished page in Next.js 16 and Tailwind 4 so it looks identical: the font fallback, image optimiser and class-conflict traps, and how drift was checked.",
-  date: "2026-10-21",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Next.js", "Tailwind CSS", "next/font", "next/image", "Visual QA", "TypeScript"],
   contentType: "Technical Guide",
