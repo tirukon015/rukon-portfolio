@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Structured Data for a Local Recycling Business: Organization, RecyclingCenter and an FAQPage That Matches the Page",
   description:
     "Turning a client's schema requirements into JSON-LD for a Malaysian e-waste service: Organization plus RecyclingCenter, and an FAQPage that mirrors the visible FAQ.",
-  date: "2026-10-10",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["JSON-LD", "Schema.org", "Local SEO", "FAQPage", "RecyclingCenter", "Malaysia"],
   contentType: "SEO/GEO",
