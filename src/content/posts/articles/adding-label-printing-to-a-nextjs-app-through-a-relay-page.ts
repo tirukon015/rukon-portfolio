@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Adding Label Printing to an Existing Next.js App Without Touching the Printer",
   description:
     "The calling side of a print integration: validating SKUs the way the printer app will, passing them in a URL fragment, detecting blocked pop-ups, and refusing to print unsaved changes.",
-  date: "2026-11-13",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Next.js", "React", "TypeScript", "Label Printing", "window.open", "Integration"],
   contentType: "Technical Guide",
