@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Out-of-Order Responses on Filter Changes: Only the Newest Request May Write",
   description:
     "Filters that apply on change put several fetches in flight, and the slow broad one often lands last. A ticket per request in a React ref keeps the screen answering the current question.",
-  date: "2027-01-02",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["React", "Race Conditions", "Fetch", "Next.js", "Frontend"],
   contentType: "Problem/Solution",
