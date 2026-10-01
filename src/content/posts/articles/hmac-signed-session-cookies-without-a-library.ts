@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "From a Constant Per-Role Cookie to HMAC-Signed, Expiring Sessions",
   description:
     "RPOMS's session cookie was the same bytes for every admin, forever. Replacing it with a signed payload carrying issue time and session id, plus a login throttle that needs no Redis.",
-  date: "2026-11-10",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Authentication", "Sessions", "HMAC", "Node.js crypto", "Rate Limiting", "Next.js"],
   contentType: "Technical Guide",
