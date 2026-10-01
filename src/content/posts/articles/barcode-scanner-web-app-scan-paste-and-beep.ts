@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Building a Web Screen Around a Barcode Scanner: Enter Keys, Excel Pastes and a Beep That Froze the Page",
   description:
     "How RPOMS's scan screens handle a barcode scanner: Enter-terminated scans, pasted Excel columns, one batched lookup, and a beep that no longer blocks.",
-  date: "2026-10-18",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Barcode Scanner", "Web Audio", "React", "Performance", "TypeScript", "Operations"],
   contentType: "Technical Guide",
