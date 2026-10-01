@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Where Does a 4-Second Label Go? Instrumenting a Scan-to-Print Pipeline",
   description:
     "Stage-by-stage tracing of a Web Bluetooth label print, an audit of every sleep in the code, and the rule of not claiming a speed-up until the hardware has measured it.",
-  date: "2026-12-10",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Performance", "Tracing", "Web Bluetooth", "Thermal printer", "Profiling", "TypeScript"],
   contentType: "Problem/Solution",
