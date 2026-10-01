@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Screens That Look Like Payments but Aren't: Parsing Malaysian Receipts Without Fake Expenses",
   description:
     "Balance, credit-limit and reward screens all show RM amounts. How SpenDrop rejects them, and the Malaysian receipt formats two of my parsers read.",
-  date: "2026-11-16",
+  date: "2026-10-02",
   category: "Malaysia & Cyberjaya",
   tags: ["OCR", "Receipt Parsing", "Regex", "Malaysia", "Touch 'n Go", "Bahasa Malaysia", "Tesseract.js"],
   contentType: "Problem/Solution",
