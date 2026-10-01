@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Working Through a 44-Finding Code Audit, Six of Them P0, Without Losing Data",
   description:
     "How I worked through a forensic audit of a live operations system: the four root causes behind 44 findings, a second pass that caught my own regressions, and what I chose not to change.",
-  date: "2026-11-25",
+  date: "2026-10-02",
   category: "Developer Journey",
   tags: ["Code Audit", "Remediation", "PostgreSQL", "Security", "Technical Debt", "Next.js"],
   contentType: "Case Study",
