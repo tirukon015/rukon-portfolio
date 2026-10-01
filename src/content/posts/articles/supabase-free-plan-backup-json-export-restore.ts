@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Backing Up a Database on a Plan With No Backups, and a One-Way Staging Refresh",
   description:
     "The procedure and scripts I designed for a production Supabase database on the Free plan: a read-only JSON export, a restore that only targets staging, and an anonymising refresh.",
-  date: "2027-01-07",
+  date: "2026-10-02",
   category: "Building Real Systems",
   tags: ["Supabase", "PostgreSQL", "Backups", "Disaster Recovery", "Staging", "Node.js"],
   contentType: "Technical Guide",
