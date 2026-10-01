@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Freezing a Label Design in CI by Hashing Its Rendered Raster",
   description:
     "A Vitest test that hashes each label template's JSON and its exact 1-bit print raster, so any change that would move a single printed dot fails the build and the deploy.",
-  date: "2026-10-30",
+  date: "2026-10-02",
   category: "Building Real Systems",
   tags: ["Vitest", "Snapshot testing", "Regression testing", "CI", "Label printing", "TypeScript"],
   contentType: "Technical Guide",
