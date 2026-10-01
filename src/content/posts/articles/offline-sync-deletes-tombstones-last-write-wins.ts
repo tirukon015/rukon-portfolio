@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Deletes That Don't Come Back: Tombstones and Last-Write-Wins in Offline Sync",
   description:
     "In offline sync, a deleted record comes back when another copy is pushed. DriveKeep's soft deletes, tombstone list and timestamp merge, and its clock problem.",
-  date: "2027-01-06",
+  date: "2026-10-02",
   category: "Building Real Systems",
   tags: ["Offline Sync", "Tombstones", "PostgreSQL", "Supabase", "Swift", "Conflict Resolution"],
   contentType: "Explainer",
