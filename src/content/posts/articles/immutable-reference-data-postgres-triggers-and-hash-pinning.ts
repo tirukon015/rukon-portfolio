@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Reference Data Nobody Can Edit: Postgres Triggers, Hash Pinning and Append-Only History",
   description:
     "Protecting the examples an AI system is measured against: a trigger that refuses UPDATE and DELETE, SHA-256 hashes checked by tests, append-only history, and what these do not stop.",
-  date: "2026-11-15",
+  date: "2026-10-02",
   category: "Building Real Systems",
   tags: ["PostgreSQL", "Triggers", "Data Integrity", "Append-only", "Vitest", "PGlite"],
   contentType: "Technical Guide",
