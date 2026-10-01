@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Sharing One Supabase Project Between Two Apps Safely",
   description:
     "A second app inside an existing Supabase project: prefixed tables, RLS on with no policies, revoked grants, server-only access and an admin check for a shared user list.",
-  date: "2027-01-14",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Supabase", "PostgreSQL", "Row Level Security", "Security", "Next.js", "Architecture"],
   contentType: "Technical Guide",
