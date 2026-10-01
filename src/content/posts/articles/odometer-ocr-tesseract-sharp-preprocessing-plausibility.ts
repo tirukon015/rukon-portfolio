@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Reading an Odometer Photo: Preprocessing Variants, Tesseract.js and a Plausibility Check",
   description:
     "DriveKeep's web app reads four sharp-preprocessed variants of an odometer photo with Tesseract.js and ranks every candidate against the previous reading.",
-  date: "2026-12-26",
+  date: "2026-10-02",
   category: "AI & Automation",
   tags: ["OCR", "Tesseract.js", "sharp", "Node.js", "Image Preprocessing", "Next.js"],
   contentType: "Problem/Solution",
