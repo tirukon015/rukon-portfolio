@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Apple Pay Is Not a Bank: Payment Channels, Funding Accounts and Reconciling Double Records",
   description:
     "One purchase can arrive as an Apple Pay tap and again as a bank record. Separating how you paid from where money came from, and merging the duplicate.",
-  date: "2026-11-02",
+  date: "2026-10-02",
   category: "Building Real Systems",
   tags: ["Data Modelling", "Reconciliation", "Duplicate Detection", "Apple Pay", "SwiftData", "Personal Finance"],
   contentType: "Problem/Solution",
