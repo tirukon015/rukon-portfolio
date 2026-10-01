@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Adding Arabic (RTL) to a Next.js Dashboard Without Translating the Whole App",
   description:
     "Publishing the RPOMS dashboard in Arabic: a typed dictionary that fails the build, dir on one wrapper not <html>, an LTR chart, and Latin digits.",
-  date: "2026-11-05",
+  date: "2026-10-02",
   category: "UI/UX & Product",
   tags: ["i18n", "RTL", "Arabic", "Next.js", "TypeScript", "Dashboard"],
   contentType: "Technical Guide",
