@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Why My VBA Maps Columns by Header Name, Not Column Number",
   description:
     "One workbook held both approaches: event macros with hard-coded column numbers that drifted as columns were added, and an update macro that finds columns by header text. The difference.",
-  date: "2026-10-07",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["VBA", "Excel", "Maintenance", "Scripting.Dictionary", "Barcode", "Data Quality"],
   contentType: "Problem/Solution",
