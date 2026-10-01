@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Google Sign-In on iOS Through Supabase, With PKCE and No Google SDK",
   description:
     "Google sign-in on iOS through Supabase with ASWebAuthenticationSession and PKCE, no Google SDK or client secret, plus an identity bug RLS would reject.",
-  date: "2026-11-30",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Supabase", "OAuth", "PKCE", "iOS", "Swift", "Keychain", "Row Level Security"],
   contentType: "Technical Guide",
