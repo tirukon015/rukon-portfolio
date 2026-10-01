@@ -32,7 +32,7 @@ export function Hero() {
         className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-bg"
       />
 
-      <Container className="relative z-10 pt-16 pb-14 sm:pt-20 lg:pt-24 lg:pb-20">
+      <Container className="relative z-10 pt-6 pb-14 lg:pb-20">
         <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-8">
           <div className="min-w-0">
             <p className="flex flex-wrap gap-x-2 gap-y-1 font-mono text-xs uppercase tracking-[0.18em] text-text-faint">

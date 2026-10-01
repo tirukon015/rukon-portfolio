@@ -121,7 +121,7 @@ export default async function ProjectOverviewPage({ params }: { params: Params }
           LEVEL 2: EXECUTIVE HR-FRIENDLY PROJECT OVERVIEW (THE HOOK)
           Dedicated concise overview designed to be scanned in 10-20 seconds.
           ========================================================================= */}
-      <section className="py-10 sm:py-14 lg:py-16">
+      <section className="pt-6 pb-10 sm:pb-14 lg:pb-16">
         <Container>
           {/* Breadcrumbs + Mode Indicator */}
           <div className="flex flex-wrap items-center justify-between gap-4 border-b border-border/70 pb-4">

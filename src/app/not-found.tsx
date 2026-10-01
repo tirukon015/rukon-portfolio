@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <div className="py-24 sm:py-32">
+    <div className="pt-6 pb-24 sm:pb-32">
       <Container className="max-w-3xl">
         <span className="font-mono text-xs uppercase tracking-[0.18em] text-accent">404</span>
         <h1 className="mt-4 text-4xl font-semibold tracking-tight text-text sm:text-5xl">

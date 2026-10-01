@@ -37,7 +37,7 @@ export default async function CVPage({ searchParams }: PageProps<"/cv">) {
 
   return (
     <>
-      <div className="border-b border-border pt-16">
+      <div className="border-b border-border pt-6">
         <Container>
           <Breadcrumbs items={crumbs} />
         </Container>

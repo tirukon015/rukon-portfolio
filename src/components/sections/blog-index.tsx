@@ -21,7 +21,7 @@ export function BlogIndex({ crumbs, description }: { crumbs: Crumb[]; descriptio
     .filter((c) => c.count > 0);
 
   return (
-    <div className="py-16 sm:py-20 lg:py-24">
+    <div className="pt-6 pb-16 sm:pb-20 lg:pb-24">
       <Container>
         <Breadcrumbs items={crumbs} />
 

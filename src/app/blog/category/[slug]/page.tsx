@@ -98,7 +98,7 @@ export default async function CategoryPage({ params }: { params: Params }) {
   );
 
   return (
-    <div className="py-16 sm:py-20 lg:py-24">
+    <div className="pt-6 pb-16 sm:pb-20 lg:pb-24">
       <JsonLd data={schema} />
       <Container>
         <Breadcrumbs items={crumbs} />

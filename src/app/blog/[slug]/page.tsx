@@ -134,7 +134,7 @@ export default async function BlogPostPage({ params }: { params: Params }) {
   const showToc = post.sections.length >= 4;
 
   return (
-    <article className="py-16 sm:py-20">
+    <article className="pt-6 pb-16 sm:pb-20">
       <JsonLd data={schema} />
 
       <Container className="max-w-3xl">

@@ -140,7 +140,7 @@ export default async function FullCaseStudyPage({ params }: { params: Params }) 
       </div>
 
       {/* Technical Case Study Header */}
-      <section className="border-b border-border bg-gradient-to-b from-bg-elevated/40 via-bg to-bg py-12 sm:py-16 lg:py-20">
+      <section className="border-b border-border bg-gradient-to-b from-bg-elevated/40 via-bg to-bg pt-6 pb-12 sm:pb-16 lg:pb-20">
         <Container>
           <Breadcrumbs items={crumbs} />
 
