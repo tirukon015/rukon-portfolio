@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Theme-Specific Logos Without a Flash: Let CSS Pick, Not useTheme()",
   description:
     "A logo with an opaque white background became a white block on the dark theme. Swapping it in CSS on data-theme, not with useTheme(), fixed it on the first frame.",
-  date: "2026-12-01",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Next.js", "Dark Mode", "next-themes", "CSS", "Accessibility", "Server Components"],
   contentType: "Problem/Solution",
