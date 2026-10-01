@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "An Error Boundary That Retried Into the Outage: Backoff With Jitter",
   description:
     "A Next.js error.tsx that retries on its own is right for a wall display, and wrong if every open screen retries in lockstep. Longer waits, jitter and a slow interval that never stops.",
-  date: "2026-12-28",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Next.js", "Error Handling", "Retry", "Jitter", "React", "Resilience"],
   contentType: "Problem/Solution",
