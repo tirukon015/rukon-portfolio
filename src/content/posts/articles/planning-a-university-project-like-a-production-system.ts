@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Planning a University Project Like a Real One: Milestones, Risks and a Decision Log",
   description:
     "The first commit of ResearchForge had no code: a plan with milestones, a risk register, a definition of done and numbered decisions. What that structure caught, and where the plan was wrong.",
-  date: "2026-12-20",
+  date: "2026-10-02",
   category: "Developer Journey",
   tags: ["Project Planning", "University Project", "Decision Log", "Risk Management", "Documentation"],
   contentType: "Experience-led",
