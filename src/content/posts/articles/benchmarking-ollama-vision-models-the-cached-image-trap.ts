@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "The 21-Second Benchmark That Was Wrong: Ollama Reuses an Encoded Image",
   description:
     "A vision-model latency figure that was half the real cost, because the benchmark sent the same image twice. How it was caught, corrected, and what a fair benchmark needs.",
-  date: "2026-10-08",
+  date: "2026-10-02",
   category: "AI & Automation",
   tags: ["Ollama", "Benchmarking", "Latency", "Vision Models", "Qwen2.5-VL"],
   contentType: "Problem/Solution",
