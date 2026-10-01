@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Getting Usable Text Out of Academic PDFs: Signatures, Encryption, Scans and Ligatures",
   description:
     "The PDF ingestion path behind ResearchForge: checking the real file signature, opening print-restricted files, rejecting scans with no text layer, and cleaning text without removing content.",
-  date: "2026-10-10",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["PDF", "Python", "pypdf", "Text Extraction", "FastAPI", "Licensing"],
   contentType: "Technical Guide",
