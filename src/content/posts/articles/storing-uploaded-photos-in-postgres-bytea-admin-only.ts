@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Storing Uploaded Photos in Postgres bytea, Served Only to Admins",
   description:
     "Why RPOMS AI keeps inspection photos in a PostgreSQL bytea column instead of a bucket, how they are served only through an admin-guarded route, and when this stops being a good idea.",
-  date: "2026-12-05",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["PostgreSQL", "bytea", "Supabase", "Next.js", "File Storage", "Security"],
   contentType: "Problem/Solution",
