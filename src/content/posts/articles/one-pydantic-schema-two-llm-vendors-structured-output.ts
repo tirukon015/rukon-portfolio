@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "One Pydantic Schema, Two LLM Vendors: Native Parsing vs JSON Mode",
   description:
     "The same Pydantic models drive structured output from Anthropic's native parsing and Groq's JSON mode. Forbidding extra fields, catching truncation, and validating instead of repairing.",
-  date: "2026-11-30",
+  date: "2026-10-02",
   category: "AI & Automation",
   tags: ["LLM", "Structured Output", "Pydantic", "JSON Schema", "Anthropic", "Groq", "Python"],
   contentType: "AI Engineering",
