@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Detecting a Device Model From Its Serial Number With Prefix Rules",
   description:
     "How RPOMS and its print engine tell a router's model from its serial: prefix and length rules stored as data, longest prefix first, unknowns flagged.",
-  date: "2026-10-06",
+  date: "2026-10-02",
   category: "Building Real Systems",
   tags: ["Serial Numbers", "Barcode Scanning", "TypeScript", "Validation", "Operations"],
   contentType: "Technical Guide",
