@@ -16,9 +16,10 @@ visitor, and anything a future developer must know. Git history has the detail.
 - Scheduled publishing. An article's `date` is its publication date and is
   never back-dated: `publishedPosts()` hides future-dated articles from every
   listing, route, feed and sitemap until that day (Malaysia time), and the
-  blog and work routes revalidate hourly to release them. 12 new articles are
-  published on 2026-10-01; the rest are released through 2027-01-14. A body link
-  only ever points to an article already published on its own date.
+  blog and work routes revalidate hourly to release them. 12 new articles were
+  published on 2026-10-01 and, at the owner's request, the other 121 on
+  2026-10-02 (dated the day they went live, not back-dated). The gate remains
+  for future articles.
 
 ### Changed
 - RPOMS case study and two articles: write-locked modules show an

@@ -44,7 +44,7 @@ Status: **Live** = in production code; **Partial** = works with a stated limitat
 
 | Feature | Status | Where |
 | --- | --- | --- |
-| 161 articles (28 earlier + 133 added 2026-10-01), six categories, category pages | Live | `content/posts`, `app/blog/*` |
+| 161 articles (28 earlier + 133 added 2026-10-01/02), six categories, category pages | Live | `content/posts`, `app/blog/*` |
 | Scheduled publishing: an article dated in the future is hidden from every listing, route, feed and sitemap until its date (Malaysia time); blog and work routes revalidate hourly | Live | `publishedPosts()` in `content/posts/index.ts`, `revalidate = 3600` |
 | Rich blocks: code, callout, flow, image, table, list | Live | `blog/post-body.tsx` |
 | Reading time | Live | `lib/reading-time.ts` |
