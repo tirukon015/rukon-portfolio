@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Hardening a Public Photo Upload: Magic Bytes, Header Dimensions and Stripping EXIF Twice",
   description:
     "An anonymous endpoint that decodes images is easy to abuse. How RPOMS AI re-encodes photos in the browser, trusts none of it on the server, and never stores the uploaded bytes.",
-  date: "2026-11-22",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["File Upload", "Security", "EXIF", "Next.js", "Image Processing", "Privacy"],
   contentType: "Technical Guide",
