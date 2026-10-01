@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Next.js Open Graph Metadata Replaces, It Doesn't Merge",
   description:
     "A child route that sets its own openGraph object silently drops the layout's og:image and og:locale. Why Next.js does that, and the helper this site uses to stop it.",
-  date: "2026-11-24",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Next.js", "Open Graph", "Metadata API", "Technical SEO", "TypeScript"],
   contentType: "Problem/Solution",
