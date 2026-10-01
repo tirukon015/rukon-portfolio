@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "The Service Worker Was Active and the Cache Was Empty: A Workbox Duplicate-Entry Bug",
   description:
     "An offline PWA that registered its service worker, cached nothing, and failed silently. The cause was one file listed twice in the precache manifest by vite-plugin-pwa's includeAssets.",
-  date: "2026-10-18",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Workbox", "vite-plugin-pwa", "Service worker", "PWA", "Offline", "Debugging"],
   contentType: "Problem/Solution",
