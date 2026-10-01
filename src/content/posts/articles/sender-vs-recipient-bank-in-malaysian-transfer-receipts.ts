@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Telling the Sender Bank From the Recipient on a Malaysian Transfer Receipt",
   description:
     "A CIMB to Maybank transfer receipt names both banks. Reading the receipt's structure to attribute the payment to the bank that actually sent it.",
-  date: "2026-11-08",
+  date: "2026-10-02",
   category: "Malaysia & Cyberjaya",
   tags: ["OCR", "Receipt Parsing", "Malaysian Banks", "DuitNow", "Swift", "iOS"],
   contentType: "Problem/Solution",
