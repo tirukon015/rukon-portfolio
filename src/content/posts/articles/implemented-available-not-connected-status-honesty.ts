@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Implemented, Available, Not Connected: Writing Honest Status Into Project Docs",
   description:
     "\"It exists in the repository\" and \"it runs in production\" are different claims. The three-state status model I use across my projects, with real rows from each.",
-  date: "2026-11-17",
+  date: "2026-10-02",
   category: "Developer Journey",
   tags: ["Documentation", "Project Status", "Engineering Practice", "Portfolio", "TypeScript"],
   contentType: "Explainer",
