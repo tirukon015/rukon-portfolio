@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Building an iOS Share Extension That Reads a Screenshot and Saves to the App's Database",
   description:
     "How SpenDrop's Share Extension loads an image from any app, stays inside the memory limit, runs Vision OCR and saves to the app's shared SwiftData store.",
-  date: "2026-10-15",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["iOS", "Share Extension", "SwiftUI", "Apple Vision", "SwiftData", "App Groups", "NSItemProvider"],
   contentType: "Technical Guide",
