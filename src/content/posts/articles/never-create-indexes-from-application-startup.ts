@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Why My App No Longer Creates Indexes When It Deploys",
   description:
     "A plain CREATE INDEX in a cold-start schema build locks a busy table as a side effect of shipping code. Moving indexes to CONCURRENTLY migrations, and what the app still does.",
-  date: "2026-10-22",
+  date: "2026-10-02",
   category: "Building Real Systems",
   tags: ["PostgreSQL", "Indexes", "Migrations", "Locking", "Deployment"],
   contentType: "Problem/Solution",
