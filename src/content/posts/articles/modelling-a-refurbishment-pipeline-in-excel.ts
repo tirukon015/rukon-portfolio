@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Modelling a Multi-Stage Refurbishment Pipeline in Excel",
   description:
     "Following one laptop through an Excel stock tracker: a completeness gate at receiving, an automatic hand-off list, status derived from department ticks, e-commerce counts, and EDATE warranties.",
-  date: "2026-11-01",
+  date: "2026-10-02",
   category: "Building Real Systems",
   tags: ["Excel", "Inventory", "Workflow", "XLOOKUP", "EDATE", "Dynamic Arrays"],
   contentType: "Case Study",
