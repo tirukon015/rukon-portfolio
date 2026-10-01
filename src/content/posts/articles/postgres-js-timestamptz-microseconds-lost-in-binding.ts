@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "postgres.js Dropped the Microseconds From My timestamptz Parameter",
   description:
     "A revision check refused every save because a bound timestamptz went through a JavaScript Date and lost its microseconds. One extra ::text cast fixed it.",
-  date: "2026-10-05",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["PostgreSQL", "postgres.js", "timestamptz", "Node.js", "Debugging"],
   contentType: "Problem/Solution",
