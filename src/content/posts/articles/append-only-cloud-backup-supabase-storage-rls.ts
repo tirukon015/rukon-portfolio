@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "An Append-Only Cloud Backup for a Local-First iOS App",
   description:
     "SpenDrop's optional cloud backup never overwrites: per-user Storage folders, no UPDATE policies, a content hash, and a restore that copies local data first.",
-  date: "2026-12-06",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Supabase", "Supabase Storage", "Row Level Security", "Backups", "iOS", "Local-First", "PostgreSQL"],
   contentType: "Technical Guide",
