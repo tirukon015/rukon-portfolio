@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Caching LLM Analyses by Content Hash Without Recording Who Uploaded What",
   description:
     "A shared cache for expensive LLM analyses, keyed by a hash of the extracted text. How the key is chosen, what is never cached, and why the cache table has no user column.",
-  date: "2026-10-16",
+  date: "2026-10-02",
   category: "AI & Automation",
   tags: ["LLM", "Caching", "SHA-256", "Supabase", "Row Level Security", "Privacy", "Python"],
   contentType: "AI Engineering",
