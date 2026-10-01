@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "The Test That Calls Every Next.js API Route With No Session",
   description:
     "Five API reads in RPOMS typechecked and linted cleanly and were open to anyone. They were found by probing the built app, and now one test globs every route.ts and expects a refusal.",
-  date: "2026-11-17",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Next.js", "Authorization", "Vitest", "API Security", "Route Handlers", "Testing"],
   contentType: "Problem/Solution",
