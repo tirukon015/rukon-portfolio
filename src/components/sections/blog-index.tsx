@@ -35,6 +35,17 @@ export function BlogIndex({ crumbs, description }: { crumbs: Crumb[]; descriptio
 
         <nav aria-label="Browse by topic" className="mt-10">
           <ul className="flex flex-wrap gap-x-6 gap-y-2">
+            {/* Every published article, so the size of the library is visible at a glance. */}
+            <li>
+              <Link
+                href="/blog"
+                aria-current="page"
+                className="inline-flex items-baseline gap-1.5 text-sm text-text transition-colors hover:text-text"
+              >
+                All
+                <span className="font-mono text-[11px] text-text-faint">{posts.length}</span>
+              </Link>
+            </li>
             {browsable.map((cat) => (
               <li key={cat.slug}>
                 <Link
