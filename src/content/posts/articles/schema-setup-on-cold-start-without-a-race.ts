@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Schema Setup on Cold Start: One Statement, One Winner, and a Building Sentinel",
   description:
     "Serverless instances that create tables on first use race each other and hold exclusive locks. How RPOMS claims the schema build with one SQL statement, and the bug in the first version.",
-  date: "2026-10-17",
+  date: "2026-10-02",
   category: "Building Real Systems",
   tags: ["PostgreSQL", "Serverless", "Schema Migrations", "Vercel", "Concurrency", "Supabase"],
   contentType: "Technical Guide",
