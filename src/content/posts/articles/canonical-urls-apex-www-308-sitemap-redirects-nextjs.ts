@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "Canonicals That Pointed at a Redirect: www vs Apex, Sitemaps and Permanent Redirects in Next.js",
   description:
     "Every canonical, og:url and sitemap entry on this site named a URL that 308-redirected. The fix, plus the sitemap, feed and redirect decisions made around it in Next.js.",
-  date: "2026-10-05",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Technical SEO", "Canonical URL", "Next.js", "Sitemap", "Redirects", "RSS"],
   contentType: "Problem/Solution",
