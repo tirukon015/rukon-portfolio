@@ -5,7 +5,7 @@ export const post: BlogPost = {
   title: "The Wrong Supabase Key Doesn't Fail. It Returns 200 and Zero Rows.",
   description:
     "A publishable Supabase key in a server slot meant for a secret one: every read succeeded with no rows, the dashboard showed confident zeros, and the health check said all was well.",
-  date: "2026-11-16",
+  date: "2026-10-02",
   category: "Full-Stack Development",
   tags: ["Supabase", "Row Level Security", "Configuration", "Health Checks", "Python"],
   contentType: "Problem/Solution",
