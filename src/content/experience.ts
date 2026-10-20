@@ -19,13 +19,14 @@ export const experience: ExperienceEntry[] = [
     summary:
       "One role covering the whole chain: operational requirement, system design, web and software implementation, deployment, daily support, and ongoing maintenance. Lead for RPOMS, the ERP-style operational system running the company's router-refurbishment programme.",
     primary: true,
-    projects: ["rpoms", "rpoms-print-engine", "rpoms-ai", "itms", "erth", "bbtech-laptop-tool", "router-diagnostic", "erth-router-distribution"],
+    projects: ["rpoms", "rpoms-print-engine", "rpoms-ai", "itms", "erth", "bbtech-laptop-tool", "bbtech-laptop-inspection-tool", "router-diagnostic", "erth-router-distribution"],
     bullets: [
       "Lead RPOMS end to end: gathered the requirement from the production floor, designed the data model and four-role access control, built its 16 pages and 41 API route files with 958 automated tests, took it to production on Vercel and Supabase, and remain its maintainer and release owner.",
       "Built RPOMS as a real operational system rather than a reporting tool: serial-level asset tracking, inventory and consumable deduction tied to valid business events, packing and delivery validation, generated delivery paperwork, workforce output, and operational dashboards.",
       "Built the RPOMS Print Engine, a Web Bluetooth label-printing workstation for the line, and deployed it with its Node.js and PostgreSQL backend on a self-hosted Ubuntu server behind nginx; it is my own independent project.",
       "Contributed to ITMS, BBTech's inventory management system, across its evolution: engineered dynamic formula systems and VBA status pipelines in the foundational BBTech Stock Tracker Excel workbook; since another developer built the web application, remediated production issues, conducted the SMBIOS hardware identity audit, and integrated my independent Print Engine and CSV export directly into production (commit 0f67de6).",
       "Built BBTech Laptop Tool, a portable .NET 8 WPF utility extracting immutable SMBIOS hardware serials, battery health, and encrypted on-device QC histories across 685 automated unit tests.",
+      "Built BBTech Laptop Inspection Tool, a Python and PySide6 desktop utility that inspects every driver on a refurbished laptop and repairs missing or outdated ones from official sources only, packaged as an installer and a portable EXE with 98 automated tests.",
       "Built ERTH Router Retest & Cleaning Operations (Next.js 15, PostgreSQL, Google OIDC PKCE), tracking multi-tiered productivity points (L1–L4) and daily target achievements across cleaning teams.",
       "Bench-tested and contributed diagnostic workflows to the WiFi Router Diagnostic Tool across Kaon, Huawei, and TP-Link hardware, automating LAN serial extraction and link-state fault recovery across 84 assertions.",
       "Built RPOMS AI, a photo inspection system in which a self-hosted vision model only reports what it sees and a deterministic rule engine applies the client's cosmetic criteria, evaluated against the client's reference photos before any model is trusted.",

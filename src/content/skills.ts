@@ -23,7 +23,7 @@ export const capabilities: Capability[] = [
     title: "Systems & internal tools",
     description:
       "Turning a physical operation into one system: serial and asset tracking, inventory and consumable deduction, production stages, delivery paperwork, workforce output and reporting, all reading from a single data model so a dashboard figure traces back to the event behind it. Requirements gathered from the floor, not from a specification, and sometimes proved first in a macro-enabled Excel workflow before they become a web application.",
-    evidence: ["rpoms", "itms", "rpoms-print-engine", "bbtech-laptop-tool", "erth-router-distribution", "router-diagnostic"],
+    evidence: ["rpoms", "itms", "rpoms-print-engine", "bbtech-laptop-tool", "bbtech-laptop-inspection-tool", "erth-router-distribution", "router-diagnostic"],
   },
   {
     title: "AI & automation",
