@@ -182,7 +182,7 @@ const allProjects: Project[] = [
     fullName: "Router Production Operations Management System",
     tagline: "An operations system, WMS/ERP-like in shape, used on a live router-refurbishment line.",
     summary:
-      "The operations system that replaced the spreadsheets running a router-refurbishment line: a daily production report that deducts stock as it saves, serial-level tracking from acceptance into numbered boxes and out on deliveries, delivery paperwork generated from the office's own template, workforce output, and a stock-request portal for the Ecommerce team. Designed, built, deployed and maintained by me alone as a Next.js, TypeScript and PostgreSQL (Supabase) application: about 61,400 lines of TypeScript, 16 pages, 41 API route files and 958 automated tests.",
+      "The operations system that replaced the spreadsheets running a router-refurbishment line: a daily production report that deducts stock as it saves, serial-level tracking from acceptance into numbered boxes and out on deliveries, delivery paperwork generated from the office's own template, workforce output, and a stock-request portal for the Ecommerce team. Designed, built, deployed and maintained by me alone as a Next.js, TypeScript and PostgreSQL (Supabase) application: about 61,400 lines of TypeScript, 16 pages, 41 API route files and 1,637 automated tests.",
     category: "Systems / ERP / WMS",
     categorySlug: "systems",
     categories: ["Systems / ERP / WMS", "Web Apps / Software"],
@@ -196,7 +196,7 @@ const allProjects: Project[] = [
         "Replaced manual spreadsheets with one unified operational platform covering stock intake, technical acceptance, box packing, delivery, and daily reporting",
         "Stock of routers, chargers, LAN cables, and boxes derived deterministically from the daily report ledger, never hand-edited",
         "Serial-level traceability from acceptance barcode scan to numbered box, delivery dispatch, and automated Delivery Order documentation",
-        "October 2026: multi-box delivery batching (PR #6) and paginated inventory history (PR #4) released to production on 12 October; the Refining and Printing workstation, Google sign-in with per-service access and Registry hardening for 250,000 routers are on staging with a production handover package dated 20 October",
+        "October 2026 releases: multi-box delivery batching (PR #6) and paginated inventory history (PR #4) on 12 October; the Refining and Printing workstation, Google sign-in with per-service access and Registry hardening for 250,000 routers on 20 October",
         "Incident response to connection-pool exhaustion (INC-2026-10-11-01): recovered in 15 minutes with zero operational data loss across 382 routers",
         "Dashboard with comparisons and trends in English and Arabic (RTL), supporting light and dark themes",
         "Four roles, signed sessions, a production write lock, and a guard preventing preview deployments from mutating live data",
@@ -283,7 +283,7 @@ const allProjects: Project[] = [
       "One storage interface with three interchangeable backends, chosen by which environment variables are present",
       "Four roles with server-side enforcement, signed sessions and no default passwords",
       "Delivery paperwork generated from the operations team's own Word document rather than redrawn",
-      "958 automated tests in the production release and 1,637 on the 20 October 2026 staging release, run in CI on every push, with both audits' findings worked through in the code",
+      "1,637 automated tests in the 20 October 2026 release, run in CI on every push, with both audits' findings worked through in the code",
     ],
     workflow: [
       "Stock booked in by model",
@@ -306,7 +306,7 @@ const allProjects: Project[] = [
         body: [
           "RPOMS is the operations system for a router-refurbishment programme that Blue Bee Technologies runs with ERTH and Maxis. It records each day's production, tracks every router by serial number from acceptance into a numbered box and out on a delivery, keeps the stock of routers, chargers, cables and boxes, and produces the delivery paperwork the office already uses. A second, locked-down build of the same code gives the Ecommerce team a portal for requesting stock.",
           "The comparison to a warehouse or resource-planning system is about shape rather than scale. It is not a commercial ERP suite and does not try to be one: there is no finance, procurement or HR module. What it shares with that category is the structure, a single operational data model that inventory, production, delivery, workforce and reporting all read from, so a figure on a dashboard traces back to the event that produced it.",
-          "It is one Next.js 15 application: about 61,400 lines of TypeScript across 16 pages and 41 API route files, with 958 automated tests. Every screenshot on this page was taken from that application running locally on synthetic data.",
+          "It is one Next.js 15 application: about 61,400 lines of TypeScript across 16 pages and 41 API route files, with 1,637 automated tests. Every screenshot on this page was taken from that application running locally on synthetic data.",
         ],
         figures: [
           {
@@ -578,7 +578,7 @@ const allProjects: Project[] = [
       {
         heading: "Testing and verification",
         body: [
-          "958 automated tests in 66 files, written with Vitest. Seventeen of those files run real SQL against PGlite, PostgreSQL compiled to WebAssembly and served in-process, so transactions, locking, concurrency and schema setup are tested with the production driver and no database server. CI runs typecheck, lint, the tests, a production build and a dependency audit on every push.",
+          "1,637 automated tests, written with Vitest. The database files run real SQL against PGlite, PostgreSQL compiled to WebAssembly and served in-process, so transactions, locking, concurrency and schema setup are tested with the production driver and no database server. CI runs typecheck, lint, the tests, a production build and a dependency audit on every push.",
           "The 28 September release commit records all 958 tests passing and a clean production build. For the original write-up the production build was run locally on synthetic data, every screen was exercised, and a Delivery Order and the Excel exports were generated. Typecheck and lint passed. The full run at that point passed 59 of 60 files; the remaining file hit a ten-second hook timeout under machine load and passed when run on its own.",
         ],
         note: "There is no browser end-to-end suite yet; a Playwright smoke test per role is on the backlog.",
@@ -587,7 +587,7 @@ const allProjects: Project[] = [
         heading: "Deployment and environments",
         body: [
           "The project deploys to Vercel from Git: pushing the main branch deploys production, and every other branch builds a preview. Production data lives in Supabase PostgreSQL. Work flows through feature branches and a staging branch before it reaches main, and a data-preservation check compares every table's row count before and after a release. The September release went out as one verified branch: main was fast-forwarded to it, following a written release plan that lists the additive schema steps a first cold start runs, the release order and the rollback.",
-          "A separate staging database is designed and its bootstrap SQL written, but it is blocked on hosting limits, so previews are protected by refusing the production database rather than by having their own. The current plan has no managed backups; a read-only JSON export is the backup path until that changes.",
+          "Since October 2026 staging runs on its own database, reported on its health endpoint, and the application refuses to start a preview against the production project. The current plan has no managed backups; a read-only JSON export is the backup path until that changes.",
         ],
         figures: [
           {
@@ -595,7 +595,7 @@ const allProjects: Project[] = [
             alt: "Environments diagram: feature branches to staging to main, with an Ecommerce build from its own branch; a production database in use and a planned staging database; and the guards in code: environment guard, demo write lock and a data-preservation gate.",
             width: 2100,
             height: 960,
-            caption: "Environments and release path. The staging database is planned, not live.",
+            caption: "Environments and release path as drawn in September 2026; staging has had its own database since October.",
             wide: true,
           },
         ],
@@ -622,10 +622,10 @@ const allProjects: Project[] = [
         heading: "October 2026: Refining, Printing and the central platform",
         body: [
           "The 12 October production release added multi-box delivery batching and paginated inventory history. An 8,332-row historical router archive now lives in the production database as its own table with an import ledger; the 250,000-router import it was designed for was measured head-to-head on an isolated copy and has not been run against production.",
-          "Built between 13 and 20 October and running on staging: a Refining workstation where the first scan starts a cleaner's session and each scan registers the router once, with a partial unique index rather than a per-scan lock catching concurrent duplicates; a Printing page that saves scans side by side and sends each label to the running Print Engine tab as soon as its own save answers, where a lost answer is shown as status unknown and never as not saved; Today's Refiner Breakdown, drill-down and Bring from Refining into the Daily Report; a Router History page with one toolbar and a Filters panel instead of a filter grid; and Row Level Security on the Refining tables.",
+          "Built between 13 and 20 October and released on 20 October: a Refining workstation where the first scan starts a cleaner's session and each scan registers the router once, with a partial unique index rather than a per-scan lock catching concurrent duplicates; a Printing page that saves scans side by side and sends each label to the running Print Engine tab as soon as its own save answers, where a lost answer is shown as status unknown and never as not saved; Today's Refiner Breakdown, drill-down and Bring from Refining into the Daily Report; a Router History page with one toolbar and a Filters panel instead of a filter grid; and Row Level Security on the Refining tables.",
           "The central platform work adds Google sign-in through the Supabase project's provider with server-side PKCE and no client library, a services portal, and per-service grants: a Printing-only account sees no other tab, access requests name capabilities, and a revoked grant takes effect on the next request. Registry hardening sorts the first page on an indexed column, from 160 to 200 ms down to under 1 ms at 250,000 routers on an isolated copy, and the application now refuses to build or alter a store's schema on the production database. The 20 October handover package lists the five schema-only migrations production needs, in order, each with a rollback block; 1,637 tests pass on that branch.",
         ],
-        note: "The second and third paragraphs describe the staging deployment (stg.rpoms.bbtech.com.my, its own database). Production runs the 12 October release, and each production step is approved separately.",
+        note: "Every item in the second and third paragraphs was exercised on the staging deployment, on its own database, before release; the production schema changes run as the five approved, schema-only migration files, before the build serves traffic.",
       },
     ],
     status: [
@@ -677,21 +677,21 @@ const allProjects: Project[] = [
       },
       {
         label: "Refining and Printing workstation",
-        state: "available",
+        state: "implemented",
         detail:
-          "On staging: scan sessions per cleaner, duplicate protection, Today's Refiner Breakdown, Bring from Refining, Router History filters and CSV export. Needs four schema-only migrations on production.",
+          "In the 20 October 2026 release: scan sessions per cleaner, duplicate protection, Today's Refiner Breakdown, Bring from Refining, Router History filters and CSV export. Its four schema-only migrations run before the build serves traffic.",
       },
       {
         label: "Google sign-in, services portal and per-service access",
-        state: "available",
+        state: "implemented",
         detail:
-          "On staging: Google proves identity, a Super Admin grants access per service and capability, and revocation takes effect on the next request. Optional in production; password logins keep working without its migration.",
+          "In the 20 October 2026 release: Google proves identity, a Super Admin grants access per service and capability, and revocation takes effect on the next request. Optional in production; password logins keep working without its migration.",
       },
       {
         label: "RPOMS Print Engine integration",
-        state: "available",
+        state: "implemented",
         detail:
-          "The Printing page links one named Print Engine tab and sends each saved scan as a label request; the engine side is live at print.rukon.dev since 19 October 2026. The RPOMS side is on staging and has not yet been exercised on the line.",
+          "The Printing page links one named Print Engine tab and sends each saved scan as a label request; the engine side is live at print.rukon.dev since 19 October 2026 and the RPOMS side since the 20 October release. A full-batch run on the line is the next validation step.",
       },
     ],
     limitations: [
@@ -708,11 +708,10 @@ const allProjects: Project[] = [
       "Shared login throttle and server-side session revocation, then per-user accounts.",
       "Foreign key from routers to boxes and a join table for Delivery Orders.",
       "A Playwright smoke test for each role.",
-      "Run the five schema-only migrations on production and release the staging build: Refining, Printing, Google sign-in and the Registry hardening.",
       "Verify the Printing to Print Engine link on the line with the B1 Pro.",
     ],
     facts: [
-      { value: "1,637", label: "automated tests on the staging release" },
+      { value: "1,637", label: "automated tests" },
       { value: "41", label: "API route files" },
       { value: "4", label: "access roles" },
       { value: "3", label: "storage backends" },
@@ -1037,9 +1036,9 @@ const allProjects: Project[] = [
       },
       {
         label: "Integration into RPOMS",
-        state: "available",
+        state: "implemented",
         detail:
-          "The engine side is live: the RPOMS link page and tab entry answer router label requests from allow-listed RPOMS origins. The RPOMS Printing page that uses it is on RPOMS's staging deployment, not yet in its production.",
+          "The RPOMS link page and tab entry answer router label requests from allow-listed RPOMS origins, live since 19 October 2026; RPOMS's Printing page uses it since its 20 October release.",
       },
     ],
     limitations: [
@@ -3555,7 +3554,7 @@ const allProjects: Project[] = [
       },
     ],
     limitations: [
-      "Currently running on Supabase staging project (Ref: aaqlvmkxsaibwzcvcosl); custom domain routing pending final DNS cutover.",
+      "Currently running on Supabase staging project; custom domain routing pending final DNS cutover.",
       "Custom analytics dashboard is currently basic click tracking per link.",
     ],
     roadmap: [

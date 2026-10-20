@@ -6,6 +6,14 @@ visitor, and anything a future developer must know. Git history has the detail.
 ## 2026-10-20
 
 ### Added
+- **Six articles dated 2026-10-20** (167 -> 173), written from the October
+  release notes, changelogs and commit history of RPOMS, the Print Engine and
+  the Laptop Inspection Tool: the RPOMS link (BroadcastChannel, COOP,
+  window.opener), refusing runtime DDL on production, partial unique indexes
+  for duplicate scans, sorting on the indexed column at 250,000 routers,
+  Google sign-in with server-side PKCE and per-service grants, and
+  official-source-only driver installation. Registered in
+  `content-planning/blog-database.json` (FSE-35..38, POS-34, ITS-16).
 - **BBTech Laptop Inspection Tool** (`/work/bbtech-laptop-inspection-tool`,
   secondary): Python and PySide6 driver inspection and official-source repair
   tool, written up from its repository docs and test suite (98 tests, v1.0.0
@@ -15,9 +23,9 @@ visitor, and anything a future developer must know. Git history has the detail.
 - **RPOMS case study, October 2026 section**: the 12 October production
   release, the historical router archive, and the Refining and Printing
   workstation, Google sign-in with per-service access and Registry hardening
-  that are on staging with a 20 October handover package. Status table,
-  roadmap and the home-card fact (1,637 tests on the staging release) updated.
-  Every staging item is labelled as such; production is the 12 October release.
+  released on 20 October with a handover package of five schema-only
+  migrations. Status table, roadmap and the home-card fact (1,637 tests)
+  updated.
 - **RPOMS Print Engine**: RPOMS link (engine tab answers label requests from
   allow-listed RPOMS origins), gated deploys and approved migrations, second
   hostname, 320 app and 42 backend tests; production commit 9d46377 of
