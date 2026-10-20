@@ -188,6 +188,12 @@ import { post as hardwareIdentityVsGeneratedStockPrefixesPost } from "./articles
 import { post as excludingDamagedMonitorStripPost } from "./articles/excluding-damaged-monitor-strip-windows-appbar-api";
 import { post as lanSerialNumberExtractionAcrossRouterVendorsPost } from "./articles/lan-serial-number-extraction-across-router-vendors";
 import { post as offlineReceiptOcrOnAndroidWithMlKitPost } from "./articles/offline-receipt-ocr-on-android-with-ml-kit";
+import { post as sendingLabelsBetweenBrowserTabsPost } from "./articles/sending-labels-between-browser-tabs-broadcastchannel-coop-window-opener";
+import { post as refusingRuntimeDdlOnProductionPost } from "./articles/refusing-runtime-ddl-on-production-schema-stamps-and-a-gate";
+import { post as oneLiveRecordPerRouterPerSessionPost } from "./articles/one-live-record-per-router-per-session-partial-unique-index";
+import { post as sortingOnTheColumnTheIndexServesPost } from "./articles/sorting-on-the-column-the-index-serves-250000-routers";
+import { post as googleSignInServerSidePkcePost } from "./articles/google-sign-in-server-side-pkce-per-service-grants-read-every-request";
+import { post as installingDriversFromOfficialSourcesOnlyPost } from "./articles/installing-drivers-from-official-sources-only-allow-lists-hashes-authenticode";
 
 /**
  * Every article, including those scheduled for a later publication date.
@@ -362,6 +368,12 @@ export const allPosts: BlogPost[] = [
   excludingDamagedMonitorStripPost,
   lanSerialNumberExtractionAcrossRouterVendorsPost,
   offlineReceiptOcrOnAndroidWithMlKitPost,
+  sendingLabelsBetweenBrowserTabsPost,
+  refusingRuntimeDdlOnProductionPost,
+  oneLiveRecordPerRouterPerSessionPost,
+  sortingOnTheColumnTheIndexServesPost,
+  googleSignInServerSidePkcePost,
+  installingDriversFromOfficialSourcesOnlyPost,
 ];
 
 export const categories: PostCategory[] = [

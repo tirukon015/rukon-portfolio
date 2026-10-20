@@ -34,34 +34,34 @@
     "Location is used only where the search intent or local context genuinely differs. No city-swap variants."
   ],
   "counts": {
-    "totalRows": 230,
-    "distinctArticles": 224,
+    "totalRows": 236,
+    "distinctArticles": 230,
     "byStatus": {
-      "publish": 183,
+      "publish": 189,
       "rewrite": 30,
       "merge": 4,
       "master": 11,
       "remove": 2
     },
     "byEvidence": {
-      "A": 165,
+      "A": 171,
       "B": 51,
       "C": 13,
       "D": 1
     },
     "byPriority": {
-      "P1": 102,
+      "P1": 108,
       "P2": 95,
       "P3": 33
     },
     "byCluster": {
-      "POS": 31,
+      "POS": 32,
       "BSA": 22,
-      "FSE": 33,
+      "FSE": 37,
       "DAT": 19,
       "AIE": 36,
       "SEO": 28,
-      "ITS": 14,
+      "ITS": 15,
       "UXD": 15,
       "MYS": 20,
       "CAR": 12
@@ -73,7 +73,7 @@
       "name": "Production & Operations Systems",
       "anchorProject": "rpoms",
       "audience": "Operations managers and SME manufacturers evaluating or replacing a tracking process; developers handed an operations domain for the first time",
-      "articles": 31
+      "articles": 32
     },
     {
       "code": "BSA",
@@ -87,7 +87,7 @@
       "name": "Full-Stack Engineering",
       "anchorProject": "rpoms",
       "audience": "Working developers, primarily Next.js/TypeScript; secondarily Python backend developers",
-      "articles": 33
+      "articles": 37
     },
     {
       "code": "DAT",
@@ -115,7 +115,7 @@
       "name": "IT Systems & Support Operations",
       "anchorProject": null,
       "audience": "Students and career-changers deciding between support and development; SME owners deciding what an IT hire should cover",
-      "articles": 14
+      "articles": 15
     },
     {
       "code": "UXD",
@@ -2499,6 +2499,66 @@
       "status": "published",
       "evidence": "A",
       "note": "SpenDrop Android: on-device TextRecognition, Room SQLite outbox, and zero cloud dependency."
+    },
+    {
+      "id": "FSE-35",
+      "title": "Sending Labels From One Web App to Another Tab: BroadcastChannel, COOP and window.opener",
+      "slug": "sending-labels-between-browser-tabs-broadcastchannel-coop-window-opener",
+      "contentType": "Problem/Solution",
+      "priority": "P1",
+      "status": "published",
+      "evidence": "A",
+      "note": "RPOMS Print Engine: the RPOMS link, BroadcastChannel partitioning, COOP and window.opener, lost answers."
+    },
+    {
+      "id": "POS-34",
+      "title": "Refusing Runtime DDL on Production: Schema Stamps, a Gate, and Schema-Only Migrations",
+      "slug": "refusing-runtime-ddl-on-production-schema-stamps-and-a-gate",
+      "contentType": "Case Study",
+      "priority": "P1",
+      "status": "published",
+      "evidence": "A",
+      "note": "RPOMS: schema stamps, the production refusal gate, five schema-only migrations with rollback blocks."
+    },
+    {
+      "id": "FSE-36",
+      "title": "One Live Record per Router per Session: Partial Unique Indexes Instead of Per-Scan Locks",
+      "slug": "one-live-record-per-router-per-session-partial-unique-index",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "published",
+      "evidence": "A",
+      "note": "RPOMS Refining: partial unique indexes for duplicate scans, print decided from the save, 20 concurrent scans."
+    },
+    {
+      "id": "FSE-37",
+      "title": "Sorting on the Column the Index Serves: 160 ms to Under 1 ms at 250,000 Routers",
+      "slug": "sorting-on-the-column-the-index-serves-250000-routers",
+      "contentType": "Problem/Solution",
+      "priority": "P1",
+      "status": "published",
+      "evidence": "A",
+      "note": "RPOMS Registry: ORDER BY on the indexed column, 160-200 ms to under 1 ms at 250,000 rows on an isolated copy."
+    },
+    {
+      "id": "FSE-38",
+      "title": "Google Sign-In Without a Client Library: Server-Side PKCE and Grants Read on Every Request",
+      "slug": "google-sign-in-server-side-pkce-per-service-grants-read-every-request",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "published",
+      "evidence": "A",
+      "note": "RPOMS central platform: Google via Supabase with server-side PKCE, per-service grants read on every request."
+    },
+    {
+      "id": "ITS-16",
+      "title": "Installing Drivers From Official Sources Only: Allow-Lists, Catalogue Hashes and Authenticode",
+      "slug": "installing-drivers-from-official-sources-only-allow-lists-hashes-authenticode",
+      "contentType": "Technical Guide",
+      "priority": "P1",
+      "status": "published",
+      "evidence": "A",
+      "note": "BBTech Laptop Inspection Tool: official catalogues, URL allow-list with redirect re-checks, Authenticode, no false success."
     }
   ]
 }
