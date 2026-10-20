@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Lock } from "lucide-react";
 import { Container } from "@/components/ui/container";
@@ -283,43 +282,26 @@ function Featured({ project }: { project: Project }) {
   return (
     <Reveal>
       <article aria-labelledby={`work-${project.slug}`} className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
-        <div
-          className={`order-2 lg:order-1 lg:col-span-6 ${project.previewFigure ? "lg:flex lg:items-center" : ""}`}
-        >
+        <div className="order-2 lg:order-1 lg:col-span-6">
           {/*
             A surface rather than a card: no border, no shadow, the mark at a
             scale that reads as the project's identity rather than a favicon.
+            Every featured block shows its mark here; a project's screenshot
+            (`previewFigure`) belongs to its overview page and the Work list.
           */}
-          {project.previewFigure ? (
-            <Link
-              href={href}
-              aria-label={`${project.name} overview`}
-              className="group block w-full overflow-hidden rounded-lg border border-border bg-bg-elevated shadow-[var(--shadow-card)] transition-colors hover:border-border-strong"
-            >
-              <Image
-                src={project.previewFigure.src}
-                alt={project.previewFigure.alt}
-                width={project.previewFigure.width}
-                height={project.previewFigure.height}
-                sizes="(min-width: 1024px) 560px, 100vw"
-                className="h-auto w-full transition-transform duration-500 ease-[var(--ease-out)] group-hover:scale-[1.015]"
-              />
-            </Link>
-          ) : (
-            <div className="relative flex h-full min-h-64 items-center justify-center overflow-hidden rounded-lg bg-bg-elevated p-10 sm:min-h-80">
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-accent-soft blur-3xl"
-              />
-              <ProjectMark
-                project={project}
-                width={360}
-                height={210}
-                className="relative h-28 w-auto object-contain sm:h-40"
-                fallbackClassName="relative font-mono text-3xl font-semibold tracking-tight text-text"
-              />
-            </div>
-          )}
+          <div className="relative flex h-full min-h-64 items-center justify-center overflow-hidden rounded-lg bg-bg-elevated p-10 sm:min-h-80">
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-accent-soft blur-3xl"
+            />
+            <ProjectMark
+              project={project}
+              width={360}
+              height={210}
+              className="relative h-28 w-auto object-contain sm:h-40"
+              fallbackClassName="relative font-mono text-3xl font-semibold tracking-tight text-text"
+            />
+          </div>
         </div>
 
         <div className="order-1 lg:order-2 lg:col-span-6">
