@@ -6,6 +6,29 @@ visitor, and anything a future developer must know. Git history has the detail.
 ## 2026-10-20
 
 ### Added
+- **BBTech Laptop Inspection Tool** (`/work/bbtech-laptop-inspection-tool`,
+  secondary): Python and PySide6 driver inspection and official-source repair
+  tool, written up from its repository docs and test suite (98 tests, v1.0.0
+  installer and portable EXE). Linked from the BBTech experience entry and the
+  systems capability. Mark from the project's own `assets/logo.png`, with a
+  dark-theme variant.
+- **RPOMS case study, October 2026 section**: the 12 October production
+  release, the historical router archive, and the Refining and Printing
+  workstation, Google sign-in with per-service access and Registry hardening
+  that are on staging with a 20 October handover package. Status table,
+  roadmap and the home-card fact (1,637 tests on the staging release) updated.
+  Every staging item is labelled as such; production is the 12 October release.
+- **RPOMS Print Engine**: RPOMS link (engine tab answers label requests from
+  allow-listed RPOMS origins), gated deploys and approved migrations, second
+  hostname, 320 app and 42 backend tests; production commit 9d46377 of
+  19 October confirmed from the live health endpoint.
+- **ERTH Router Retest & Distribution** is now listed in the RPOMS ecosystem
+  (and links back to RPOMS), as a related system on its own database.
+
+### Changed
+- **ITMS**: the printing integration is recorded as merged and deployed on
+  4 October 2026 (commit 0f67de6) everywhere on the page; the status table,
+  note and roadmap no longer say it is on a branch.
 - **Marks** for BBTech Laptop Tool, ERTH Router Retest & Distribution and
   DriveKeep (`public/images/*-mark.{png,svg}`), taken from each project's own
   branding assets, so their cards no longer fall back to a text wordmark.

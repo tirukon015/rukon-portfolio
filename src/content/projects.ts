@@ -196,7 +196,7 @@ const allProjects: Project[] = [
         "Replaced manual spreadsheets with one unified operational platform covering stock intake, technical acceptance, box packing, delivery, and daily reporting",
         "Stock of routers, chargers, LAN cables, and boxes derived deterministically from the daily report ledger, never hand-edited",
         "Serial-level traceability from acceptance barcode scan to numbered box, delivery dispatch, and automated Delivery Order documentation",
-        "October 2026 releases: Multi-box delivery batching (PR #6), paginated inventory history (PR #4), and scan-and-print refining workstation",
+        "October 2026: multi-box delivery batching (PR #6) and paginated inventory history (PR #4) released to production on 12 October; the Refining and Printing workstation, Google sign-in with per-service access and Registry hardening for 250,000 routers are on staging with a production handover package dated 20 October",
         "Incident response to connection-pool exhaustion (INC-2026-10-11-01): recovered in 15 minutes with zero operational data loss across 382 routers",
         "Dashboard with comparisons and trends in English and Arabic (RTL), supporting light and dark themes",
         "Four roles, signed sessions, a production write lock, and a guard preventing preview deployments from mutating live data",
@@ -229,10 +229,17 @@ const allProjects: Project[] = [
         },
         {
           name: "RPOMS Print Engine",
-          relation: "Subsystem & Embedded Core",
+          relation: "Subsystem, linked from the Printing page",
           summary:
-            "Scan-to-label printing to a NIIMBOT B1 Pro thermal printer straight from the browser over Web Bluetooth. Deployed standalone and embedded into the RPOMS refining workstation.",
+            "Scan-to-label printing to a NIIMBOT B1 Pro thermal printer straight from the browser over Web Bluetooth. Deployed standalone; RPOMS's Printing page sends each saved scan to the running engine tab as a label request.",
           slug: "rpoms-print-engine",
+        },
+        {
+          name: "ERTH Router Retest & Distribution",
+          relation: "Related system, same programme",
+          summary:
+            "Floor operations app for the router retest and cleaning facility: supervisor distribution, cleaner productivity points by difficulty level, and daily target tracking. Own database; never connects to RPOMS.",
+          slug: "erth-router-distribution",
         },
       ],
     },
@@ -276,7 +283,7 @@ const allProjects: Project[] = [
       "One storage interface with three interchangeable backends, chosen by which environment variables are present",
       "Four roles with server-side enforcement, signed sessions and no default passwords",
       "Delivery paperwork generated from the operations team's own Word document rather than redrawn",
-      "958 automated tests and CI, with both audits' findings worked through in the code and released to production",
+      "958 automated tests in the production release and 1,637 on the 20 October 2026 staging release, run in CI on every push, with both audits' findings worked through in the code",
     ],
     workflow: [
       "Stock booked in by model",
@@ -611,6 +618,15 @@ const allProjects: Project[] = [
           },
         ],
       },
+      {
+        heading: "October 2026: Refining, Printing and the central platform",
+        body: [
+          "The 12 October production release added multi-box delivery batching and paginated inventory history. An 8,332-row historical router archive now lives in the production database as its own table with an import ledger; the 250,000-router import it was designed for was measured head-to-head on an isolated copy and has not been run against production.",
+          "Built between 13 and 20 October and running on staging: a Refining workstation where the first scan starts a cleaner's session and each scan registers the router once, with a partial unique index rather than a per-scan lock catching concurrent duplicates; a Printing page that saves scans side by side and sends each label to the running Print Engine tab as soon as its own save answers, where a lost answer is shown as status unknown and never as not saved; Today's Refiner Breakdown, drill-down and Bring from Refining into the Daily Report; a Router History page with one toolbar and a Filters panel instead of a filter grid; and Row Level Security on the Refining tables.",
+          "The central platform work adds Google sign-in through the Supabase project's provider with server-side PKCE and no client library, a services portal, and per-service grants: a Printing-only account sees no other tab, access requests name capabilities, and a revoked grant takes effect on the next request. Registry hardening sorts the first page on an indexed column, from 160 to 200 ms down to under 1 ms at 250,000 routers on an isolated copy, and the application now refuses to build or alter a store's schema on the production database. The 20 October handover package lists the five schema-only migrations production needs, in order, each with a rollback block; 1,637 tests pass on that branch.",
+        ],
+        note: "The second and third paragraphs describe the staging deployment (stg.rpoms.bbtech.com.my, its own database). Production runs the 12 October release, and each production step is approved separately.",
+      },
     ],
     status: [
       {
@@ -655,14 +671,27 @@ const allProjects: Project[] = [
       },
       {
         label: "Separate staging database and managed backups",
-        state: "not-connected",
+        state: "available",
         detail:
-          "Designed and scripted, blocked on hosting limits. Previews refuse the production database instead; backups are a manual read-only export.",
+          "Staging runs as a Vercel preview of the staging branch on its own database and reports it on its health endpoint; the application refuses to start a preview against the production project. Backups remain a manual export.",
+      },
+      {
+        label: "Refining and Printing workstation",
+        state: "available",
+        detail:
+          "On staging: scan sessions per cleaner, duplicate protection, Today's Refiner Breakdown, Bring from Refining, Router History filters and CSV export. Needs four schema-only migrations on production.",
+      },
+      {
+        label: "Google sign-in, services portal and per-service access",
+        state: "available",
+        detail:
+          "On staging: Google proves identity, a Super Admin grants access per service and capability, and revocation takes effect on the next request. Optional in production; password logins keep working without its migration.",
       },
       {
         label: "RPOMS Print Engine integration",
-        state: "not-connected",
-        detail: "The print engine is a separate, standalone project. Box labels in RPOMS print through the browser for now.",
+        state: "available",
+        detail:
+          "The Printing page links one named Print Engine tab and sends each saved scan as a label request; the engine side is live at print.rukon.dev since 19 October 2026. The RPOMS side is on staging and has not yet been exercised on the line.",
       },
     ],
     limitations: [
@@ -676,14 +705,14 @@ const allProjects: Project[] = [
     ],
     roadmap: [
       "Back up the production database and prove a restore; move to a plan with managed backups.",
-      "Give previews and staging their own database.",
       "Shared login throttle and server-side session revocation, then per-user accounts.",
       "Foreign key from routers to boxes and a join table for Delivery Orders.",
       "A Playwright smoke test for each role.",
-      "Integrate the RPOMS Print Engine once it is validated on the line.",
+      "Run the five schema-only migrations on production and release the staging build: Refining, Printing, Google sign-in and the Registry hardening.",
+      "Verify the Printing to Print Engine link on the line with the B1 Pro.",
     ],
     facts: [
-      { value: "958", label: "automated tests" },
+      { value: "1,637", label: "automated tests on the staging release" },
       { value: "41", label: "API route files" },
       { value: "4", label: "access roles" },
       { value: "3", label: "storage backends" },
@@ -717,7 +746,7 @@ const allProjects: Project[] = [
     fullName: "Offline-first label printing workstation for the RPOMS refurbishment line",
     tagline: "Scan a router, and the right label prints: a browser app that drives a Bluetooth thermal printer with no server in the loop.",
     summary:
-      "A TypeScript and React Progressive Web App that turns any PC with Chrome and Bluetooth into a label station for a NIIMBOT B1 Pro. A USB scanner reads a router serial, a prefix-and-length rule names the model, a fixed 50 by 30 mm template is rendered to the printer's raster and printed over one persistent Web Bluetooth session. The print path never touches the network, the app boots offline from cache and IndexedDB, and a Node.js and PostgreSQL backend adds Google sign-in, device provisioning and sync. Deployed on a self-hosted Ubuntu server behind nginx, with a second module that prints QR device labels for BBTech's inventory system, ITMS. My own independent project: 218 app tests and 26 backend tests.",
+      "A TypeScript and React Progressive Web App that turns any PC with Chrome and Bluetooth into a label station for a NIIMBOT B1 Pro. A USB scanner reads a router serial, a prefix-and-length rule names the model, a fixed 50 by 30 mm template is rendered to the printer's raster and printed over one persistent Web Bluetooth session. The print path never touches the network, the app boots offline from cache and IndexedDB, and a Node.js and PostgreSQL backend adds Google sign-in, device provisioning and sync. Deployed on a self-hosted Ubuntu server behind nginx, with a second module that prints QR device labels for BBTech's inventory system, ITMS, and a link through which RPOMS sends router labels to the running engine tab. My own independent project: 320 app tests and 42 backend tests.",
     category: "Systems / ERP / WMS",
     categorySlug: "systems",
     categories: ["Systems / ERP / WMS", "Web Apps / Software"],
@@ -750,10 +779,17 @@ const allProjects: Project[] = [
       systems: [
         {
           name: "ITMS",
-          relation: "BBTech inventory system, integration in progress",
+          relation: "BBTech inventory system, printing integration live",
           summary:
-            "BBTech's inventory management system, developed by another developer and supported by me. It prints device labels through this engine's relay.",
+            "BBTech's inventory management system, developed by another developer and supported by me. It prints device labels through this engine's relay; merged and deployed on 4 October 2026.",
           slug: "itms",
+        },
+        {
+          name: "RPOMS",
+          relation: "Parent system, router labels through the RPOMS link",
+          summary:
+            "RPOMS's Printing page opens one named Print Engine tab and sends each saved scan as a label request over a first-party channel; the tab holding the connected printer answers. Live on the engine side since 19 October 2026.",
+          slug: "rpoms",
         },
       ],
     },
@@ -806,6 +842,8 @@ const allProjects: Project[] = [
       "A guard test fails if anything in scan → print makes a network request",
       "Boots and renders from cache with the network unplugged, proven by an automated headless-Chrome test that cuts the connection and reloads",
       "Google is the identity provider, RPOMS the authority: users start pending, administrators activate them, workstations are provisioned with revocable hashed device tokens",
+      "RPOMS link: an RPOMS page opens one named engine tab, which answers label requests itself over a first-party BroadcastChannel from allow-listed RPOMS origins; a lost answer is reported as unknown, never as printed",
+      "Releases are gated: migrations are a separate approved step, deploys run typecheck, tests and builds before the service restarts, restores never drop the live database, and the health endpoint reports the deployed commit",
     ],
     workflow: [
       "Scan the router",
@@ -981,21 +1019,27 @@ const allProjects: Project[] = [
       },
       {
         label: "ITMS printing integration",
-        state: "available",
+        state: "implemented",
         detail:
-          "Built on a branch of the ITMS repository: print from the new-device form, device details and the device drawer. Not yet merged or deployed there.",
+          "Print from the new-device form, device details and the device drawer, through the relay. Merged into ITMS and deployed on 4 October 2026 (commit 0f67de6).",
       },
       {
         label: "Production deployment",
         state: "implemented",
         detail:
-          "Live since 29 September 2026 at print.rukon.dev on a self-hosted Ubuntu server: nginx, a systemd service and PostgreSQL, with deploy, backup and restore scripts. The health endpoint reports the PostgreSQL store and Google sign-in.",
+          "Live since 29 September 2026 at print.rukon.dev, and since October also at print.neksdev.tech with sign-in on each hostname, on a self-hosted Ubuntu server: nginx, a systemd service and PostgreSQL. The health endpoint reports the PostgreSQL store, Google sign-in and the deployed commit, 9d46377 of 19 October 2026.",
+      },
+      {
+        label: "Dashboard, gated deploys, approved migrations",
+        state: "implemented",
+        detail:
+          "Per-account statistics dashboard with RPOMS sections; deploy gates, migrations as a separately approved step, a never-drop restore and an update checker; sync pushes refused with 413 are split and oversized events parked. In the 19 October production build.",
       },
       {
         label: "Integration into RPOMS",
-        state: "not-connected",
+        state: "available",
         detail:
-          "The data-provider interfaces exist; RPOMS does not yet supply router or box data to the engine.",
+          "The engine side is live: the RPOMS link page and tab entry answer router label requests from allow-listed RPOMS origins. The RPOMS Printing page that uses it is on RPOMS's staging deployment, not yet in its production.",
       },
     ],
     limitations: [
@@ -2081,9 +2125,8 @@ const allProjects: Project[] = [
         heading: "Solving label printing",
         body: [
           "Label printing was one of the problems I took on, and my manager asked me to solve it. Rather than patch around it inside ITMS, I built the RPOMS Print Engine: my own, independently developed browser workstation that drives a NIIMBOT B1 Pro thermal printer over Web Bluetooth, with a device-label module for BBTech's QR labels and a relay page that other applications print through.",
-          "I am now building the ITMS side of that integration: a small print service that validates a device's barcode and group SKUs and opens the relay, and print buttons on the new-device form, the device details and the device drawer, plus a printer-setup button in the devices header. ITMS never talks to the printer; the open, connected Print Engine does, and reports the real result back.",
+          "I built the ITMS side of that integration, merged and deployed on 4 October 2026 (commit 0f67de6): a small print service that validates a device's barcode and group SKUs and opens the relay, and print buttons on the new-device form, the device details and the device drawer, plus a printer-setup button in the devices header. ITMS never talks to the printer; the open, connected Print Engine does, and reports the real result back.",
         ],
-        note: "The integration and the fixes above are on a branch and have not yet been merged into ITMS.",
       },
     ],
     status: [
@@ -2104,8 +2147,8 @@ const allProjects: Project[] = [
       },
       {
         label: "ITMS printing integration and recent fixes",
-        state: "available",
-        detail: "Built on a branch of the ITMS repository; not yet merged or deployed.",
+        state: "implemented",
+        detail: "Merged into ITMS and deployed on 4 October 2026 (commit 0f67de6); print buttons on the device drawer, details and new-device form, plus CSV export.",
       },
     ],
     limitations: [
@@ -2115,7 +2158,6 @@ const allProjects: Project[] = [
     confidentialNotice:
       "ITMS is BBTech's internal software. The web application was developed by another BBTech developer; this page describes the Excel tracker I worked on and my contributions to the web system at a level that is safe to share publicly, with no internal screenshots, data or credentials.",
     roadmap: [
-      "Merge the printing integration into ITMS with the developer.",
       "Validate label printing on the line with the real printer across a full batch.",
     ],
     links: [
@@ -3063,6 +3105,18 @@ const allProjects: Project[] = [
       { value: "350", label: "Daily points benchmark per cleaner" },
       { value: "100%", label: "Decoupled from RPOMS database" },
     ],
+    ecosystem: {
+      label: "RPOMS ecosystem",
+      systems: [
+        {
+          name: "RPOMS",
+          relation: "Flagship system, same programme",
+          summary:
+            "The router refurbishment operations platform: acceptance, packing, delivery and daily reporting. This app runs beside it on its own database and never connects to it.",
+          slug: "rpoms",
+        },
+      ],
+    },
     tech: ["Next.js 15", "React 19", "TypeScript", "PostgreSQL", "Google OIDC", "Tailwind CSS"],
     techGroups: [
       { label: "Frontend & UI", items: ["Next.js 15 App Router", "React 19", "Tailwind CSS", "Lucide React", "HTML5 Barcode Detection API"] },
@@ -3266,6 +3320,126 @@ const allProjects: Project[] = [
       {
         label: "ResearchForge Case Study",
         href: "/work/researchforge",
+      },
+    ],
+  },
+
+  {
+    slug: "bbtech-laptop-inspection-tool",
+    name: "BBTech Laptop Inspection Tool",
+    fullName: "BBTech Laptop Inspection Tool: driver inspection and official-source repair for refurbished laptops",
+    tagline: "Press Start Inspection, see every driver that is missing, generic or outdated, and fix it from the official source only.",
+    summary:
+      "A Windows 10 and 11 desktop application for BBTech's laptop refurbishment line, written in Python with PySide6. One read-only PowerShell and WMI pass collects the laptop's identity and every device, classifies each into a hardware category, grades its driver as OK, missing, error, disabled, generic or outdated, and resolves the right package from the Lenovo, Dell and HP catalogues or Windows Update. Fix Driver Issues runs find, download, install and verify behind an HTTPS allow-list with hash and Authenticode checks, and reports Installed only when Windows confirms it. Reports export as PDF, TXT, CSV and JSON, history stays in local SQLite, and the tool ships as an installer and as a portable single EXE for the BBTech USB drive. Version 1.0.0 with 98 automated tests.",
+    category: "Systems / ERP / WMS",
+    categorySlug: "systems",
+    categories: ["Systems / ERP / WMS"],
+    hrOverview: {
+      valueProposition:
+        "Desktop inspection tool that finds and repairs driver problems on refurbished laptops from official sources only, with a report per machine.",
+      role: "Sole Developer",
+      roleScope:
+        "Design and implementation: hardware collection and classification, driver resolution adapters, download and install safety, the verification workflow, the Qt interface, packaging and documentation.",
+      context: "BBTech laptop refurbishment and testing operation.",
+      highlights: [
+        "Classified every device of a laptop into hardware categories from one read-only WMI pass, with a real captured ThinkPad scan as the test fixture",
+        "Resolved drivers from official sources only, with firmware excluded from automatic installation and unsigned packages blocked",
+        "Shipped a 1.0.0 installer and a portable single EXE, with 98 automated tests that never install a driver or change Windows",
+      ],
+      technologies: ["Python 3", "PySide6 (Qt)", "PowerShell / WMI", "Windows Update Agent", "pnputil", "SQLite", "PyInstaller"],
+    },
+    role: "Sole Developer",
+    period: "2026",
+    affiliation: "Blue Bee Technologies (BBTech)",
+    confidential: true,
+    confidentialNotice:
+      "Internal BBTech tooling: the code is not public and no inspection data is shown. The figures on this page come from the repository's documentation and its test suite.",
+    kind: "professional",
+    tier: "secondary",
+    tech: ["Python 3", "PySide6 (Qt Widgets)", "PowerShell / WMI", "Windows Update Agent", "pnputil", "Authenticode", "SQLite", "PyInstaller", "Inno Setup"],
+    techGroups: [
+      { label: "Application", items: ["Python 3", "PySide6 (Qt Widgets)", "QThreadPool workers", "Lucide SVG icons", "SQLite history"] },
+      { label: "Windows integration", items: ["PowerShell / WMI and CIM", "Windows Update Agent COM API", "pnputil", "expand.exe", "Get-AuthenticodeSignature"] },
+      { label: "Packaging", items: ["PyInstaller one-folder and portable EXE", "Inno Setup installer", "pytest"] },
+    ],
+    highlights: [
+      "One PowerShell process collects computer, BIOS, OS, CPU, RAM, PnP devices, signed drivers, disks, adapters and audio endpoints in about 6 to 12 seconds, without administrator rights",
+      "Devices are classified by PCI and USB class codes, NDIS medium, setup class and name patterns, with virtual devices kept apart",
+      "Driver resolution ranks official sources: Lenovo, Dell and HP catalogue parsers, then Windows Update, then official links; firmware is excluded from automatic install",
+      "Downloads pass an HTTPS allow-list that rejects spoofed domains, credentials in URLs and unofficial redirects, then hash, size and Authenticode checks",
+      "No false success: Installed only when Windows or the installer confirms it, Verified only after a fresh re-query passes every check, and a driver result is never presented as a hardware test",
+      "Read-only by design: no formatting, no file deletion, no BIOS flashing, no change to driver signature enforcement; inspection and reports work offline",
+    ],
+    workflow: [
+      "Start inspection",
+      "Results by hardware category",
+      "Fix driver issues from official sources",
+      "Verify and scan again",
+      "Finish inspection and report",
+    ],
+    sections: [
+      {
+        heading: "Overview",
+        body: [
+          "BBTech refurbishes and tests laptops, and the step that used to depend on a technician's memory was drivers: which device is missing one, which is running on a generic Microsoft driver, where the right package is, and whether the fix actually took. The tool answers all of that from one screen. A technician presses Start Inspection and gets the laptop's identity, every hardware category with a status, each device's hardware ID, driver provider, version, date, INF, signature and Device Manager problem code, and the official source for anything that needs replacing.",
+          "It is an inspection tool first. No drivers are bundled; packages are downloaded from the laptop manufacturer, the hardware manufacturer or Microsoft only when needed, and kept in a folder the technician chooses. Physical hardware testing is a separate BBTech process, and the tool never presents a driver result as one.",
+        ],
+        note: "Internal BBTech software: described here from its repository and documentation, with no screenshots or inspection data.",
+      },
+      {
+        heading: "How an inspection works",
+        body: [
+          "One PowerShell process, read-only and without administrator rights, returns the computer, BIOS, operating system, CPU, RAM, every PnP entity with its hardware and compatible IDs and problem code, the signed drivers, video, monitors, physical disks, network adapters, audio endpoints and OEM services in about six to twelve seconds. A parser turns that into typed system and device records; a classifier assigns each device a category from its PCI or USB class code, NDIS medium, setup class or name pattern, and separates virtual devices; a status rule grades each driver as OK, missing, error, disabled, generic, warning or unknown.",
+          "The engine folds those into one result per category and a final verdict: Ready, Issues Found, Manual Inspection Required or Driver Installation Required. A full inspection with internet access also asks the official sources whether a newer driver exists. Every slow step runs on a worker thread, so the interface never freezes. The classifier's tests run against a real captured ThinkPad scan kept as a fixture, alongside malformed-data cases.",
+        ],
+      },
+      {
+        heading: "Fixing drivers safely",
+        body: [
+          "Fix Driver Issues is a chain: find, download, install, verify, scan again. Resolution adapters parse the Lenovo, Dell and HP catalogues for the exact hardware ID and expected version, fall back to Windows Update, and otherwise offer the official link; firmware is never installed automatically. Downloads go through a URL allow-list that refuses HTTP, spoofed domains, credentials in the URL and redirects off the allow-list, and each file is checked by size, hash and Authenticode signature before anything runs.",
+          "Installation refuses unsigned packages, commands outside the package and INF files without a catalogue, maps exit codes (0, 3010 restart pending, failures) honestly, and uses pnputil, the vendor's silent installer, MSI or Windows Update as the package dictates. Verification re-queries the device and reports verified, still broken, wrong version, device gone or restart pending. The rule throughout is no false success: Installed only when Windows confirms it, Verified only after the fresh check passes.",
+        ],
+      },
+      {
+        heading: "Testing and packaging",
+        body: [
+          "98 automated tests cover hardware ID parsing, detection on the captured scan, the inspection engine, catalogue parsers and ranking, the download allow-list and failure modes (hash mismatch, 404, interrupted, truncated, unofficial redirect), installation refusals and exit codes including zip-slip, the end-to-end fix workflow, the download location rules, and reports and history. Every test uses an isolated data folder and none installs a driver or changes Windows. A test mode with six scenarios shows an orange simulated-data banner on every screen and in every report.",
+          "The build script produces a one-folder build, an Inno Setup installer with silent flags, and a portable single EXE that keeps its history, logs and settings next to itself on the BBTech USB drive. Reports export as PDF, TXT, CSV and JSON, and the runtime depends on PySide6 and requests only. The user guide, architecture, driver resolution, installation, testing and troubleshooting documents ship with the repository.",
+        ],
+      },
+    ],
+    status: [
+      {
+        label: "Inspection, classification and reports",
+        state: "available",
+        detail: "Built and covered by the automated suite; version 1.0.0 packaged as an installer and a portable EXE. Use on the line is not recorded in the repository.",
+      },
+      {
+        label: "Official-source driver repair",
+        state: "available",
+        detail: "Find, download, install and verify implemented with the allow-list and signature checks; the real-laptop checklist in the testing guide is the next validation step.",
+      },
+    ],
+    limitations: [
+      "Physical hardware testing is out of scope; BBTech uses a separate process for it.",
+      "Automatic installation covers signed packages from official sources only; anything else is offered as a link.",
+      "The repository is internal, so there is no public link and no screenshots.",
+    ],
+    facts: [
+      { value: "98", label: "automated tests, none installing a driver" },
+      { value: "2", label: "runtime dependencies" },
+      { value: "4", label: "report formats" },
+    ],
+    image: {
+      src: "/images/bbtech-laptop-inspection-tool-mark.png",
+      srcDark: "/images/bbtech-laptop-inspection-tool-mark-dark.png",
+      alt: "BBTech Laptop Inspection Tool wordmark",
+      variant: "mark",
+    },
+    links: [
+      {
+        label: "BBTech Laptop Tool case study",
+        href: "/work/bbtech-laptop-tool",
       },
     ],
   },

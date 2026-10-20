@@ -38,7 +38,7 @@ Status: **Live** = in production code; **Partial** = works with a stated limitat
 | Level 1 overview page per project, with optional preview screenshot | Live | `app/work/[slug]/page.tsx` |
 | Level 2 case study: workflow strip, related systems, sections with figures (normal / wide, click for full size), notes, status table, tech groups, limitations, roadmap, source links, confidentiality notice | Live | `app/work/[slug]/case-study/page.tsx` |
 | Per-project social image (`shareImage`) | Live | both project routes |
-| Project count | 13 listed: RPOMS (flagship); RPOMS Print Engine, ERTH, ResearchForge, BBTech Laptop Tool, ERTH Router Retest & Distribution (featured); RPOMS AI, ITMS, DriveKeep, SpenDrop, rukon-link, Startup Research Hub, LinkNest (secondary). WiFi Router Diagnostic Tool is written up but `hidden: true` (no listing, route or sitemap entry) until it is ready to show | `content/projects.ts` |
+| Project count | 14 listed: RPOMS (flagship); RPOMS Print Engine, ERTH, ResearchForge, BBTech Laptop Tool, ERTH Router Retest & Distribution (featured); RPOMS AI, ITMS, DriveKeep, SpenDrop, rukon-link, BBTech Laptop Inspection Tool, Startup Research Hub, LinkNest (secondary). WiFi Router Diagnostic Tool is written up but `hidden: true` (no listing, route or sitemap entry) until it is ready to show | `content/projects.ts` |
 
 ## Blog
 
