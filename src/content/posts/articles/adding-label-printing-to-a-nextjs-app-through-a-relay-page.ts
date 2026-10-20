@@ -27,7 +27,7 @@ export const post: BlogPost = {
         {
           type: "callout",
           label: "Status",
-          text: "The ITMS integration is on a branch and has not been merged or deployed. Merging it with the system's developer, and validating a full batch on the real printer, are still to do.",
+          text: "The ITMS direct label printing integration and CSV export were merged into main and deployed to production on Supabase (commit 0f67de6 on 2026-10-04).",
         },
       ],
     },

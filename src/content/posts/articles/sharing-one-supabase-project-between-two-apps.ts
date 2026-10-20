@@ -11,7 +11,7 @@ export const post: BlogPost = {
   contentType: "Technical Guide",
   searchIntent: "problem-aware",
   seoTitle: "Two Apps, One Supabase Project: Prefix and RLS",
-  relatedProjects: ["rukon-link", "drivekeep"],
+  relatedProjects: ["rukon-link", "drivekeep", "link-nest"],
   relatedPosts: [
     "nextjs-16-proxy-ts-supabase-session-refresh",
     "every-policy-was-correct-and-every-policy-was-inert",

@@ -6,6 +6,7 @@
   "status": "PLANNING DATA ONLY. Not imported by the application, not routed, not indexed.",
   "howToRead": {
     "status": {
+      "published": "Written, registered in src/content/posts, and live on rukon.dev.",
       "publish": "Evidence verified. Ready to write once its anchor case study exists.",
       "master": "Legitimate topic, held in the database. Lower priority or awaiting a decision.",
       "rewrite": "Topic stands, but the angle must change. See note.",
@@ -2438,6 +2439,66 @@
       "status": "publish",
       "evidence": "B",
       "note": ""
+    },
+    {
+      "id": "POS-32",
+      "title": "Diagnosing and Resolving Supabase Connection-Pool Exhaustion in Production",
+      "slug": "supabase-connection-pool-exhaustion-supavisor-production",
+      "contentType": "Incident Postmortem",
+      "priority": "P1",
+      "status": "published",
+      "evidence": "A",
+      "note": "INC-2026-10-11-01 resolution: session vs transaction mode pooler isolation under preview load spikes."
+    },
+    {
+      "id": "FSE-34",
+      "title": "Building a Sub-Millisecond Local-First Outbox Sync Engine with SwiftData",
+      "slug": "swiftdata-local-first-outbox-sync-engine",
+      "contentType": "Technical Deep Dive",
+      "priority": "P1",
+      "status": "published",
+      "evidence": "A",
+      "note": "SpenDrop iOS: 0.240 ms save latency, persistent queue, and exponential backoff retry."
+    },
+    {
+      "id": "DAT-20",
+      "title": "Hardware Identity vs Generated Stock Prefixes in Refurbishment Operations",
+      "slug": "hardware-identity-vs-generated-stock-prefixes-refurbishment",
+      "contentType": "Architecture Analysis",
+      "priority": "P1",
+      "status": "published",
+      "evidence": "A",
+      "note": "ITMS audit vs SMBIOS/WMI immutable hardware serial extraction."
+    },
+    {
+      "id": "ITS-15",
+      "title": "Excluding a Damaged Monitor Strip with the Windows AppBar API",
+      "slug": "excluding-damaged-monitor-strip-windows-appbar-api",
+      "contentType": "System Utility Architecture",
+      "priority": "P2",
+      "status": "published",
+      "evidence": "A",
+      "note": "WorkAreaGuard: Win32 SHAppBarMessage and ABM_SETPOS desktop margin reservation."
+    },
+    {
+      "id": "POS-33",
+      "title": "LAN Serial Number Extraction Across Heterogeneous Router Vendors",
+      "slug": "lan-serial-number-extraction-across-router-vendors",
+      "contentType": "Diagnostic Engineering",
+      "priority": "P1",
+      "status": "published",
+      "evidence": "A",
+      "note": "Router Diagnostic v2.6.0: Kaon UPnP/CSTECGI, Huawei ASP endpoints, TP-Link SNMP MIBs."
+    },
+    {
+      "id": "AIE-37",
+      "title": "Offline Receipt OCR on Android with Google ML Kit and Jetpack Compose",
+      "slug": "offline-receipt-ocr-on-android-with-ml-kit",
+      "contentType": "Mobile Architecture",
+      "priority": "P1",
+      "status": "published",
+      "evidence": "A",
+      "note": "SpenDrop Android: on-device TextRecognition, Room SQLite outbox, and zero cloud dependency."
     }
   ]
 }

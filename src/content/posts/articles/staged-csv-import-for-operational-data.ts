@@ -10,7 +10,7 @@ export const post: BlogPost = {
   tags: ["CSV", "Data Validation", "TypeScript", "Papa Parse", "Operations", "Security"],
   contentType: "Technical Guide",
   searchIntent: "problem-aware",
-  relatedProjects: ["rpoms"],
+  relatedProjects: ["rpoms", "erth-router-distribution"],
   relatedPosts: [
     "common-problems-manual-production-tracking",
     "one-storage-interface-three-backends",

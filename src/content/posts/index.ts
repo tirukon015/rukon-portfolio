@@ -182,6 +182,12 @@ import { post as wholeDocumentContextInsteadOfRagForPaperAnalysisPost } from "./
 import { post as workboxConflictingPrecacheEntriesEmptyCachePost } from "./articles/workbox-conflicting-precache-entries-empty-cache";
 import { post as writingAPageAiAnswerEnginesCanQuotePost } from "./articles/writing-a-page-ai-answer-engines-can-quote";
 import { post as wrongSupabaseKeyReturns200AndZeroRowsPost } from "./articles/wrong-supabase-key-returns-200-and-zero-rows";
+import { post as supabaseConnectionPoolExhaustionPost } from "./articles/supabase-connection-pool-exhaustion-supavisor-production";
+import { post as swiftdataLocalFirstOutboxSyncEnginePost } from "./articles/swiftdata-local-first-outbox-sync-engine";
+import { post as hardwareIdentityVsGeneratedStockPrefixesPost } from "./articles/hardware-identity-vs-generated-stock-prefixes-refurbishment";
+import { post as excludingDamagedMonitorStripPost } from "./articles/excluding-damaged-monitor-strip-windows-appbar-api";
+import { post as lanSerialNumberExtractionAcrossRouterVendorsPost } from "./articles/lan-serial-number-extraction-across-router-vendors";
+import { post as offlineReceiptOcrOnAndroidWithMlKitPost } from "./articles/offline-receipt-ocr-on-android-with-ml-kit";
 
 /**
  * Every article, including those scheduled for a later publication date.
@@ -350,6 +356,12 @@ export const allPosts: BlogPost[] = [
   workboxConflictingPrecacheEntriesEmptyCachePost,
   writingAPageAiAnswerEnginesCanQuotePost,
   wrongSupabaseKeyReturns200AndZeroRowsPost,
+  supabaseConnectionPoolExhaustionPost,
+  swiftdataLocalFirstOutboxSyncEnginePost,
+  hardwareIdentityVsGeneratedStockPrefixesPost,
+  excludingDamagedMonitorStripPost,
+  lanSerialNumberExtractionAcrossRouterVendorsPost,
+  offlineReceiptOcrOnAndroidWithMlKitPost,
 ];
 
 export const categories: PostCategory[] = [
