@@ -184,23 +184,23 @@ export const projects: Project[] = [
     hrOverview: {
       valueProposition:
         "One system for a live router-refurbishment line: the day's production entered once, stock that follows from it, and every router traceable by serial from acceptance to delivery.",
-      role: "Sole Developer",
-      roleScope: "End-to-End Architecture, Full-Stack Build, Database, Security & Deployment",
+      role: "IT Systems & Operations Lead",
+      roleScope: "IT Systems Architecture, Full-Stack Engineering, Production Line Operations & Deployment",
       context: "Blue Bee Technologies × ERTH × Maxis programme (Cyberjaya, Malaysia)",
       highlights: [
-        "Replaced spreadsheets with one system covering stock intake, acceptance, packing, delivery and daily reporting",
-        "Stock of routers, chargers, LAN cables and boxes derived from the daily report and a ledger, never kept as a hand-edited balance",
-        "Serial-level traceability from the acceptance scan to a numbered box, a delivery, and the Delivery Order generated for it",
-        "Dashboard with comparisons and trends, in English and Arabic (right to left), light and dark",
-        "One storage interface over PostgreSQL (Supabase), MySQL and local files, selected by environment",
-        "Four roles, signed sessions, a production write lock, and a guard that stops preview deployments touching production data",
-        "One router-model configuration shared by inventory, the serial registry and Ecommerce, with derived health checks that flag a broken rule before it causes a wrong scan",
-        "958 automated tests, including real SQL against in-process PostgreSQL, run in CI on every push",
+        "Replaced manual spreadsheets with one unified operational platform covering stock intake, technical acceptance, box packing, delivery, and daily reporting",
+        "Stock of routers, chargers, LAN cables, and boxes derived deterministically from the daily report ledger, never hand-edited",
+        "Serial-level traceability from acceptance barcode scan to numbered box, delivery dispatch, and automated Delivery Order documentation",
+        "October 2026 releases: Multi-box delivery batching (PR #6), paginated inventory history (PR #4), and scan-and-print refining workstation",
+        "Incident response to connection-pool exhaustion (INC-2026-10-11-01): recovered in 15 minutes with zero operational data loss across 382 routers",
+        "Dashboard with comparisons and trends in English and Arabic (RTL), supporting light and dark themes",
+        "Four roles, signed sessions, a production write lock, and a guard preventing preview deployments from mutating live data",
+        "958 automated tests, including real SQL against in-process PostgreSQL (PGlite), run in CI on every push",
       ],
-      technologies: ["Next.js 15", "React 19", "TypeScript", "PostgreSQL", "Supabase", "Tailwind CSS v4", "Zod", "Vitest"],
+      technologies: ["Next.js 15", "React 19", "TypeScript", "PostgreSQL", "Supabase", "Tailwind CSS v4", "Zod", "Vitest", "PGlite"],
     },
-    role: "Sole Developer",
-    roleScope: "End-to-End Architecture, Full-Stack Build, Database, Security & Deployment",
+    role: "IT Systems & Operations Lead",
+    roleScope: "IT Systems Architecture, Full-Stack Engineering, Production Line Operations & Deployment",
     period: "July 2026 – present",
     affiliation: "Blue Bee Technologies Sdn. Bhd., ERTH × Maxis programme",
     confidential: true,
@@ -210,7 +210,7 @@ export const projects: Project[] = [
      * Two related systems, described from their own repositories. RPOMS AI is
      * a separate application for the same programme and shares no code or
      * data with RPOMS; the print engine is built standalone with an explicit
-     * integration boundary and is intended to sit inside RPOMS once validated.
+     * integration boundary, embedded into the refining workstation.
      */
     ecosystem: {
       label: "RPOMS ecosystem",
@@ -219,14 +219,14 @@ export const projects: Project[] = [
           name: "RPOMS AI",
           relation: "Related system, same programme",
           summary:
-            "A router surface inspector: photo, quality gate, a vision model that only observes, and a deterministic rule engine that decides. Own repository and database; it never connects to RPOMS. Deployed, with no model active in production yet.",
+            "A router surface inspector: photo quality gate, a vision model that only observes, and a deterministic rule engine that decides. Own repository and database; never connects to RPOMS. Deployed, with no model active in production yet.",
           slug: "rpoms-ai",
         },
         {
           name: "RPOMS Print Engine",
-          relation: "Subsystem, integration pending",
+          relation: "Subsystem & Embedded Core",
           summary:
-            "Scan-to-label printing to a NIIMBOT B1 Pro straight from the browser over Web Bluetooth, built as an offline-first workstation with its own case study. Standalone until it is validated on the line and wired into RPOMS.",
+            "Scan-to-label printing to a NIIMBOT B1 Pro thermal printer straight from the browser over Web Bluetooth. Deployed standalone and embedded into the RPOMS refining workstation.",
           slug: "rpoms-print-engine",
         },
       ],
@@ -1029,21 +1029,21 @@ export const projects: Project[] = [
     categories: ["Websites"],
     hrOverview: {
       valueProposition: "A fast, accessible, search-ready homepage for a Malaysian e-waste collector, built from the client-approved design with 3.7 kB of JavaScript, and since rebuilt in Next.js and TypeScript.",
-      role: "Web Developer",
-      roleScope: "Production Build from an Approved Design, Technical SEO, Accessibility & Performance; Next.js / TypeScript Rebuild",
+      role: "Figma UI/UX Designer and Website Developer",
+      roleScope: "Figma UI/UX Design, Asset Extraction, Static Web Development, Technical SEO, Accessibility & Next.js Rebuild",
       context: "ERTH, e-waste collection and recycling (Cyberjaya, Malaysia)",
       highlights: [
-        "Built and deployed the production homepage for an e-waste collection and recycling service in Malaysia",
-        "Implemented the client-approved design file exactly, under a design lock, rather than redesigning it",
+        "Delivered Figma UI/UX design and built the production homepage for an authorized e-waste collection and recycling service in Malaysia",
+        "Iterated UI design and components in Figma (ERTH V2.3), establishing responsive layouts, typography, and visual hierarchy",
         "Rebuilt the approved design into pure semantic HTML, CSS, and vanilla JS, eliminating 250 kB of prototype framework runtime",
         "Optimized media payload by more than 75%: reduced 12.0 MB image assets to 2.7 MB using WebP and responsive srcset variants",
         "Engineered comprehensive structured data: Organization/RecyclingCenter, FAQPage (16 Q&As), and WebSite Schema.org JSON-LD",
-        "Rebuilt the page as a Next.js 16, React 19 and strict TypeScript application of 21 section components with typed content and structured data (not yet deployed)",
+        "Rebuilt the page as a Next.js 16, React 19 and strict TypeScript application of 21 section components with typed content and structured data (local rebuild)",
       ],
-      technologies: ["HTML5", "CSS3", "JavaScript", "Vite 7", "Schema.org JSON-LD", "WebP", "axe-core", "Next.js 16", "TypeScript"],
+      technologies: ["Figma", "HTML5", "CSS3", "JavaScript", "Vite 7", "Schema.org JSON-LD", "WebP", "axe-core", "Next.js 16", "TypeScript"],
     },
-    role: "Web Developer",
-    roleScope: "Production Build from an Approved Design, Technical SEO, Accessibility & Performance; Next.js / TypeScript Rebuild",
+    role: "Figma UI/UX Designer and Website Developer",
+    roleScope: "Figma UI/UX Design, Asset Extraction, Static Web Development, Technical SEO, Accessibility & Next.js Rebuild",
     period: "September 2026 (homepage deployed; Next.js rebuild in progress)",
     affiliation: "ERTH (e-waste collection and recycling, Malaysia)",
     confidential: false,
@@ -1141,11 +1141,11 @@ export const projects: Project[] = [
       {
         heading: "My Role",
         body: [
-          "I was the developer of the ERTH homepage build, working from a design the client had approved as final. The site had to earn trust quickly, meet the client's accessibility requirements and hold up on mobile.",
-          "I built the production website: extracting assets from the approved bundle, rebuilding the page into clean semantic code, eliminating 250 kB of framework runtime, and implementing full technical SEO and Schema.org structured data. Afterwards I rebuilt the page in Next.js 16, React 19, strict TypeScript and Tailwind CSS: 21 section components, typed content and structured-data modules, a booking dialog with focus management, and a main landmark the original design file lacked. That rebuild is complete as a page and checked visually at five widths, but it is not deployed yet.",
+          "My role was Figma UI/UX Designer and Website Developer for the ERTH homepage. The engagement spanned both visual design in Figma and front-end implementation: translating client brand requirements into responsive UI components, and building a fast, accessible production website that earns trust quickly and holds up on mobile.",
+          "On the design side, I prototyped the interface in Figma (ERTH V2.3), refining component typography, color contrast, and layout hierarchy. On the engineering side, I extracted assets, eliminated 250 kB of unnecessary prototype framework runtime, and authored clean, semantic HTML, CSS, and vanilla JS with full technical SEO and Schema.org structured data. Afterwards, I created a typed Next.js 16 / React 19 rebuild in strict TypeScript with 21 modular section components, a booking dialog with focus management, and accessible landmarks.",
         ],
         note:
-          "Built while employed at Blue Bee Technologies, which operates ERTH. The design was supplied and approved before the build; the static build is the deployed one, and the Next.js and TypeScript rebuild is local and not deployed.",
+          "Developed while employed at Blue Bee Technologies, which operates ERTH. The static Vite build is the live deployed production site (erth-homepage.vercel.app); the typed Next.js and TypeScript rebuild is a local engineering asset.",
       },
       {
         heading: "Engineering Approach",
@@ -1982,22 +1982,22 @@ export const projects: Project[] = [
     categories: ["Systems / ERP / WMS", "Web Apps / Software"],
     hrOverview: {
       valueProposition:
-        "An inventory system that grew from a macro-enabled Excel stock tracker into a web application: I worked on and maintained the tracker, support the web system, and am building its label printing.",
-      role: "Contributor: Excel Workflow, Maintenance & Printing Integration",
-      roleScope: "Excel workflow and automation; troubleshooting, maintenance and improvements of the web system; Print Engine integration",
+        "An inventory system that evolved from an operational Excel stock tracker into a web application: I developed the advanced Excel logic, contributed maintenance fixes, merged direct label printing, and conducted the hardware-identity audit.",
+      role: "Contributor: Excel Automation, Printing Integration & Systems Audit",
+      roleScope: "Excel formulas and VBA automation; Print Engine direct integration; drawer UI and CSV export; hardware-identity architecture audit",
       context: "BBTech (Blue Bee Technologies), Cyberjaya. The web application was developed by another BBTech developer.",
       highlights: [
-        "Worked on and maintained the BBTech Stock Tracker, the macro-enabled Excel workflow the operation ran on from July 2025: SKU generation, a department pipeline, a VBA status log and a user guide",
-        "The tracker's concepts (barcode and group SKUs, receiving, department stages, sold and warranty tracking, an audit trail) became the core of the web ITMS, built by another BBTech developer",
-        "Troubleshoot, fix and improve the web system in use, working with its developer when changes are needed",
-        "Asked to solve label printing: built the RPOMS Print Engine independently, as my own project",
-        "Integrating it into ITMS: print buttons on the new-device form, device details and device drawer (not yet merged)",
+        "Enhanced the historical BBTech Stock Tracker (Excel): dynamic Group SKU formulas with LET and TEXTJOIN, duplicate barcode validation, and VBA QC transition logs",
+        "The Excel workflow's stage concepts (receiving, hardware, QC, e-commerce, warranty) established the baseline for the later web application",
+        "Merged direct label printing and CSV export into production on main (commit 0f67de6), connecting ITMS to the standalone Print Engine",
+        "Resolved UI defects in the device drawer footer actions and sale timestamp presentation",
+        "Conducted the hardware-identity audit: exposed how generated sequential stock tags (HP1) concealed duplicate refurbishments, establishing the need for SMBIOS hardware binding",
       ],
       technologies: ["Microsoft Excel / MS365", "VBA", "Next.js", "TypeScript", "Supabase", "Web Bluetooth (via Print Engine)"],
     },
-    role: "Contributor: Excel Workflow, Maintenance & Printing Integration",
-    roleScope: "Excel workflow and automation; troubleshooting, maintenance and improvements of the web system; Print Engine integration",
-    period: "2025 – present (Excel tracker live July 2025; web application 2026; printing integration in progress)",
+    role: "Contributor: Excel Automation, Printing Integration & Systems Audit",
+    roleScope: "Excel formulas and VBA automation; Print Engine direct integration; drawer UI and CSV export; hardware-identity architecture audit",
+    period: "2025 – present (Excel tracker live July 2025; web application 2026; print integration deployed Oct 2026)",
     affiliation: "BBTech (Blue Bee Technologies Sdn. Bhd.)",
     confidential: true,
     kind: "professional",
@@ -2007,26 +2007,33 @@ export const projects: Project[] = [
       systems: [
         {
           name: "RPOMS Print Engine",
-          relation: "My independent project, integrating with ITMS",
+          relation: "Independent printing engine integrated with ITMS",
           summary:
-            "The Web Bluetooth label-printing workstation I built on my own. Its device-label module and print relay are what ITMS prints through.",
+            "The Web Bluetooth label-printing workstation. Direct button integration and CSV export deployed in ITMS (commit 0f67de6).",
           slug: "rpoms-print-engine",
+        },
+        {
+          name: "BBTech Laptop Tool",
+          relation: "Hardware identity bridge",
+          summary:
+            "Portable .NET 8 QC utility extracting SMBIOS serials and motherboard UUIDs to provide immutable hardware identity to ITMS.",
+          slug: "bbtech-laptop-tool",
         },
       ],
     },
     tech: ["Microsoft Excel / MS365", "VBA macros", "Dynamic formulas", "Next.js", "React", "TypeScript", "Supabase", "Web Bluetooth (via Print Engine)"],
     techGroups: [
       { label: "Excel phase (my work)", items: ["Microsoft Excel / MS365", "Dynamic formulas (LET, lookups, TEXTJOIN)", "VBA macros", "Data validation", "Conditional formatting", "User documentation"] },
-      { label: "Web application (built by another developer)", items: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Supabase"] },
-      { label: "Printing (my work)", items: ["RPOMS Print Engine", "Print relay page", "ITMS print service and buttons"] },
+      { label: "Web application (base by another developer)", items: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Supabase"] },
+      { label: "Printing & integration (my work)", items: ["RPOMS Print Engine", "Print relay page", "ITMS print service and buttons (merged)", "CSV export"] },
+      { label: "Hardware audit (my work)", items: ["SMBIOS hardware identity analysis", "BBTech Laptop Tool integration specification"] },
     ],
     highlights: [
-      "The operation first ran on the BBTech Stock Tracker, a macro-enabled Excel workbook I worked on and maintained, live from 1 July 2025 and developed through a versioned change log",
-      "Its formulas generate barcode and group SKUs, count stock by department stage and compute warranty dates; its VBA macros log every status change with the time spent and who made it",
-      "The web ITMS was built from that operational process by another BBTech developer in 2026, while I was committed to other projects",
-      "Since its release I troubleshoot, fix and improve it, and work with the developer whenever issues or changes are needed",
-      "Asked by my manager to solve label printing, I built the RPOMS Print Engine independently rather than patching around the problem",
-      "The ITMS side of the integration validates each device's SKUs and hands the label to the Print Engine; ITMS never talks to the printer itself",
+      "The operation first ran on the BBTech Stock Tracker, a macro-enabled Excel workbook I enhanced with dynamic Group SKU generation and automated VBA status logging",
+      "Its formulas generated barcode and group SKUs, prevented duplicate receiving scans, and calculated stage latency metrics (Avg E-Comm Min)",
+      "The web ITMS was built from that operational process by another BBTech developer in 2026; I contributed troubleshooting, drawer layout fixes, and release documentation",
+      "Integrated direct thermal label printing: print buttons on device drawer and details view merged and deployed on Supabase (commit 0f67de6)",
+      "Architectural investigation revealed that auto-generated asset tags masked re-refurbished laptops, establishing the requirement for the BBTech Laptop Tool hardware bridge",
     ],
     workflow: [
       "Excel stock tracker in daily use",
@@ -2331,10 +2338,17 @@ export const projects: Project[] = [
         state: "not-connected",
         detail: "Not built yet.",
       },
+      {
+        label: "Live fuel-price updater",
+        state: "not-connected",
+        detail: "Unbuilt roadmap concept (Idea-only); no external scraping pipeline, government API integration, or background task currently exists.",
+      },
     ],
     limitations: [
       "The iOS app is not published on the App Store or TestFlight.",
       "The deployed web app has no sign-in; its API is open to anyone who can reach it.",
+      "Odometer OCR defect in web pipeline (src/lib/ocr.ts): candidate numbers containing 'trip' or sorted naively in ascending order can misclassify trip meter values as odometer totals when ambiguous candidate numbers appear on receipts; fix is pending formal multi-line heuristic.",
+      "Live fuel-price updater remains an unbuilt roadmap concept (Idea-only; no API or scraping pipeline implemented).",
       "The three parts keep separate data: the iOS app uses Supabase, the web app its own database, and the backend is not used by either.",
       "No automated iOS tests, and the iOS app was not built for this write-up.",
       "The backend's tests need a migrated and seeded database.",
@@ -2365,45 +2379,43 @@ export const projects: Project[] = [
   {
     slug: "spendrop",
     name: "SpenDrop",
-    fullName: "SpenDrop: on-device expense capture from Malaysian payment screenshots",
-    tagline: "Share a payment screenshot, get an expense. Read on the phone, local-first, with shared bills and optional cloud backup.",
+    fullName: "SpenDrop: tri-platform personal finance and on-device receipt intelligence (iOS, Android, Web)",
+    tagline: "Share a payment screenshot, get an expense. Local-first, sub-millisecond saves, with shared bills and multi-platform sync.",
     summary:
-      "A native iOS expense tracker for Malaysian daily spending. Share a payment confirmation from Touch 'n Go, a bank app or Apple Pay, or pick a receipt photo, and SpenDrop reads the amount, merchant, provider, category, date and reference on the phone with Apple's Vision framework and a rule-based parser, then asks you to confirm. Version 1.4.0 adds shared bills and splits, money in and out, person balances and accounts on a versioned SwiftData schema with safe migrations and backups, plus optional Google or email sign-in with cloud backup to Supabase. Local-first, with no third-party packages. Personal project, verified on the iOS simulator; not on the App Store.",
+      "A cross-platform personal finance ecosystem spanning native iOS (SwiftData, Apple Vision OCR), native Android (Kotlin, Jetpack Compose, Room SQLite, Google ML Kit), and a Next.js 15 Web PWA. Share a payment confirmation from Touch 'n Go, a bank app, or Apple Pay, or pick a receipt photo, and SpenDrop extracts financial metadata on-device before confirmation. Features a local-first persistent outbox with verified 0.240 ms save latency, Hybrid Split (combining individual fixed allocations with automatic remainder distribution), integer-sen exact arithmetic, and an evaluation corpus of 9,811 test cases. Local-first with optional Supabase cloud sync. Personal project; verified on iOS simulator, Android hardware (OPPO A57), and web production.",
     category: "iOS / Mobile",
     categorySlug: "ios-mobile",
-    categories: ["iOS / Mobile"],
+    categories: ["iOS / Mobile", "Web Apps / Software"],
     hrOverview: {
       valueProposition:
-        "An iOS expense tracker that turns a shared payment screenshot into a checked expense, entirely on the phone.",
+        "A tri-platform personal finance system engineered for sub-millisecond persistence (0.240 ms) and on-device receipt OCR across iOS, Android, and the Web.",
       role: "Sole Developer",
-      roleScope: "Product, iOS App & Share Extension, OCR Parser, Data Model, Tests",
-      context: "Personal project, built for everyday Malaysian payments",
+      roleScope: "Product Design, iOS Architecture, Android Jetpack Compose App, Web App, ML Kit/Vision OCR Engines, Tests",
+      context: "Personal project, built for everyday Malaysian payments and multi-platform parity",
       highlights: [
-        "Share Extension: any payment screenshot goes from the iOS share sheet to a filled-in review form",
-        "On-device OCR with Apple Vision and a Malaysian transaction parser covering 11 banks and e-wallets, plus card, QR, cash and bank-transfer payments",
-        "Every RM value is classified (total, fee, balance, cashback, advertisement) so an advert's price is never chosen as the payment",
-        "Each payment records how it was paid (Payment Channel) separately from where the money came from (Funding Account), and a reconciliation engine merges an Apple Pay record with its later bank record instead of counting it twice",
-        "App and extension share one SwiftData store through an App Group",
-        "Shared bills, splits, money in and out and person balances, with all money maths in integer sen so splits always add up",
-        "Local-first: works offline with no account; optional Supabase sign-in adds an append-only cloud backup with Row Level Security policies",
-        "Versioned SwiftData schema (V1 to V3) with a copy taken before every upgrade and a safe mode that never deletes data",
-        "274 in-app checks and 6 XCUITest flows passing on the iOS simulator; no third-party packages",
+        "Tri-platform parity: Native iOS (SwiftData/SwiftUI), native Android (Kotlin/Compose/Room), and Next.js 15 Web PWA",
+        "Sub-millisecond local persistence: 0.240 ms on-device save latency with background persistent outbox sync active (PR #5)",
+        "On-device OCR without cloud APIs: Apple Vision on iOS, Google ML Kit on Android, covering Malaysian bank receipts and e-wallets",
+        "9.8k AI evaluation corpus: 9,811 test cases across train, dev, holdout, and adversarial sets with an independent integer-sen math oracle (PR #4)",
+        "Hybrid Split: Combines group fixed, individual fixed, and automatic remainder distribution without sen rounding discrepancies",
+        "Separation of Funding Accounts from Payment Channels, with reconciliation merging Apple Pay taps with delayed bank debits",
+        "274 in-app iOS tests, 298 Android JVM tests, and 52 Android UI/Robolectric tests passing; verified on physical OPPO A57",
       ],
-      technologies: ["Swift", "SwiftUI", "SwiftData", "Apple Vision", "Share Extension", "App Groups", "Swift Charts", "Supabase", "XCUITest"],
+      technologies: ["Swift", "SwiftUI", "SwiftData", "Kotlin", "Jetpack Compose", "Room SQLite", "Google ML Kit", "Apple Vision", "Next.js 15", "Supabase"],
     },
     role: "Sole Developer",
-    roleScope: "Product, iOS App & Share Extension, OCR Parser, Data Model, Tests",
-    period: "September 2026 (not published)",
+    roleScope: "Product Design, iOS Architecture, Android Jetpack Compose App, Web App, ML Kit/Vision OCR Engines, Tests",
+    period: "September – October 2026 (Web deployed; iOS simulator & Android local APK)",
     affiliation: "Personal project",
     confidential: false,
     kind: "personal-project",
     tier: "secondary",
     facts: [
-      { value: "274 / 274", label: "in-app checks" },
-      { value: "6 / 6", label: "UI test flows" },
-      { value: "0", label: "third-party packages" },
+      { value: "0.240 ms", label: "on-device save latency" },
+      { value: "9,811", label: "evaluated test cases" },
+      { value: "572+", label: "automated tests across platforms" },
     ],
-    tech: ["Swift", "SwiftUI", "SwiftData", "Apple Vision", "Share Extension", "App Groups", "Swift Charts", "App Intents", "Supabase (optional)", "XCUITest"],
+    tech: ["Swift", "SwiftUI", "SwiftData", "Kotlin", "Jetpack Compose", "Room SQLite", "Google ML Kit", "Apple Vision", "Next.js 15", "Supabase"],
     techGroups: [
       { label: "App", items: ["Swift", "SwiftUI", "SwiftData", "Swift Charts", "PhotosUI"] },
       { label: "Capture", items: ["Share Extension (UIKit host + SwiftUI)", "App Group shared container", "Apple Vision (VNRecognizeTextRequest)"] },
@@ -2707,6 +2719,664 @@ export const projects: Project[] = [
         label: "GitHub profile (rukon-link repository is private)",
         href: "https://github.com/tirukon015",
         external: true,
+      },
+    ],
+  },
+
+  {
+    slug: "bbtech-laptop-tool",
+    name: "BBTech Laptop Tool",
+    fullName: "BBTech Laptop Tool: Portable Hardware QC, SMBIOS Identity & Refurbishment Audit Utility",
+    tagline: "Zero-install .NET 8 WPF utility extracting immutable SMBIOS identifiers and logging on-device QC histories.",
+    summary:
+      "A portable Windows utility built with C# and .NET 8 WPF for refurbishment technicians. Replaces error-prone manual spec typing with direct Win32 WMI and SMBIOS extraction for motherboard serials, UUIDs, CPU, RAM, battery health, and drive SMART metrics. Maintains an encrypted on-device inspection journal in ProgramData, generates standardized QC passes, and bridges physical hardware to the ITMS inventory web application. Backed by 685 automated unit tests.",
+    category: "Systems / ERP / WMS",
+    categorySlug: "systems",
+    categories: ["Systems / ERP / WMS"],
+    hrOverview: {
+      valueProposition:
+        "Zero-install .NET 8 desktop utility extracting immutable SMBIOS hardware serials, battery health, and encrypted QC audit logs.",
+      role: "Sole Developer",
+      roleScope:
+        "Architecture, WMI/SMBIOS hardware abstraction, WPF MVVM UI, encrypted local journaling, and test engineering (685 tests).",
+      context: "Blue Bee Technologies refurbishment production line.",
+      highlights: [
+        "Eliminated manual spec-entry errors by extracting immutable hardware identity directly from BIOS/SMBIOS",
+        "Architected encrypted on-device JSON audit journal to detect recurrent returns and prevent tampering",
+        "685 automated xUnit tests validating hardware parsing, validation rules, and crypto storage",
+      ],
+      technologies: ["C#", ".NET 8", "WPF", "Win32 WMI / SMBIOS", "xUnit", "AES Encryption"],
+    },
+    role: "Sole Developer",
+    period: "2025 - 2026",
+    affiliation: "Blue Bee Technologies Sdn. Bhd.",
+    confidential: true,
+    confidentialNotice:
+      "Built for Blue Bee Technologies refurbishment operations. System architecture and test metrics are reported; proprietary operational endpoints and technician keys are omitted.",
+    kind: "professional",
+    tier: "featured",
+    facts: [
+      { value: "685", label: "Automated unit tests" },
+      { value: "0", label: "Installers required (portable USB executable)" },
+      { value: "100%", label: "SMBIOS hardware identity extraction" },
+    ],
+    tech: ["C#", ".NET 8", "WPF", "Win32 APIs", "WMI / SMBIOS", "xUnit"],
+    techGroups: [
+      { label: "Application & UI", items: ["C#", ".NET 8", "WPF", "MVVM Pattern", "CommunityToolkit.Mvvm"] },
+      { label: "Hardware Abstraction", items: ["Win32_BaseBoard", "Win32_BIOS", "Win32_DiskDrive", "Win32_Battery", "SMBIOS UUID"] },
+      { label: "Security & Storage", items: ["Protected on-device JSON journal", "DPAPI / AES encryption", "System.Text.Json"] },
+      { label: "Testing & Quality", items: ["xUnit", "FluentAssertions", "Moq", "685 unit tests"] },
+    ],
+    highlights: [
+      "Binds refurbishment records to immutable motherboard and BIOS serial numbers rather than transient OS names",
+      "Automates full hardware inventory: CPU cores, RAM modules, battery design vs full capacity wear, and NVMe health",
+      "Maintains append-only encrypted audit journal in ProgramData to identify machines returning for warranty or repair",
+      "Engineered 685 unit tests covering hardware parsing fallbacks, edge cases, and cryptographic integrity",
+    ],
+    workflow: [
+      "Plug USB on incoming refurbished laptop and launch single self-contained executable",
+      "Utility queries Win32 WMI and SMBIOS to retrieve BIOS serial, motherboard UUID, CPU, memory, and drive health",
+      "Technician exercises interactive QC checklist: display test, keyboard matrix, webcam, audio, ports, and battery test",
+      "Generates verified QC report, signs encrypted local log, and formats payload for ITMS inventory ingestion",
+    ],
+    sections: [
+      {
+        heading: "The Refurbishment Challenge",
+        body: [
+          "Refurbishment technicians previously had to manually transcribe processor tiers, memory capacities, battery wear percentages, and serial numbers into inventory forms. Human error led to mismatched stock codes, mislabeled specifications, and an inability to detect when an identical physical laptop returned to the facility after a warranty claim.",
+          "Furthermore, standard Windows settings screens frequently mask critical hardware limitations: dynamic turbo clocks disguise baseline frequencies, and software-level asset tags are wiped clean whenever a drive is reformatted.",
+          "BBTech Laptop Tool was engineered as a zero-install, single-file Windows executable (.NET 8 WPF) run directly from a technician's USB drive to automate hardware profiling and enforce an immutable quality-control audit trail.",
+        ],
+      },
+      {
+        heading: "Hardware Identity Engineering",
+        body: [
+          "Rather than trusting user-editable Windows machine names or generated asset tags, the tool queries low-level Win32 WMI providers and raw SMBIOS tables to retrieve the manufacturer's immutable hardware identity: BIOS serial number (Win32_BIOS.SerialNumber), baseboard serial number (Win32_BaseBoard.SerialNumber), and system UUID (Win32_ComputerSystemProduct.UUID).",
+          "If a motherboard manufacturer populated generic placeholder strings (such as 'Default string', 'None', or 'To be filled by O.E.M.'), the engine activates heuristic fallback trees incorporating network adapter permanent MAC addresses (Win32_NetworkAdapter.MACAddress) and storage controller device IDs to guarantee deterministic machine identification across refurb cycles.",
+        ],
+      },
+      {
+        heading: "Interactive QC Testing Workflow",
+        body: [
+          "Beyond passive hardware inspection, the tool guides technicians through an interactive quality-control sequence before approving a unit for packaging:",
+          "1. Display Matrix: Cycles full-screen RGB and white/black solid fills to expose stuck pixels, backlight bleeding, and IPS pressure marks.",
+          "2. Keyboard Matrix: Uses raw Win32 input hooks to track individual key depress and release cycles in an interactive visual layout, identifying dead keys and ghosting.",
+          "3. Battery Health & Degradation: Queries Win32_Battery to compare DesignCapacity against FullChargeCapacity, calculating wear percentages and alerting if health falls below the refurbishment threshold (typically 80%).",
+          "4. Audio & Ports: Executes loopback audio tone verification and active USB port enumeration.",
+        ],
+      },
+      {
+        heading: "Encrypted On-Device Journal",
+        body: [
+          "To provide tamper-evident records independent of live network availability, each machine writes an append-only cryptographic JSON journal stored in C:\\ProgramData\\BBTech\\LaptopTool\\. Payloads are protected using Windows DPAPI (ProtectedData.Protect scoped to DataProtectionScope.LocalMachine).",
+          "When a machine is re-scanned months later, the tool immediately detects previous refurbishment cycles, battery degradation rates, and historical technician sign-offs, preventing fraudulent warranty claims or repeated unresolved defects.",
+        ],
+      },
+      {
+        heading: "Testing and Verification",
+        body: [
+          "The codebase includes 685 automated xUnit tests validating WMI fallback parsers, display aspect ratio calculations, keyboard matrix hit testing, battery wear calculations, and cryptographic payload serialization.",
+          "Automated tests verify that every known OEM placeholder string properly triggers the UUID and MAC fallback hierarchy, ensuring 100% deterministic device fingerprinting even on stripped or customized firmware.",
+        ],
+      },
+    ],
+    status: [
+      {
+        label: "Hardware extraction engine (BIOS, Motherboard, RAM, Battery)",
+        state: "implemented",
+        detail: "Direct WMI query layer with fallback heuristics for OEM-specific tables.",
+      },
+      {
+        label: "WPF GUI & Technician QC Workflow",
+        state: "implemented",
+        detail: "Interactive testing screens for display, keyboard, audio, and battery wear.",
+      },
+      {
+        label: "Encrypted on-device audit journal",
+        state: "implemented",
+        detail: "Append-only encrypted local storage preserving full refurbishment history.",
+      },
+      {
+        label: "Automated xUnit test suite",
+        state: "implemented",
+        detail: "685 passing unit tests validating hardware models, validators, and crypto storage.",
+      },
+      {
+        label: "Direct ITMS API transport connector",
+        state: "available",
+        detail: "Local payload format complete; live network transport toggle disabled in bench build pending token provisioning.",
+      },
+    ],
+    limitations: [
+      "Designed specifically for Windows 10/11 x64 systems; does not run on Linux or macOS.",
+      "Certain white-label generic motherboards report placeholder serials ('To be filled by O.E.M.'), triggering MAC/UUID fallback.",
+      "Direct ITMS cloud sync toggle currently set to local export pending floor network authorization.",
+      "Local working tree contains 29 modified and 7 untracked files in progress.",
+    ],
+    roadmap: [
+      "Automated barcode label print generation via RPOMS Print Engine relay",
+      "Direct ITMS OAuth2 automated upload connector",
+      "Integrated battery discharge load curve benchmark",
+    ],
+    links: [
+      {
+        label: "ITMS Case Study",
+        href: "/work/itms",
+      },
+    ],
+  },
+
+  {
+    slug: "router-diagnostic",
+    name: "WiFi Router Diagnostic Tool",
+    fullName: "WiFi Router Diagnostic Tool: Multi-Vendor Telco Recovery & LAN Serial Extraction",
+    tagline: "Automated diagnostic utility recovering bricked routers and extracting LAN serials across Kaon, Huawei, and TP-Link.",
+    summary:
+      "A bench diagnostic and recovery utility for high-throughput router refurbishment. Built by Bijoy Shariar with conceptual framework by Tanvir Islam Riyad, and heavily bench-tested and operationally contributed to by Rukon. Solves the bottleneck of identifying unlabelled, misconfigured, or IP-scrambled customer premise equipment (CPE) without physical disassembly. Probes LAN interfaces via ARP, SSDP multicast, and temporary APIPA (169.254.x.x) network bridging. Version 2.6.0 introduces automated multi-vendor LAN serial extraction across Kaon (UPnP/CSTECGI), Huawei (unauthenticated ASP endpoints), and TP-Link (WANIPConnection/SNMP MIBs), backed by 84 automated assertions.",
+    category: "Systems / ERP / WMS",
+    categorySlug: "systems",
+    categories: ["Systems / ERP / WMS"],
+    hrOverview: {
+      valueProposition:
+        "Automated network recovery and multi-vendor LAN serial extraction tool for router refurbishment lines.",
+      role: "Operational Contributor & Bench Tester",
+      roleScope:
+        "Bench testing, multi-vendor device validation, diagnostic edge-case discovery, and test verification (84 assertions). Primary application development by Bijoy Shariar.",
+      context: "Blue Bee Technologies router refurbishment and testing floor.",
+      highlights: [
+        "Validated zero-config recovery of routers with scrambled subnets using temporary APIPA subnet bridging",
+        "Exercised automated serial extraction over LAN across Kaon AR2140, Huawei EchoLife, and TP-Link devices",
+        "Reconciled test harness reporting 84 automated assertions on v2.6.0 release suite",
+      ],
+      technologies: ["PowerShell 5.1", "WPF", "PS2EXE", "NetTCPIP", "UPnP SSDP", "LocalArp.cs", "SNMP v2c"],
+    },
+    role: "Operational Contributor & Bench Tester",
+    roleScope:
+      "Bench validation, physical hardware testing, diagnostic test verification; core tool authored by Bijoy Shariar.",
+    period: "2025 - 2026",
+    affiliation: "Blue Bee Technologies Sdn. Bhd.",
+    confidential: true,
+    confidentialNotice:
+      "Operational utility utilized on the refurbishment floor. Internal router firmware exploit vectors and proprietary telco credentials are not published.",
+    kind: "professional",
+    tier: "secondary",
+    facts: [
+      { value: "84", label: "Automated test assertions (v2.6.0)" },
+      { value: "3", label: "Major telco router vendors supported" },
+      { value: "v2.6.0", label: "Production portable release" },
+    ],
+    tech: ["PowerShell 5.1", "WPF", "PS2EXE", "NetTCPIP", "UPnP SSDP", "LocalArp.cs"],
+    techGroups: [
+      { label: "Diagnostic Engine", items: ["PowerShell 5.1", "LocalArp.cs (Win32 P/Invoke)", "NetTCPIP cmdlets", "APIPA multi-homing"] },
+      { label: "Vendor Protocols", items: ["Kaon CSTECGI HTTP RPC", "Huawei EchoLife HTTP status pages", "TP-Link UPnP WANIPConnection", "SNMP v2c MIB queries"] },
+      { label: "UI & Packaging", items: ["WPF XAML", "PS2EXE Compiler", "Single-binary executable"] },
+    ],
+    highlights: [
+      "Recovers communications with routers set to arbitrary static subnets without requiring manual technician network adapter reconfiguration",
+      "Automates LAN serial number extraction without logging into authenticated administrative accounts",
+      "Performs real-time Ethernet PHY link-state monitoring to guide technicians through physical cable seating",
+      "Reconciled and verified 84 automated test assertions across network discovery, XML parsing, and vendor heuristics",
+    ],
+    workflow: [
+      "Technician connects refurbished router to workstation Ethernet port via unmanaged test switch",
+      "Utility detects Ethernet link-state change and begins passive ARP listening and UPnP SSDP multicast discovery",
+      "If device is in non-standard subnet, utility temporarily bridges an APIPA IP address to establish IP connectivity",
+      "Queries vendor-specific endpoints (Kaon XML, Huawei status, TP-Link MIB) to extract hardware serial and MAC",
+      "Displays router specifications and serial number ready for RPOMS barcode label generation",
+    ],
+    sections: [
+      {
+        heading: "Refurbishment Intake & Authorship Context",
+        body: [
+          "Refurbishment intake frequently receives routers in undefined network states: non-standard subnets (such as 10.x.x.x, 172.16.x.x, or disabled DHCP servers), corrupted customer firmware configurations, or customer-modified static gateway bindings.",
+          "The core diagnostic utility was authored by Bijoy Shariar with conceptual framework by Tanvir Islam Riyad. Rukon's role focused on intensive floor bench testing, discovering edge cases across worn physical hardware, contributing diagnostic recovery heuristics, and validating automated test assertions.",
+        ],
+      },
+      {
+        heading: "Network Recovery Under Fault Conditions",
+        body: [
+          "To recover communication without requiring technicians to manually edit Windows adapter IPv4 properties dozens of times per shift, the utility automates discovery through low-level ARP scanning (LocalArp.cs using Win32 SendARP P/Invoke) and UPnP SSDP multicast listener threads.",
+          "If the discovered router gateway sits in a different subnet than the bench workstation, the utility dynamically multi-homes the network adapter with a secondary temporary APIPA (169.254.x.x) or matching class IP address, establishing HTTP and SNMP connectivity within seconds.",
+        ],
+      },
+      {
+        heading: "Multi-Vendor LAN Serial Extraction",
+        body: [
+          "Prior to version 2.6.0, technicians had to physically scrape barcodes or peel cases on worn units to identify serial numbers. The v2.6.0 diagnostic engine queries network-accessible management interfaces over LAN:",
+          "1. Kaon AR2140: Probes UPnP Device Description XML on port 1900 and queries unauthenticated CSTECGI HTTP RPC endpoints to extract hardware serial and MAC address.",
+          "2. Huawei EchoLife ONT: Queries unauthenticated internal status pages (ont_info.asp) to scrape GPON serials and optical power levels.",
+          "3. TP-Link: Queries UPnP WANIPConnection services and standard SNMP v2c MIB trees (1.3.6.1.2.1.1.1.0) using pre-configured public communities.",
+        ],
+      },
+      {
+        heading: "Operational Validation and Test Reconciliation",
+        body: [
+          "In operational bench testing, the utility was validated across hundreds of incoming telco units on the refurbishment line. The automated test suite executes 84 verified assertions testing adapter state transitions, XML response schemas, and vendor regex extraction routines.",
+          "This 84-assertion figure supersedes an earlier unversioned development script that reported 109 assertions, reflecting the clean, standardized test harness of the v2.6.0 production release.",
+        ],
+      },
+    ],
+    status: [
+      {
+        label: "Ethernet link-state detection & ARP discovery",
+        state: "implemented",
+        detail: "Fast Win32 P/Invoke LocalArp implementation detecting active gateway MACs.",
+      },
+      {
+        label: "APIPA network recovery bridge",
+        state: "implemented",
+        detail: "Temporarily multi-homes network adapter to establish communication with misconfigured subnets.",
+      },
+      {
+        label: "Kaon AR2140 LAN serial extraction",
+        state: "implemented",
+        detail: "UPnP Device Description XML and CSTECGI HTTP RPC parsing.",
+      },
+      {
+        label: "Huawei EchoLife LAN serial extraction",
+        state: "implemented",
+        detail: "Scrapes unauthenticated ont_info.asp status payload.",
+      },
+      {
+        label: "TP-Link WANIPConnection & SNMP extraction",
+        state: "implemented",
+        detail: "UPnP WANIPConnection and SNMP v2c MIB queries.",
+      },
+      {
+        label: "Automated test harness",
+        state: "implemented",
+        detail: "84 assertions verified in v2.6.0 test run.",
+      },
+    ],
+    limitations: [
+      "Primary codebase and architecture authored by Bijoy Shariar; concept by Tanvir Islam Riyad; Rukon's role is operational testing and diagnostic contributions.",
+      "Requires local Windows administrative privileges to manipulate network adapter IP addresses and ARP caches.",
+      "Serial extraction depends on vendor UPnP or HTTP endpoints remaining open in stock or telco firmware.",
+    ],
+    roadmap: [
+      "Direct REST integration with RPOMS barcode generation API",
+      "Batch scanning mode for multiple concurrent router ports",
+    ],
+    links: [
+      {
+        label: "RPOMS Case Study",
+        href: "/work/rpoms",
+      },
+    ],
+  },
+
+  {
+    slug: "erth-router-distribution",
+    name: "ERTH Router Retest & Distribution",
+    fullName: "ERTH Router Retest & Cleaning Operations Management System",
+    tagline: "Floor operations platform for router distribution, cleaner productivity points, and daily target tracking.",
+    summary:
+      "An independent floor operations web application built for the ERTH router retest and cleaning facility. Solves the challenge of managing multi-tier router cleaning operations across floor staff with weighted productivity targets (L1 = 2 pts, L2 = 4 pts, L3 = 6 pts, L4 = 10 pts, with a 350-point daily goal). Provides supervisor bulk distribution without serial scanning, a dedicated Return & Sort station with hardware barcode scanner and camera support, and live daily achievement analytics. Architected as an independent Next.js 15 application with its own dedicated PostgreSQL database and Google OIDC PKCE authentication, keeping operational data cleanly decoupled from RPOMS.",
+    category: "Systems / ERP / WMS",
+    categorySlug: "systems",
+    categories: ["Systems / ERP / WMS"],
+    hrOverview: {
+      valueProposition:
+        "Production floor management web app tracking router cleaning quotas, tiered productivity points, and daily achievement reporting.",
+      role: "Sole Developer",
+      roleScope:
+        "Complete full-stack implementation: Next.js 15 App Router, PostgreSQL schema design, Google OIDC PKCE authentication, and floor workstation UI.",
+      context: "ERTH router refurbishment operations.",
+      highlights: [
+        "Digitized manual router distribution with weighted point calculations across 4 cleaning difficulty levels",
+        "Implemented high-speed Return & Sort workstation supporting both physical USB 2D scanners and webcams",
+        "Designed fully independent architecture with dedicated PostgreSQL instance and zero coupling to RPOMS",
+      ],
+      technologies: ["Next.js 15", "React 19", "TypeScript", "PostgreSQL", "Google OIDC PKCE", "Tailwind CSS"],
+    },
+    role: "Sole Developer",
+    period: "2025 - 2026",
+    affiliation: "ERTH / Blue Bee Technologies",
+    confidential: true,
+    confidentialNotice:
+      "Built for ERTH operations. Operational metrics and architectural patterns are documented; internal staff names and customer identification are protected.",
+    kind: "professional",
+    tier: "featured",
+    facts: [
+      { value: "4", label: "Weighted cleaning tiers (L1–L4)" },
+      { value: "350", label: "Daily points benchmark per cleaner" },
+      { value: "100%", label: "Decoupled from RPOMS database" },
+    ],
+    tech: ["Next.js 15", "React 19", "TypeScript", "PostgreSQL", "Google OIDC", "Tailwind CSS"],
+    techGroups: [
+      { label: "Frontend & UI", items: ["Next.js 15 App Router", "React 19", "Tailwind CSS", "Lucide React", "HTML5 Barcode Detection API"] },
+      { label: "Backend & Database", items: ["Node.js", "PostgreSQL", "Prisma / pg client", "Transactional point ledgers"] },
+      { label: "Auth & Security", items: ["Google OIDC with PKCE", "Session cookies", "Role-based access (Supervisor vs Cleaner)"] },
+    ],
+    highlights: [
+      "Automates productivity point scoring based on router model difficulty (L1 easy clean to L4 heavy adhesive refurb)",
+      "Allows supervisors to bulk-assign 50+ units in seconds without bottlenecking on individual serial scans",
+      "High-speed Return & Sort station validates cleaned units, updates daily progress bars in real-time, and flags rejects",
+      "Daily achievement board reports individual output against 350-point target, driving floor motivation",
+    ],
+    workflow: [
+      "Supervisor logs in via Google OIDC and selects staff member to assign a batch of incoming routers",
+      "System increments cleaner's open allocation count and records timestamped distribution event",
+      "Cleaner completes physical cleaning, adhesive removal, and sanitization at their workstation",
+      "Cleaner returns batch to Return & Sort station; supervisor or lead scans serials via USB barcode scanner or camera",
+      "System matches router model to point level (L1=2 to L4=10), credits points to cleaner's daily tally, and updates production scoreboard",
+    ],
+    sections: [
+      {
+        heading: "The Operational Challenge",
+        body: [
+          "In the router retest and cleaning facility, routers arrive in vastly different physical conditions: some require only dust removal and wiping (Level 1: 2 points), while others arrive coated in stubborn adhesive, damaged stickers, or grime requiring solvent baths and scraping (Level 4: 10 points).",
+          "Without a tiered points system, staff were incentivized to cherry-pick easy routers and avoid difficult units. Tracking this on paper work logs led to disputes, lost tallies, and delayed end-of-shift reporting.",
+        ],
+      },
+      {
+        heading: "Architecture & Independence",
+        body: [
+          "Rather than overloading RPOMS with fine-grained cleaning sub-tasks, ERTH Router Distribution was architected as a fully independent Next.js 15 application. It operates with its own dedicated PostgreSQL database and Google OIDC PKCE authentication.",
+          "This architectural isolation ensures that high-volume floor workstation polling and real-time scanning do not impact RPOMS core inventory locks or Supabase connection pools.",
+        ],
+      },
+      {
+        heading: "Workstation Ergonomics: Dual-Mode Scanning",
+        body: [
+          "The Return & Sort station was engineered for maximum technician throughput. It supports both standard USB keyboard-wedge 2D barcode scanners and browser-based webcam optical scanning via the HTML5 Barcode Detection API.",
+          "As units are scanned, audio cues confirm successful registration and update the cleaner's live points progress bar against their 350-point target without requiring mouse or keyboard interaction.",
+        ],
+      },
+    ],
+    status: [
+      {
+        label: "Supervisor distribution module",
+        state: "implemented",
+        detail: "Fast bulk assignment without serial bottlenecking.",
+      },
+      {
+        label: "Return & Sort inspection station",
+        state: "implemented",
+        detail: "Dual hardware scanner and camera barcode detection with instant point attribution.",
+      },
+      {
+        label: "Weighted productivity point engine (L1–L4)",
+        state: "implemented",
+        detail: "Transactional point ledger tracking daily benchmarks against 350-point quota.",
+      },
+      {
+        label: "Google OIDC PKCE authentication",
+        state: "implemented",
+        detail: "Role-based authentication isolating supervisor actions from cleaner views.",
+      },
+      {
+        label: "Production deployment handoff",
+        state: "implemented",
+        detail: "Production container configuration and dedicated PostgreSQL migration prepared.",
+      },
+    ],
+    limitations: [
+      "Requires stable network connection to the local floor PostgreSQL server.",
+      "Camera-based barcode scanning requires adequate workstation lighting; USB hardware scanners are recommended for high volume.",
+      "6 modified files currently uncommitted in local working tree.",
+    ],
+    roadmap: [
+      "Automated daily summary report export to Excel/PDF",
+      "Integration with floor overhead display monitor for live productivity rankings",
+    ],
+    links: [
+      {
+        label: "RPOMS Case Study",
+        href: "/work/rpoms",
+      },
+    ],
+  },
+
+  {
+    slug: "startup-research-hub",
+    name: "Startup Research Hub",
+    fullName: "Startup Research Hub Malaysia: YC Model Taxonomy & AI Financial Watchlist",
+    tagline: "Zero-dependency single-file market intelligence platform featuring 100 YC business models and 50 AI companies.",
+    summary:
+      "A standalone, zero-dependency interactive market intelligence platform built into a self-contained 238 KB single-file application. Synthesizes research on 100 Malaysian market opportunities mapped against Y Combinator startup business models, alongside a 50-company AI financial watchlist tracking burn rates, funding stages, and unit economics. Requires zero server-side infrastructure, databases, or bundlers, offering instant multi-attribute filtering, sector cross-tabulation, and dynamic CSV export entirely in-browser.",
+    category: "Web Apps / Software",
+    categorySlug: "web-apps",
+    categories: ["Web Apps / Software"],
+    hrOverview: {
+      valueProposition:
+        "Zero-dependency single-file market intelligence platform analyzing 100 YC business models and 50 AI financial metrics.",
+      role: "Sole Developer & Researcher",
+      roleScope:
+        "Complete development and market analysis: architecture, embedded relational JSON engine, responsive UI, and financial research.",
+      context: "Independent venture research and market analysis.",
+      highlights: [
+        "Engineered zero-dependency 238 KB single-file architecture running 100% client-side with zero hosting cost",
+        "Structured taxonomy of 100 Malaysian market archetypes mapped to Y Combinator venture playbooks",
+        "Built responsive multi-attribute filtering engine with instant search and dynamic client-side CSV export",
+      ],
+      technologies: ["HTML5", "CSS3", "Vanilla JavaScript", "Embedded JSON", "Client-Side CSV Engine"],
+    },
+    role: "Sole Developer & Researcher",
+    period: "2024 - 2026",
+    affiliation: "Independent Project",
+    confidential: false,
+    kind: "personal-project",
+    tier: "secondary",
+    facts: [
+      { value: "100", label: "YC business model blueprints" },
+      { value: "50", label: "AI company financial profiles" },
+      { value: "238 KB", label: "Self-contained single file size" },
+      { value: "0", label: "External dependencies or build tools" },
+    ],
+    tech: ["HTML5", "CSS3", "Vanilla JavaScript", "Embedded Data Store"],
+    techGroups: [
+      { label: "Platform Architecture", items: ["Single-file HTML5/CSS3/ES6", "Zero-build pipeline", "Embedded JSON database", "Zero external network calls"] },
+      { label: "Interactive Features", items: ["In-memory multi-filter engine", "Real-time search indexing", "Client-side Blob CSV export", "Responsive grid layout"] },
+      { label: "Research Domain", items: ["Y Combinator business models", "Southeast Asian tech taxonomy", "Unit economics analysis", "AI financial burn modeling"] },
+    ],
+    highlights: [
+      "Completely portable 238 KB single-file application requiring zero npm installs, build steps, or server hosting",
+      "Comprehensive dataset of 100 localized Malaysian startup opportunities mapped to proven YC archetypes",
+      "Curated financial watchlist of 50 AI ventures detailing capitalization, monetization models, and margin structures",
+      "Zero-latency search and multi-tag filtering executing synchronously on client memory",
+    ],
+    workflow: [
+      "Open single HTML file in any modern web browser — runs instantly offline or online",
+      "Browse or search across 100 YC model profiles categorized by B2B, Fintech, Logistics, EdTech, and Health",
+      "Filter by market readiness, regulatory moat, initial capital requirement, or TAM",
+      "Switch to AI Financial Watchlist to evaluate gross margin, inference compute cost, and ARR multiples",
+      "Export filtered selections directly to structured CSV for spreadsheet modeling",
+    ],
+    sections: [
+      {
+        heading: "Zero-Dependency Single-File Engineering",
+        body: [
+          "Modern web development often introduces heavy build toolchains, megabytes of node_modules, and complex hosting dependencies for what is fundamentally an information-dense interactive tool.",
+          "Startup Research Hub was designed as an exercise in architectural austerity: an entirely self-contained 238 KB single-file application uniting semantic HTML5, clean scoped CSS3, reactive vanilla JavaScript, and an embedded relational JSON dataset. It has zero CDN links, zero tracking pixels, and opens instantly in any browser offline.",
+        ],
+      },
+      {
+        heading: "Taxonomy & Research Scope",
+        body: [
+          "The tool structures two deep research datasets:",
+          "1. 100 Malaysian Startup Opportunities: Each entry pairs a proven Y Combinator archetype with local market dynamics, regulatory conditions, viable monetization models, and structural entry barriers.",
+          "2. 50-Company AI Financial Watchlist: Analyzes leading applied AI ventures across funding stage, estimated ARR multiples, inference unit economics, gross margin profiles, and compute infrastructure moats.",
+        ],
+      },
+      {
+        heading: "Interactive Capabilities & In-Memory Pipeline",
+        body: [
+          "The client-side engine provides instantaneous multi-column filtering, fuzzy substring matching, and sector grouping without triggering network latency. Filtered views can be exported on the fly to CSV via client-side Blob generation and standard RFC 4180 escaping.",
+        ],
+      },
+    ],
+    status: [
+      {
+        label: "Zero-dependency single-file engine",
+        state: "implemented",
+        detail: "238 KB self-contained artifact running in any modern browser without external assets.",
+      },
+      {
+        label: "100 YC business model taxonomy",
+        state: "implemented",
+        detail: "Fully researched database of localized market blueprints with monetization mechanics.",
+      },
+      {
+        label: "50-company AI financial watchlist",
+        state: "implemented",
+        detail: "Profiles covering burn rates, capital efficiency, and gross margins.",
+      },
+      {
+        label: "Client-side search and multi-filtering",
+        state: "implemented",
+        detail: "Instant zero-latency in-memory query engine.",
+      },
+      {
+        label: "Dynamic CSV export engine",
+        state: "implemented",
+        detail: "Client-side Blob generation with proper character escaping.",
+      },
+    ],
+    limitations: [
+      "Maintained as a standalone HTML file rather than a hosted multi-user cloud service.",
+      "Dataset updates require updating the embedded JSON array within the file.",
+    ],
+    roadmap: [
+      "Publishing online as a static web showcase on rukon.dev",
+      "Adding interactive TAM calculator for custom unit economic assumptions",
+    ],
+    links: [
+      {
+        label: "ResearchForge Case Study",
+        href: "/work/researchforge",
+      },
+    ],
+  },
+
+  {
+    slug: "link-nest",
+    name: "LinkNest",
+    fullName: "LinkNest: Multi-Tenant Digital Identity & Privacy-Preserving Contact Hub",
+    tagline: "Multi-tenant digital profile SaaS with privacy-preserving contact requests and WhatsApp presets.",
+    summary:
+      "A multi-tenant digital profile and link management SaaS platform evolved from the single-user rukon-link architecture. Designed to give professionals and creators a unified digital presence without compromising privacy. Features a strict link hierarchy (1 Highlighted Super Link + 5 Standard Links), an administrative approval workflow for extra link quotas (+1 to +3), and a privacy-preserving contact exchange system where phone numbers and emails are never exposed publicly. Visitors submit structured contact requests, which creators can approve and convert into direct WhatsApp conversations using pre-configured international dialing codes (+60 Malaysia, +880 Bangladesh). Built with Next.js 16, React 19, TypeScript, and Supabase PostgreSQL with strict Row Level Security (RLS).",
+    category: "Web Apps / Software",
+    categorySlug: "web-apps",
+    categories: ["Web Apps / Software"],
+    hrOverview: {
+      valueProposition:
+        "Multi-tenant link-in-bio SaaS with privacy-preserving contact requests and Supabase Row Level Security.",
+      role: "Sole Developer",
+      roleScope:
+        "Complete full-stack architecture: Next.js 16 App Router, multi-tenant Supabase schema with RLS, WhatsApp bridge, and quota management.",
+      context: "Independent SaaS platform.",
+      highlights: [
+        "Transformed single-user profile site into multi-tenant SaaS with complete data isolation via Supabase RLS",
+        "Pioneered privacy-first contact request pattern keeping user phone numbers and emails hidden from scrapers",
+        "Built WhatsApp direct messaging bridge supporting preset regional routing (+60 and +880)",
+      ],
+      technologies: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS", "Supabase PostgreSQL with RLS"],
+    },
+    role: "Sole Developer",
+    period: "2025 - 2026",
+    affiliation: "Independent SaaS",
+    confidential: false,
+    kind: "personal-project",
+    tier: "secondary",
+    facts: [
+      { value: "1 + 5", label: "Structured link hierarchy (Super Link + Standard)" },
+      { value: "100%", label: "Private contact numbers protected from scrapers" },
+      { value: "RLS", label: "Multi-tenant Supabase Row Level Security" },
+    ],
+    tech: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS", "Supabase PostgreSQL", "Supabase Auth"],
+    techGroups: [
+      { label: "Frontend & UI", items: ["Next.js 16 App Router", "React 19", "Tailwind CSS", "Framer Motion", "Lucide Icons"] },
+      { label: "Data & Security", items: ["Supabase PostgreSQL", "Row Level Security (RLS)", "Multi-tenant tenant isolation", "Encrypted contact storage"] },
+      { label: "Integrations & Routing", items: ["WhatsApp Click-to-Chat API", "International country code presets (+60, +880)", "Structured link quota enforcement"] },
+    ],
+    highlights: [
+      "Replaces insecure public contact cards with a secure contact broker where inquiries are vetted before disclosure",
+      "Enforces clean visual discipline through a 1 Super Link + 5 Standard Links hierarchy, preventing profile clutter",
+      "Tenant isolation guaranteed at the database engine level through Supabase Row Level Security policies",
+      "Integrates pre-filled WhatsApp click-to-chat deep links configured for Southeast Asian and South Asian regions",
+    ],
+    workflow: [
+      "User creates profile and configures 1 Highlighted Super Link and up to 5 Standard Links",
+      "Visitor views public profile; contact info is protected behind a structured contact request button",
+      "Visitor enters name, organization, and message to request direct communication",
+      "Creator receives notification in private dashboard and approves or declines the request",
+      "On approval, creator can open an instant WhatsApp chat with pre-filled greeting without exposing their phone number on the web",
+    ],
+    sections: [
+      {
+        heading: "From Single-User Utility to Multi-Tenant SaaS",
+        body: [
+          "rukon-link successfully protected personal contact details from web scrapers, but was hard-coded for a single user with static environment configurations. Other professionals and entrepreneurs needed the same balance of open discoverability and strict contact privacy.",
+          "LinkNest re-engineers that premise into a scalable multi-tenant platform. Every user gains an authenticated dashboard to manage their digital persona, review inbound contact requests, and monitor engagement analytics.",
+        ],
+      },
+      {
+        heading: "The 1 + 5 Link Hierarchy & Quota Control",
+        body: [
+          "Most link-in-bio services suffer from link sprawl: endless buttons that degrade visual hierarchy and overwhelm visitors. LinkNest enforces intentional presentation: 1 Highlighted Super Link (e.g., current flagship project, newsletter, or major release) followed by up to 5 Standard Links.",
+          "Users requiring additional links submit an in-app quota expansion request (+1 to +3 links) reviewed by administrators, preventing visual bloat and maintaining high engagement quality.",
+        ],
+      },
+      {
+        heading: "Privacy-Preserving Contact Broker & WhatsApp Bridge",
+        body: [
+          "Directly displaying phone numbers and personal emails invites scraping bots, phishing, and spam. LinkNest acts as a confidential contact broker: visitors submit their credentials and message intent.",
+          "Once approved by the profile owner, the platform generates a pre-formatted WhatsApp Click-to-Chat URI leveraging preset country codes (+60 for Malaysia, +880 for Bangladesh), facilitating direct professional conversations safely.",
+        ],
+      },
+      {
+        heading: "Row Level Security Architecture",
+        body: [
+          "Multi-tenancy is enforced natively in Supabase PostgreSQL using Row Level Security (RLS). Every table is keyed by `user_id`, and policies strictly enforce that tenants can only read and mutate their own profile links, analytics events, and contact submissions.",
+        ],
+      },
+    ],
+    status: [
+      {
+        label: "Multi-tenant digital profile pages",
+        state: "implemented",
+        detail: "Responsive public profiles with custom handles and theme options.",
+      },
+      {
+        label: "Strict 1 Super + 5 Standard link hierarchy",
+        state: "implemented",
+        detail: "Clean layout constraints preventing link sprawl.",
+      },
+      {
+        label: "Privacy-preserving contact request system",
+        state: "implemented",
+        detail: "Visitors request contact; creator reviews and approves before disclosure.",
+      },
+      {
+        label: "WhatsApp preset integration (+60, +880)",
+        state: "implemented",
+        detail: "Deep link generator with regional country code formatting.",
+      },
+      {
+        label: "Supabase Row Level Security isolation",
+        state: "implemented",
+        detail: "PostgreSQL RLS policies ensuring users can only read/modify their own tenant data.",
+      },
+    ],
+    limitations: [
+      "Currently running on Supabase staging project (Ref: aaqlvmkxsaibwzcvcosl); custom domain routing pending final DNS cutover.",
+      "Custom analytics dashboard is currently basic click tracking per link.",
+    ],
+    roadmap: [
+      "Custom domain CNAME mapping for creator personal domains",
+      "QR code generator with downloadable vector SVG assets",
+      "Stripe integration for automated extra link quota purchasing",
+    ],
+    links: [
+      {
+        label: "GitHub Repository",
+        href: "https://github.com/tirukon015/link-nest",
+        external: true,
+      },
+      {
+        label: "Rukon Link Case Study",
+        href: "/work/rukon-link",
       },
     ],
   },

@@ -17,13 +17,13 @@ export const capabilities: Capability[] = [
     title: "Product & full-stack development",
     description:
       "End to end in TypeScript and Python: interfaces, API routes, data models, access control and the deployment path to production. Next.js App Router on the front, Next.js route handlers or FastAPI behind it, PostgreSQL or MySQL underneath, deployed on Vercel, Supabase and cPanel and kept running afterwards.",
-    evidence: ["rpoms", "rpoms-print-engine", "researchforge", "rukon-link"],
+    evidence: ["rpoms", "rpoms-print-engine", "researchforge", "rukon-link", "link-nest"],
   },
   {
     title: "Systems & internal tools",
     description:
       "Turning a physical operation into one system: serial and asset tracking, inventory and consumable deduction, production stages, delivery paperwork, workforce output and reporting, all reading from a single data model so a dashboard figure traces back to the event behind it. Requirements gathered from the floor, not from a specification, and sometimes proved first in a macro-enabled Excel workflow before they become a web application.",
-    evidence: ["rpoms", "itms", "rpoms-print-engine"],
+    evidence: ["rpoms", "itms", "rpoms-print-engine", "bbtech-laptop-tool", "erth-router-distribution", "router-diagnostic"],
   },
   {
     title: "AI & automation",
@@ -32,9 +32,9 @@ export const capabilities: Capability[] = [
     evidence: ["researchforge", "rpoms-ai", "rpoms"],
   },
   {
-    title: "Native iOS",
+    title: "Native mobile & iOS",
     description:
-      "Swift and SwiftUI with the work kept on the device: text recognition with Apple Vision instead of a cloud OCR service, SwiftData persistence shared between an app and its Share Extension, a versioned schema with safe migrations, and a rule-based parser with its own test runner. Local-first, with optional Supabase sign-in and backup protected by Row Level Security, and no third-party packages.",
+      "Native iOS and Android with the processing kept on the device: on-device text recognition with Apple Vision and Google ML Kit instead of third-party cloud OCR, sub-millisecond local-first persistence (SwiftData and Room SQLite), persistent sync outbox queues, and zero cloud dependency on the collection path.",
     evidence: ["spendrop", "drivekeep"],
   },
   {
