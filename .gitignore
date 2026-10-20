@@ -52,3 +52,7 @@ private/*
 .claude/
 .agents/
 skills-lock.json
+
+# Local tooling output
+audit-output/
+graphify-out/

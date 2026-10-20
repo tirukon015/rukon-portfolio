@@ -23,7 +23,7 @@ Status: **Live** = in production code; **Partial** = works with a stated limitat
 | Hero: statement, CTA, Resume link, verifiable "now" facts | Live | `sections/hero.tsx`, `content/site.ts` |
 | Hero cursor grid | Live | `cursor-grid.tsx` |
 | Hero portrait spotlight (soft resting glimpse, reveal near the pointer, tap toggle on touch) | Live | `hero-spotlight.tsx` |
-| Tiered Selected Work: flagship with facts, workflow and ecosystem (no screenshot since 2026-10-01); featured blocks with screenshot or mark; "Other work" rows | Live | `sections/featured-work.tsx` |
+| Tiered Selected Work: flagship with facts, workflow and ecosystem (no screenshot since 2026-10-01); featured blocks always show the project mark (screenshot stays on the project page and `/work`); "Other work" rows | Live | `sections/featured-work.tsx` |
 | Live GitHub contribution heatmap with tooltip | Live (needs `GITHUB_TOKEN`) | `sections/github-activity.tsx` |
 | "What I Build": five capabilities, each with project evidence links | Live | `sections/capabilities.tsx`, `content/skills.ts` |
 | Experience, About, Latest writing (3 newest) | Live | `sections/*` |
@@ -38,13 +38,13 @@ Status: **Live** = in production code; **Partial** = works with a stated limitat
 | Level 1 overview page per project, with optional preview screenshot | Live | `app/work/[slug]/page.tsx` |
 | Level 2 case study: workflow strip, related systems, sections with figures (normal / wide, click for full size), notes, status table, tech groups, limitations, roadmap, source links, confidentiality notice | Live | `app/work/[slug]/case-study/page.tsx` |
 | Per-project social image (`shareImage`) | Live | both project routes |
-| Project count | 9: RPOMS (flagship); RPOMS Print Engine, ERTH, ResearchForge (featured); RPOMS AI, ITMS, DriveKeep, SpenDrop, rukon-link (secondary) | `content/projects.ts` |
+| Project count | 14: RPOMS (flagship); RPOMS Print Engine, ERTH, ResearchForge, BBTech Laptop Tool, ERTH Router Retest & Distribution (featured); RPOMS AI, ITMS, DriveKeep, SpenDrop, rukon-link, WiFi Router Diagnostic Tool, Startup Research Hub, LinkNest (secondary) | `content/projects.ts` |
 
 ## Blog
 
 | Feature | Status | Where |
 | --- | --- | --- |
-| 161 articles (28 earlier + 133 added 2026-10-01/02), six categories, category pages | Live | `content/posts`, `app/blog/*` |
+| 167 articles (28 baseline + 133 added 2026-10-02 + 6 engineering deep dives added 2026-10-13), six categories, category pages | Live | `content/posts`, `app/blog/*` |
 | Scheduled publishing: an article dated in the future is hidden from every listing, route, feed and sitemap until its date (Malaysia time); blog and work routes revalidate hourly | Live | `publishedPosts()` in `content/posts/index.ts`, `revalidate = 3600` |
 | Rich blocks: code, callout, flow, image, table, list | Live | `blog/post-body.tsx` |
 | Reading time | Live | `lib/reading-time.ts` |

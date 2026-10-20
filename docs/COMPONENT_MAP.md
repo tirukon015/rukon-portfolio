@@ -29,7 +29,7 @@ Where each piece of the UI lives and what uses it. Paths are relative to `src/`.
 | Component | Anchor | Data | Notes |
 | --- | --- | --- | --- |
 | `hero.tsx` | `#hero` | `site.headline`, `statement`, `now`, `cvHref` | uses `CursorGrid`, `HeroSpotlight` |
-| `featured-work.tsx` | `#work` | `getProjectsByTier()`, `upcomingWork` | internal `Flagship`, `FlagshipVisual`, `Featured`, `SecondaryList`; shows `previewFigure`, `facts`, `status` |
+| `featured-work.tsx` | `#work` | `getProjectsByTier()`, `upcomingWork` | internal `Flagship`, `FlagshipVisual`, `Featured`, `SecondaryList`; shows `ProjectMark`, `facts`, `status` (`previewFigure` is not used on the homepage) |
 | `github-activity.tsx` | n/a | `lib/github/contributions.ts` | server fetch; `HeatmapTooltip` (client) |
 | `capabilities.tsx` | `#capabilities` | `content/skills.ts` `capabilities`, `stack` | evidence links resolve through `getProject()` |
 | `experience.tsx` | n/a | `content/experience.ts` | |

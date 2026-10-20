@@ -3,6 +3,46 @@
 Significant changes, newest first. Keep entries short: what changed for a
 visitor, and anything a future developer must know. Git history has the detail.
 
+## 2026-10-20
+
+### Changed
+- **Homepage featured blocks** always show the project mark. ResearchForge
+  previously showed its analysis screenshot there while ERTH and the other
+  featured projects showed a logo; the screenshot still appears on
+  `/work/researchforge` and in the `/work` list (`sections/featured-work.tsx`).
+
+## 2026-10-13 (comprehensive engineering & portfolio update)
+
+### Added
+- **5 new project case studies** added to `/work`:
+  - **BBTech Laptop Tool** (`/work/bbtech-laptop-tool`): Portable .NET 8 WPF utility extracting immutable SMBIOS hardware serials, battery health, and encrypted on-device QC histories; 685 automated unit tests.
+  - **WiFi Router Diagnostic Tool** (`/work/router-diagnostic`): Automated network recovery and multi-vendor LAN serial extraction across Kaon, Huawei, and TP-Link; 84 verified assertions (v2.6.0). Authored by Bijoy Shariar; operational testing and diagnostic contributions by Rukon.
+  - **ERTH Router Retest & Distribution** (`/work/erth-router-distribution`): Floor operations Next.js 15 app tracking multi-tiered router cleaning quotas (L1–L4) and cleaner productivity points; dedicated PostgreSQL database and Google OIDC PKCE.
+  - **Startup Research Hub** (`/work/startup-research-hub`): Zero-dependency single-file 238 KB market intelligence platform analyzing 100 Malaysian YC business models and a 50-company AI financial watchlist.
+  - **LinkNest** (`/work/link-nest`): Multi-tenant digital profile SaaS with 1 Super + 5 Standard link hierarchy, privacy-preserving contact broker, WhatsApp presets (+60, +880), and Supabase RLS.
+- **6 new technical deep dive articles** added to `/blog` (161 -> 167 total):
+  - `supabase-connection-pool-exhaustion-supavisor-production` (Incident postmortem INC-2026-10-11-01)
+  - `swiftdata-local-first-outbox-sync-engine` (SpenDrop iOS 0.240 ms local-first outbox sync)
+  - `hardware-identity-vs-generated-stock-prefixes-refurbishment` (ITMS vs SMBIOS hardware identity audit)
+  - `excluding-damaged-monitor-strip-windows-appbar-api` (WorkAreaGuard Win32 SHAppBarMessage margin reservation)
+  - `lan-serial-number-extraction-across-router-vendors` (Router Diagnostic v2.6.0 UPnP/CSTECGI/SNMP)
+  - `offline-receipt-ocr-on-android-with-ml-kit` (SpenDrop Android ML Kit coroutine OCR)
+
+- **Organic Search & Keyword Strategy**: Created master strategy specification (`docs/KEYWORD_STRATEGY.md`) establishing query-to-URL mappings, search intent clustering (Supabase, SwiftData, Win32 AppBar, reverse logistics, ML Kit OCR, and APAC recruiter intent), and SERP competitive positioning.
+- **Next.js Root Error Boundary**: Implemented accessible, production-safe `src/app/error.tsx` preventing stack trace leaks while logging errors safely and offering one-click retry state recovery.
+
+### Changed
+- **Technical SEO & Crawl Budget**: Updated `src/app/robots.ts` to explicitly disallow `/api/` protecting crawl budget from internal endpoints.
+- **Internal Entity Linking**: Fixed broken related post slugs, integrated the 5 newly added projects into `src/content/skills.ts` capabilities evidence, and cross-referenced `link-nest` and `erth-router-distribution` in operational articles.
+- **Content Depth**: Expanded `src/content/posts/articles/offline-receipt-ocr-on-android-with-ml-kit.ts` to 605 words with EXIF rotation handling and integer-sen Room SQLite outbox transactions.
+- **RPOMS**: role updated to **IT Systems & Operations Lead**; added October 2026 releases (multi-box delivery, paged history, refining scan-and-print workstation, INC-2026-10-11-01 connection pooler resolution).
+- **ITMS**: updated attribution to reflect foundational Excel Stock Tracker contributions, base app by `devbbtech`, merged direct Print Engine integration and CSV export (commit `0f67de6`), and hardware identity audit.
+- **SpenDrop**: updated to tri-platform parity (iOS, Android, Web), verified 0.240 ms save latency, 9,811 evaluation test cases, and Android local hardware APK status.
+- **DriveKeep**: documented verified odometer OCR defect in `src/lib/ocr.ts` (`trip` regex keyword collision & ascending sort bias) and Idea-only status of live fuel-price updater.
+- **ERTH**: role updated to **Figma UI/UX Designer and Website Developer** (Figma V2.3 prototype + static Vite build + Next.js 16 rebuild).
+- **Experience**: updated BBTech entry with new project links and reconciled bullets.
+- **Content Planning**: reconciled `content-planning/blog-database.json` with published statuses and registered topics.
+
 ## 2026-10-01 (technical knowledge base)
 
 ### Added

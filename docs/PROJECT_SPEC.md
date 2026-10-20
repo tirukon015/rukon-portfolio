@@ -95,7 +95,7 @@ Content rules for every project (enforced by review, not code):
 
 ## 5. Blog
 
-161 articles in `src/content/posts/articles/*.ts` (all published by 2026-10-02; future-dated articles stay hidden until their date, see `publishedPosts()`), registered in
+167 articles in `src/content/posts/articles/*.ts` (all published, see `publishedPosts()`), registered in
 `src/content/posts/index.ts`. Six categories (`src/content/categories.ts`):
 Building Real Systems, Full-Stack Development, AI & Automation, UI/UX & Product,
 Developer Journey, Malaysia & Cyberjaya. Articles can list `relatedProjects`,
