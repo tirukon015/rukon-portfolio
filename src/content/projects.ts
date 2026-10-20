@@ -125,6 +125,11 @@ export type Project = {
   confidential: boolean;
   kind: ProjectKind;
   tier: ProjectTier;
+  /**
+   * Keeps an entry out of every listing, route and sitemap until it is ready
+   * to show. The write-up stays in the file so it can be switched on later.
+   */
+  hidden?: boolean;
   /** Set on a platform that has connected subsystems. */
   ecosystem?: {
     label: string;
@@ -170,7 +175,7 @@ export type Project = {
   links?: { label: string; href: string; external?: boolean }[];
 };
 
-export const projects: Project[] = [
+const allProjects: Project[] = [
   {
     slug: "rpoms",
     name: "RPOMS",
@@ -2154,6 +2159,11 @@ export const projects: Project[] = [
     confidential: false,
     kind: "personal-project",
     tier: "secondary",
+    image: {
+      src: "/images/drivekeep-mark.png",
+      alt: "DriveKeep mark",
+      variant: "mark",
+    },
     facts: [
       { value: "64 / 64", label: "backend checks passing" },
       { value: "21 / 21", label: "calculation engine checks" },
@@ -2755,6 +2765,11 @@ export const projects: Project[] = [
       "Built for Blue Bee Technologies refurbishment operations. System architecture and test metrics are reported; proprietary operational endpoints and technician keys are omitted.",
     kind: "professional",
     tier: "featured",
+    image: {
+      src: "/images/bbtech-laptop-tool-mark.png",
+      alt: "BBTech Laptop Tool mark",
+      variant: "mark",
+    },
     facts: [
       { value: "685", label: "Automated unit tests" },
       { value: "0", label: "Installers required (portable USB executable)" },
@@ -2900,6 +2915,7 @@ export const projects: Project[] = [
       "Operational utility utilized on the refurbishment floor. Internal router firmware exploit vectors and proprietary telco credentials are not published.",
     kind: "professional",
     tier: "secondary",
+    hidden: true,
     facts: [
       { value: "84", label: "Automated test assertions (v2.6.0)" },
       { value: "3", label: "Major telco router vendors supported" },
@@ -3037,6 +3053,11 @@ export const projects: Project[] = [
       "Built for ERTH operations. Operational metrics and architectural patterns are documented; internal staff names and customer identification are protected.",
     kind: "professional",
     tier: "featured",
+    image: {
+      src: "/images/erth-router-distribution-mark.svg",
+      alt: "ERTH Router Retest & Distribution mark",
+      variant: "mark",
+    },
     facts: [
       { value: "4", label: "Weighted cleaning tiers (L1–L4)" },
       { value: "350", label: "Daily points benchmark per cleaner" },
@@ -3381,6 +3402,9 @@ export const projects: Project[] = [
     ],
   },
 ];
+
+/** Every project that is ready to show. Entries with `hidden: true` stay out. */
+export const projects: Project[] = allProjects.filter((p) => !p.hidden);
 
 /**
  * Work that has a name but no case study yet.

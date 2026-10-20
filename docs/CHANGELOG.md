@@ -5,7 +5,17 @@ visitor, and anything a future developer must know. Git history has the detail.
 
 ## 2026-10-20
 
+### Added
+- **Marks** for BBTech Laptop Tool, ERTH Router Retest & Distribution and
+  DriveKeep (`public/images/*-mark.{png,svg}`), taken from each project's own
+  branding assets, so their cards no longer fall back to a text wordmark.
+
 ### Changed
+- **WiFi Router Diagnostic Tool is hidden** for now: a `hidden` flag on
+  `Project` keeps an entry out of the exported `projects` list, so it has no
+  card, route or sitemap entry. The write-up stays in `content/projects.ts`
+  and the flag can be removed when it is ready to show. The one article that
+  linked to its page now names the tool without a link.
 - **Homepage featured blocks** always show the project mark. ResearchForge
   previously showed its analysis screenshot there while ERTH and the other
   featured projects showed a logo; the screenshot still appears on

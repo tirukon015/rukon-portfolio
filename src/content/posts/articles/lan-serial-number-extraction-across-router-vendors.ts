@@ -22,7 +22,7 @@ export const post: BlogPost = {
       heading: "The floor bottleneck: thousands of barcode sticker scans",
       body: [
         "On high-volume telco router refurbishment lines, every returned unit must be checked, tested, and logged. Historically, technicians used handheld optical barcode guns to scan the tiny serial barcode printed on the physical router label sticker.",
-        "In production, physical labels present frequent failure modes: stickers are scratched, faded by heat, peeled off by subscribers, or obstructed by mounting brackets. Technicians spent minutes manually squinting at microscopic printed serials or typing 16-character alphanumeric strings by hand. To automate this, we built automated LAN serial extraction directly into the [BBTech WiFi Router Diagnostic Tool](/work/router-diagnostic).",
+        "In production, physical labels present frequent failure modes: stickers are scratched, faded by heat, peeled off by subscribers, or obstructed by mounting brackets. Technicians spent minutes manually squinting at microscopic printed serials or typing 16-character alphanumeric strings by hand. To automate this, we built automated LAN serial extraction directly into the BBTech WiFi Router Diagnostic Tool.",
       ],
     },
     {
