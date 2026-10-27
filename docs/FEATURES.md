@@ -68,7 +68,7 @@ Status: **Live** = in production code; **Partial** = works with a stated limitat
 | --- | --- | --- |
 | Per-page metadata, canonical URLs on `www.rukon.dev` | Live | `lib/seo.ts` |
 | JSON-LD: Person, WebSite, ProfilePage, CreativeWork, TechArticle, BreadcrumbList, articles | Live | `components/seo/json-ld.tsx` |
-| Sitemap, robots, site OG image, icon | Live | `app/sitemap.ts`, `robots.ts`, `opengraph-image.tsx`, `icon.tsx` |
+| Sitemap, robots, site OG image, icon | Live | `app/sitemap.ts`, `robots.ts`, `opengraph-image.tsx`, `icon.svg`, `apple-icon.png`, `favicon.ico` |
 | Security headers (no CSP, by decision) | Live | `next.config.ts` |
 | Reduced-motion support for every animation | Live | `app/globals.css` |
 

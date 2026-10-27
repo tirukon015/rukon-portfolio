@@ -27,7 +27,7 @@ src/
     blog/                 /blog, /blog/[slug] (+ opengraph-image), /blog/category/[slug]
     cv/                   /cv request-access gate
     api/                  contact, cv/request-access, cv/contact, cv/document
-    feed.xml/ sitemap.ts robots.ts opengraph-image.tsx icon.tsx not-found.tsx globals.css
+    feed.xml/ sitemap.ts robots.ts opengraph-image.tsx icon.svg apple-icon.png not-found.tsx globals.css
   components/
     layout/               header, footer
     sections/             homepage and page sections

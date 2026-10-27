@@ -3,6 +3,17 @@
 Significant changes, newest first. Keep entries short: what changed for a
 visitor, and anything a future developer must know. Git history has the detail.
 
+## 2026-10-27
+
+### Changed
+- **Favicon & app icons**: Replaced the previous text-based favicon with the
+  official Electric TIR monogram logo (white 'T' and 'R', sky blue / cyan
+  `#22C7F2` 'I' with electric diagonal slash, centered on dark charcoal
+  `#101820` rounded squircle background). Recreated as a crisp vector SVG
+  (`src/app/icon.svg`), multi-resolution ICO (`src/app/favicon.ico`), Apple
+  Touch Icon (`src/app/apple-icon.png`), and static web fallbacks in `public/`.
+  Removed the outdated generator `src/app/icon.tsx`.
+
 ## 2026-10-20
 
 ### Added
