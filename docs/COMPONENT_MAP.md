@@ -38,6 +38,10 @@ Where each piece of the UI lives and what uses it. Paths are relative to `src/`.
 | `contact.tsx` (client) | `#contact` | posts to `/api/contact` | |
 | `blog-index.tsx` | n/a | posts + categories | used by `/blog` |
 | `cv-access.tsx` → `CVAccess` (client) | n/a | `/api/cv/*` | used by `/cv` |
+| `access-status-indicator.tsx` (client) | Header | `src/components/access/` | authorized banner indicator |
+| `access-request-form.tsx` (client) | `/access` | `src/components/access/` | visitor access request form |
+| `admin-login-form.tsx` (client) | `/admin/access-requests` | `src/components/admin/` | password gate for admin dashboard |
+| `admin-dashboard-view.tsx` (client) | `/admin/access-requests` | `src/components/admin/` | review requests, revoke sessions, audit log |
 
 ## Work components (`components/work/`)
 

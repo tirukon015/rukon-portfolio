@@ -46,6 +46,21 @@ const permanentRedirects = [
     from: "/blog/why-production-operations-need-digital-systems",
     to: "/blog/common-problems-manual-production-tracking",
   },
+  // Aliases redirected to authentic project URLs
+  { from: "/work/enterprise-device-operations", to: "/work/rpoms" },
+  { from: "/work/enterprise-device-operations/case-study", to: "/work/rpoms/case-study" },
+  { from: "/work/device-print-engine", to: "/work/rpoms-print-engine" },
+  { from: "/work/device-print-engine/case-study", to: "/work/rpoms-print-engine/case-study" },
+  { from: "/work/device-vision-grading", to: "/work/rpoms-ai" },
+  { from: "/work/device-vision-grading/case-study", to: "/work/rpoms-ai/case-study" },
+  { from: "/work/asset-inventory-management", to: "/work/itms" },
+  { from: "/work/asset-inventory-management/case-study", to: "/work/itms/case-study" },
+  { from: "/work/hardware-qc-tool", to: "/work/bbtech-laptop-tool" },
+  { from: "/work/hardware-qc-tool/case-study", to: "/work/bbtech-laptop-tool/case-study" },
+  { from: "/work/driver-inspection-tool", to: "/work/bbtech-laptop-inspection-tool" },
+  { from: "/work/driver-inspection-tool/case-study", to: "/work/bbtech-laptop-inspection-tool/case-study" },
+  { from: "/work/device-operations-cleaning", to: "/work/erth-router-distribution" },
+  { from: "/work/device-operations-cleaning/case-study", to: "/work/erth-router-distribution/case-study" },
 ];
 
 const nextConfig: NextConfig = {

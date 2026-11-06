@@ -1,3 +1,6 @@
+import { projectProject } from "@/lib/confidentiality/projector";
+import { getOriginalSlug } from "@/lib/confidentiality/registry";
+
 /**
  * A screenshot or diagram placed under a section's copy.
  *
@@ -175,32 +178,32 @@ export type Project = {
   links?: { label: string; href: string; external?: boolean }[];
 };
 
-const allProjects: Project[] = [
+export const allProjects: Project[] = [
   {
     slug: "rpoms",
     name: "RPOMS",
     fullName: "Router Production Operations Management System",
-    tagline: "An operations system, WMS/ERP-like in shape, used on a live router-refurbishment line.",
+    tagline: "An operations platform, WMS/ERP-like in shape, powering a live enterprise router-refurbishment line.",
     summary:
-      "The operations system that replaced the spreadsheets running a router-refurbishment line: a daily production report that deducts stock as it saves, serial-level tracking from acceptance into numbered boxes and out on deliveries, delivery paperwork generated from the office's own template, workforce output, and a stock-request portal for the Ecommerce team. Designed, built, deployed and maintained by me alone as a Next.js, TypeScript and PostgreSQL (Supabase) application: about 61,400 lines of TypeScript, 16 pages, 41 API route files and 1,637 automated tests.",
+      "The operations platform that replaced manual spreadsheets on a live router-refurbishment line: daily production reporting that deducts stock as it saves, serial-level tracking from acceptance into numbered boxes and out on deliveries, automated delivery paperwork generated from the office's Word template, customer QR verification portals, electronic proof of delivery (ePOD), real-time Control Center monitoring, and a stock-request portal for Ecommerce. Designed, built, deployed and maintained by me alone as a Next.js, TypeScript and PostgreSQL (Supabase) application: over 65,000 lines of TypeScript across 96 compiled routes and 2,388 automated tests.",
     category: "Systems / ERP / WMS",
     categorySlug: "systems",
     categories: ["Systems / ERP / WMS", "Web Apps / Software"],
     hrOverview: {
       valueProposition:
-        "One system for a live router-refurbishment line: the day's production entered once, stock that follows from it, and every router traceable by serial from acceptance to delivery.",
+        "Full-stack operations platform for an enterprise router-refurbishment facility: intake scanning, real-time audio-guided cleaning, multi-box packing, QR delivery tracking with mobile ePOD, and immutable ledger accounting across 250,000+ devices.",
       role: "IT Systems & Operations Lead",
       roleScope: "IT Systems Architecture, Full-Stack Engineering, Production Line Operations & Deployment",
       context: "Blue Bee Technologies × ERTH × Maxis programme (Cyberjaya, Malaysia)",
       highlights: [
-        "Replaced manual spreadsheets with one unified operational platform covering stock intake, technical acceptance, box packing, delivery, and daily reporting",
-        "Stock of routers, chargers, LAN cables, and boxes derived deterministically from the daily report ledger, never hand-edited",
-        "Serial-level traceability from acceptance barcode scan to numbered box, delivery dispatch, and automated Delivery Order documentation",
-        "October 2026 releases: multi-box delivery batching (PR #6) and paginated inventory history (PR #4) on 12 October; the Refining and Printing workstation, Google sign-in with per-service access and Registry hardening for 250,000 routers on 20 October",
-        "Incident response to connection-pool exhaustion (INC-2026-10-11-01): recovered in 15 minutes with zero operational data loss across 382 routers",
-        "Dashboard with comparisons and trends in English and Arabic (RTL), supporting light and dark themes",
-        "Four roles, signed sessions, a production write lock, and a guard preventing preview deployments from mutating live data",
-        "958 automated tests, including real SQL against in-process PostgreSQL (PGlite), run in CI on every push",
+        "Replaced manual spreadsheets with one unified operational platform covering stock intake, technical acceptance, box packing, delivery dispatch, customer tracking, and daily reporting",
+        "November 2026 production release: Delivery Tracking & Electronic Proof of Delivery (ePOD) featuring customer QR portal, mobile digital signature capture, and private blob evidence storage",
+        "Staged Real-Time Control Center with append-only production ledger using folded CTEs inside router-move statements to guarantee zero round trips and zero duplicate writes",
+        "Serial-level traceability from acceptance barcode scan to numbered box, delivery dispatch, and automated Delivery Order documentation generated from the office's Word template",
+        "Integrated real-time audio feedback cues across six warehouse scanning modules, boosting scanning throughput and eliminating head-up display checking",
+        "Hardened registry benchmarked across 250,000+ routers with pg_trgm fuzzy search; full backup dump and restore proven on production copy",
+        "Multi-cycle hardware rework architecture tracking routers through secondary repairs without losing original intake identity",
+        "2,388 automated tests across 198 test files, including real SQL against in-process PostgreSQL (PGlite), run in CI on every push with zero operational data loss",
       ],
       technologies: ["Next.js 15", "React 19", "TypeScript", "PostgreSQL", "Supabase", "Tailwind CSS v4", "Zod", "Vitest", "PGlite"],
     },
@@ -277,21 +280,22 @@ const allProjects: Project[] = [
       },
     ],
     highlights: [
-      "Covers the operational chain end to end: stock intake, acceptance, packing, delivery and daily reporting, in one system",
-      "Serial-level traceability from acceptance through packing to a delivered box, so any unit can be accounted for after the fact",
-      "Consumable stock deducts from the production figures entered once, rather than being counted a second time by hand",
-      "One storage interface with three interchangeable backends, chosen by which environment variables are present",
-      "Four roles with server-side enforcement, signed sessions and no default passwords",
-      "Delivery paperwork generated from the operations team's own Word document rather than redrawn",
-      "1,637 automated tests in the 20 October 2026 release, run in CI on every push, with both audits' findings worked through in the code",
+      "Covers the operational chain end to end: stock intake, acceptance, cleaning with audio cues, packing, delivery tracking with ePOD, and daily reporting",
+      "Serial-level traceability from acceptance through packing to delivered boxes and signed customer proof of delivery",
+      "Real-Time Control Center with immutable production ledger folded directly into router moves via RETURNING CTEs",
+      "Mobile customer portal (/cp/do/[id]) with permanent PIN-protected QR code and digital signature capture",
+      "Word Delivery Order generation embedding verification QR codes byte-for-byte from the office's actual document template",
+      "Consumable stock deducts deterministically from production figures entered once, never hand-edited",
+      "High-scale registry handling 250,000+ router records with pg_trgm fuzzy matching; full production backup restore verified",
+      "2,388 automated tests passing across 198 test files in CI, covering edge cases, race conditions, and cryptographic integrity",
     ],
     workflow: [
-      "Stock booked in by model",
-      "Accept scan into the registry",
-      "Cleaned (daily count)",
-      "Packed into a numbered box",
-      "Delivered against the scanned load",
-      "Delivery Order and tracker generated",
+      "Stock booked in and scanned into registry",
+      "Refining and cleaning with real-time audio cues",
+      "Packed into numbered boxes with thermal label printing",
+      "Control Center ledger recording via atomic folded CTEs",
+      "Delivery dispatch with QR-coded Delivery Order",
+      "Customer portal verification & mobile ePOD signature capture",
     ],
     previewFigure: {
       src: "/images/rpoms/dashboard-overview.png",
@@ -304,9 +308,9 @@ const allProjects: Project[] = [
       {
         heading: "Overview",
         body: [
-          "RPOMS is the operations system for a router-refurbishment programme that Blue Bee Technologies runs with ERTH and Maxis. It records each day's production, tracks every router by serial number from acceptance into a numbered box and out on a delivery, keeps the stock of routers, chargers, cables and boxes, and produces the delivery paperwork the office already uses. A second, locked-down build of the same code gives the Ecommerce team a portal for requesting stock.",
-          "The comparison to a warehouse or resource-planning system is about shape rather than scale. It is not a commercial ERP suite and does not try to be one: there is no finance, procurement or HR module. What it shares with that category is the structure, a single operational data model that inventory, production, delivery, workforce and reporting all read from, so a figure on a dashboard traces back to the event that produced it.",
-          "It is one Next.js 15 application: about 61,400 lines of TypeScript across 16 pages and 41 API route files, with 1,637 automated tests. Every screenshot on this page was taken from that application running locally on synthetic data.",
+          "RPOMS is the operations platform for a router-refurbishment programme that Blue Bee Technologies runs with ERTH and Maxis. It records each day's production, tracks every router by serial number from acceptance into a numbered box and out on a delivery, keeps the stock of routers, chargers, cables and boxes, and produces the delivery paperwork the office already uses. A customer-facing portal enables electronic proof of delivery with digital signatures, while a second, locked-down build of the same code gives the Ecommerce team a portal for requesting stock.",
+          "The comparison to a warehouse or resource-planning system is about shape rather than scale. It is not a commercial ERP suite and does not try to be one: there is no finance, procurement or HR module. What it shares with that category is the structure, a single operational data model that inventory, production, delivery, workforce, Control Center and reporting all read from, so a figure on a dashboard traces back to the event that produced it.",
+          "It is one Next.js 15 application: over 65,000 lines of TypeScript across 96 compiled routes and 2,388 automated tests. Every screenshot on this page was taken from that application running locally on synthetic data.",
         ],
         figures: [
           {
@@ -578,8 +582,8 @@ const allProjects: Project[] = [
       {
         heading: "Testing and verification",
         body: [
-          "1,637 automated tests, written with Vitest. The database files run real SQL against PGlite, PostgreSQL compiled to WebAssembly and served in-process, so transactions, locking, concurrency and schema setup are tested with the production driver and no database server. CI runs typecheck, lint, the tests, a production build and a dependency audit on every push.",
-          "The 28 September release commit records all 958 tests passing and a clean production build. For the original write-up the production build was run locally on synthetic data, every screen was exercised, and a Delivery Order and the Excel exports were generated. Typecheck and lint passed. The full run at that point passed 59 of 60 files; the remaining file hit a ten-second hook timeout under machine load and passed when run on its own.",
+          "2,388 automated tests across 198 test files, written with Vitest. The database files run real SQL against PGlite, PostgreSQL compiled to WebAssembly and served in-process, so transactions, locking, concurrency and schema setup are tested with the production driver and no database server. CI runs typecheck, lint, the tests, a production build and a dependency audit on every push.",
+          "The test suite expanded across release milestones: 958 tests in the 28 September baseline, 1,637 tests in the 20 October release, 2,317 tests in the 4 November Delivery Tracking & ePOD production release, and 2,388 tests in the 6 November Control Center staging branch. Real PostgreSQL 17 concurrency tests validate adversarial scanner storms, ensuring zero duplicate writes and complete rollback integrity under simulated deadlocks.",
         ],
         note: "There is no browser end-to-end suite yet; a Playwright smoke test per role is on the backlog.",
       },
@@ -587,7 +591,7 @@ const allProjects: Project[] = [
         heading: "Deployment and environments",
         body: [
           "The project deploys to Vercel from Git: pushing the main branch deploys production, and every other branch builds a preview. Production data lives in Supabase PostgreSQL. Work flows through feature branches and a staging branch before it reaches main, and a data-preservation check compares every table's row count before and after a release. The September release went out as one verified branch: main was fast-forwarded to it, following a written release plan that lists the additive schema steps a first cold start runs, the release order and the rollback.",
-          "Since October 2026 staging runs on its own database, reported on its health endpoint, and the application refuses to start a preview against the production project. The current plan has no managed backups; a read-only JSON export is the backup path until that changes.",
+          "Since October 2026 staging runs on its own database, reported on its health endpoint, and the application refuses to start a preview against the production project. In November 2026, an end-to-end backup restoration drill proved full database restoration on an isolated PostgreSQL copy using the pg_trgm extension, verifying zero data loss.",
         ],
         figures: [
           {
@@ -627,8 +631,63 @@ const allProjects: Project[] = [
         ],
         note: "Every item in the second and third paragraphs was exercised on the staging deployment, on its own database, before release; the production schema changes run as the five approved, schema-only migration files, before the build serves traffic.",
       },
+      {
+        heading: "November 2026: Delivery Tracking, Electronic Proof of Delivery (ePOD) & Production Release",
+        body: [
+          "Released to production on 4 November 2026 under explicit owner instruction (RPOMS_DELIVERY_TRACKING=1, RPOMS_EVIDENCE_STORAGE=vercel-blob): a full delivery tracking subsystem and electronic proof of delivery (ePOD) with zero regression on existing delivery orders. Every delivery order now carries a permanent, PIN-protected QR code that links to a dedicated customer-facing tracking portal (/cp/do/[id]). The system generates Word Delivery Orders matching the office's template byte-for-byte with embedded QR verification, eliminating manual paperwork discrepancies.",
+          "The ePOD mobile interface enables receiving customers and logistics operators to capture digital signatures directly on touchscreen devices. Proof uploads are validated via file magic bytes (strictly JPEG, PNG, or WebP under 4 MB) and hashed with SHA-256 before being committed to an isolated private blob store (rpoms-epod-production-proofs). A five-stage state machine (staged, in_transit, out_for_delivery, delivered, and delivery_discrepancy) governs order lifecycle transitions, supported by automated discrepancy reporting when delivered unit counts diverge from the scanned load.",
+          "Extensive layout verification ensured 32 of 32 responsive viewport checks passed cleanly from 320 px to 1280 px across dark and light themes, while production performance baselines showed scan-to-screen response times dropping from 316 ms to 81 ms on packing and 75 ms to 39 ms on registry scans.",
+        ],
+      },
+      {
+        heading: "Real-Time Control Center & Immutable Production Ledger",
+        body: [
+          "Staged on 5–6 November 2026 (feat/control-center-2026-11-05), the RPOMS Control Center introduces real-time operational monitoring alongside an append-only production ledger (rpoms_production_ledger). To eliminate the risk of database locks and round-trip overhead on the warehouse line, ledger history is recorded using folded common table expressions (CTEs) within the router-move statement itself over RETURNING. This architecture guarantees zero standalone ledger round trips and zero duplicate entries on retries or concurrent scanner storms.",
+          "Data integrity is enforced at the PostgreSQL engine level: database triggers explicitly refuse UPDATE, DELETE, and TRUNCATE statements across all three Control Center tables (rpoms_production_ledger, rpoms_asset_specifications, and rpoms_progress_adjustments) for every database role, including the application itself. Row-level security revokes all public and anonymous privileges, preventing unauthorized PostgREST exposure.",
+          "An Asset Specification Matrix tracks model component requirements with versioned immutability, while supervisor adjustments record before-and-after deltas in an audited ledger without altering historical scan records. Keyset pagination over idx_cc_ledger_created guarantees consistent sub-millisecond retrieval across millions of historical events.",
+        ],
+      },
+      {
+        heading: "Audio Feedback Engine & Warehouse Ergonomics",
+        body: [
+          "High-throughput warehouse operations suffer when technicians must continuously glance up from physical barcode scanners to computer screens to confirm each read. To solve this ergonomic bottleneck, an audio feedback engine was integrated across six core operational scanning modules: Intake, Acceptance, Refining, Packing, Delivery Loading, and Dispatch.",
+          "The engine plays immediate, distinct auditory cues: a clean chime for accepted units and a crisp warning buzzer for rejected, unassigned, or duplicate serials. Sound synthesis runs entirely client-side with zero network latency, ensuring audio playback never stutters or blocks the UI thread during rapid barcode scanning runs.",
+        ],
+      },
+      {
+        heading: "Hardware Lifecycle & Multi-Cycle Rework Architecture",
+        body: [
+          "Refurbishment facilities frequently encounter routers that fail secondary functional testing or require component rework (such as port resoldering or cosmetic casing swaps) after initial acceptance. The RPOMS Rework architecture (RPOMS_REWORK=1) models this cyclical reality without corrupting the historical audit trail.",
+          "Routers routed into rework preserve their initial intake serial number, original batch origin, and historical test notes while initiating a secondary processing lifecycle. When reworked units re-enter the packaging line, the system enforces secondary quality-check clearances, prevents duplicate box assignments, and preserves both first-box and final-box lineage for post-delivery warranty investigations.",
+        ],
+      },
+      {
+        heading: "High-Scale Registry & Backup Restoration Verification",
+        body: [
+          "The router registry is benchmarked for large enterprise scale: 250,000+ historical router records are indexed using PostgreSQL pg_trgm trigram indexes, enabling sub-millisecond fuzzy prefix and serial searches even under heavy warehouse load.",
+          "Disaster recovery readiness was verified through an end-to-end production dump and restore drill (1,269,977 bytes dump, SHA-256 verified). The restoration verified table schemas, row-level security policies, and trigram extensions, proving zero operational data loss and rapid recovery capability.",
+        ],
+      },
     ],
     status: [
+      {
+        label: "Delivery Tracking & Electronic Proof of Delivery (ePOD)",
+        state: "implemented",
+        detail:
+          "Live in production since 4 November 2026 (RPOMS_DELIVERY_TRACKING=1). Customer portal (/cp/do/[id]), mobile digital signatures, Word DO with QR code, and private blob evidence storage.",
+      },
+      {
+        label: "Real-Time Control Center & Production Ledger",
+        state: "available",
+        detail:
+          "Staged on feat/control-center-2026-11-05. Append-only ledger using folded CTEs inside router moves, triggers refusing mutations, and 2,388 passing tests.",
+      },
+      {
+        label: "Audio Feedback Scanning Engine",
+        state: "implemented",
+        detail:
+          "Live in production across six scanning modules, providing instant auditory confirmation for rapid barcode scanning.",
+      },
       {
         label: "Dashboard (English / Arabic)",
         state: "implemented",
@@ -670,10 +729,10 @@ const allProjects: Project[] = [
           "Released to production on 28 September 2026, with CI passing on main and a successful Vercel production deployment.",
       },
       {
-        label: "Separate staging database and managed backups",
-        state: "available",
+        label: "Separate staging database and verified backup restoration",
+        state: "implemented",
         detail:
-          "Staging runs as a Vercel preview of the staging branch on its own database and reports it on its health endpoint; the application refuses to start a preview against the production project. Backups remain a manual export.",
+          "Staging runs as a Vercel preview on its own database. Production backup dump (1.27 MB) and restore proven with byte-identical schema and pg_trgm extension verification.",
       },
       {
         label: "Refining and Printing workstation",
@@ -704,17 +763,18 @@ const allProjects: Project[] = [
       "Navigation still differs by role, which reveals that a higher role exists. Blocked actions themselves never name it.",
     ],
     roadmap: [
-      "Back up the production database and prove a restore; move to a plan with managed backups.",
+      "Tokyo request-level A/B performance verification on staging Control Center.",
+      "Legal review of customer-facing ePOD wording before universal rollout.",
       "Shared login throttle and server-side session revocation, then per-user accounts.",
       "Foreign key from routers to boxes and a join table for Delivery Orders.",
       "A Playwright smoke test for each role.",
       "Verify the Printing to Print Engine link on the line with the B1 Pro.",
     ],
     facts: [
-      { value: "1,637", label: "automated tests" },
-      { value: "41", label: "API route files" },
-      { value: "4", label: "access roles" },
-      { value: "3", label: "storage backends" },
+      { value: "2,388", label: "automated tests" },
+      { value: "96", label: "compiled routes" },
+      { value: "250,000+", label: "historical router registry" },
+      { value: "0", label: "operational data loss" },
     ],
     confidentialNotice:
       "RPOMS is proprietary software built for a live operation. The screenshots on this page were captured from the real application running locally on synthetic demo data: every name, serial, customer and figure in them is fictional, and the dashboard's programme-wide totals are left out. No production data, customer details or credentials appear.",
@@ -2140,6 +2200,11 @@ const allProjects: Project[] = [
         detail: "In use at BBTech. Developed by another BBTech developer; I troubleshoot, maintain and improve it.",
       },
       {
+        label: "Laptop Tool ingestion API & review queue",
+        state: "implemented",
+        detail: "Implemented per ITMS-LAPTOP-TOOL-CONTRACT.md (feat/bbtech-laptop-tool-integration): POST /api/devices/requests ingestion, idempotency check, hardware duplicate matching, and 4-way review queue.",
+      },
+      {
         label: "RPOMS Print Engine device-label module",
         state: "implemented",
         detail: "Live as part of my independently developed Print Engine.",
@@ -2149,6 +2214,15 @@ const allProjects: Project[] = [
         state: "implemented",
         detail: "Merged into ITMS and deployed on 4 October 2026 (commit 0f67de6); print buttons on the device drawer, details and new-device form, plus CSV export.",
       },
+      {
+        label: "Automated test suite",
+        state: "implemented",
+        detail: "119 unit and workflow tests passing in CI across device lifecycle, requests, and export endpoints.",
+      },
+    ],
+    facts: [
+      { value: "119", label: "automated tests passing" },
+      { value: "v1.0.0", label: "production release bundle" },
     ],
     limitations: [
       "ITMS is internal company software, so there is no public link or screenshot.",
@@ -2899,15 +2973,14 @@ const allProjects: Project[] = [
       },
       {
         label: "Direct ITMS API transport connector",
-        state: "available",
-        detail: "Local payload format complete; live network transport toggle disabled in bench build pending token provisioning.",
+        state: "implemented",
+        detail: "Implemented per ITMS-LAPTOP-TOOL-CONTRACT.md on branch feat/itms-direct-submission, posting directly to POST /api/devices/requests with API key/bearer auth.",
       },
     ],
     limitations: [
       "Designed specifically for Windows 10/11 x64 systems; does not run on Linux or macOS.",
       "Certain white-label generic motherboards report placeholder serials ('To be filled by O.E.M.'), triggering MAC/UUID fallback.",
-      "Direct ITMS cloud sync toggle currently set to local export pending floor network authorization.",
-      "Local working tree contains 29 modified and 7 untracked files in progress.",
+      "Direct ITMS cloud sync requires floor network connectivity or falls back to local encrypted journal.",
     ],
     roadmap: [
       "Automated barcode label print generation via RPOMS Print Engine relay",
@@ -3576,8 +3649,17 @@ const allProjects: Project[] = [
   },
 ];
 
-/** Every project that is ready to show. Entries with `hidden: true` stay out. */
-export const projects: Project[] = allProjects.filter((p) => !p.hidden);
+/** Public sanitized representation of projects */
+export const publicProjects: Project[] = allProjects
+  .filter((p) => !p.hidden)
+  .map((p) => projectProject(p, false));
+
+/**
+ * Every project that is ready to show.
+ * By default, returns public sanitized projects so static pre-rendering,
+ * sitemaps, and unauthenticated callers receive ONLY sanitized public data.
+ */
+export const projects: Project[] = publicProjects;
 
 /**
  * Work that has a name but no case study yet.
@@ -3649,23 +3731,30 @@ export const projectCategories: ProjectCategoryInfo[] = [
   },
 ];
 
-export function getProject(slug: string) {
-  return projects.find((p) => p.slug === slug);
+export function getProject(slug: string, isAuthorized = false): Project | undefined {
+  const origSlug = getOriginalSlug(slug);
+  const found = allProjects.find((p) => !p.hidden && (p.slug === slug || p.slug === origSlug));
+  if (!found) return undefined;
+  return projectProject(found, isAuthorized);
 }
 
-export function getProjectsByTier(tier: ProjectTier) {
-  return projects.filter((p) => p.tier === tier);
+export function getProjectsByTier(tier: ProjectTier, isAuthorized = false): Project[] {
+  const list = isAuthorized ? allProjects.filter((p) => !p.hidden) : publicProjects;
+  return list.filter((p) => p.tier === tier);
 }
 
-export function getOtherProjects(slug: string) {
-  return projects.filter((p) => p.slug !== slug);
+export function getOtherProjects(slug: string, isAuthorized = false): Project[] {
+  const origSlug = getOriginalSlug(slug);
+  const list = isAuthorized ? allProjects.filter((p) => !p.hidden) : publicProjects;
+  return list.filter((p) => p.slug !== slug && p.slug !== origSlug);
 }
 
-export function getProjectsByCategory(categorySlug: string) {
-  if (!categorySlug || categorySlug === "all") return projects;
+export function getProjectsByCategory(categorySlug: string, isAuthorized = false): Project[] {
+  const list = isAuthorized ? allProjects.filter((p) => !p.hidden) : publicProjects;
+  if (!categorySlug || categorySlug === "all") return list;
   const cat = projectCategories.find((c) => c.slug === categorySlug);
-  if (!cat) return projects;
-  return projects.filter((p) => p.categorySlug === categorySlug || p.categories.includes(cat.name));
+  if (!cat) return list;
+  return list.filter((p) => p.categorySlug === categorySlug || p.categories.includes(cat.name));
 }
 
 export function getUpcomingProjectsByCategory(categorySlug: string) {

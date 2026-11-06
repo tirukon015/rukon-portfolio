@@ -53,6 +53,18 @@ Status: **Live** = in production code; **Partial** = works with a stated limitat
 | RSS feed | Live | `app/feed.xml/route.ts` |
 | Permanent redirects for retired categories and merged article | Live | `next.config.ts` |
 
+## Confidentiality and Access Control
+
+| Feature | Status | Where |
+| --- | --- | --- |
+| Context-aware confidentiality projection (projects, posts, experience, FAQs, SEO) | Live | `src/lib/confidentiality/projector.ts`, `registry.ts` |
+| Authentic project routes preserved (`/work/rpoms`, `/work/rpoms-print-engine`, `/work/rpoms-ai`, `/work/itms`) with 308 redirects from temporary aliases | Live | `next.config.ts`, `src/lib/confidentiality/registry.ts` |
+| Approval-based access requests (`/access`) | Live | `src/app/access/page.tsx`, `src/app/api/access/request/route.ts` |
+| 1-click email approvals & HMAC magic links | Live | `src/app/api/access/decision/route.ts`, `src/app/access/verify/route.ts` |
+| Admin dashboard (`/admin/access-requests`) with instant session revocation and audit logging | Live | `src/app/admin/access-requests/page.tsx`, `src/components/admin/*` |
+| Protected media streaming with `Cache-Control: private, no-store` | Live | `src/app/api/media/[...path]/route.ts`, `private/media/` |
+| Authorized session indicator in site header | Live | `src/components/access/access-status-indicator.tsx` |
+
 ## CV access
 
 | Feature | Status | Where |

@@ -3,6 +3,39 @@
 Significant changes, newest first. Keep entries short: what changed for a
 visitor, and anything a future developer must know. Git history has the detail.
 
+## 2026-11-06
+
+### Updated
+- **Complete Portfolio Re-Audit & Technical Content Modernization**: Audited live repositories across `C:\Users\TOUHIDUL ISLAM RUKON\Desktop\Project` and modernized portfolio content to accurately reflect the latest system architectures and production releases:
+  - **RPOMS Flagship Platform**: Updated to reflect modern platform reality (over 65,000 LOC TypeScript across 96 compiled routes, 2,388 automated tests passing across 198 test files, 250,000+ router registry). Added comprehensive case study sections:
+    - *November 2026 Production Release*: Delivery Tracking & Electronic Proof of Delivery (ePOD) (`RPOMS_DELIVERY_TRACKING=1`, `RPOMS_EVIDENCE_STORAGE=vercel-blob`), Customer Portal (`/cp/do/[id]`), permanent PIN-protected QR codes, Word DO generator byte-for-byte with embedded QR verification, mobile digital signature capture directly into ePOD, private blob evidence storage (`rpoms-epod-production-proofs`), and 5-stage order lifecycle.
+    - *Real-Time Control Center & Production Ledger*: Staged 5–6 November 2026 (`feat/control-center-2026-11-05`), append-only `rpoms_production_ledger` table using data-modifying folded CTEs inside router-move statements (`RETURNING`) guaranteeing zero added round trips and zero duplicate writes on retries. Database triggers refusing UPDATE, DELETE, and TRUNCATE for all roles. Keyset pagination (`idx_cc_ledger_created`).
+    - *Audio Feedback Scanning Engine*: Real-time auditory confirmation (success/error cues) across six operational scanning modules to eliminate head-up display checking and accelerate warehouse scanning throughput.
+    - *Hardware Lifecycle & Multi-Cycle Rework*: Secondary recovery tracking (`RPOMS_REWORK=1`) preserving initial intake identity and lineage.
+    - *High-Scale Registry & Backup Verification*: 250,000+ router registry benchmarked with PostgreSQL `pg_trgm` trigram indexing; full production backup dump (1.27 MB) and restore proven on production copy with `pg_trgm`.
+  - **BBTech Laptop Tool**: Documented 685 unit/integration tests passing (xUnit), .NET 8 / WPF Windows x64 desktop utility, single self-contained portable executable, direct ITMS ingestion contract (`feat/itms-direct-submission` / `POST /api/devices/requests`), and on-device encrypted audit journal in `ProgramData` (AES-256-CBC + HMAC-SHA256, DPAPI).
+  - **BBTech Driver Manager (Laptop Inspection Tool)**: Documented Python 3.12 / PySide6 architecture, Inno Setup installer + portable single EXE (v1.0.0), 98 tests, device classification via PCI `VEN_`/`DEV_`, official OEM allow-lists (Lenovo, Dell, HP, Windows Update), and Authenticode verification.
+  - **ITMS (H001_TrackerApp)**: Documented 119 unit/workflow tests passed, Next.js 15.5 + Supabase, direct Laptop Tool ingestion API (`POST /api/devices/requests`) with review queue (Approve, Update Existing, Link Existing, Reject), barcode sticker printing integration, and automated asset tag allocation.
+  - **RPOMS-AI**: Documented 247 test assertions passed, 35 compiled routes, PGlite in-process testing, cosmetic grading (Acceptable, Not acceptable, Unclear) with photo quality gate and deterministic rules (observation-only contract, no hallucinated scores).
+  - **ERTH Homepage**: Documented production homepage build on Vite and complete Next.js 16 + React 19 + TypeScript rebuild with 21 section components, Schema.org Organization/RecyclingCenter JSON-LD, axe-core 0 violations.
+  - **Site-Wide Synchronization**: Updated `about.ts`, `experience.ts`, `skills.ts`, `faq.ts`, and `cv.ts` to keep statistics, technology stacks, and operational achievements aligned.
+- **Authenticity-Preserving Confidentiality Architecture**: Refined confidentiality projection to retain real, authentic software project names, acronyms, and marks (**RPOMS**, **RPOMS Print Engine**, **RPOMS AI**, **ITMS**) directly under authentic slugs (`/work/rpoms`, `/work/rpoms-print-engine`, `/work/rpoms-ai`, `/work/itms`), eliminating artificial acronyms (EDOMS, AIMS) that harm engineering trust.
+  - Authentic software IP, codebase metrics (65,000+ LOC, 2,388 tests), and project marks/logos remain proudly visible to public visitors.
+  - Business confidentiality remains strictly enforced: client identities (**Maxis**, **ERTH**) and employer corporate entities (**Blue Bee Technologies / BBTech**) are 100% anonymized across all projects, case studies, experience records, 173 blog posts, structured data, and URLs.
+  - Legacy/temporary aliases (`/work/enterprise-device-operations`, etc.) 308-redirect back to authentic project routes.
+
+## 2026-11-05
+
+### Added
+- **Confidentiality & Anonymization Engine**: Complete, context-aware projection system for protecting business, client, employer, and confidential hardware identities across public visitors while keeping private records intact.
+  - Public projection engine (`src/lib/confidentiality/projector.ts`) sanitizing all 15 projects, 173 blog articles, professional experience entries, SEO schemas, JSON-LD, and FAQs.
+  - Mapped RPOMS to `Enterprise Device Operations Management System (EDOMS)` with public slug `/work/enterprise-device-operations` and 308 permanent redirects for legacy paths.
+  - Anonymized ERTH to "Malaysia's No. 1 E-Waste Recycling Company", Blue Bee Technologies to "Established Malaysian technology company", and Maxis to "Leading Malaysian telecommunications provider".
+  - Context-aware technical brand preservation: preserved generic networking protocols (UPnP, CSTECGI, SNMP) and hardware vendors (Huawei, TP-Link, Kaon) in educational articles while stripping confidential employer relationships and enterprise models.
+  - Protected media isolation: confidential screenshots moved from `public/` to `private/media/` and served exclusively via authenticated streaming endpoint `/api/media/[...path]` with `Cache-Control: private, no-store`.
+  - Approval-based access system: `/access` request form, 1-click email approvals (`/api/access/decision`), HMAC-SHA256 magic links (`/access/verify`), and admin dashboard (`/admin/access-requests`) with instant session revocation and audit logging.
+  - Access status banner in header (`src/components/access/access-status-indicator.tsx`) adhering strictly to the existing design system.
+
 ## 2026-10-27
 
 ### Changed

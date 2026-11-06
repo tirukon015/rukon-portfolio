@@ -4,9 +4,10 @@ import { Reveal } from "@/components/ui/reveal";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { JsonLd } from "@/components/seo/json-ld";
 import { WorkFilter } from "@/components/work/work-filter";
-import { projects, upcomingProjects } from "@/content/projects";
+import { allProjects, publicProjects, upcomingProjects, type Project } from "@/content/projects";
 import { getPostsForProject } from "@/content/posts";
 import { site } from "@/content/site";
+import { isAuthorizedSession } from "@/lib/confidentiality/auth";
 import {
   absoluteUrl,
   breadcrumbSchema,
@@ -40,7 +41,12 @@ const crumbs = [
   { name: "Work", href: "/work" },
 ];
 
-export default function WorkIndexPage() {
+export default async function WorkIndexPage() {
+  const isAuthorized = await isAuthorizedSession();
+  const currentProjects: Project[] = isAuthorized
+    ? allProjects.filter((p: Project) => !p.hidden)
+    : publicProjects;
+
   const schema = graph(
     {
       "@type": "CollectionPage",
@@ -50,7 +56,7 @@ export default function WorkIndexPage() {
       description,
       inLanguage: "en-MY",
       about: { "@id": PERSON_ID },
-      hasPart: projects.map((p) => ({
+      hasPart: currentProjects.map((p: Project) => ({
         "@type": "CreativeWork",
         name: p.fullName,
         url: absoluteUrl(`/work/${p.slug}`),
@@ -63,8 +69,8 @@ export default function WorkIndexPage() {
 
   // Precompute post counts for fast client rendering
   const postCountsByProject: Record<string, number> = {};
-  for (const p of projects) {
-    postCountsByProject[p.slug] = getPostsForProject(p.slug).length;
+  for (const p of currentProjects) {
+    postCountsByProject[p.slug] = getPostsForProject(p.slug, isAuthorized).length;
   }
 
   return (
@@ -85,7 +91,7 @@ export default function WorkIndexPage() {
 
         {/* Category Navigation & Level 1 HR Overviews */}
         <WorkFilter
-          projects={projects}
+          projects={currentProjects}
           upcomingProjects={upcomingProjects}
           postCountsByProject={postCountsByProject}
         />

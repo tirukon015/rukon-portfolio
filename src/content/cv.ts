@@ -40,7 +40,7 @@ export const cv = {
     "IT Systems & Operations Lead · Web Developer · Software Specialist with hands-on experience across business IT operations, software systems, web development, and technical support.",
     "Experienced in supporting internal business systems, troubleshooting hardware and software issues, configuring systems, maintaining IT equipment, and resolving day-to-day operational problems.",
     "Experienced in business web development and maintenance, including WordPress, Elementor, WooCommerce, responsive interfaces, updates, and technical troubleshooting.",
-    "Built practical software around real operational workflows, including RPOMS, a WMS/ERP-like operational system for inventory, device, delivery, usage, and related business processes.",
+    "Built practical software around real operational workflows, including RPOMS, a Router Production Operations Management System (WMS/ERP-like) for inventory, router, delivery, usage, and related business processes.",
     "Developed ResearchForge as a University Project for BIT4543 Artificial Intelligence, handling documentation, planning, architecture, development, testing, deployment, debugging, and maintenance.",
     "Hands-on with Python, FastAPI, Next.js, PostgreSQL, Row Level Security, structured AI output validation, testing, deployment, and production problem solving.",
     "Certified in Google IT Support and C/C++ Specialization through Coursera, with continued development across software, web, systems, and AI technologies.",
@@ -90,19 +90,19 @@ export const cv = {
   experience: [
     {
       title: "IT Systems & Operations Lead · Web Developer · Software Specialist",
-      org: "Blue Bee Technologies Sdn. Bhd., Cyberjaya",
+      org: "Established Malaysian technology company, Cyberjaya",
       body: "Support and maintain internal business systems and day-to-day IT operations; handle software and hardware troubleshooting, system configuration, deployment, maintenance, user support, and web-related technical operations.",
     },
     {
-      title: "RPOMS: WMS/ERP-like Operational System",
-      body: "Designed and developed a real-world WMS/ERP-like operational system for a major Malaysian telecommunications and technology company through ERTH, covering system architecture, inventory and asset management, router and device workflows, charger deductions, delivery and usage tracking, dashboards, data relationships, and operational logic.",
+      title: "RPOMS: Enterprise Operations Management Platform",
+      body: "Designed, engineered, and deployed a real-world operations platform for a major Malaysian telecommunications and technology enterprise programme: serial-level asset tracking, audio-guided scanning, delivery tracking with customer QR portal, mobile electronic proof of delivery (ePOD) digital signatures, and real-time Control Center monitoring with an immutable production ledger across 2,388 automated tests.",
     },
     {
-      title: "ERTH: Business Web Development",
-      body: "Developed and maintained business web solutions for ERTH under the wider Blue Bee environment, covering responsive frontend implementation, WordPress/CMS, Elementor, WooCommerce and e-commerce, integrations, deployment, updates, and technical maintenance.",
+      title: "E-Waste Circularity: Business Web Development",
+      body: "Developed and maintained business web solutions for Malaysia's No. 1 E-Waste Recycling Company under the enterprise environment, covering responsive frontend implementation, WordPress/CMS, Elementor, WooCommerce and e-commerce, integrations, deployment, updates, and technical maintenance.",
     },
     {
-      title: "BBTech: IT & Operations",
+      title: "Enterprise IT & Operations",
       body: "Handled Mac and Windows hardware and software support, troubleshooting, OS and software installation, system configuration, maintenance, and peripheral and networking issues. Managed day-to-day operational workflows including quality control, inventory management, product listing, order preparation, packaging, and stock handling. Built and maintained an internal Microsoft Excel tracking system for operational data and workflow management, later followed by development of a separate web-based system.",
     },
     {

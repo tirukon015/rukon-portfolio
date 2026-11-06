@@ -1,4 +1,6 @@
 import type { Block, BlogPost, PostCategory, PostSection } from "./types";
+import { projectBlogPost } from "@/lib/confidentiality/projector";
+import { getOriginalSlug, getPublicSlug } from "@/lib/confidentiality/registry";
 
 export type {
   Block,
@@ -404,17 +406,21 @@ export function todayInMalaysia(now: number = Date.now()): string {
  * long-lived server notices the day change; the blog routes revalidate hourly
  * to pick it up.
  */
-export function publishedPosts(): BlogPost[] {
+export function publishedPosts(isAuthorized = false): BlogPost[] {
   const today = todayInMalaysia();
-  return allPosts.filter((p) => p.date <= today);
+  const raw = allPosts.filter((p) => p.date <= today);
+  if (isAuthorized) return raw;
+  return raw.map((p) => projectBlogPost(p, false));
 }
 
-export function getPost(slug: string) {
-  return publishedPosts().find((p) => p.slug === slug);
+export function getPost(slug: string, isAuthorized = false) {
+  const post = allPosts.find((p) => p.slug === slug);
+  if (!post) return undefined;
+  return projectBlogPost(post, isAuthorized);
 }
 
-export function getPostsByCategory(category: PostCategory) {
-  return sortedPosts().filter((p) => p.category === category);
+export function getPostsByCategory(category: PostCategory, isAuthorized = false) {
+  return sortedPosts(isAuthorized).filter((p) => p.category === category);
 }
 
 /** Categories that actually have at least one post. */
@@ -431,13 +437,13 @@ export function usedCategories(): PostCategory[] {
  * which is what keeps this useful as the library grows past the point where
  * "same category" means anything on its own.
  */
-export function getRelatedPosts(post: BlogPost, limit = 3) {
+export function getRelatedPosts(post: BlogPost, limit = 3, isAuthorized = false) {
   const picked = (post.relatedPosts ?? [])
-    .map((slug) => getPost(slug))
+    .map((slug) => getPost(slug, isAuthorized))
     .filter((p): p is BlogPost => Boolean(p) && p!.slug !== post.slug);
 
   const seen = new Set(picked.map((p) => p.slug));
-  const sameCategory = sortedPosts().filter(
+  const sameCategory = sortedPosts(isAuthorized).filter(
     (p) => p.slug !== post.slug && p.category === post.category && !seen.has(p.slug)
   );
 
@@ -450,18 +456,20 @@ export function getRelatedPosts(post: BlogPost, limit = 3) {
  * Reads the structured `relatedProjects` field, and falls back to the older
  * hand-written `related` links so no existing relationship is lost.
  */
-export function getPostsForProject(projectSlug: string) {
-  const href = `/work/${projectSlug}`;
-  return sortedPosts().filter(
+export function getPostsForProject(projectSlug: string, isAuthorized = false) {
+  const origSlug = getOriginalSlug(projectSlug);
+  const pubSlug = getPublicSlug(projectSlug);
+  return sortedPosts(isAuthorized).filter(
     (p) =>
-      p.relatedProjects?.includes(projectSlug) ||
-      p.related?.some((link) => link.href === href)
+      p.relatedProjects?.includes(origSlug) ||
+      p.relatedProjects?.includes(pubSlug) ||
+      p.related?.some((link) => link.href === `/work/${origSlug}` || link.href === `/work/${pubSlug}`)
   );
 }
 
 /** Newest first. */
-export function sortedPosts() {
-  return publishedPosts().sort((a, b) => (a.date < b.date ? 1 : -1));
+export function sortedPosts(isAuthorized = false) {
+  return publishedPosts(isAuthorized).sort((a, b) => (a.date < b.date ? 1 : -1));
 }
 
 /** Falls back to `description` so every card and meta tag has copy. */

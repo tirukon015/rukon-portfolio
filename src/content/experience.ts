@@ -1,3 +1,5 @@
+import { projectExperience } from "@/lib/confidentiality/projector";
+
 export type ExperienceEntry = {
   role: string;
   org: string;
@@ -10,7 +12,7 @@ export type ExperienceEntry = {
   projects?: string[];
 };
 
-export const experience: ExperienceEntry[] = [
+export const masterExperience: ExperienceEntry[] = [
   {
     role: "IT Systems & Operations Lead · Web Developer · Software Specialist",
     org: "Blue Bee Technologies Sdn. Bhd.",
@@ -21,8 +23,8 @@ export const experience: ExperienceEntry[] = [
     primary: true,
     projects: ["rpoms", "rpoms-print-engine", "rpoms-ai", "itms", "erth", "bbtech-laptop-tool", "bbtech-laptop-inspection-tool", "router-diagnostic", "erth-router-distribution"],
     bullets: [
-      "Lead RPOMS end to end: gathered the requirement from the production floor, designed the data model and four-role access control, built its 16 pages and 41 API route files with 958 automated tests, took it to production on Vercel and Supabase, and remain its maintainer and release owner.",
-      "Built RPOMS as a real operational system rather than a reporting tool: serial-level asset tracking, inventory and consumable deduction tied to valid business events, packing and delivery validation, generated delivery paperwork, workforce output, and operational dashboards.",
+      "Lead RPOMS end to end: gathered requirements from the production floor, architected the data model and four-role access control, engineered over 65,000 lines of TypeScript across 96 compiled routes with 2,388 automated tests, took it to production on Vercel and Supabase, and remain its maintainer and release owner.",
+      "Built RPOMS as a full enterprise operations platform: serial-level asset tracking, real-time audio-guided scanning, packing, delivery tracking with customer QR portal, mobile electronic proof of delivery (ePOD), and a staged Control Center with an append-only production ledger using atomic folded CTEs.",
       "Built the RPOMS Print Engine, a Web Bluetooth label-printing workstation for the line, and deployed it with its Node.js and PostgreSQL backend on a self-hosted Ubuntu server behind nginx; it is my own independent project.",
       "Contributed to ITMS, BBTech's inventory management system, across its evolution: engineered dynamic formula systems and VBA status pipelines in the foundational BBTech Stock Tracker Excel workbook; since another developer built the web application, remediated production issues, conducted the SMBIOS hardware identity audit, and integrated my independent Print Engine and CSV export directly into production (commit 0f67de6).",
       "Built BBTech Laptop Tool, a portable .NET 8 WPF utility extracting immutable SMBIOS hardware serials, battery health, and encrypted on-device QC histories across 685 automated unit tests.",
@@ -67,3 +69,12 @@ export const experience: ExperienceEntry[] = [
     ],
   },
 ];
+
+export const publicExperience: ExperienceEntry[] = projectExperience(masterExperience, false);
+
+/** Default export is publicExperience to ensure all static passes remain sanitized */
+export const experience: ExperienceEntry[] = publicExperience;
+
+export function getExperience(isAuthorized = false): ExperienceEntry[] {
+  return isAuthorized ? masterExperience : publicExperience;
+}

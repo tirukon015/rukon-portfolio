@@ -19,6 +19,7 @@ import {
 } from "@/content/posts";
 import { getCategoryMeta } from "@/content/categories";
 import { getProject } from "@/content/projects";
+import { isAuthorizedSession } from "@/lib/confidentiality/auth";
 import { estimateReadingTime } from "@/lib/reading-time";
 import { site } from "@/content/site";
 import {
@@ -83,13 +84,14 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 
 export default async function BlogPostPage({ params }: { params: Params }) {
   const { slug } = await params;
-  const post = getPost(slug);
+  const isAuthorized = await isAuthorizedSession();
+  const post = getPost(slug, isAuthorized);
   if (!post) notFound();
 
-  const related = getRelatedPosts(post);
+  const related = getRelatedPosts(post, 3, isAuthorized);
   const category = getCategoryMeta(post.category);
   const projectsBehind = (post.relatedProjects ?? [])
-    .map((s) => getProject(s))
+    .map((s) => getProject(s, isAuthorized))
     .filter((p): p is NonNullable<typeof p> => Boolean(p));
 
   const crumbs = [

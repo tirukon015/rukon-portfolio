@@ -20,7 +20,7 @@ export type Crumb = { name: string; href: string };
 export const PERSON_ID = `${BASE_URL}/#person`;
 export const WEBSITE_ID = `${BASE_URL}/#website`;
 
-export function personSchema() {
+export function personSchema(isAuthorized = false) {
   return {
     "@type": "Person",
     "@id": PERSON_ID,
@@ -38,7 +38,7 @@ export function personSchema() {
     jobTitle: site.role,
     worksFor: {
       "@type": "Organization",
-      name: "Blue Bee Technologies Sdn. Bhd.",
+      name: isAuthorized ? "Blue Bee Technologies Sdn. Bhd." : "Established Malaysian technology company",
     },
     description: site.statement,
     image: absoluteUrl("/images/profile.png"),

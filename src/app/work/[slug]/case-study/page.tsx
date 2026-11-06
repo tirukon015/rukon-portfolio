@@ -12,6 +12,7 @@ import { ProjectMark } from "@/components/ui/project-mark";
 import { JsonLd } from "@/components/seo/json-ld";
 import { getProject, getOtherProjects, projects, type CapabilityState } from "@/content/projects";
 import { getPostsForProject, postExcerpt } from "@/content/posts";
+import { isAuthorizedSession } from "@/lib/confidentiality/auth";
 import {
   absoluteUrl,
   breadcrumbSchema,
@@ -73,7 +74,8 @@ const stateClass: Record<CapabilityState, string> = {
 
 export default async function FullCaseStudyPage({ params }: { params: Params }) {
   const { slug } = await params;
-  const project = getProject(slug);
+  const isAuthorized = await isAuthorizedSession();
+  const project = getProject(slug, isAuthorized);
   if (!project) notFound();
 
   // If a project has no case study sections yet, 404
@@ -81,9 +83,9 @@ export default async function FullCaseStudyPage({ params }: { params: Params }) 
     notFound();
   }
 
-  const others = getOtherProjects(project.slug);
+  const others = getOtherProjects(project.slug, isAuthorized);
   const next = others.find((p) => p.sections && p.sections.length > 0) || others[0];
-  const relatedPosts = getPostsForProject(project.slug);
+  const relatedPosts = getPostsForProject(project.slug, isAuthorized);
 
   const crumbs = [
     { name: "Home", href: "/" },

@@ -27,7 +27,7 @@ export const site = {
   /** Used for og:locale and the Person schema. */
   locale: "en_MY",
   statement:
-    "I work across IT systems, operations, web and software: understanding an operational problem, designing the system for it, building and deploying it, then supporting and improving it once people depend on it daily. RPOMS, the operations system running a live router-refurbishment line, is the clearest example; alongside it sit a deployed browser-to-printer label engine, an AI photo-inspection system, a live AI research assistant and native iOS apps.",
+    "I work across IT systems, operations, web and software: understanding an operational problem, designing the system for it, building and deploying it, then supporting and improving it once people depend on it daily. The Router Production Operations Management System (RPOMS), the operations system running a live router-refurbishment line, is the clearest example; alongside it sit a deployed browser-to-printer label engine, an AI photo-inspection system, a live AI research assistant and native iOS apps.",
   /** Search and share description: the statement, cut to snippet length. */
   metaDescription:
     "Full-stack developer in Cyberjaya, Malaysia: operations systems, Next.js and TypeScript web apps, PostgreSQL and Supabase backends, AI tools and native iOS apps.",
@@ -47,7 +47,7 @@ export const site = {
    * site (experience.ts, the RPOMS and ResearchForge status tables, about.ts).
    */
   now: [
-    { label: "Role", value: "IT Systems & Operations Lead, Blue Bee Technologies", href: null },
+    { label: "Role", value: "IT Systems & Operations Lead, Established Technology Co.", href: null },
     { label: "Shipped", value: "RPOMS, an operational system in daily use", href: "/work/rpoms" },
     { label: "Live", value: "ResearchForge, an AI research assistant", href: "/work/researchforge" },
     { label: "Status", value: "Open to opportunities", href: "/#contact" },

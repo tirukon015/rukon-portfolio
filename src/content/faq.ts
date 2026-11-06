@@ -15,12 +15,12 @@ export const faqs: FaqItem[] = [
   {
     question: "What does Touhidul Islam Rukon build?",
     answer:
-      "Websites and the internal systems a business runs on, plus the IT operations around them. The main three are RPOMS, a production-operations platform for a router-refurbishment line; the completed production homepage for ERTH, a Malaysian e-waste collection service; and ResearchForge, an AI research assistant that analyses academic PDFs. Based in Cyberjaya, Selangor, Malaysia.",
+      "Websites and the internal systems a business runs on, plus the IT operations around them. The main three are RPOMS, an operational system for a router-refurbishment line; the completed production platform for Malaysia's No. 1 E-Waste Recycling Company; and ResearchForge, an AI research assistant that analyses academic PDFs. Based in Cyberjaya, Selangor, Malaysia.",
   },
   {
     question: "What is RPOMS?",
     answer:
-      "RPOMS is a Router Production Operations Management System built for a refurbishment programme run by Blue Bee Technologies. It covers the full path a unit takes, from intake and serial registry through cleaning, packing into numbered boxes, and delivery with matching paperwork, across 16 pages and 41 API route files in TypeScript, with a storage layer that runs on PostgreSQL, MySQL or a local file store. I designed and built it and remain its maintainer.",
+      "RPOMS is a Router Production Operations Management System built for an enterprise router-refurbishment programme run by an established Malaysian technology company. It covers the full operational path a router takes, from intake and serial registry through audio-guided cleaning, packing into numbered boxes, delivery tracking with customer QR verification, mobile electronic proof of delivery (ePOD), and real-time Control Center monitoring with an immutable production ledger. Built across 96 compiled routes and over 65,000 lines of TypeScript with 2,388 automated tests. I designed, built and deployed it and remain its maintainer.",
   },
   {
     question: "What is ResearchForge?",
@@ -33,7 +33,7 @@ export const faqs: FaqItem[] = [
       "No. The analysis path sends the document itself to the model rather than retrieved passages, so it is not a retrieval-augmented system. A database is connected and analyses are stored in a per-account library, but the retrieval layer is not: the embedding provider interface and request construction are written and unit-tested, while the embedding network call is deliberately not implemented, so no embedding is ever produced and nothing is retrieved. The application states this rather than implying otherwise.",
   },
   {
-    question: "What was your role on the ERTH website?",
+    question: "What was your role on the e-waste circularity website?",
     answer:
       "The work is complete. The client approved a single design file as final, and the production homepage was built from the client-approved design as static HTML, CSS and vanilla JavaScript bundled by Vite, which replaced roughly 250 kB of prototype JavaScript with 3.7 kB, cut the image payload from 12.0 MB to 2.7 MB, and fixed four real defects the prototype carried. Technical SEO, structured data, performance and accessibility were implemented in the same pass: the head block went from no canonical, no Open Graph and no structured data to all three, with three JSON-LD blocks, and axe-core reports zero violations across five interaction states.",
   },
@@ -55,7 +55,7 @@ export const faqs: FaqItem[] = [
   {
     question: "Do you do technical SEO work?",
     answer:
-      "Yes, at the implementation level: metadata, canonical URLs, Open Graph and Twitter cards, Schema.org JSON-LD, heading hierarchy, semantic HTML, internal linking, and structuring content so an answer engine can quote a single section and still be correct. On the ERTH homepage this was delivered as part of the production build, against a supplied requirements document and without changing the approved design.",
+      "Yes, at the implementation level: metadata, canonical URLs, Open Graph and Twitter cards, Schema.org JSON-LD, heading hierarchy, semantic HTML, internal linking, and structuring content so an answer engine can quote a single section and still be correct. On the circularity platform this was delivered as part of the production build, against a supplied requirements document and without changing the approved design.",
   },
   {
     question: "Where are you based?",

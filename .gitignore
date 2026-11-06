@@ -54,5 +54,6 @@ private/*
 skills-lock.json
 
 # Local tooling output
+dist-release/
 audit-output/
 graphify-out/

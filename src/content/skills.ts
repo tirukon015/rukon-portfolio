@@ -22,7 +22,7 @@ export const capabilities: Capability[] = [
   {
     title: "Systems & internal tools",
     description:
-      "Turning a physical operation into one system: serial and asset tracking, inventory and consumable deduction, production stages, delivery paperwork, workforce output and reporting, all reading from a single data model so a dashboard figure traces back to the event behind it. Requirements gathered from the floor, not from a specification, and sometimes proved first in a macro-enabled Excel workflow before they become a web application.",
+      "Turning a physical operation into one system: serial and asset tracking, real-time audio-guided scanning, inventory and consumable deduction, production stages, QR delivery tracking with mobile ePOD, workforce output and reporting, all reading from a single data model so a dashboard figure traces back to the event behind it. Requirements gathered from the floor, not from a specification, and proved through real hardware tooling (.NET 8 WPF, PySide6) and macro-enabled Excel workflows before scaling to cloud platforms.",
     evidence: ["rpoms", "itms", "rpoms-print-engine", "bbtech-laptop-tool", "bbtech-laptop-inspection-tool", "erth-router-distribution", "router-diagnostic"],
   },
   {
@@ -117,6 +117,9 @@ export const stack: StackCategory[] = [
       "Recharts",
       "Prisma",
       "Tesseract.js",
+      "C# / .NET 8 (WPF)",
+      "PySide6 (Qt)",
+      "Win32 WMI / SMBIOS",
       "Swift / SwiftUI",
       "SwiftData",
       "Apple Vision",

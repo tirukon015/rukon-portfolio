@@ -4,6 +4,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { JsonLd } from "@/components/seo/json-ld";
+import { AccessStatusIndicator } from "@/components/access/access-status-indicator";
+import { isAuthorizedSession } from "@/lib/confidentiality/auth";
 import { site } from "@/content/site";
 import {
   BASE_URL,
@@ -46,7 +48,9 @@ export const metadata: Metadata = {
   twitter: twitterFor(siteTitle, site.metaDescription),
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const isAuthorized = await isAuthorizedSession();
+
   return (
     <html
       lang="en-MY"
@@ -54,8 +58,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-bg text-text">
-        <JsonLd data={graph(personSchema(), websiteSchema())} />
+        <JsonLd data={graph(personSchema(isAuthorized), websiteSchema())} />
         <ThemeProvider attribute="data-theme" defaultTheme="system" enableSystem>
+          <AccessStatusIndicator isAuthorized={isAuthorized} />
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />

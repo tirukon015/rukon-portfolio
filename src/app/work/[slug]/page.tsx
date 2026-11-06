@@ -23,6 +23,7 @@ import { ProjectMark } from "@/components/ui/project-mark";
 import { JsonLd } from "@/components/seo/json-ld";
 import { getProject, getOtherProjects, projects } from "@/content/projects";
 import { getPostsForProject, postExcerpt } from "@/content/posts";
+import { isAuthorizedSession } from "@/lib/confidentiality/auth";
 import {
   absoluteUrl,
   breadcrumbSchema,
@@ -79,12 +80,13 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
 
 export default async function ProjectOverviewPage({ params }: { params: Params }) {
   const { slug } = await params;
-  const project = getProject(slug);
+  const isAuthorized = await isAuthorizedSession();
+  const project = getProject(slug, isAuthorized);
   if (!project) notFound();
 
-  const others = getOtherProjects(project.slug);
+  const others = getOtherProjects(project.slug, isAuthorized);
   const next = others[0];
-  const relatedPosts = getPostsForProject(project.slug);
+  const relatedPosts = getPostsForProject(project.slug, isAuthorized);
   const hasCaseStudy = Boolean(project.sections && project.sections.length > 0);
 
   const crumbs = [
