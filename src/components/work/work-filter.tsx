@@ -1,114 +1,81 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { Layers } from "lucide-react";
 import { Reveal } from "@/components/ui/reveal";
-import { HRProjectCard } from "@/components/work/hr-project-card";
-import { UpcomingProjectCard } from "@/components/work/upcoming-project-card";
-import type { Project, UpcomingProject, ProjectCategorySlug } from "@/content/projects";
+import type { ProjectCategorySlug } from "@/content/projects";
 import { projectCategories } from "@/content/project-categories";
 
-type WorkFilterProps = {
-  projects: Project[];
-  upcomingProjects: UpcomingProject[];
-  postCountsByProject: Record<string, number>;
+/**
+ * One entry in the /work grid. The card itself is rendered on the server and
+ * passed in as `card`, so neither project data nor the card component ships
+ * to the browser; the filter only needs each entry's categories.
+ */
+export type WorkFilterItem = {
+  slug: string;
+  categorySlug: string;
+  categories: string[];
+  card: ReactNode;
 };
 
-export function WorkFilter({
-  projects,
-  upcomingProjects,
-  postCountsByProject,
-}: WorkFilterProps) {
-  const [activeSlug, setActiveSlug] = useState<ProjectCategorySlug | "all">("all");
+type WorkFilterProps = {
+  items: WorkFilterItem[];
+};
 
-  // Determine items matching active category
+type ActiveSlug = ProjectCategorySlug | "all";
+
+function matches(item: WorkFilterItem, slug: ActiveSlug) {
+  if (slug === "all") return true;
+  const cat = projectCategories.find((c) => c.slug === slug);
+  if (!cat) return true;
+  return item.categorySlug === slug || item.categories.includes(cat.name);
+}
+
+export function WorkFilter({ items }: WorkFilterProps) {
+  const [activeSlug, setActiveSlug] = useState<ActiveSlug>("all");
   const activeCategoryInfo = projectCategories.find((c) => c.slug === activeSlug);
+  const visible = items.filter((item) => matches(item, activeSlug));
+  const count = (slug: ActiveSlug) => items.filter((item) => matches(item, slug)).length;
 
-  const filteredProjects = projects.filter((p) => {
-    if (activeSlug === "all") return true;
-    const cat = projectCategories.find((c) => c.slug === activeSlug);
-    if (!cat) return true;
-    return p.categorySlug === activeSlug || p.categories.includes(cat.name);
-  });
-
-  const filteredUpcoming = upcomingProjects.filter((p) => {
-    if (activeSlug === "all") return true;
-    const cat = projectCategories.find((c) => c.slug === activeSlug);
-    if (!cat) return true;
-    return p.categorySlug === activeSlug || p.categories.includes(cat.name);
-  });
-
-  // Category counts
-  const getCategoryCount = (slug: ProjectCategorySlug | "all") => {
-    if (slug === "all") return projects.length + upcomingProjects.length;
-    const cat = projectCategories.find((c) => c.slug === slug);
-    if (!cat) return 0;
-    const pCount = projects.filter((p) => p.categorySlug === slug || p.categories.includes(cat.name)).length;
-    const uCount = upcomingProjects.filter((p) => p.categorySlug === slug || p.categories.includes(cat.name)).length;
-    return pCount + uCount;
+  const pill = (slug: ActiveSlug, label: string, activeClass: string, activeCountClass: string) => {
+    const isActive = activeSlug === slug;
+    return (
+      <button
+        key={slug}
+        type="button"
+        aria-pressed={isActive}
+        onClick={() => setActiveSlug(slug)}
+        className={`group inline-flex min-h-11 items-center gap-2 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer ${
+          isActive
+            ? activeClass
+            : "border border-border bg-bg-elevated text-text-muted hover:border-border-strong hover:text-text"
+        }`}
+      >
+        <span>{label}</span>
+        <span
+          className={`rounded-full px-1.5 py-0.2 font-mono text-[11px] ${
+            isActive ? activeCountClass : "bg-bg text-text-faint group-hover:text-text"
+          }`}
+        >
+          {count(slug)}
+        </span>
+      </button>
+    );
   };
 
   return (
     <div className="mt-10">
-      {/* Category Filter Pills */}
-      <div className="flex flex-wrap items-center gap-2 border-b border-border/80 pb-6" role="tablist" aria-label="Work categories">
-        <button
-          role="tab"
-          aria-selected={activeSlug === "all"}
-          onClick={() => setActiveSlug("all")}
-          className={`group inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer ${
-            activeSlug === "all"
-              ? "bg-text text-bg shadow-sm"
-              : "border border-border bg-bg-elevated text-text-muted hover:border-border-strong hover:text-text"
-          }`}
-        >
-          <span>All Work</span>
-          <span
-            className={`rounded-full px-1.5 py-0.2 font-mono text-[11px] ${
-              activeSlug === "all"
-                ? "bg-bg/20 text-bg"
-                : "bg-bg text-text-faint group-hover:text-text"
-            }`}
-          >
-            {getCategoryCount("all")}
-          </span>
-        </button>
-
-        {projectCategories.map((category) => {
-          const count = getCategoryCount(category.slug as ProjectCategorySlug);
-          const isActive = activeSlug === category.slug;
-
-          return (
-            <button
-              key={category.slug}
-              role="tab"
-              aria-selected={isActive}
-              onClick={() => setActiveSlug(category.slug as ProjectCategorySlug)}
-              className={`group inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer ${
-                isActive
-                  ? "bg-accent text-white shadow-sm"
-                  : "border border-border bg-bg-elevated text-text-muted hover:border-border-strong hover:text-text"
-              }`}
-            >
-              <span>{category.label}</span>
-              <span
-                className={`rounded-full px-1.5 py-0.2 font-mono text-[11px] ${
-                  isActive
-                    ? "bg-white/20 text-white"
-                    : "bg-bg text-text-faint group-hover:text-text"
-                }`}
-              >
-                {count}
-              </span>
-            </button>
-          );
-        })}
+      {/* Category filter: toggle buttons, so the pressed state is announced. */}
+      <div className="flex flex-wrap items-center gap-2 border-b border-border/80 pb-6" role="group" aria-label="Filter work by category">
+        {pill("all", "All Work", "bg-text text-bg shadow-sm", "bg-bg/20 text-bg")}
+        {projectCategories.map((category) =>
+          pill(category.slug as ProjectCategorySlug, category.label, "bg-accent text-white shadow-sm", "bg-white/20 text-white")
+        )}
       </div>
 
-      {/* Category Description Banner */}
       {activeCategoryInfo && (
         <div className="mt-6 flex items-start gap-3 rounded-xl border border-accent/20 bg-accent/[0.03] px-4 py-3 text-xs sm:text-sm text-text-muted">
-          <Layers size={16} className="mt-0.5 shrink-0 text-accent" />
+          <Layers size={16} className="mt-0.5 shrink-0 text-accent" aria-hidden="true" />
           <div>
             <span className="font-semibold text-text">{activeCategoryInfo.label}: </span>
             <span>{activeCategoryInfo.description}</span>
@@ -116,20 +83,14 @@ export function WorkFilter({
         </div>
       )}
 
-      {/* Projects Grid */}
-      <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-2">
-        {filteredProjects.map((project, i) => (
-          <Reveal key={project.slug} delayMs={i * 60}>
-            <HRProjectCard
-              project={project}
-              articleCount={postCountsByProject[project.slug] ?? 0}
-            />
-          </Reveal>
-        ))}
+      <p className="sr-only" aria-live="polite">
+        {visible.length} {visible.length === 1 ? "project" : "projects"} shown
+      </p>
 
-        {filteredUpcoming.map((project, i) => (
-          <Reveal key={project.slug} delayMs={(filteredProjects.length + i) * 60}>
-            <UpcomingProjectCard project={project} />
+      <div className="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-2">
+        {visible.map((item, i) => (
+          <Reveal key={item.slug} delayMs={i * 60}>
+            {item.card}
           </Reveal>
         ))}
       </div>

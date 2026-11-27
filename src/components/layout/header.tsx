@@ -33,7 +33,18 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const firstLinkRef = useRef<HTMLAnchorElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
   const activeSection = useActiveSection(isHome ? sectionIds : NO_SECTIONS);
+
+  // Any route change closes the drawer, including browser back and forward,
+  // which never pass through a link's onClick. Adjusting state during render
+  // (rather than in an effect) avoids a frame with the drawer still open.
+  const [shownPath, setShownPath] = useState(pathname);
+  if (pathname !== shownPath) {
+    setShownPath(pathname);
+    if (open) setOpen(false);
+  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -45,13 +56,22 @@ export function Header() {
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") {
+        setOpen(false);
+        toggleRef.current?.focus();
+      }
+    };
+    // A tap or click anywhere outside the header closes the drawer.
+    const onPointerDown = (e: PointerEvent) => {
+      if (headerRef.current && !headerRef.current.contains(e.target as Node)) setOpen(false);
     };
     document.addEventListener("keydown", onKey);
+    document.addEventListener("pointerdown", onPointerDown);
     document.body.style.overflow = "hidden";
     firstLinkRef.current?.focus();
     return () => {
       document.removeEventListener("keydown", onKey);
+      document.removeEventListener("pointerdown", onPointerDown);
       document.body.style.overflow = "";
     };
   }, [open]);
@@ -65,6 +85,7 @@ export function Header() {
 
   return (
     <header
+      ref={headerRef}
       className={cn(
         "sticky top-0 z-50 border-b transition-colors duration-300",
         scrolled || open
@@ -108,10 +129,11 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-1 md:hidden">
-          <ThemeToggle className="grid h-9 w-9 place-items-center rounded-full text-text-muted transition-colors hover:text-text" />
+          <ThemeToggle className="grid h-11 w-11 place-items-center rounded-full text-text-muted transition-colors hover:text-text" />
           <button
+            ref={toggleRef}
             type="button"
-            className="grid h-9 w-9 place-items-center rounded-full text-text"
+            className="grid h-11 w-11 place-items-center rounded-full text-text"
             aria-label={open ? "Close navigation menu" : "Open navigation menu"}
             aria-expanded={open}
             aria-controls="mobile-nav"

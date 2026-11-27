@@ -409,10 +409,25 @@ export function todayInMalaysia(now: number = Date.now()): string {
  */
 export function publishedPosts(isAuthorized = false): BlogPost[] {
   const today = todayInMalaysia();
-  const raw = allPosts.filter((p) => p.date <= today);
-  if (isAuthorized) return raw;
-  return raw.map((p) => projectBlogPost(p, false));
+  const cache = isAuthorized ? authorizedCache : publicCache;
+  if (cache.day !== today) {
+    const raw = allPosts.filter((p) => p.date <= today);
+    cache.posts = isAuthorized ? raw : raw.map((p) => projectBlogPost(p, false));
+    cache.sorted = [...cache.posts].sort((a, b) => (a.date < b.date ? 1 : -1));
+    cache.day = today;
+  }
+  // A copy, so a caller that sorts or splices cannot corrupt the cache.
+  return [...cache.posts];
 }
+
+/**
+ * The published set only changes when the Malaysian date does, so the
+ * projection (a regex pass over every article) runs once per day per server
+ * instance instead of on every call.
+ */
+type PostCache = { day: string; posts: BlogPost[]; sorted: BlogPost[] };
+const publicCache: PostCache = { day: "", posts: [], sorted: [] };
+const authorizedCache: PostCache = { day: "", posts: [], sorted: [] };
 
 export function getPost(slug: string, isAuthorized = false) {
   const post = allPosts.find((p) => p.slug === slug);
@@ -457,6 +472,20 @@ export function getRelatedPosts(post: BlogPost, limit = 3, isAuthorized = false)
  * Reads the structured `relatedProjects` field, and falls back to the older
  * hand-written `related` links so no existing relationship is lost.
  */
+/** Article counts for many projects in one pass over the published articles. */
+export function getPostCountsByProject(projectSlugs: string[], isAuthorized = false): Record<string, number> {
+  const posts = sortedPosts(isAuthorized);
+  const counts: Record<string, number> = {};
+  for (const slug of projectSlugs) {
+    const keys = new Set([getOriginalSlug(slug), getPublicSlug(slug)]);
+    const hrefs = new Set([...keys].map((k) => `/work/${k}`));
+    counts[slug] = posts.filter(
+      (p) => p.relatedProjects?.some((r) => keys.has(r)) || p.related?.some((link) => hrefs.has(link.href))
+    ).length;
+  }
+  return counts;
+}
+
 export function getPostsForProject(projectSlug: string, isAuthorized = false) {
   const origSlug = getOriginalSlug(projectSlug);
   const pubSlug = getPublicSlug(projectSlug);
@@ -470,7 +499,35 @@ export function getPostsForProject(projectSlug: string, isAuthorized = false) {
 
 /** Newest first. */
 export function sortedPosts(isAuthorized = false) {
-  return publishedPosts(isAuthorized).sort((a, b) => (a.date < b.date ? 1 : -1));
+  publishedPosts(isAuthorized); // refreshes the cache on a new day
+  return [...(isAuthorized ? authorizedCache : publicCache).sorted];
+}
+
+/**
+ * The blog index is paginated so its size stays flat as the library grows:
+ * page 1 is `/blog`, later pages are `/blog/page/<n>`.
+ */
+export const BLOG_PAGE_SIZE = 40;
+
+export function blogPageCount(): number {
+  return Math.max(1, Math.ceil(sortedPosts().length / BLOG_PAGE_SIZE));
+}
+
+/** One page of the blog index, newest first; `undefined` for a page that does not exist. */
+export function getBlogPage(page: number) {
+  const total = blogPageCount();
+  if (!Number.isInteger(page) || page < 1 || page > total) return undefined;
+  const all = sortedPosts();
+  return {
+    posts: all.slice((page - 1) * BLOG_PAGE_SIZE, page * BLOG_PAGE_SIZE),
+    page,
+    totalPages: total,
+    totalPosts: all.length,
+  };
+}
+
+export function blogPageHref(page: number) {
+  return page <= 1 ? "/blog" : `/blog/page/${page}`;
 }
 
 /** Falls back to `description` so every card and meta tag has copy. */

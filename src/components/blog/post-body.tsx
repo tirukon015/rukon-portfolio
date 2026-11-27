@@ -61,7 +61,12 @@ function BlockView({ block }: { block: string | Block }) {
     case "code":
       return (
         <figure className="my-2">
-          <pre className="overflow-x-auto rounded-lg border border-border bg-bg-elevated p-4 font-mono text-[13px] leading-relaxed text-text">
+          {/* Focusable so keyboard users can scroll long lines (WCAG 2.1.1). */}
+          <pre
+            tabIndex={0}
+            aria-label={block.caption ? `Code: ${block.caption}` : block.lang ? `${block.lang} code` : "Code sample"}
+            className="overflow-x-auto rounded-lg border border-border bg-bg-elevated p-4 font-mono text-[13px] leading-relaxed text-text"
+          >
             <code>{block.code}</code>
           </pre>
           {block.caption || block.lang ? (
