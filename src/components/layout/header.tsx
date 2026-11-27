@@ -157,7 +157,12 @@ export function Header() {
                 key={item.href}
                 ref={i === 0 ? firstLinkRef : undefined}
                 href={item.href}
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  // Release the scroll lock before the router scrolls the new
+                  // page to the top; the effect cleanup would run too late.
+                  document.body.style.overflow = "";
+                  setOpen(false);
+                }}
                 aria-current={active ? "page" : undefined}
                 className={cn(
                   "border-b border-border py-4 text-lg tracking-tight transition-colors last:border-b-0",

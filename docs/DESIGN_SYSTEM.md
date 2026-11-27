@@ -28,8 +28,8 @@ Use the Tailwind utilities (`bg-bg`, `text-text-muted`, `border-border-strong`,
 | `border-strong` | `rgba(233,240,244,.16)` | `rgba(16,22,28,.18)` | chips, hover, emphasis |
 | `text` | `#edf1f4` | `#10161c` | headings, primary text |
 | `text-muted` | `#99a3ad` | `#4b5661` | body copy |
-| `text-faint` | `#757d85` | `#687179` | captions, meta, eyebrows (≥4.5:1 on bg and bg-elevated, both themes) |
-| `accent` | `#4fb2e0` | `#1977a5` | links, eyebrows, focus, primary button (≥4.5:1 as text and under white button text) |
+| `text-faint` | `#838a91` | `#656e75` | captions, meta, eyebrows (≥4.5:1 on bg, bg-elevated and accent-tinted panels, both themes) |
+| `accent` | `#4fb2e0` | `#176e99` | links, eyebrows, focus, primary button (≥4.5:1 as text and under white button text) |
 | `accent-strong` | `#7ecbee` | `#12658c` | hover states |
 | `accent-soft` | `rgba(79,178,224,.12)` | `rgba(28,133,184,.10)` | glows, selection, tinted backgrounds |
 | `accent-contrast` | `#04121a` | `#ffffff` | text on accent |

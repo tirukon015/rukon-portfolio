@@ -112,7 +112,7 @@ export default async function CategoryPage({ params }: { params: Params }) {
           {anchor ? (
             <p className="mt-4 text-sm text-text-muted">
               Most of this comes out of{" "}
-              <Link href={`/work/${anchor.slug}`} className="text-accent-strong transition-colors hover:text-accent">
+              <Link href={`/work/${anchor.slug}`} className="text-accent-strong underline decoration-accent/40 underline-offset-4 transition-colors hover:text-accent">
                 {anchor.name}
               </Link>
               .

@@ -107,13 +107,17 @@ console.log("\n4. Verifying Protected Media Isolation...");
 const publicMediaDir = path.join(process.cwd(), "public");
 const privateMediaDir = path.join(process.cwd(), "private", "media");
 
-assert(fs.existsSync(privateMediaDir), "private/media directory exists");
-
 const rpomsScreenshotInPublic = fs.existsSync(path.join(publicMediaDir, "work", "rpoms"));
 assert(!rpomsScreenshotInPublic, "No unredacted rpoms media directory exists in public/");
 
-const rpomsScreenshotInPrivate = fs.existsSync(path.join(privateMediaDir, "rpoms", "dashboard-overview.png"));
-assert(rpomsScreenshotInPrivate, "Original RPOMS dashboard screenshot exists in private/media/rpoms/dashboard-overview.png");
+// private/media is git-ignored: it exists only on the owner's machine, never
+// in a clean checkout (CI) or a Git-based deployment. Check it where present.
+if (fs.existsSync(privateMediaDir)) {
+  const rpomsScreenshotInPrivate = fs.existsSync(path.join(privateMediaDir, "rpoms", "dashboard-overview.png"));
+  assert(rpomsScreenshotInPrivate, "Original RPOMS dashboard screenshot exists in private/media/rpoms/dashboard-overview.png");
+} else {
+  console.log("  [SKIP] private/media not present (git-ignored; expected in CI and deployments)");
+}
 
 // 5. Slug Translation & Redirection
 console.log("\n5. Verifying Slug Mappings...");

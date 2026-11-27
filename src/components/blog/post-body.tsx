@@ -73,7 +73,7 @@ function BlockView({ block }: { block: string | Block }) {
             <figcaption className="mt-2 font-mono text-[11px] uppercase tracking-[0.14em] text-text-faint">
               {block.lang ? <span>{block.lang}</span> : null}
               {block.lang && block.caption ? <span aria-hidden="true"> · </span> : null}
-              {block.caption ? <span className="normal-case tracking-normal">{block.caption}</span> : null}
+              {block.caption ? <span className="normal-case tracking-normal [overflow-wrap:anywhere]">{block.caption}</span> : null}
             </figcaption>
           ) : null}
         </figure>
@@ -202,7 +202,7 @@ function inline(text: string): React.ReactNode {
       );
     } else if (match[3]) {
       parts.push(
-        <code key={match.index} className="rounded bg-bg-elevated-2 px-1.5 py-0.5 font-mono text-[0.85em] text-text">
+        <code key={match.index} className="rounded bg-bg-elevated-2 px-1.5 py-0.5 font-mono text-[0.85em] text-text [overflow-wrap:anywhere]">
           {match[3]}
         </code>
       );

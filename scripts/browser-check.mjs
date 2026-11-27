@@ -196,7 +196,18 @@ console.log(`clicked: /work ${nWork}, home ${nHome}, mobile /work ${nMobile}, he
   check("link navigates to /blog", new URL(page.url()).pathname === "/blog");
   check("closes after navigation", !(await menu.isVisible()));
   check("scroll unlocked after navigation", (await page.evaluate(() => document.body.style.overflow)) === "");
-  check("new page starts at top", (await page.evaluate(() => window.scrollY)) < 5);
+  // Smooth scrolling animates to the top of <main>, just under the sticky
+  // header: wait until the position settles, then allow the header's height.
+  const settled = await page.evaluate(async () => {
+    let last = -1;
+    for (let i = 0; i < 40 && window.scrollY !== last; i++) {
+      last = window.scrollY;
+      await new Promise((r) => setTimeout(r, 100));
+    }
+    const header = document.querySelector("header")?.getBoundingClientRect().height ?? 0;
+    return { y: window.scrollY, header };
+  });
+  check(`new page starts at top (y=${settled.y}, header ${settled.header}px)`, settled.y <= settled.header + 4);
   check("client-side navigation", await page.evaluate(() => window.__noReload === true));
 
   await toggle.click();
