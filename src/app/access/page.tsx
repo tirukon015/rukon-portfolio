@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   description:
     "Request authorized access to view confidential client identities, original project names, and unredacted case study data.",
   alternates: { canonical: "/access" },
+  robots: { index: false, follow: true },
 };
 
 const crumbs = [
