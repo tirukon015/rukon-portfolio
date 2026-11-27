@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "next typegen && tsc --noEmit",
     "test": "tsx --conditions=react-server scripts/verify-security-full.ts",
     "check:site": "node scripts/check-site.mjs",
     "check:browser": "node scripts/browser-check.mjs"
