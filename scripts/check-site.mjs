@@ -102,11 +102,18 @@ function confidentialTerms() {
   for (const m of src.matchAll(entity)) {
     if (m[1] !== m[2] && m[3] !== "hardware") terms.add(m[1]);
   }
-  // Short forms and original slugs that differ from the public slug.
+  // Original slugs that differ from the public slug.
   for (const m of src.matchAll(/^\s+"?([a-z-]+)"?:\s*"([a-z-]+)",$/gm)) if (m[1] !== m[2]) terms.add(`/work/${m[1]}`);
-  ["Blue Bee", "BBTech", "Maxis", "bbtech.com.my", "router-diagnostic"].forEach((t) => terms.add(t));
-  // A word-bounded ERTH: the client's name, never a substring of another word.
-  return { literals: [...terms], regexes: [/\bERTH\b/] };
+  // Short forms: the registry's own match patterns for every non-hardware
+  // entity whose public form differs. This file names no entity itself, so
+  // the public repository gains no new copy of a confidential name.
+  const regexes = [];
+  const block = /original:\s*"([^"]+)",\s*\n\s*publicAlternative:\s*"([^"]+)",\s*\n\s*classification:\s*"([^"]+)"[\s\S]*?patterns:\s*\[([\s\S]*?)\]/g;
+  for (const m of src.matchAll(block)) {
+    if (m[1] === m[2] || m[3] === "hardware") continue;
+    for (const p of m[4].matchAll(/\/((?:\\.|[^/\n])+)\/g/g)) regexes.push(new RegExp(p[1]));
+  }
+  return { literals: [...terms], regexes };
 }
 
 /**
@@ -122,7 +129,7 @@ function scanConfidential(label, raw, terms) {
   for (const t of terms.literals) {
     const esc = t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     // Paths end at a boundary (`/work/erth` is not `/work/erth-…`); names are
-    // case-sensitive whole words ("ERTH" is not "afterthought").
+    // case-sensitive whole words (a short acronym must not match inside a word).
     const re = t.startsWith("/work/")
       ? new RegExp(esc + "(?=[\"'?#\\s<\\\\]|$)")
       : new RegExp("(?<![A-Za-z])" + esc + "(?![A-Za-z])");
