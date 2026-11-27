@@ -263,7 +263,10 @@ console.log(`clicked: /work ${nWork}, home ${nHome}, mobile /work ${nMobile}, he
   await page.goto(BASE + "/work/rpoms/case-study", { waitUntil: "load" });
   await page.reload({ waitUntil: "load" });
   if (!(await page.locator("h1").count())) fail("refresh of a deep URL lost the page");
+  // A back/forward-cache restore resolves goBack() with no response and
+  // updates the URL a moment later, so wait for the URL itself.
   await page.goBack({ waitUntil: "load" });
+  await page.waitForURL((u) => u.pathname === "/work", { timeout: 10000 }).catch(() => null);
   if (new URL(page.url()).pathname !== "/work") fail(`back from a case study landed on ${page.url()}`);
   flush("filters/refresh/back", log);
   await context.close();
