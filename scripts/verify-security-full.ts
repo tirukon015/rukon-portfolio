@@ -67,9 +67,10 @@ assert(privFlagship?.name === "RPOMS", "Authorized flagship preserves original n
 assert(privFlagship?.image !== undefined || privFlagship?.previewFigure !== undefined, "Authorized flagship has original visual present");
 
 // 2. Blog Posts Verification
-console.log("\n2. Verifying All 173 Blog Articles...");
+console.log("\n2. Verifying the Published Blog Articles...");
 const publicPosts = publishedPosts(false);
-assert(publicPosts.length === 173, `All 173 blog posts are loaded and published (found ${publicPosts.length})`);
+// The library only grows; never fewer than the 173 articles of 27 Nov 2026.
+assert(publicPosts.length >= 173, `All published blog posts are loaded (found ${publicPosts.length}, minimum 173)`);
 
 let leakedPosts = 0;
 for (const post of publicPosts) {
@@ -79,7 +80,7 @@ for (const post of publicPosts) {
     console.error(`Leak detected in post: ${post.slug}`);
   }
 }
-assert(leakedPosts === 0, `All 173 public blog posts have 0 business leaks (Blue Bee/BBTech/Maxis)`);
+assert(leakedPosts === 0, `All ${publicPosts.length} public blog posts have 0 business leaks`);
 
 // Check hardware article context-awareness
 const hwArticle = getPost("lan-serial-number-extraction-across-router-vendors", false);
