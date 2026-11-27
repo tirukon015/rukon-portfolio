@@ -3,6 +3,33 @@
 Significant changes, newest first. Keep entries short: what changed for a
 visitor, and anything a future developer must know. Git history has the detail.
 
+## 2026-11-27 (logos restored, articles, SEO/GEO/AEO)
+
+### Restored
+- Original project logos (Laptop QC & SMBIOS Tool, Driver Inspection Tool
+  light/dark, the e-waste website project), byte-exact from before the
+  cleanup, by owner decision. Screenshots stay redacted.
+
+### Fixed
+- Name projection ran the company short name before the full tool names, so
+  one article read "Established Malaysian technology company Laptop
+  Inspection Tool"; full tool names are now replaced first.
+
+### Articles (178)
+- Five new case-study articles grounded in verified work: the client import
+  that shipped every project, OCR redaction of screenshots, replacing
+  dashboard polling with Server-Sent Events, testing the portfolio like a
+  production application, and the /work 2.5 s → 20 ms fix.
+- Thirteen early articles: self-contained question headings, one concrete
+  verified project example each, `updated` set.
+- Thirteen long titles get concise `seoTitle`s (≤70 chars).
+- Meta descriptions are cut at sentence boundaries to ≤160 chars
+  (`metaDescriptionFor`); the full description stays on the page.
+- `FAQPage` JSON-LD only where an article has at least two self-contained
+  question sections with prose answers (`faqFor`): 13 articles + new ones.
+- `npm run audit:articles` (in CI): broken/missing article and category links,
+  duplicate titles/descriptions, missing sections, short descriptions.
+
 ## 2026-11-27 (production hardening)
 
 ### Security

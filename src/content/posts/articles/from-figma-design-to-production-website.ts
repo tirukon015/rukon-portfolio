@@ -15,21 +15,22 @@ export const post: BlogPost = {
     updated: "2026-10-01",
     sections: [
       {
-        heading: "What is it?",
+        heading: "What is the path from a Figma design to a production website?",
         body: [
           "This is the process of taking a completed design file and turning it into real, working markup, styling, and behavior in a browser, then into a deployed site.",
         ],
       },
       {
-        heading: "Why does it matter?",
+        heading: "Why does the handover from design to production matter?",
         body: [
           "A design file isn't a website. Responsive behavior, real content lengths, interactive states, and performance all have to be built and decided during development, and a design that looks finished can still be a long way from a finished site.",
         ],
       },
       {
-        heading: "Real-world perspective",
+        heading: "How this worked on a production homepage",
         body: [
           "On ERTH I did the second half of this path. The client approved a design file as final, and I built the production website from it: static HTML, CSS and vanilla JavaScript bundled by Vite. That build is finished and deployed on Vercel.",
+          "The result was a static page of semantic HTML, CSS and vanilla JavaScript: about 3.7 kB of JavaScript where the design bundle carried roughly 250 kB, and 2.7 MB of images where the source assets were 12.0 MB.",
           "The gap between the two was larger than the design suggested. Rebuilding element by element surfaced four defects nobody had noticed in the prototype, including a wrapper that closed early and left one heading rendering black on a near-black background. A design file can look complete and still be some distance from a page a browser handles correctly.",
         ],
       },

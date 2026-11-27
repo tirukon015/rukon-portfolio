@@ -6,28 +6,31 @@ export const post: BlogPost = {
     description:
       "A grounded look at what IT systems work covers day to day, beyond the narrow idea of fixing computers.",
     date: "2026-08-15",
+    updated: "2026-11-27",
     category: "Developer Journey",
     tags: ["IT Systems", "IT Support"],
     contentType: "Career",
+    relatedProjects: ["rpoms", "bbtech-laptop-tool", "itms"],
     searchIntent: "informational",
     relatedPosts: ["why-system-maintenance-matters-after-deployment", "why-developers-should-understand-the-physical-process"],
     sections: [
       {
-        heading: "What is it?",
+        heading: "What does an IT systems role actually involve?",
         body: [
           "IT systems work spans hardware support, software troubleshooting, system configuration, and increasingly, building or maintaining the internal tools a business actually runs on.",
         ],
       },
       {
-        heading: "Why does it matter?",
+        heading: "Why does an IT systems role span hardware, software and operations?",
         body: [
           "The role gets flattened in most descriptions to 'fixes computers,' which misses most of what it actually is: understanding how a business's systems, hardware, software, and data fit together, and keeping that whole picture working.",
         ],
       },
       {
-        heading: "Real-world perspective",
+        heading: "How this looks in my work",
         body: [
           "My own work covers hardware troubleshooting and installation, website and system maintenance, and designing and building RPOMS, the operational system a production line depends on. Those aren't separate jobs, they're one role covering the full stack of a business's IT needs.",
+          "Alongside RPOMS, the role covers the Laptop QC & SMBIOS Tool, a portable .NET Framework utility for refurbishment technicians, and the label-printing integration for an inventory system that another developer built.",
         ],
       },
       {

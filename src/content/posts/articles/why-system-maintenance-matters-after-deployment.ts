@@ -6,6 +6,7 @@ export const post: BlogPost = {
     description:
       "Shipping an operational system is the start of the work, not the end. What ongoing maintenance actually involves.",
     date: "2026-07-14",
+    updated: "2026-11-27",
     category: "Full-Stack Development",
     tags: ["Software Engineering", "Maintenance"],
     contentType: "Experience-led",
@@ -14,21 +15,22 @@ export const post: BlogPost = {
     relatedPosts: ["what-an-it-systems-role-actually-involves"],
     sections: [
       {
-        heading: "What is it?",
+        heading: "What is system maintenance after deployment?",
         body: [
           "Maintenance here means everything that keeps a live, in-use system correct and useful after its first deployment: fixing what breaks, adjusting to new requirements, and documenting what changed.",
         ],
       },
       {
-        heading: "Why does it matter?",
+        heading: "Why does system maintenance matter after deployment?",
         body: [
           "An operational system doesn't get to be finished. The business it supports keeps changing (new product variants, new rules, new edge cases), and the software has to keep up or it starts costing the operation instead of helping it.",
         ],
       },
       {
-        heading: "Real-world perspective",
+        heading: "How this works in RPOMS",
         body: [
           "RPOMS has gone through multiple rounds of changes after its first release: new modules, a rewritten sign-in flow, documentation that didn't exist yet, security notes recorded honestly rather than quietly fixed and forgotten. That's normal for software that's actually in daily use.",
+          "By 27 November 2026 the production branch held 779 commits, with releases on 4, 6, 7, 21, 23 and 27 November alone. Each release records what it contains, how it was verified and the deployment to roll back to.",
         ],
       },
       {

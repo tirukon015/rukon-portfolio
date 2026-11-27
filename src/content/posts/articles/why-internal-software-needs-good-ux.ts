@@ -6,6 +6,7 @@ export const post: BlogPost = {
     description:
       "Internal tools get less design attention than public products, even though the people using them have no choice but to use them.",
     date: "2026-08-21",
+    updated: "2026-11-27",
     category: "UI/UX & Product",
     tags: ["UI/UX", "Software Engineering", "Admin Systems"],
     contentType: "Experience-led",
@@ -14,21 +15,22 @@ export const post: BlogPost = {
     relatedPosts: ["how-admin-panels-help-manage-operational-data"],
     sections: [
       {
-        heading: "What is it?",
+        heading: "What does good UX mean for internal software?",
         body: [
           "This is about applying real UX thinking, clear layout, sensible defaults, obvious error states, to internal tools, not just to public-facing products.",
         ],
       },
       {
-        heading: "Why does it matter?",
+        heading: "Why does internal software need good UX?",
         body: [
           "Internal software users can't switch to a competitor if the tool is confusing. That's usually treated as a reason to under-invest in its design, when it should be the opposite: they'll be in it every day, so friction compounds fast.",
         ],
       },
       {
-        heading: "Real-world perspective",
+        heading: "How this works in RPOMS",
         body: [
           "Each admin screen in RPOMS is scoped to one specific job on the floor (packing, delivery, registry) instead of being one generic form, because the people using it are doing that one job repeatedly, and the interface should match the task, not a database schema.",
+          "Scanning stations answer every scan with a sound for success, duplicate and error, so an operator can keep their eyes on the router and the scanner instead of checking the screen after each one.",
         ],
       },
       {

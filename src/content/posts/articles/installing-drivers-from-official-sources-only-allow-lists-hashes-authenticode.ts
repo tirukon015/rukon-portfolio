@@ -10,7 +10,7 @@ export const post: BlogPost = {
   tags: ["Windows", "Drivers", "Python", "PySide6", "Authenticode", "Supply Chain Security", "Refurbishment"],
   contentType: "Technical Guide",
   searchIntent: "problem-aware",
-  seoTitle: "Official-Source Driver Installation on Windows: Allow-List, Catalogue Hash and Authenticode Checks",
+  seoTitle: "Official-Source Driver Installs: Allow-Lists, Hashes, Authenticode",
   relatedProjects: ["bbtech-laptop-inspection-tool", "bbtech-laptop-tool"],
   relatedPosts: [
     "hardware-identity-vs-generated-stock-prefixes-refurbishment",

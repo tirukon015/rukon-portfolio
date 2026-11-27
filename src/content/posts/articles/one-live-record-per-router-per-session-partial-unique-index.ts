@@ -10,7 +10,7 @@ export const post: BlogPost = {
   tags: ["PostgreSQL", "Partial Index", "Concurrency", "Idempotency", "Barcode Scanning", "Next.js"],
   contentType: "Technical Guide",
   searchIntent: "informational",
-  seoTitle: "Partial Unique Index for Duplicate Scans: Concurrency Without Row Locks in PostgreSQL",
+  seoTitle: "Partial Unique Indexes Instead of Per-Scan Locks in PostgreSQL",
   relatedProjects: ["rpoms", "rpoms-print-engine"],
   relatedPosts: [
     "sending-labels-between-browser-tabs-broadcastchannel-coop-window-opener",

@@ -10,7 +10,7 @@ export const post: BlogPost = {
   tags: ["Systems Architecture", "Hardware Inspection", "SMBIOS", "Inventory Management", "ITMS", "Refurbishment"],
   contentType: "Case Study",
   searchIntent: "problem-aware",
-  seoTitle: "Hardware Identity vs Generated Stock Prefixes in IT Asset Refurbishment",
+  seoTitle: "Hardware Identity vs Generated Stock Prefixes in Refurbishment",
   relatedProjects: ["itms", "bbtech-laptop-tool"],
   relatedPosts: [
     "common-problems-manual-production-tracking",

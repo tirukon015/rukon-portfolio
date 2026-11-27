@@ -6,6 +6,7 @@ export const post: BlogPost = {
     description:
       "How to tell whether a repetitive manual task is actually worth automating, and what to check before building anything.",
     date: "2026-08-18",
+    updated: "2026-11-27",
     category: "AI & Automation",
     tags: ["Automation", "Business Systems"],
     contentType: "Problem/Solution",
@@ -14,21 +15,22 @@ export const post: BlogPost = {
     relatedPosts: ["from-manual-workflow-to-digital-workflow"],
     sections: [
       {
-        heading: "What is it?",
+        heading: "What does replacing repetitive manual work with software mean?",
         body: [
           "This is about identifying manual, repetitive work (re-typing the same data, reconciling two sheets by hand, generating the same document over and over) and deciding whether software should take it over.",
         ],
       },
       {
-        heading: "Why does it matter?",
+        heading: "Why automate repetitive operational work?",
         body: [
           "Not every repetitive task is worth automating. The ones worth it are the ones where manual repetition is also where mistakes happen: transcription errors, missed steps, inconsistent formatting. Those are the tasks where software adds real reliability, not just speed.",
         ],
       },
       {
-        heading: "Real-world perspective",
+        heading: "How this works in RPOMS",
         body: [
           "RPOMS automates exactly this kind of repetition: generating delivery paperwork from a template instead of redrawing it by hand each time, and deducting stock automatically from a report instead of updating a separate sheet afterward.",
+          "Accessory Links, released on 6 November 2026, removed another typed step: each router model is linked to its charger, LAN cable and boxes, and a Daily Report saved without accessory lines deducts them from the variant with the most stock remaining.",
         ],
       },
       {

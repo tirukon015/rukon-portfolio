@@ -10,7 +10,7 @@ export const post: BlogPost = {
   tags: ["PostgreSQL", "Indexes", "Query Performance", "EXPLAIN", "Pagination", "Next.js"],
   contentType: "Problem/Solution",
   searchIntent: "problem-aware",
-  seoTitle: "ORDER BY the Indexed Column, Not Its Text Copy: A 250,000-Row Registry Page Fix",
+  seoTitle: "Index-Served Sorting: 160 ms to Under 1 ms at 250,000 Rows",
   relatedProjects: ["rpoms"],
   relatedPosts: [
     "supabase-connection-pool-exhaustion-supavisor-production",

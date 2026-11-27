@@ -3,6 +3,7 @@ import type { BlogPost } from "../types";
 export const post: BlogPost = {
   slug: "live-github-contribution-heatmap-in-nextjs",
   title: "A Live GitHub Contribution Heatmap in Next.js, Without a Token in the Browser",
+  seoTitle: "A Live GitHub Contribution Heatmap in Next.js, Token-Free",
   description:
     "How this site's homepage renders real GitHub contribution data: a server-fetched calendar cached for an hour, a documented API with an undocumented fallback, and one small client island for the tooltip.",
   date: "2026-09-24",

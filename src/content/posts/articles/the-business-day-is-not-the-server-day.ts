@@ -3,6 +3,7 @@ import type { BlogPost } from "../types";
 export const post: BlogPost = {
   slug: "the-business-day-is-not-the-server-day",
   title: "The Business Day Is Not the Server Day: Time Zones in a Malaysian Operations System",
+  seoTitle: "The Business Day Is Not the Server Day: Time Zones in Practice",
   description:
     "A deployed server keeps UTC. A warehouse floor in Malaysia keeps UTC+8. Until eight in the morning, the two disagree about what day it is, which is long enough for a morning delivery to file itself under yesterday.",
   date: "2026-09-24",

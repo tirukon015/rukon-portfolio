@@ -10,7 +10,8 @@
     "typecheck": "next typegen && tsc --noEmit",
     "test": "tsx --conditions=react-server scripts/verify-security-full.ts",
     "check:site": "node scripts/check-site.mjs",
-    "check:browser": "node scripts/browser-check.mjs"
+    "check:browser": "node scripts/browser-check.mjs",
+    "audit:articles": "tsx --conditions=react-server scripts/audit-articles.ts --strict"
   },
   "dependencies": {
     "lucide-react": "^1.34.0",
