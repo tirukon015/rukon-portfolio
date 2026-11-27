@@ -1,3 +1,4 @@
+import "server-only";
 import type { Block, BlogPost, PostCategory, PostSection } from "./types";
 import { projectBlogPost } from "@/lib/confidentiality/projector";
 import { getOriginalSlug, getPublicSlug } from "@/lib/confidentiality/registry";

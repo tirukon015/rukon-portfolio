@@ -86,7 +86,7 @@ export const post: BlogPost = {
             "Give every read a deadline and a fallback, and give the reads where absence is meaningful a way to say \"I do not know\".",
           ],
         },
-        "The system this comes from is described in the [RPOMS case study](/work/rpoms), including which modules are live and which are held behind a write lock pending sign-off.",
+        "The system this comes from is described in the [RPOMS case study](/work/rpoms), including which modules are live and which are still switched off.",
       ],
     },
   ],

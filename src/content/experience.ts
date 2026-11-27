@@ -1,3 +1,4 @@
+import "server-only";
 import { projectExperience } from "@/lib/confidentiality/projector";
 
 export type ExperienceEntry = {
@@ -23,11 +24,11 @@ export const masterExperience: ExperienceEntry[] = [
     primary: true,
     projects: ["rpoms", "rpoms-print-engine", "rpoms-ai", "itms", "erth", "bbtech-laptop-tool", "bbtech-laptop-inspection-tool", "router-diagnostic", "erth-router-distribution"],
     bullets: [
-      "Lead RPOMS end to end: gathered requirements from the production floor, architected the data model and four-role access control, engineered over 65,000 lines of TypeScript across 96 compiled routes with 2,388 automated tests, took it to production on Vercel and Supabase, and remain its maintainer and release owner.",
+      "Lead RPOMS end to end: gathered requirements from the production floor, architected the data model and role- and grant-based access control, engineered about 160,000 lines of TypeScript with 3,323 automated tests, took it to production on Vercel and Supabase, and remain its maintainer and release owner.",
       "Built RPOMS as a full enterprise operations platform: serial-level asset tracking, real-time audio-guided scanning, packing, delivery tracking with customer QR portal, mobile electronic proof of delivery (ePOD), and a staged Control Center with an append-only production ledger using atomic folded CTEs.",
       "Built the RPOMS Print Engine, a Web Bluetooth label-printing workstation for the line, and deployed it with its Node.js and PostgreSQL backend on a self-hosted Ubuntu server behind nginx; it is my own independent project.",
       "Contributed to ITMS, BBTech's inventory management system, across its evolution: engineered dynamic formula systems and VBA status pipelines in the foundational BBTech Stock Tracker Excel workbook; since another developer built the web application, remediated production issues, conducted the SMBIOS hardware identity audit, and integrated my independent Print Engine and CSV export directly into production (commit 0f67de6).",
-      "Built BBTech Laptop Tool, a portable .NET 8 WPF utility extracting immutable SMBIOS hardware serials, battery health, and encrypted on-device QC histories across 685 automated unit tests.",
+      "Built BBTech Laptop Tool, a portable WPF utility on .NET Framework 4.7.2 extracting immutable SMBIOS hardware serials, battery health, SSD health and encrypted on-device QC histories, with 596 automated tests passing in CI.",
       "Built BBTech Laptop Inspection Tool, a Python and PySide6 desktop utility that inspects every driver on a refurbished laptop and repairs missing or outdated ones from official sources only, packaged as an installer and a portable EXE with 98 automated tests.",
       "Built ERTH Router Retest & Cleaning Operations (Next.js 15, PostgreSQL, Google OIDC PKCE), tracking multi-tiered productivity points (L1–L4) and daily target achievements across cleaning teams.",
       "Bench-tested and contributed diagnostic workflows to the WiFi Router Diagnostic Tool across Kaon, Huawei, and TP-Link hardware, automating LAN serial extraction and link-state fault recovery across 84 assertions.",

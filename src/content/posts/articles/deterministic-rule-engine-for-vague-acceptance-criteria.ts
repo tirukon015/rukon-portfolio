@@ -78,7 +78,7 @@ export const post: BlogPost = {
       heading: "Gaps become a list, not a guess",
       body: [
         "Every UNDOCUMENTED case corresponds to a question the source leaves open: where the line between small and long falls, how many marks count as multiple, whether faint marks count, whether two individually acceptable marks together become a rejection, whether a dent in one zone counts the same as in another. These are written down as open questions in the admin knowledge view. They are the questions to take back to the client.",
-        "That is why the [decision states](/blog/four-kinds-of-unclear-decision-states-for-an-ai-check) separate ERTH_RULE_INSUFFICIENT, a gap in the written criteria, from AI_UNCERTAIN, a weak model. In the reference evaluation, two of the eleven UNCLEAR answers were rule gaps. No model can close those. Only the client can, by saying what they meant.",
+        "That is why the [decision states](/blog/four-kinds-of-unclear-decision-states-for-an-ai-check) separate CLIENT_RULE_INSUFFICIENT, a gap in the written criteria, from AI_UNCERTAIN, a weak model. In the reference evaluation, two of the eleven UNCLEAR answers were rule gaps. No model can close those. Only the client can, by saying what they meant.",
       ],
     },
     {

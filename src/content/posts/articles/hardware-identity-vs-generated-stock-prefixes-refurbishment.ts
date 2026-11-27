@@ -46,7 +46,7 @@ export const post: BlogPost = {
     {
       heading: "Engineering the bridge: BBTech Laptop Tool",
       body: [
-        "To solve this identity mismatch without rebuilding the entire web application database from scratch, we developed the [BBTech Laptop Tool](/work/bbtech-laptop-tool), a portable .NET 8 desktop utility designed to run directly from a technician's USB drive.",
+        "To solve this identity mismatch without rebuilding the entire web application database from scratch, we developed the [BBTech Laptop Tool](/work/bbtech-laptop-tool), a portable .NET Framework desktop utility designed to run directly from a technician's USB drive.",
         "When plugged into a laptop under inspection, the tool queries the system's firmware via native Win32 WMI and SMBIOS interfaces, extracting four immutable hardware attributes:",
         {
           type: "list",

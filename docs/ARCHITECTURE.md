@@ -76,6 +76,17 @@ src/content/*.ts  ──►  page / section components  ──►  HTML at build
 - **site.ts** holds identity, hero copy, the meta description, nav and links.
   `skills.ts` holds capabilities and the stack; `experience.ts`, `about.ts`,
   `cv.ts` and `education.ts` hold their sections.
+- **Server-only content.** `projects.ts`, `experience.ts`, `posts/index.ts`,
+  `lib/seo.ts` and `lib/confidentiality/*` start with `import "server-only"`.
+  They hold the full project data, so a client component that imports a value
+  from them fails the build instead of shipping that data to the browser.
+  Client components import types only (`import type`), or small data-free
+  modules such as `content/project-categories.ts` (the `/work` filter's
+  categories). Scripts that import these modules run with
+  `npx tsx --conditions=react-server …`.
+- **Public slugs only.** Projects with a confidential affiliation are served at
+  their public slugs. `next.config.ts` redirects older aliases and original
+  slugs *to* the public slug, never the reverse.
 - There is **no database** and no CMS. Content changes are code changes.
 
 ## 5. API routes

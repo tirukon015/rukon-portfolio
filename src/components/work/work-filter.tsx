@@ -5,12 +5,8 @@ import { Layers } from "lucide-react";
 import { Reveal } from "@/components/ui/reveal";
 import { HRProjectCard } from "@/components/work/hr-project-card";
 import { UpcomingProjectCard } from "@/components/work/upcoming-project-card";
-import {
-  projectCategories,
-  type Project,
-  type UpcomingProject,
-  type ProjectCategorySlug,
-} from "@/content/projects";
+import type { Project, UpcomingProject, ProjectCategorySlug } from "@/content/projects";
+import { projectCategories } from "@/content/project-categories";
 
 type WorkFilterProps = {
   projects: Project[];

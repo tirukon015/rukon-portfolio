@@ -3,6 +3,46 @@
 Significant changes, newest first. Keep entries short: what changed for a
 visitor, and anything a future developer must know. Git history has the detail.
 
+## 2026-11-27
+
+### Fixed (confidentiality)
+- `/work` no longer ships the full project dataset to the browser. The client
+  work filter imported a value from `content/projects.ts`, which bundled every
+  project, including original names and a hidden project, into a client chunk.
+  Categories moved to `content/project-categories.ts`; the content and
+  confidentiality modules are now `server-only` (package added). Verified: no
+  confidential term in any `.next/static` chunk.
+- Redirects now point older aliases and original slugs to the public slugs.
+  Previously three public aliases redirected to the original slugs.
+- Image files renamed to public-slug names (`laptop-qc-tool-mark.png`,
+  `driver-inspection-tool-mark*.png`, `e-waste-platform-mark.png`,
+  `router-retest-distribution-mark.svg`).
+- Code examples in five articles used client-derived identifiers that the
+  render-time projection cannot rewrite; renamed to neutral ones. The JSON-LD
+  example in the structured-data article now uses placeholder names and URLs.
+- Removed internal switch names and a private storage name from the RPOMS case
+  study. Internal working notes and a content preview report moved out of this
+  repository; a preview URL was scrubbed from `PORTFOLIO_UI_POLISH.md`.
+
+### Updated (verified against repositories, CI runs and deployments, 27 Nov)
+- **RPOMS:** about 160,000 lines of TypeScript, 55 pages and 148 API route
+  handlers, 3,323 tests passing in CI (26 Nov), 779 commits on the production
+  branch. Control Center marked live (6 Nov release). The old write-lock status
+  removed. New status rows for the 21, 23 and 27 November releases; the
+  27 November features are marked *available* (deployed behind switches,
+  activation not recorded). The registry's 250,000 figure is now described as
+  a load test, not a production count. Limitations and roadmap updated for
+  named accounts and employee IDs. The same figures updated in About,
+  Experience, FAQ and CV.
+- **Print Engine:** removed the claim that the health endpoint reports a commit
+  (it no longer does).
+- **ITMS:** Laptop Tool intake deployed to production on 8 Nov; 262 tests
+  passing in CI (was 119).
+- **Laptop Tool:** corrected the platform to .NET Framework 4.7.2 (it never
+  targeted .NET 8); 596 tests passing in CI (was 685, which could not be
+  verified); removed libraries it does not use; added the v1.2.0 release
+  (UTF-8 JSON QR intake, SSD health).
+
 ## 2026-11-06
 
 ### Updated

@@ -66,8 +66,8 @@ the earlier report conflated them.
    writing in production. See the status table on `/work/rpoms`.
 4. No article claims ResearchForge performs retrieval, or is a RAG system.
 5. Figma-based design and prototyping on ERTH is supported evidence (the
-   ERTH V2.3 prototype). Sole design authorship is not. See
-   `../ERTH_REMAINING_ITEMS.md`.
+   ERTH V2.3 prototype). Sole design authorship is not. The evidence notes
+   are kept in the private Portfolio Update System repository.
 6. Location is used only where the search intent or the local context genuinely
    differs. No city-swap variants.
 

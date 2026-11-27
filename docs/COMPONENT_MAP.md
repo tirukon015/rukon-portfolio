@@ -96,7 +96,8 @@ Where each piece of the UI lives and what uses it. Paths are relative to `src/`.
 | Change | File |
 | --- | --- |
 | Hero text, facts, nav, meta description, socials | `content/site.ts` |
-| Add or edit a project (cards, both project pages, sitemap) | `content/projects.ts` + `public/images/<slug>/` |
+| Add or edit a project (cards, both project pages, sitemap) | `content/projects.ts` + `public/images/<slug>/` (server-only; name images by the *public* slug) |
+| Work categories (also used by the client-side `/work` filter) | `content/project-categories.ts` |
 | Capabilities or stack | `content/skills.ts` |
 | Experience / About / CV page data | `content/experience.ts`, `about.ts`, `cv.ts`, `education.ts` |
 | New article | `content/posts/articles/<slug>.ts` + register in `content/posts/index.ts` |

@@ -36,7 +36,7 @@ export const post: BlogPost = {
         {
           type: "code",
           lang: "json",
-          code: "{\n  \"@context\": \"https://schema.org\",\n  \"@type\": [\"Organization\", \"RecyclingCenter\"],\n  \"name\": \"ERTH\",\n  \"alternateName\": \"Electronic Recycling Through Heroes\",\n  \"legalName\": \"...\",\n  \"url\": \"https://erth.app/\",\n  \"logo\": \"https://erth.app/logo.png\",\n  \"address\": { \"@type\": \"PostalAddress\", \"addressLocality\": \"Cyberjaya\", \"addressRegion\": \"Selangor\", \"addressCountry\": \"MY\", \"...\": \"...\" },\n  \"areaServed\": [\"Kuala Lumpur\", \"Petaling Jaya\", \"Shah Alam\", \"Klang Valley\", \"Johor Bahru\", \"Penang\"],\n  \"sameAs\": [\"...\"]\n}",
+          code: "{\n  \"@context\": \"https://schema.org\",\n  \"@type\": [\"Organization\", \"RecyclingCenter\"],\n  \"name\": \"Example Recycling\",\n  \"legalName\": \"...\",\n  \"url\": \"https://example.com/\",\n  \"logo\": \"https://example.com/logo.png\",\n  \"address\": { \"@type\": \"PostalAddress\", \"addressLocality\": \"Cyberjaya\", \"addressRegion\": \"Selangor\", \"addressCountry\": \"MY\", \"...\": \"...\" },\n  \"areaServed\": [\"Kuala Lumpur\", \"Petaling Jaya\", \"Shah Alam\", \"Klang Valley\", \"Johor Bahru\", \"Penang\"],\n  \"sameAs\": [\"...\"]\n}",
           caption: "Shape of the shipped node, with contact fields elided. The live page carries description, email, telephone, the full street address and postal code.",
         },
         "Two requirement fields shaped the markup more than they appear to. \"Use Multiple Locations: No\" means one `PostalAddress` for the Cyberjaya premises, not a list of branches. The areas the service collects from are a different fact, so they go in `areaServed` as place names. Mixing the two, by inventing addresses for areas served, would have described branches that do not exist.",
@@ -65,7 +65,7 @@ export const post: BlogPost = {
     {
       heading: "Canonical and content that a crawler can read without JavaScript",
       body: [
-        "The canonical URL, `og:url`, `robots.txt` and `sitemap.xml` all name the client's domain, `https://erth.app/`, as the requirements specified. They are deliberately independent of the Vercel deployment URL, so they are already right when the custom domain is attached. The reasoning is the same as in [Canonicals That Pointed at a Redirect](/blog/canonical-urls-apex-www-308-sitemap-redirects-nextjs): a canonical names the URL you want indexed, not the one the build ran on.",
+        "The canonical URL, `og:url`, `robots.txt` and `sitemap.xml` all name the client's own domain, as the requirements specified. They are deliberately independent of the Vercel deployment URL, so they are already right when the custom domain is attached. The reasoning is the same as in [Canonicals That Pointed at a Redirect](/blog/canonical-urls-apex-www-308-sitemap-redirects-nextjs): a canonical names the URL you want indexed, not the one the build ran on.",
         "All page content, the FAQ answers included, is in the static HTML. Nothing depends on JavaScript to be crawlable, which matters for the FAQ in particular: each question is an `h3` followed by its answer as a paragraph, in the HTML the server sends, not text fetched or rendered on demand.",
       ],
     },
