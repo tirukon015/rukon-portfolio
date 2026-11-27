@@ -1115,6 +1115,12 @@ export const allProjects: Project[] = [
           "Live since 29 September 2026 at print.rukon.dev, and since October also at print.neksdev.tech with sign-in on each hostname, on a self-hosted Ubuntu server: nginx, a systemd service and PostgreSQL. The health endpoint reports the PostgreSQL store and Google sign-in.",
       },
       {
+        label: "Release 1.0.1: multi-origin RPOMS link",
+        state: "implemented",
+        detail:
+          "Released 9 November 2026 and served at print.rukon.dev (the live app bundle reports 1.0.1): several trusted RPOMS origins, RPOMS's Printing page answered from the Print Engine tab it opened, and a production engine that refuses requests from local pages.",
+      },
+      {
         label: "Dashboard, gated deploys, approved migrations",
         state: "implemented",
         detail:
@@ -1410,7 +1416,7 @@ export const allProjects: Project[] = [
     ],
     image: {
       src: "/images/e-waste-platform-mark.png",
-      alt: "ERTH mark",
+      alt: "E-waste platform mark",
       variant: "mark",
     },
     links: [
@@ -3536,7 +3542,7 @@ export const allProjects: Project[] = [
     image: {
       src: "/images/driver-inspection-tool-mark.png",
       srcDark: "/images/driver-inspection-tool-mark-dark.png",
-      alt: "BBTech Laptop Inspection Tool wordmark",
+      alt: "Driver inspection tool mark",
       variant: "mark",
     },
     links: [
@@ -3667,11 +3673,6 @@ export const allProjects: Project[] = [
       "Stripe integration for automated extra link quota purchasing",
     ],
     links: [
-      {
-        label: "GitHub Repository",
-        href: "https://github.com/tirukon015/link-nest",
-        external: true,
-      },
       {
         label: "Rukon Link Case Study",
         href: "/work/rukon-link",

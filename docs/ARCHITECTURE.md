@@ -84,6 +84,13 @@ src/content/*.ts  ──►  page / section components  ──►  HTML at build
   modules such as `content/project-categories.ts` (the `/work` filter's
   categories). Scripts that import these modules run with
   `npx tsx --conditions=react-server …`.
+- **Lists render on the server.** `/work` renders every card on the server and
+  hands the client filter only `{slug, categories, card}`; the blog index is
+  paginated (`BLOG_PAGE_SIZE`). `publishedPosts()` caches the projected list
+  per Malaysian day, so listings do not re-run the projection per request.
+- **Verification.** `npm run check:site` and `npm run check:browser` run
+  against a started build (CI does both); public images are OCR-checked when
+  screenshots change (see the private update-system repo for the procedure).
 - **Public slugs only.** Projects with a confidential affiliation are served at
   their public slugs. `next.config.ts` redirects older aliases and original
   slugs *to* the public slug, never the reverse.

@@ -3,6 +3,41 @@
 Significant changes, newest first. Keep entries short: what changed for a
 visitor, and anything a future developer must know. Git history has the detail.
 
+## 2026-11-27 (production hardening)
+
+### Security
+- Next.js 16.3.2 → 16.4.6: fixes critical advisories (unauthenticated RCE,
+  incl. the image optimisation API); `npm audit` clean.
+- Screenshots and marks sanitised in the pixels: client and employer names,
+  logos and client hardware models are redacted or replaced in every RPOMS
+  and Print Engine screenshot, the RPOMS social image and three project
+  marks. Verified by OCR over every public image.
+- robots.txt disallows `/admin` and `/access`; `/access` is `noindex`.
+- A link to a private repository (404 for visitors) removed.
+
+### Fixed
+- `/work`: 2.3–3.2 s server time per request → ~20 ms. Article counts no
+  longer re-project every article per project, and the published/projected
+  article list is cached per day.
+- `/work` cards render on the server; the client filter receives only
+  categories and finished markup (no project objects in the page payload).
+- Mobile menu closes on browser back/forward and on an outside tap; Escape
+  returns focus to the button; 44 px touch targets.
+- Scroll reveal: a tall element could never meet the 15 % threshold and stayed
+  invisible; it now reveals on first pixel. Content is visible without JS.
+- Accessibility: contrast tokens (`text-faint` both themes, light `accent`)
+  raised to ≥4.5:1; project overview is a valid `<dl>`; code blocks are
+  keyboard-scrollable; work filter uses toggle buttons (`aria-pressed`).
+
+### Added
+- Blog pagination (`/blog`, `/blog/page/<n>`, 40 per page) so the index stays
+  flat as the library grows; pages are in the sitemap.
+- `npm run typecheck | test | check:site | check:browser`, all run in CI:
+  route/link/image/metadata/JSON-LD/feed/robots/404 and confidentiality
+  checks over the running build, plus a real-browser pass (console, network,
+  overflow at ten widths, project clicks, mobile menu, filters, axe, CLS).
+- Print Engine status: release 1.0.1 (live bundle verified).
+
 ## 2026-11-27
 
 ### Fixed (confidentiality)
