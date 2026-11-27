@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { projects } from "@/content/projects";
-import { publishedPosts, sortedPosts, usedCategories } from "@/content/posts";
+import { blogPageCount, blogPageHref, publishedPosts, sortedPosts, usedCategories } from "@/content/posts";
 import { categoryMeta } from "@/content/categories";
 import { BASE_URL } from "@/lib/seo";
 
@@ -48,6 +48,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.75,
     }));
 
+  const blogPageRoutes: MetadataRoute.Sitemap = Array.from({ length: Math.max(0, blogPageCount() - 1) }, (_, i) => ({
+    url: `${BASE_URL}${blogPageHref(i + 2)}`,
+    lastModified: latest,
+    changeFrequency: "weekly" as const,
+    priority: 0.4,
+  }));
+
   const used = new Set(usedCategories());
   const categoryRoutes: MetadataRoute.Sitemap = categoryMeta
     .filter((c) => used.has(c.name))
@@ -68,5 +75,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.5,
   }));
 
-  return [...staticRoutes, ...projectRoutes, ...caseStudyRoutes, ...categoryRoutes, ...postRoutes];
+  return [...staticRoutes, ...blogPageRoutes, ...projectRoutes, ...caseStudyRoutes, ...categoryRoutes, ...postRoutes];
 }
