@@ -215,47 +215,51 @@ export default async function ProjectOverviewPage({ params }: { params: Params }
           </Reveal>
 
           {/* Scannable Metadata Grid: Role Prominently Stated */}
-          <Reveal delayMs={80} className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 rounded-2xl border border-border/80 bg-bg-elevated p-6 shadow-sm">
+          <Reveal delayMs={80} className="mt-8">
+           <dl className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 rounded-2xl border border-border/80 bg-bg-elevated p-6 shadow-sm">
             <div className="border-b border-border/60 pb-4 sm:border-b-0 sm:border-r sm:pr-4 sm:pb-0">
-              <div className="flex items-center gap-1.5 text-accent">
-                <User size={14} className="shrink-0" />
-                <dt className="font-mono text-[11px] uppercase tracking-wider font-bold">Role</dt>
-              </div>
-              <dd className="mt-2 text-base font-bold text-text">
-                {project.hrOverview?.role || "Sole Developer"}
+              <dt className="flex items-center gap-1.5 text-accent font-mono text-[11px] uppercase tracking-wider font-bold">
+                <User size={14} className="shrink-0" aria-hidden="true" />
+                Role
+              </dt>
+              <dd className="mt-2">
+                <span className="block text-base font-bold text-text">
+                  {project.hrOverview?.role || "Sole Developer"}
+                </span>
+                {project.hrOverview?.roleScope && (
+                  <span className="mt-1 block text-xs leading-normal text-text-muted">
+                    {project.hrOverview.roleScope}
+                  </span>
+                )}
               </dd>
-              {project.hrOverview?.roleScope && (
-                <p className="mt-1 text-xs leading-normal text-text-muted">
-                  {project.hrOverview.roleScope}
-                </p>
-              )}
             </div>
 
             <div className="border-b border-border/60 pb-4 sm:border-b-0 lg:border-r lg:pr-4 lg:pb-0">
-              <div className="flex items-center gap-1.5 text-text-faint">
-                <Building2 size={14} className="shrink-0" />
-                <dt className="font-mono text-[11px] uppercase tracking-wider">Context / Client</dt>
-              </div>
+              <dt className="flex items-center gap-1.5 text-text-faint font-mono text-[11px] uppercase tracking-wider">
+                <Building2 size={14} className="shrink-0" aria-hidden="true" />
+                Context / Client
+              </dt>
               <dd className="mt-2 text-sm font-semibold text-text">
                 {project.hrOverview?.context || project.affiliation}
               </dd>
             </div>
 
             <div className="border-b border-border/60 pb-4 sm:border-b-0 sm:border-r sm:pr-4 sm:pb-0">
-              <div className="flex items-center gap-1.5 text-text-faint">
-                <Calendar size={14} className="shrink-0" />
-                <dt className="font-mono text-[11px] uppercase tracking-wider">Timeline / Period</dt>
-              </div>
+              <dt className="flex items-center gap-1.5 text-text-faint font-mono text-[11px] uppercase tracking-wider">
+                <Calendar size={14} className="shrink-0" aria-hidden="true" />
+                Timeline / Period
+              </dt>
               <dd className="mt-2 text-sm font-semibold text-text">{project.period}</dd>
             </div>
 
             <div>
-              <div className="flex items-center gap-1.5 text-text-faint">
-                <FolderGit2 size={14} className="shrink-0" />
-                <dt className="font-mono text-[11px] uppercase tracking-wider">Category</dt>
-              </div>
+              <dt className="flex items-center gap-1.5 text-text-faint font-mono text-[11px] uppercase tracking-wider">
+                <FolderGit2 size={14} className="shrink-0" aria-hidden="true" />
+                Category
+              </dt>
               <dd className="mt-2 text-sm font-bold text-accent">{project.category}</dd>
             </div>
+           </dl>
           </Reveal>
 
           {/* Key Value Highlights Box */}

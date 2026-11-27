@@ -3,9 +3,11 @@ import { Container } from "@/components/ui/container";
 import { Reveal } from "@/components/ui/reveal";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { JsonLd } from "@/components/seo/json-ld";
-import { WorkFilter } from "@/components/work/work-filter";
+import { WorkFilter, type WorkFilterItem } from "@/components/work/work-filter";
+import { HRProjectCard } from "@/components/work/hr-project-card";
+import { UpcomingProjectCard } from "@/components/work/upcoming-project-card";
 import { allProjects, publicProjects, upcomingProjects, type Project } from "@/content/projects";
-import { getPostsForProject } from "@/content/posts";
+import { getPostCountsByProject } from "@/content/posts";
 import { site } from "@/content/site";
 import { isAuthorizedSession } from "@/lib/confidentiality/auth";
 import {
@@ -67,11 +69,24 @@ export default async function WorkIndexPage() {
     breadcrumbSchema(crumbs)
   );
 
-  // Precompute post counts for fast client rendering
-  const postCountsByProject: Record<string, number> = {};
-  for (const p of currentProjects) {
-    postCountsByProject[p.slug] = getPostsForProject(p.slug, isAuthorized).length;
-  }
+  // One pass over the articles for every project's count, and the cards are
+  // rendered here on the server: the client filter receives only categories
+  // and finished markup, never project data.
+  const counts = getPostCountsByProject(currentProjects.map((p) => p.slug), isAuthorized);
+  const items: WorkFilterItem[] = [
+    ...currentProjects.map((p) => ({
+      slug: p.slug,
+      categorySlug: p.categorySlug,
+      categories: p.categories,
+      card: <HRProjectCard project={p} articleCount={counts[p.slug] ?? 0} />,
+    })),
+    ...upcomingProjects.map((p) => ({
+      slug: p.slug,
+      categorySlug: p.categorySlug,
+      categories: p.categories,
+      card: <UpcomingProjectCard project={p} />,
+    })),
+  ];
 
   return (
     <div className="pt-6 pb-16 sm:pb-20 lg:pb-24">
@@ -90,11 +105,7 @@ export default async function WorkIndexPage() {
         </Reveal>
 
         {/* Category Navigation & Level 1 HR Overviews */}
-        <WorkFilter
-          projects={currentProjects}
-          upcomingProjects={upcomingProjects}
-          postCountsByProject={postCountsByProject}
-        />
+        <WorkFilter items={items} />
       </Container>
     </div>
   );

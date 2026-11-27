@@ -1,3 +1,4 @@
+import "server-only";
 import type { Metadata } from "next";
 import { site } from "@/content/site";
 

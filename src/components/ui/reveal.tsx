@@ -31,7 +31,9 @@ export function Reveal({ children, className, delayMs = 0, as = "div" }: RevealP
           }
         }
       },
-      { threshold: 0.15, rootMargin: "0px 0px -8% 0px" }
+      // Any visible pixel: a ratio threshold can never be met by an element
+      // much taller than the viewport, which would then stay hidden for good.
+      { threshold: 0, rootMargin: "0px 0px -8% 0px" }
     );
 
     observer.observe(el);

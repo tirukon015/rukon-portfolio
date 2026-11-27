@@ -36,7 +36,7 @@ export const post: BlogPost = {
           code: `CREATE OR REPLACE FUNCTION erth_references_guard() RETURNS trigger AS $$
 BEGIN
   IF OLD.protected THEN
-    RAISE EXCEPTION 'ERTH reference % is protected and cannot be modified', OLD.item;
+    RAISE EXCEPTION 'Reference % is protected and cannot be modified', OLD.item;
   END IF;
   IF TG_OP = 'DELETE' THEN RETURN OLD; END IF;
   RETURN NEW;

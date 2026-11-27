@@ -55,12 +55,21 @@ const permanentRedirects = [
   { from: "/work/device-vision-grading/case-study", to: "/work/rpoms-ai/case-study" },
   { from: "/work/asset-inventory-management", to: "/work/itms" },
   { from: "/work/asset-inventory-management/case-study", to: "/work/itms/case-study" },
-  { from: "/work/hardware-qc-tool", to: "/work/bbtech-laptop-tool" },
-  { from: "/work/hardware-qc-tool/case-study", to: "/work/bbtech-laptop-tool/case-study" },
-  { from: "/work/driver-inspection-tool", to: "/work/bbtech-laptop-inspection-tool" },
-  { from: "/work/driver-inspection-tool/case-study", to: "/work/bbtech-laptop-inspection-tool/case-study" },
-  { from: "/work/device-operations-cleaning", to: "/work/erth-router-distribution" },
-  { from: "/work/device-operations-cleaning/case-study", to: "/work/erth-router-distribution/case-study" },
+  // Projects with a confidential affiliation are served only at their public
+  // slugs. Older aliases and the original slugs redirect there, never the other
+  // way round, so a redirect never puts a confidential name in the address bar.
+  { from: "/work/hardware-qc-tool", to: "/work/laptop-qc-tool" },
+  { from: "/work/hardware-qc-tool/case-study", to: "/work/laptop-qc-tool/case-study" },
+  { from: "/work/bbtech-laptop-tool", to: "/work/laptop-qc-tool" },
+  { from: "/work/bbtech-laptop-tool/case-study", to: "/work/laptop-qc-tool/case-study" },
+  { from: "/work/bbtech-laptop-inspection-tool", to: "/work/driver-inspection-tool" },
+  { from: "/work/bbtech-laptop-inspection-tool/case-study", to: "/work/driver-inspection-tool/case-study" },
+  { from: "/work/device-operations-cleaning", to: "/work/router-retest-distribution" },
+  { from: "/work/device-operations-cleaning/case-study", to: "/work/router-retest-distribution/case-study" },
+  { from: "/work/erth-router-distribution", to: "/work/router-retest-distribution" },
+  { from: "/work/erth-router-distribution/case-study", to: "/work/router-retest-distribution/case-study" },
+  { from: "/work/erth", to: "/work/e-waste-circularity-platform" },
+  { from: "/work/erth/case-study", to: "/work/e-waste-circularity-platform/case-study" },
 ];
 
 const nextConfig: NextConfig = {

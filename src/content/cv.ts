@@ -95,7 +95,7 @@ export const cv = {
     },
     {
       title: "RPOMS: Enterprise Operations Management Platform",
-      body: "Designed, engineered, and deployed a real-world operations platform for a major Malaysian telecommunications and technology enterprise programme: serial-level asset tracking, audio-guided scanning, delivery tracking with customer QR portal, mobile electronic proof of delivery (ePOD) digital signatures, and real-time Control Center monitoring with an immutable production ledger across 2,388 automated tests.",
+      body: "Designed, engineered, and deployed a real-world operations platform for a major Malaysian telecommunications and technology enterprise programme: serial-level asset tracking, audio-guided scanning, delivery tracking with customer QR portal, mobile electronic proof of delivery (ePOD) digital signatures, and real-time Control Center monitoring with an append-only production ledger, verified by 3,323 automated tests.",
     },
     {
       title: "E-Waste Circularity: Business Web Development",

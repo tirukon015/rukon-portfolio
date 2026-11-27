@@ -1,3 +1,4 @@
+import "server-only";
 import type { Project, CaseStudySection, CaseStudyFigure, HROverview, ProjectStatusItem, RelatedSystem } from "@/content/projects";
 import type { ExperienceEntry } from "@/content/experience";
 import type { BlogPost, PostSection } from "@/content/posts/types";

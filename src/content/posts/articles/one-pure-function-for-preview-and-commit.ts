@@ -57,7 +57,7 @@ export const post: BlogPost = {
         {
           type: "code",
           lang: "ts",
-          code: `if (source === "ERTH_INVENTORY") {
+          code: `if (source === "CLIENT_INVENTORY") {
   return { ...base, raw: { router: 0, charger: -n, smallBox: -n }, /* ... */ };
 }
 // Both storerooms: consumed when packed, so no raw movement at all.
@@ -65,7 +65,7 @@ return {
   ...base,
   raw: { router: 0, charger: 0, smallBox: 0 },
   variantWrites: [],
-  erthStoreroom: source === "ERTH_STOREROOM" ? -n : 0,
+  clientStoreroom: source === "CLIENT_STOREROOM" ? -n : 0,
   bbtechStoreroom: source === "BBTECH_STOREROOM" ? -n : 0,
   // ...
 };`,
@@ -88,7 +88,7 @@ return {
     // ...
     raw: { router: flip(raw.router), charger: flip(raw.charger), smallBox: flip(raw.smallBox) },
     variantWrites: (executed.variantWrites ?? []).map((w) => ({ ...w, delta: -w.delta })),
-    erthStoreroom: flip(executed.erthStoreroom),
+    clientStoreroom: flip(executed.clientStoreroom),
     // ...
   };
 }`,

@@ -384,7 +384,7 @@ staged.
 Platform: Vercel, project `rpoms/rukon-portfolio` (existing project, unchanged
 domain and DNS)
 
-Deployment: **SUCCESS**, `rukon-portfolio-9nmjmw9eu-rpoms.vercel.app`, target
+Deployment: **SUCCESS**, target
 production
 
 Production URL: `https://www.rukon.dev`

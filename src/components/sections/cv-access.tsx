@@ -493,7 +493,7 @@ function ProtectedField({
             type="button"
             onClick={onRequest}
             disabled={busy}
-            aria-label={`${label} is protected. Request access to view it.`}
+            aria-label={`Click to view ${label} (protected: request access)`}
             className="group flex w-full flex-col items-start gap-1.5 rounded-lg text-left outline-none focus-visible:outline-2 focus-visible:outline-accent disabled:opacity-60"
           >
             <span

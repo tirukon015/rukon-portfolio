@@ -20,7 +20,7 @@ export const faqs: FaqItem[] = [
   {
     question: "What is RPOMS?",
     answer:
-      "RPOMS is a Router Production Operations Management System built for an enterprise router-refurbishment programme run by an established Malaysian technology company. It covers the full operational path a router takes, from intake and serial registry through audio-guided cleaning, packing into numbered boxes, delivery tracking with customer QR verification, mobile electronic proof of delivery (ePOD), and real-time Control Center monitoring with an immutable production ledger. Built across 96 compiled routes and over 65,000 lines of TypeScript with 2,388 automated tests. I designed, built and deployed it and remain its maintainer.",
+      "RPOMS is a Router Production Operations Management System built for an enterprise router-refurbishment programme run by an established Malaysian technology company. It covers the full operational path a router takes, from intake and serial registry through audio-guided cleaning, packing into numbered boxes, delivery tracking with customer QR verification, mobile electronic proof of delivery (ePOD), and real-time Control Center monitoring with an immutable production ledger. It is about 160,000 lines of TypeScript with 3,323 automated tests. I designed, built and deployed it and remain its maintainer.",
   },
   {
     question: "What is ResearchForge?",

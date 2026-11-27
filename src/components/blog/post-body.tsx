@@ -61,14 +61,19 @@ function BlockView({ block }: { block: string | Block }) {
     case "code":
       return (
         <figure className="my-2">
-          <pre className="overflow-x-auto rounded-lg border border-border bg-bg-elevated p-4 font-mono text-[13px] leading-relaxed text-text">
+          {/* Focusable so keyboard users can scroll long lines (WCAG 2.1.1). */}
+          <pre
+            tabIndex={0}
+            aria-label={block.caption ? `Code: ${block.caption}` : block.lang ? `${block.lang} code` : "Code sample"}
+            className="overflow-x-auto rounded-lg border border-border bg-bg-elevated p-4 font-mono text-[13px] leading-relaxed text-text"
+          >
             <code>{block.code}</code>
           </pre>
           {block.caption || block.lang ? (
             <figcaption className="mt-2 font-mono text-[11px] uppercase tracking-[0.14em] text-text-faint">
               {block.lang ? <span>{block.lang}</span> : null}
               {block.lang && block.caption ? <span aria-hidden="true"> · </span> : null}
-              {block.caption ? <span className="normal-case tracking-normal">{block.caption}</span> : null}
+              {block.caption ? <span className="normal-case tracking-normal [overflow-wrap:anywhere]">{block.caption}</span> : null}
             </figcaption>
           ) : null}
         </figure>
@@ -197,7 +202,7 @@ function inline(text: string): React.ReactNode {
       );
     } else if (match[3]) {
       parts.push(
-        <code key={match.index} className="rounded bg-bg-elevated-2 px-1.5 py-0.5 font-mono text-[0.85em] text-text">
+        <code key={match.index} className="rounded bg-bg-elevated-2 px-1.5 py-0.5 font-mono text-[0.85em] text-text [overflow-wrap:anywhere]">
           {match[3]}
         </code>
       );

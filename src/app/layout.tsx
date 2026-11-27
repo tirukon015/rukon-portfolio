@@ -57,6 +57,12 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        {/* Without JavaScript the reveal observer never runs; show content as-is. */}
+        <noscript>
+          <style>{"[data-reveal]{opacity:1!important;transform:none!important}"}</style>
+        </noscript>
+      </head>
       <body className="min-h-full flex flex-col bg-bg text-text">
         <JsonLd data={graph(personSchema(isAuthorized), websiteSchema())} />
         <ThemeProvider attribute="data-theme" defaultTheme="system" enableSystem>

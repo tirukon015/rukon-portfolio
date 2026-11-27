@@ -1,5 +1,7 @@
+import "server-only";
 import { projectProject } from "@/lib/confidentiality/projector";
 import { getOriginalSlug } from "@/lib/confidentiality/registry";
+import { projectCategories } from "./project-categories";
 
 /**
  * A screenshot or diagram placed under a section's copy.
@@ -185,25 +187,26 @@ export const allProjects: Project[] = [
     fullName: "Router Production Operations Management System",
     tagline: "An operations platform, WMS/ERP-like in shape, powering a live enterprise router-refurbishment line.",
     summary:
-      "The operations platform that replaced manual spreadsheets on a live router-refurbishment line: daily production reporting that deducts stock as it saves, serial-level tracking from acceptance into numbered boxes and out on deliveries, automated delivery paperwork generated from the office's Word template, customer QR verification portals, electronic proof of delivery (ePOD), real-time Control Center monitoring, and a stock-request portal for Ecommerce. Designed, built, deployed and maintained by me alone as a Next.js, TypeScript and PostgreSQL (Supabase) application: over 65,000 lines of TypeScript across 96 compiled routes and 2,388 automated tests.",
+      "The operations platform that replaced manual spreadsheets on a live router-refurbishment line: daily production reporting that deducts stock as it saves, serial-level tracking from acceptance into numbered boxes and out on deliveries, automated delivery paperwork generated from the office's Word template, customer QR verification portals, electronic proof of delivery (ePOD), real-time Control Center monitoring, and a stock-request portal for Ecommerce. Designed, built, deployed and maintained by me alone as a Next.js, TypeScript and PostgreSQL (Supabase) application: about 160,000 lines of TypeScript, 55 pages and 148 API route handlers, and 3,323 automated tests passing in CI.",
     category: "Systems / ERP / WMS",
     categorySlug: "systems",
     categories: ["Systems / ERP / WMS", "Web Apps / Software"],
     hrOverview: {
       valueProposition:
-        "Full-stack operations platform for an enterprise router-refurbishment facility: intake scanning, real-time audio-guided cleaning, multi-box packing, QR delivery tracking with mobile ePOD, and immutable ledger accounting across 250,000+ devices.",
+        "Full-stack operations platform for an enterprise router-refurbishment facility: intake scanning, real-time audio-guided cleaning, multi-box packing, QR delivery tracking with mobile ePOD, and an append-only production ledger.",
       role: "IT Systems & Operations Lead",
       roleScope: "IT Systems Architecture, Full-Stack Engineering, Production Line Operations & Deployment",
       context: "Blue Bee Technologies × ERTH × Maxis programme (Cyberjaya, Malaysia)",
       highlights: [
         "Replaced manual spreadsheets with one unified operational platform covering stock intake, technical acceptance, box packing, delivery dispatch, customer tracking, and daily reporting",
-        "November 2026 production release: Delivery Tracking & Electronic Proof of Delivery (ePOD) featuring customer QR portal, mobile digital signature capture, and private blob evidence storage",
-        "Staged Real-Time Control Center with append-only production ledger using folded CTEs inside router-move statements to guarantee zero round trips and zero duplicate writes",
+        "4 November 2026 production release: Delivery Tracking & Electronic Proof of Delivery (ePOD) featuring customer QR portal, mobile digital signature capture, and private blob evidence storage",
+        "Late-November releases: named staff and customer accounts with emailed one-time codes, a Supervisor access preset, a dashboard that updates live over Server-Sent Events, and the Dashboard downloadable as a PDF or PNG Daily Report",
+        "Control Center in production since 6 November 2026, with an append-only production ledger written by folded CTEs inside the router-move statements: no extra round trip, and no duplicate entry on retries",
         "Serial-level traceability from acceptance barcode scan to numbered box, delivery dispatch, and automated Delivery Order documentation generated from the office's Word template",
         "Integrated real-time audio feedback cues across six warehouse scanning modules, boosting scanning throughput and eliminating head-up display checking",
-        "Hardened registry benchmarked across 250,000+ routers with pg_trgm fuzzy search; full backup dump and restore proven on production copy",
+        "Registry load-tested at 250,000 routers on staging (indexed first page under 1 ms); full backup dump and restore proven on a production copy",
         "Multi-cycle hardware rework architecture tracking routers through secondary repairs without losing original intake identity",
-        "2,388 automated tests across 198 test files, including real SQL against in-process PostgreSQL (PGlite), run in CI on every push with zero operational data loss",
+        "3,323 automated tests passing across 276 test files in CI (26 November 2026), including real SQL against in-process PostgreSQL (PGlite)",
       ],
       technologies: ["Next.js 15", "React 19", "TypeScript", "PostgreSQL", "Supabase", "Tailwind CSS v4", "Zod", "Vitest", "PGlite"],
     },
@@ -286,8 +289,8 @@ export const allProjects: Project[] = [
       "Mobile customer portal (/cp/do/[id]) with permanent PIN-protected QR code and digital signature capture",
       "Word Delivery Order generation embedding verification QR codes byte-for-byte from the office's actual document template",
       "Consumable stock deducts deterministically from production figures entered once, never hand-edited",
-      "High-scale registry handling 250,000+ router records with pg_trgm fuzzy matching; full production backup restore verified",
-      "2,388 automated tests passing across 198 test files in CI, covering edge cases, race conditions, and cryptographic integrity",
+      "Registry load-tested at 250,000 routers; full production backup restore verified",
+      "3,323 automated tests passing across 276 test files in CI (26 November 2026), including real-PostgreSQL concurrency suites",
     ],
     workflow: [
       "Stock booked in and scanned into registry",
@@ -310,7 +313,7 @@ export const allProjects: Project[] = [
         body: [
           "RPOMS is the operations platform for a router-refurbishment programme that Blue Bee Technologies runs with ERTH and Maxis. It records each day's production, tracks every router by serial number from acceptance into a numbered box and out on a delivery, keeps the stock of routers, chargers, cables and boxes, and produces the delivery paperwork the office already uses. A customer-facing portal enables electronic proof of delivery with digital signatures, while a second, locked-down build of the same code gives the Ecommerce team a portal for requesting stock.",
           "The comparison to a warehouse or resource-planning system is about shape rather than scale. It is not a commercial ERP suite and does not try to be one: there is no finance, procurement or HR module. What it shares with that category is the structure, a single operational data model that inventory, production, delivery, workforce, Control Center and reporting all read from, so a figure on a dashboard traces back to the event that produced it.",
-          "It is one Next.js 15 application: over 65,000 lines of TypeScript across 96 compiled routes and 2,388 automated tests. Every screenshot on this page was taken from that application running locally on synthetic data.",
+          "It is one Next.js 15 application: about 160,000 lines of TypeScript, 55 pages and 148 API route handlers, and 3,323 automated tests (figures as of 27 November 2026). Every screenshot on this page was taken from that application running locally on synthetic data.",
         ],
         figures: [
           {
@@ -348,7 +351,7 @@ export const allProjects: Project[] = [
       {
         heading: "My Role",
         body: [
-          "I am the only developer on RPOMS. Of 292 commits on the production branch, every one except an uploaded copyright file is mine: the data model, every module, authentication and access control, the storage layer, the tests and CI, the remediation of two code audits, the deployment and staging runbooks, and the production releases.",
+          "I am the only developer on RPOMS. Of 779 commits on the production branch (27 November 2026), every one except an uploaded copyright file is mine: the data model, every module, authentication and access control, the storage layer, the tests and CI, the remediation of two code audits, the deployment and staging runbooks, and the production releases.",
           "I work as IT Systems & Operations Lead around RPOMS, so I also work directly with the side it supports: the production line, the stock it consumes, and the people running it day to day. RPOMS models a physical process closely enough to run it, which only works if the person building it understands the process and not just the schema behind it.",
         ],
       },
@@ -582,8 +585,8 @@ export const allProjects: Project[] = [
       {
         heading: "Testing and verification",
         body: [
-          "2,388 automated tests across 198 test files, written with Vitest. The database files run real SQL against PGlite, PostgreSQL compiled to WebAssembly and served in-process, so transactions, locking, concurrency and schema setup are tested with the production driver and no database server. CI runs typecheck, lint, the tests, a production build and a dependency audit on every push.",
-          "The test suite expanded across release milestones: 958 tests in the 28 September baseline, 1,637 tests in the 20 October release, 2,317 tests in the 4 November Delivery Tracking & ePOD production release, and 2,388 tests in the 6 November Control Center staging branch. Real PostgreSQL 17 concurrency tests validate adversarial scanner storms, ensuring zero duplicate writes and complete rollback integrity under simulated deadlocks.",
+          "3,323 automated tests across 276 test files, written with Vitest (CI run of 26 November 2026; 131 more are skipped there). The database files run real SQL against PGlite, PostgreSQL compiled to WebAssembly and served in-process, so transactions, locking, concurrency and schema setup are tested with the production driver and no database server. CI runs typecheck, lint, the tests, a production build and a dependency audit on every push.",
+          "The test suite expanded across release milestones: 958 tests in the 28 September baseline, 1,637 tests in the 20 October release, 2,317 tests in the 4 November Delivery Tracking & ePOD production release, 2,388 tests in the 6 November Control Center branch, and 3,323 tests passing in CI on 26 November. Real PostgreSQL 17 concurrency tests validate adversarial scanner storms, ensuring zero duplicate writes and complete rollback integrity under simulated deadlocks.",
         ],
         note: "There is no browser end-to-end suite yet; a Playwright smoke test per role is on the backlog.",
       },
@@ -634,17 +637,17 @@ export const allProjects: Project[] = [
       {
         heading: "November 2026: Delivery Tracking, Electronic Proof of Delivery (ePOD) & Production Release",
         body: [
-          "Released to production on 4 November 2026 under explicit owner instruction (RPOMS_DELIVERY_TRACKING=1, RPOMS_EVIDENCE_STORAGE=vercel-blob): a full delivery tracking subsystem and electronic proof of delivery (ePOD) with zero regression on existing delivery orders. Every delivery order now carries a permanent, PIN-protected QR code that links to a dedicated customer-facing tracking portal (/cp/do/[id]). The system generates Word Delivery Orders matching the office's template byte-for-byte with embedded QR verification, eliminating manual paperwork discrepancies.",
-          "The ePOD mobile interface enables receiving customers and logistics operators to capture digital signatures directly on touchscreen devices. Proof uploads are validated via file magic bytes (strictly JPEG, PNG, or WebP under 4 MB) and hashed with SHA-256 before being committed to an isolated private blob store (rpoms-epod-production-proofs). A five-stage state machine (staged, in_transit, out_for_delivery, delivered, and delivery_discrepancy) governs order lifecycle transitions, supported by automated discrepancy reporting when delivered unit counts diverge from the scanned load.",
+          "Released to production on 4 November 2026 under explicit owner instruction: a full delivery tracking subsystem and electronic proof of delivery (ePOD) with zero regression on existing delivery orders. Every delivery order now carries a permanent, PIN-protected QR code that links to a dedicated customer-facing tracking portal (/cp/do/[id]). The system generates Word Delivery Orders matching the office's template byte-for-byte with embedded QR verification, eliminating manual paperwork discrepancies.",
+          "The ePOD mobile interface enables receiving customers and logistics operators to capture digital signatures directly on touchscreen devices. Proof uploads are validated via file magic bytes (strictly JPEG, PNG, or WebP under 4 MB) and hashed with SHA-256 before being committed to an isolated private blob store. A five-stage state machine (staged, in_transit, out_for_delivery, delivered, and delivery_discrepancy) governs order lifecycle transitions, supported by automated discrepancy reporting when delivered unit counts diverge from the scanned load.",
           "Extensive layout verification ensured 32 of 32 responsive viewport checks passed cleanly from 320 px to 1280 px across dark and light themes, while production performance baselines showed scan-to-screen response times dropping from 316 ms to 81 ms on packing and 75 ms to 39 ms on registry scans.",
         ],
       },
       {
         heading: "Real-Time Control Center & Immutable Production Ledger",
         body: [
-          "Staged on 5–6 November 2026 (feat/control-center-2026-11-05), the RPOMS Control Center introduces real-time operational monitoring alongside an append-only production ledger (rpoms_production_ledger). To eliminate the risk of database locks and round-trip overhead on the warehouse line, ledger history is recorded using folded common table expressions (CTEs) within the router-move statement itself over RETURNING. This architecture guarantees zero standalone ledger round trips and zero duplicate entries on retries or concurrent scanner storms.",
-          "Data integrity is enforced at the PostgreSQL engine level: database triggers explicitly refuse UPDATE, DELETE, and TRUNCATE statements across all three Control Center tables (rpoms_production_ledger, rpoms_asset_specifications, and rpoms_progress_adjustments) for every database role, including the application itself. Row-level security revokes all public and anonymous privileges, preventing unauthorized PostgREST exposure.",
-          "An Asset Specification Matrix tracks model component requirements with versioned immutability, while supervisor adjustments record before-and-after deltas in an audited ledger without altering historical scan records. Keyset pagination over idx_cc_ledger_created guarantees consistent sub-millisecond retrieval across millions of historical events.",
+          "Released to production on 6 November 2026, the RPOMS Control Center provides real-time operational monitoring alongside an append-only production ledger (rpoms_production_ledger). To eliminate the risk of database locks and round-trip overhead on the warehouse line, ledger history is recorded using folded common table expressions (CTEs) within the router-move statement itself over RETURNING. This architecture guarantees zero standalone ledger round trips and zero duplicate entries on retries or concurrent scanner storms.",
+          "Data integrity is enforced at the PostgreSQL engine level: database triggers explicitly refuse UPDATE, DELETE, and TRUNCATE statements on the Control Center history tables for every database role, including the application itself. Row-level security revokes all public and anonymous privileges, preventing unauthorized PostgREST exposure.",
+          "Accessory Links map each router model to its charger, LAN cable and boxes, chosen from live inventory, and supervisor adjustments record before-and-after deltas in an audited ledger without altering historical scan records. Ledger history is read with keyset pagination over its creation index, so a page costs the same however long the history grows.",
         ],
       },
       {
@@ -657,14 +660,14 @@ export const allProjects: Project[] = [
       {
         heading: "Hardware Lifecycle & Multi-Cycle Rework Architecture",
         body: [
-          "Refurbishment facilities frequently encounter routers that fail secondary functional testing or require component rework (such as port resoldering or cosmetic casing swaps) after initial acceptance. The RPOMS Rework architecture (RPOMS_REWORK=1) models this cyclical reality without corrupting the historical audit trail.",
+          "Refurbishment facilities frequently encounter routers that fail secondary functional testing or require component rework (such as port resoldering or cosmetic casing swaps) after initial acceptance. The RPOMS Rework architecture models this cyclical reality without corrupting the historical audit trail.",
           "Routers routed into rework preserve their initial intake serial number, original batch origin, and historical test notes while initiating a secondary processing lifecycle. When reworked units re-enter the packaging line, the system enforces secondary quality-check clearances, prevents duplicate box assignments, and preserves both first-box and final-box lineage for post-delivery warranty investigations.",
         ],
       },
       {
         heading: "High-Scale Registry & Backup Restoration Verification",
         body: [
-          "The router registry is benchmarked for large enterprise scale: 250,000+ historical router records are indexed using PostgreSQL pg_trgm trigram indexes, enabling sub-millisecond fuzzy prefix and serial searches even under heavy warehouse load.",
+          "The router registry was load-tested at 250,000 routers on staging: sorting the first page on an indexed column took it from 160 to 200 ms to under 1 ms. Production holds the live registry alongside an 8,332-row historical archive.",
           "Disaster recovery readiness was verified through an end-to-end production dump and restore drill (1,269,977 bytes dump, SHA-256 verified). The restoration verified table schemas, row-level security policies, and trigram extensions, proving zero operational data loss and rapid recovery capability.",
         ],
       },
@@ -674,13 +677,13 @@ export const allProjects: Project[] = [
         label: "Delivery Tracking & Electronic Proof of Delivery (ePOD)",
         state: "implemented",
         detail:
-          "Live in production since 4 November 2026 (RPOMS_DELIVERY_TRACKING=1). Customer portal (/cp/do/[id]), mobile digital signatures, Word DO with QR code, and private blob evidence storage.",
+          "Live in production since 4 November 2026. Customer portal (/cp/do/[id]), mobile digital signatures, Word DO with QR code, and private blob evidence storage.",
       },
       {
         label: "Real-Time Control Center & Production Ledger",
-        state: "available",
+        state: "implemented",
         detail:
-          "Staged on feat/control-center-2026-11-05. Append-only ledger using folded CTEs inside router moves, triggers refusing mutations, and 2,388 passing tests.",
+          "In production since the 6 November 2026 release: Accessory Links, Overall Progress and the append-only production ledger, written by folded CTEs inside router moves, with triggers refusing changes.",
       },
       {
         label: "Audio Feedback Scanning Engine",
@@ -712,9 +715,9 @@ export const allProjects: Project[] = [
       },
       {
         label: "Serial registry, packing, delivery and paperwork, workforce, inventory",
-        state: "available",
+        state: "implemented",
         detail:
-          "Complete, held behind a deployment-level write lock pending programme sign-off; while it is on, these screens show an under-development notice in production.",
+          "Live in production. The deployment-level write lock that held these screens before programme sign-off is no longer in the code.",
       },
       {
         label: "Transaction pooler and connection diagnostics",
@@ -747,6 +750,29 @@ export const allProjects: Project[] = [
           "In the 20 October 2026 release: Google proves identity, a Super Admin grants access per service and capability, and revocation takes effect on the next request. Optional in production; password logins keep working without its migration.",
       },
       {
+        label: "Instant dashboard and packaging status",
+        state: "implemented",
+        detail:
+          "Released 21 November 2026: open dashboards refresh over Server-Sent Events when a Daily Report is saved (on staging, an idle dashboard went from six polls a minute to none), and every packed box shows Available, On DO, Delivered or Cosmetic, derived from delivery records rather than stored.",
+      },
+      {
+        label: "Named accounts, email verification and Supervisor access",
+        state: "implemented",
+        detail:
+          "Deployed 23 November 2026: staff and customer registration with emailed one-time codes and password recovery beside Google sign-in, and Access Management with a Supervisor preset and per-person grants. The shared per-role password logins remain.",
+      },
+      {
+        label: "Daily Report download",
+        state: "implemented",
+        detail: "Deployed 27 November 2026: the Dashboard downloads as a PDF or PNG snapshot of itself, built on demand.",
+      },
+      {
+        label: "Employee performance, packaging inspection, attribution corrections, internal rework",
+        state: "available",
+        detail:
+          "Deployed to production on 27 November 2026 behind per-feature switches, each of which turns on with its own database migration. Built and covered by the CI suite; activation in production is not recorded here yet.",
+      },
+      {
         label: "RPOMS Print Engine integration",
         state: "implemented",
         detail:
@@ -754,10 +780,10 @@ export const allProjects: Project[] = [
       },
     ],
     limitations: [
-      "Accounts are shared per role, so the audit trail records a role and a session, not a named person.",
+      "Shared per-role password logins still exist beside named accounts; actions taken through them are attributed to a role, not a person.",
       "The login throttle is per server instance, and sessions cannot be revoked individually; both need shared tables that are designed but not written.",
       "Some programme-wide baselines are still constants in code rather than settings.",
-      "Employees and workforce rows are matched by name rather than linked by ID.",
+      "Workforce rows are matched by name until the stable employee IDs deployed on 27 November 2026 are switched on.",
       "Only the dashboard is translated; the admin panel is English-only.",
       "The content security policy still allows inline scripts, and the daily report form is one very large component.",
       "Navigation still differs by role, which reveals that a higher role exists. Blocked actions themselves never name it.",
@@ -765,16 +791,16 @@ export const allProjects: Project[] = [
     roadmap: [
       "Tokyo request-level A/B performance verification on staging Control Center.",
       "Legal review of customer-facing ePOD wording before universal rollout.",
-      "Shared login throttle and server-side session revocation, then per-user accounts.",
+      "Shared login throttle and server-side session revocation for the shared role logins.",
       "Foreign key from routers to boxes and a join table for Delivery Orders.",
       "A Playwright smoke test for each role.",
       "Verify the Printing to Print Engine link on the line with the B1 Pro.",
     ],
     facts: [
-      { value: "2,388", label: "automated tests" },
-      { value: "96", label: "compiled routes" },
-      { value: "250,000+", label: "historical router registry" },
-      { value: "0", label: "operational data loss" },
+      { value: "3,323", label: "automated tests passing in CI" },
+      { value: "203", label: "pages and API route handlers" },
+      { value: "160k", label: "lines of TypeScript" },
+      { value: "250,000", label: "routers in the registry load test" },
     ],
     confidentialNotice:
       "RPOMS is proprietary software built for a live operation. The screenshots on this page were captured from the real application running locally on synthetic demo data: every name, serial, customer and figure in them is fictional, and the dashboard's programme-wide totals are left out. No production data, customer details or credentials appear.",
@@ -1086,7 +1112,13 @@ export const allProjects: Project[] = [
         label: "Production deployment",
         state: "implemented",
         detail:
-          "Live since 29 September 2026 at print.rukon.dev, and since October also at print.neksdev.tech with sign-in on each hostname, on a self-hosted Ubuntu server: nginx, a systemd service and PostgreSQL. The health endpoint reports the PostgreSQL store, Google sign-in and the deployed commit, 9d46377 of 19 October 2026.",
+          "Live since 29 September 2026 at print.rukon.dev, and since October also at print.neksdev.tech with sign-in on each hostname, on a self-hosted Ubuntu server: nginx, a systemd service and PostgreSQL. The health endpoint reports the PostgreSQL store and Google sign-in.",
+      },
+      {
+        label: "Release 1.0.1: multi-origin RPOMS link",
+        state: "implemented",
+        detail:
+          "Released 9 November 2026 and served at print.rukon.dev (the live app bundle reports 1.0.1): several trusted RPOMS origins, RPOMS's Printing page answered from the Print Engine tab it opened, and a production engine that refuses requests from local pages.",
       },
       {
         label: "Dashboard, gated deploys, approved migrations",
@@ -1383,8 +1415,8 @@ export const allProjects: Project[] = [
       "One eligibility rule is stated two ways in the approved copy and remains a client content decision.",
     ],
     image: {
-      src: "/images/erth-mark.png",
-      alt: "ERTH mark",
+      src: "/images/e-waste-platform-mark.png",
+      alt: "E-waste platform mark",
       variant: "mark",
     },
     links: [
@@ -2124,7 +2156,7 @@ export const allProjects: Project[] = [
           name: "BBTech Laptop Tool",
           relation: "Hardware identity bridge",
           summary:
-            "Portable .NET 8 QC utility extracting SMBIOS serials and motherboard UUIDs to provide immutable hardware identity to ITMS.",
+            "Portable .NET Framework QC utility extracting SMBIOS serials and motherboard UUIDs to provide immutable hardware identity to ITMS.",
           slug: "bbtech-laptop-tool",
         },
       ],
@@ -2202,7 +2234,7 @@ export const allProjects: Project[] = [
       {
         label: "Laptop Tool ingestion API & review queue",
         state: "implemented",
-        detail: "Implemented per ITMS-LAPTOP-TOOL-CONTRACT.md (feat/bbtech-laptop-tool-integration): POST /api/devices/requests ingestion, idempotency check, hardware duplicate matching, and 4-way review queue.",
+        detail: "Merged into ITMS and deployed to production on 8 November 2026: ingestion of Laptop Tool submissions with an idempotency check, hardware duplicate matching and a four-way review queue.",
       },
       {
         label: "RPOMS Print Engine device-label module",
@@ -2217,11 +2249,11 @@ export const allProjects: Project[] = [
       {
         label: "Automated test suite",
         state: "implemented",
-        detail: "119 unit and workflow tests passing in CI across device lifecycle, requests, and export endpoints.",
+        detail: "262 tests passing across 21 test files in CI on 8 November 2026, covering device lifecycle, requests and export endpoints.",
       },
     ],
     facts: [
-      { value: "119", label: "automated tests passing" },
+      { value: "262", label: "automated tests passing" },
       { value: "v1.0.0", label: "production release bundle" },
     ],
     limitations: [
@@ -2852,25 +2884,25 @@ export const allProjects: Project[] = [
     slug: "bbtech-laptop-tool",
     name: "BBTech Laptop Tool",
     fullName: "BBTech Laptop Tool: Portable Hardware QC, SMBIOS Identity & Refurbishment Audit Utility",
-    tagline: "Zero-install .NET 8 WPF utility extracting immutable SMBIOS identifiers and logging on-device QC histories.",
+    tagline: "Zero-install .NET Framework WPF utility extracting immutable SMBIOS identifiers and logging on-device QC histories.",
     summary:
-      "A portable Windows utility built with C# and .NET 8 WPF for refurbishment technicians. Replaces error-prone manual spec typing with direct Win32 WMI and SMBIOS extraction for motherboard serials, UUIDs, CPU, RAM, battery health, and drive SMART metrics. Maintains an encrypted on-device inspection journal in ProgramData, generates standardized QC passes, and bridges physical hardware to the ITMS inventory web application. Backed by 685 automated unit tests.",
+      "A portable Windows utility built with C# and WPF on .NET Framework 4.7.2 for refurbishment technicians. Replaces error-prone manual spec typing with direct Win32 WMI and SMBIOS extraction for motherboard serials, UUIDs, CPU, RAM, battery health, and drive SMART metrics. Maintains an encrypted on-device inspection journal in ProgramData, generates standardized QC passes, and bridges physical hardware to the ITMS inventory web application. Backed by 596 automated tests passing in CI.",
     category: "Systems / ERP / WMS",
     categorySlug: "systems",
     categories: ["Systems / ERP / WMS"],
     hrOverview: {
       valueProposition:
-        "Zero-install .NET 8 desktop utility extracting immutable SMBIOS hardware serials, battery health, and encrypted QC audit logs.",
+        "Zero-install .NET Framework desktop utility extracting immutable SMBIOS hardware serials, battery health, and encrypted QC audit logs.",
       role: "Sole Developer",
       roleScope:
-        "Architecture, WMI/SMBIOS hardware abstraction, WPF MVVM UI, encrypted local journaling, and test engineering (685 tests).",
+        "Architecture, WMI/SMBIOS hardware abstraction, WPF MVVM UI, encrypted local journaling, and test engineering (596 tests in CI).",
       context: "Blue Bee Technologies refurbishment production line.",
       highlights: [
         "Eliminated manual spec-entry errors by extracting immutable hardware identity directly from BIOS/SMBIOS",
         "Architected encrypted on-device JSON audit journal to detect recurrent returns and prevent tampering",
-        "685 automated xUnit tests validating hardware parsing, validation rules, and crypto storage",
+        "596 automated xUnit tests passing in CI, validating hardware parsing, validation rules, and crypto storage",
       ],
-      technologies: ["C#", ".NET 8", "WPF", "Win32 WMI / SMBIOS", "xUnit", "AES Encryption"],
+      technologies: ["C#", ".NET Framework 4.7.2", "WPF", "Win32 WMI / SMBIOS", "xUnit", "AES Encryption"],
     },
     role: "Sole Developer",
     period: "2025 - 2026",
@@ -2881,27 +2913,27 @@ export const allProjects: Project[] = [
     kind: "professional",
     tier: "featured",
     image: {
-      src: "/images/bbtech-laptop-tool-mark.png",
+      src: "/images/laptop-qc-tool-mark.png",
       alt: "BBTech Laptop Tool mark",
       variant: "mark",
     },
     facts: [
-      { value: "685", label: "Automated unit tests" },
+      { value: "596", label: "Automated tests passing in CI" },
       { value: "0", label: "Installers required (portable USB executable)" },
       { value: "100%", label: "SMBIOS hardware identity extraction" },
     ],
-    tech: ["C#", ".NET 8", "WPF", "Win32 APIs", "WMI / SMBIOS", "xUnit"],
+    tech: ["C#", ".NET Framework 4.7.2", "WPF", "Win32 APIs", "WMI / SMBIOS", "xUnit"],
     techGroups: [
-      { label: "Application & UI", items: ["C#", ".NET 8", "WPF", "MVVM Pattern", "CommunityToolkit.Mvvm"] },
+      { label: "Application & UI", items: ["C#", ".NET Framework 4.7.2", "WPF", "MVVM Pattern"] },
       { label: "Hardware Abstraction", items: ["Win32_BaseBoard", "Win32_BIOS", "Win32_DiskDrive", "Win32_Battery", "SMBIOS UUID"] },
       { label: "Security & Storage", items: ["Protected on-device JSON journal", "DPAPI / AES encryption", "System.Text.Json"] },
-      { label: "Testing & Quality", items: ["xUnit", "FluentAssertions", "Moq", "685 unit tests"] },
+      { label: "Testing & Quality", items: ["xUnit", "596 tests in CI"] },
     ],
     highlights: [
       "Binds refurbishment records to immutable motherboard and BIOS serial numbers rather than transient OS names",
       "Automates full hardware inventory: CPU cores, RAM modules, battery design vs full capacity wear, and NVMe health",
       "Maintains append-only encrypted audit journal in ProgramData to identify machines returning for warranty or repair",
-      "Engineered 685 unit tests covering hardware parsing fallbacks, edge cases, and cryptographic integrity",
+      "Engineered 596 automated tests, passing in CI, covering hardware parsing fallbacks, edge cases, and cryptographic integrity",
     ],
     workflow: [
       "Plug USB on incoming refurbished laptop and launch single self-contained executable",
@@ -2915,7 +2947,7 @@ export const allProjects: Project[] = [
         body: [
           "Refurbishment technicians previously had to manually transcribe processor tiers, memory capacities, battery wear percentages, and serial numbers into inventory forms. Human error led to mismatched stock codes, mislabeled specifications, and an inability to detect when an identical physical laptop returned to the facility after a warranty claim.",
           "Furthermore, standard Windows settings screens frequently mask critical hardware limitations: dynamic turbo clocks disguise baseline frequencies, and software-level asset tags are wiped clean whenever a drive is reformatted.",
-          "BBTech Laptop Tool was engineered as a zero-install, single-file Windows executable (.NET 8 WPF) run directly from a technician's USB drive to automate hardware profiling and enforce an immutable quality-control audit trail.",
+          "BBTech Laptop Tool was engineered as a zero-install, single-file Windows executable (WPF on .NET Framework 4.7.2, preinstalled on Windows 10 and 11) run directly from a technician's USB drive to automate hardware profiling and enforce an immutable quality-control audit trail.",
         ],
       },
       {
@@ -2945,7 +2977,7 @@ export const allProjects: Project[] = [
       {
         heading: "Testing and Verification",
         body: [
-          "The codebase includes 685 automated xUnit tests validating WMI fallback parsers, display aspect ratio calculations, keyboard matrix hit testing, battery wear calculations, and cryptographic payload serialization.",
+          "596 automated xUnit tests, passing in CI on 29 October 2026, validate WMI fallback parsers, display aspect ratio calculations, keyboard matrix hit testing, battery wear calculations, and cryptographic payload serialization.",
           "Automated tests verify that every known OEM placeholder string properly triggers the UUID and MAC fallback hierarchy, ensuring 100% deterministic device fingerprinting even on stripped or customized firmware.",
         ],
       },
@@ -2969,12 +3001,17 @@ export const allProjects: Project[] = [
       {
         label: "Automated xUnit test suite",
         state: "implemented",
-        detail: "685 passing unit tests validating hardware models, validators, and crypto storage.",
+        detail: "596 tests passing in CI (29 October 2026) validating hardware models, validators, and crypto storage.",
       },
       {
         label: "Direct ITMS API transport connector",
         state: "implemented",
-        detail: "Implemented per ITMS-LAPTOP-TOOL-CONTRACT.md on branch feat/itms-direct-submission, posting directly to POST /api/devices/requests with API key/bearer auth.",
+        detail: "Released in v1.1.0 (29 October 2026), posting to the ITMS requests API with key authentication; the ITMS side has been in production since 8 November 2026.",
+      },
+      {
+        label: "UTF-8 JSON QR intake and SSD health (v1.2.0)",
+        state: "implemented",
+        detail: "Released 6 November 2026: one uncompressed UTF-8 JSON QR format sized for fast on-screen scanning, and SSD wear and health for NVMe, SATA and eMMC drives.",
       },
     ],
     limitations: [
@@ -3168,7 +3205,7 @@ export const allProjects: Project[] = [
     kind: "professional",
     tier: "featured",
     image: {
-      src: "/images/erth-router-distribution-mark.svg",
+      src: "/images/router-retest-distribution-mark.svg",
       alt: "ERTH Router Retest & Distribution mark",
       variant: "mark",
     },
@@ -3503,9 +3540,9 @@ export const allProjects: Project[] = [
       { value: "4", label: "report formats" },
     ],
     image: {
-      src: "/images/bbtech-laptop-inspection-tool-mark.png",
-      srcDark: "/images/bbtech-laptop-inspection-tool-mark-dark.png",
-      alt: "BBTech Laptop Inspection Tool wordmark",
+      src: "/images/driver-inspection-tool-mark.png",
+      srcDark: "/images/driver-inspection-tool-mark-dark.png",
+      alt: "Driver inspection tool mark",
       variant: "mark",
     },
     links: [
@@ -3637,11 +3674,6 @@ export const allProjects: Project[] = [
     ],
     links: [
       {
-        label: "GitHub Repository",
-        href: "https://github.com/tirukon015/link-nest",
-        external: true,
-      },
-      {
         label: "Rukon Link Case Study",
         href: "/work/rukon-link",
       },
@@ -3697,39 +3729,7 @@ export const upcomingProjects: UpcomingProject[] = [
 export const upcomingWork: WorkListItem[] = [
 ];
 
-export type ProjectCategoryInfo = {
-  name: ProjectCategory;
-  slug: ProjectCategorySlug | "all";
-  label: string;
-  description: string;
-};
-
-export const projectCategories: ProjectCategoryInfo[] = [
-  {
-    name: "Systems / ERP / WMS",
-    slug: "systems",
-    label: "Systems / ERP / WMS",
-    description: "Operational platforms, warehouse & manufacturing logic, automation, and real-world workflow systems.",
-  },
-  {
-    name: "Web Apps / Software",
-    slug: "web-apps",
-    label: "Web Apps / Software",
-    description: "Full-stack software applications, API integrations, data isolation, and AI-assisted workflows.",
-  },
-  {
-    name: "Websites",
-    slug: "websites",
-    label: "Websites",
-    description: "High-performance production websites, design-to-code implementations, and technical SEO.",
-  },
-  {
-    name: "iOS / Mobile",
-    slug: "ios-mobile",
-    label: "iOS / Mobile",
-    description: "Native mobile applications, on-device intelligence, and offline-first mobile tools.",
-  },
-];
+export { projectCategories, type ProjectCategoryInfo } from "./project-categories";
 
 export function getProject(slug: string, isAuthorized = false): Project | undefined {
   const origSlug = getOriginalSlug(slug);

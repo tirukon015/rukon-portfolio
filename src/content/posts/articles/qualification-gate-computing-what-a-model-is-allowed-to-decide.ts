@@ -47,14 +47,14 @@ export const post: BlogPost = {
         {
           type: "code",
           lang: "ts",
-          code: `const rejectCriteria = ERTH_CRITERIA
+          code: `const rejectCriteria = CLIENT_CRITERIA
   .filter((c) => c.outcome === "NOT_ACCEPTABLE")
   .map((c) => c.id)
   .filter((id) => {
     const fired = rows.filter((r) => r.raw === "NOT_ACCEPTABLE" && r.criteria.includes(id));
     const wrong = fired.some((r) => r.expected === "ACCEPTABLE");
     const ownHit = fired.some(
-      (r) => r.expected === "NOT_ACCEPTABLE" && ERTH_CRITERIA.find((c) => c.id === id)!.items.includes(r.item),
+      (r) => r.expected === "NOT_ACCEPTABLE" && CLIENT_CRITERIA.find((c) => c.id === id)!.items.includes(r.item),
     );
     return !wrong && ownHit;
   });

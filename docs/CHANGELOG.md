@@ -3,6 +3,81 @@
 Significant changes, newest first. Keep entries short: what changed for a
 visitor, and anything a future developer must know. Git history has the detail.
 
+## 2026-11-27 (production hardening)
+
+### Security
+- Next.js 16.3.2 → 16.4.6: fixes critical advisories (unauthenticated RCE,
+  incl. the image optimisation API); `npm audit` clean.
+- Screenshots and marks sanitised in the pixels: client and employer names,
+  logos and client hardware models are redacted or replaced in every RPOMS
+  and Print Engine screenshot, the RPOMS social image and three project
+  marks. Verified by OCR over every public image.
+- robots.txt disallows `/admin` and `/access`; `/access` is `noindex`.
+- A link to a private repository (404 for visitors) removed.
+
+### Fixed
+- `/work`: 2.3–3.2 s server time per request → ~20 ms. Article counts no
+  longer re-project every article per project, and the published/projected
+  article list is cached per day.
+- `/work` cards render on the server; the client filter receives only
+  categories and finished markup (no project objects in the page payload).
+- Mobile menu closes on browser back/forward and on an outside tap; Escape
+  returns focus to the button; 44 px touch targets.
+- Scroll reveal: a tall element could never meet the 15 % threshold and stayed
+  invisible; it now reveals on first pixel. Content is visible without JS.
+- Accessibility: contrast tokens (`text-faint` both themes, light `accent`)
+  raised to ≥4.5:1; project overview is a valid `<dl>`; code blocks are
+  keyboard-scrollable; work filter uses toggle buttons (`aria-pressed`).
+
+### Added
+- Blog pagination (`/blog`, `/blog/page/<n>`, 40 per page) so the index stays
+  flat as the library grows; pages are in the sitemap.
+- `npm run typecheck | test | check:site | check:browser`, all run in CI:
+  route/link/image/metadata/JSON-LD/feed/robots/404 and confidentiality
+  checks over the running build, plus a real-browser pass (console, network,
+  overflow at ten widths, project clicks, mobile menu, filters, axe, CLS).
+- Print Engine status: release 1.0.1 (live bundle verified).
+
+## 2026-11-27
+
+### Fixed (confidentiality)
+- `/work` no longer ships the full project dataset to the browser. The client
+  work filter imported a value from `content/projects.ts`, which bundled every
+  project, including original names and a hidden project, into a client chunk.
+  Categories moved to `content/project-categories.ts`; the content and
+  confidentiality modules are now `server-only` (package added). Verified: no
+  confidential term in any `.next/static` chunk.
+- Redirects now point older aliases and original slugs to the public slugs.
+  Previously three public aliases redirected to the original slugs.
+- Image files renamed to public-slug names (`laptop-qc-tool-mark.png`,
+  `driver-inspection-tool-mark*.png`, `e-waste-platform-mark.png`,
+  `router-retest-distribution-mark.svg`).
+- Code examples in five articles used client-derived identifiers that the
+  render-time projection cannot rewrite; renamed to neutral ones. The JSON-LD
+  example in the structured-data article now uses placeholder names and URLs.
+- Removed internal switch names and a private storage name from the RPOMS case
+  study. Internal working notes and a content preview report moved out of this
+  repository; a preview URL was scrubbed from `PORTFOLIO_UI_POLISH.md`.
+
+### Updated (verified against repositories, CI runs and deployments, 27 Nov)
+- **RPOMS:** about 160,000 lines of TypeScript, 55 pages and 148 API route
+  handlers, 3,323 tests passing in CI (26 Nov), 779 commits on the production
+  branch. Control Center marked live (6 Nov release). The old write-lock status
+  removed. New status rows for the 21, 23 and 27 November releases; the
+  27 November features are marked *available* (deployed behind switches,
+  activation not recorded). The registry's 250,000 figure is now described as
+  a load test, not a production count. Limitations and roadmap updated for
+  named accounts and employee IDs. The same figures updated in About,
+  Experience, FAQ and CV.
+- **Print Engine:** removed the claim that the health endpoint reports a commit
+  (it no longer does).
+- **ITMS:** Laptop Tool intake deployed to production on 8 Nov; 262 tests
+  passing in CI (was 119).
+- **Laptop Tool:** corrected the platform to .NET Framework 4.7.2 (it never
+  targeted .NET 8); 596 tests passing in CI (was 685, which could not be
+  verified); removed libraries it does not use; added the v1.2.0 release
+  (UTF-8 JSON QR intake, SSD health).
+
 ## 2026-11-06
 
 ### Updated

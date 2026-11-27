@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { BlogIndex } from "@/components/sections/blog-index";
 import { JsonLd } from "@/components/seo/json-ld";
 import { site } from "@/content/site";
-import { publishedAt, sortedPosts } from "@/content/posts";
+import { getBlogPage, publishedAt } from "@/content/posts";
 import {
   absoluteUrl,
   breadcrumbSchema,
@@ -40,7 +40,7 @@ const crumbs = [
 ];
 
 export default function BlogPage() {
-  const posts = sortedPosts();
+  const posts = getBlogPage(1)!.posts;
 
   const schema = graph(
     {
