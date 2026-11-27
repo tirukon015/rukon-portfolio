@@ -10,7 +10,7 @@ export const post: BlogPost = {
   tags: ["PostgreSQL", "Migrations", "Supabase", "Next.js", "Release Engineering", "Operations"],
   contentType: "Case Study",
   searchIntent: "problem-aware",
-  seoTitle: "No Runtime DDL on Production: Schema Stamps, a Refusal Gate and Ordered Migrations",
+  seoTitle: "Refusing Runtime DDL on Production: Schema Stamps and a Gate",
   relatedProjects: ["rpoms"],
   relatedPosts: [
     "supabase-connection-pool-exhaustion-supavisor-production",

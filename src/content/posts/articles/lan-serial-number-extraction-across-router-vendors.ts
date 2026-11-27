@@ -10,7 +10,7 @@ export const post: BlogPost = {
   tags: ["Networking", "PowerShell", "UPnP", "SNMP", "Hardware Diagnostics", "Telco Routers", "Win32"],
   contentType: "Technical Guide",
   searchIntent: "problem-aware",
-  seoTitle: "LAN Router Serial Extraction: UPnP, CSTECGI, SNMP across Kaon, Huawei, TP-Link",
+  seoTitle: "Reading Router Serial Numbers Over LAN: UPnP, CSTECGI, SNMP",
   relatedProjects: ["router-diagnostic"],
   relatedPosts: [
     "what-an-it-systems-role-actually-involves",

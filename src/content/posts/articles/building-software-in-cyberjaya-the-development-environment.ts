@@ -3,6 +3,7 @@ import type { BlogPost } from "../types";
 export const post: BlogPost = {
   slug: "building-software-in-cyberjaya-the-development-environment",
   title: "Building Software in Cyberjaya: The Development Environment Behind the Work",
+  seoTitle: "Building Software in Cyberjaya: The Development Environment",
   description:
     "What a production operations system, a client website, an AI research assistant and a vision inspector actually get built on, from a laptop in Cyberjaya: the machine, the stack, where things are hosted, and the local details that shaped the code.",
   date: "2026-09-24",

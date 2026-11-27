@@ -197,6 +197,11 @@ import { post as oneLiveRecordPerRouterPerSessionPost } from "./articles/one-liv
 import { post as sortingOnTheColumnTheIndexServesPost } from "./articles/sorting-on-the-column-the-index-serves-250000-routers";
 import { post as googleSignInServerSidePkcePost } from "./articles/google-sign-in-server-side-pkce-per-service-grants-read-every-request";
 import { post as installingDriversFromOfficialSourcesOnlyPost } from "./articles/installing-drivers-from-official-sources-only-allow-lists-hashes-authenticode";
+import { post as oneClientImportShippedEveryProjectPost } from "./articles/one-client-import-shipped-every-project-to-the-browser";
+import { post as redactingConfidentialTextFromScreenshotsPost } from "./articles/redacting-confidential-text-from-screenshots-with-ocr";
+import { post as replacingDashboardPollingWithSsePost } from "./articles/replacing-dashboard-polling-with-server-sent-events";
+import { post as testingAPortfolioLikeAProductionAppPost } from "./articles/testing-a-portfolio-like-a-production-application";
+import { post as listingPageTo20msPost } from "./articles/a-listing-page-from-2-5-seconds-to-20-ms-without-a-cache-layer";
 
 /**
  * Every article, including those scheduled for a later publication date.
@@ -377,6 +382,11 @@ export const allPosts: BlogPost[] = [
   sortingOnTheColumnTheIndexServesPost,
   googleSignInServerSidePkcePost,
   installingDriversFromOfficialSourcesOnlyPost,
+  oneClientImportShippedEveryProjectPost,
+  redactingConfidentialTextFromScreenshotsPost,
+  replacingDashboardPollingWithSsePost,
+  testingAPortfolioLikeAProductionAppPost,
+  listingPageTo20msPost,
 ];
 
 export const categories: PostCategory[] = [
@@ -528,6 +538,45 @@ export function getBlogPage(page: number) {
 
 export function blogPageHref(page: number) {
   return page <= 1 ? "/blog" : `/blog/page/${page}`;
+}
+
+/** Plain text from inline markdown: links keep their label, code loses its backticks. */
+function plain(text: string) {
+  return text.replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/`([^`]+)`/g, "$1").replace(/\*\*([^*]+)\*\*/g, "$1");
+}
+
+/**
+ * The meta description: the article's own words, cut to fit a search result.
+ * `seoDescription` wins; otherwise whole sentences of `description` up to 160
+ * characters, falling back to a word boundary. The full description stays on
+ * the page and in the structured data.
+ */
+export function metaDescriptionFor(post: BlogPost, max = 160): string {
+  const text = plain(post.seoDescription ?? post.description).trim();
+  if (text.length <= max) return text;
+  const sentences = text.match(/[^.!?]+[.!?]+(\s|$)/g) ?? [];
+  let out = "";
+  for (const s of sentences) {
+    if ((out + s).trim().length > max) break;
+    out += s;
+  }
+  if (out.trim().length >= 70) return out.trim();
+  const cut = text.slice(0, max - 1);
+  return `${cut.slice(0, cut.lastIndexOf(" "))}…`;
+}
+
+/**
+ * Question-and-answer pairs that the article itself contains: sections whose
+ * heading is a self-contained question and whose first block is a prose
+ * answer. Used for FAQPage structured data only when there are at least two,
+ * so the markup always mirrors visible content.
+ */
+export function faqFor(post: BlogPost): { question: string; answer: string }[] {
+  const pairs = post.sections
+    .filter((s) => /\?$/.test(s.heading.trim()) && s.heading.trim().length >= 25 && typeof s.body[0] === "string")
+    .map((s) => ({ question: s.heading.trim(), answer: plain(s.body[0] as string) }))
+    .filter((p) => p.answer.length >= 40);
+  return pairs.length >= 2 ? pairs : [];
 }
 
 /** Falls back to `description` so every card and meta tag has copy. */

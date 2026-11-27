@@ -10,7 +10,7 @@ export const post: BlogPost = {
   tags: ["BroadcastChannel", "Cross-Origin-Opener-Policy", "window.opener", "Web Bluetooth", "postMessage", "Browser Security"],
   contentType: "Problem/Solution",
   searchIntent: "problem-aware",
-  seoTitle: "BroadcastChannel Across Sites, COOP and window.opener: Linking Two Web Apps to One Printer",
+  seoTitle: "Cross-Tab Messaging: BroadcastChannel, COOP and window.opener",
   relatedProjects: ["rpoms-print-engine", "rpoms"],
   relatedPosts: [
     "adding-label-printing-to-a-nextjs-app-through-a-relay-page",

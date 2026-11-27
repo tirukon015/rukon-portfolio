@@ -15,21 +15,22 @@ export const post: BlogPost = {
     relatedPosts: ["replacing-repetitive-manual-work-with-software"],
     sections: [
       {
-        heading: "What is it?",
+        heading: "What does moving a manual workflow to a digital one involve?",
         body: [
           "This is about the practical shift from a manual process (spreadsheets, paper forms, verbal handoffs) to a digital one, and what that transition actually requires to succeed.",
         ],
       },
       {
-        heading: "Why does it matter?",
+        heading: "Why move an operational workflow from manual to digital?",
         body: [
           "Digitizing a workflow badly is worse than leaving it manual: it adds a system people have to fight instead of a process they understand. The goal isn't to digitize for its own sake, it's to remove specific, real friction.",
         ],
       },
       {
-        heading: "Real-world perspective",
+        heading: "How this worked in RPOMS",
         body: [
           "RPOMS was built for the router-refurbishment operation I support one module at a time, registry, then packing, then delivery, so each piece could be checked against how the floor actually works before the next was started. The rollout is staged the same way but is not the same thing as the build order: today the Daily Production Report is the module in daily use, while the registry, packing, delivery, workforce and inventory modules are complete but sit behind a deployment-level write lock until the programme signs them off; until then, production shows those screens as under development. A module goes live by being named, not by accident.",
+          "The same approach continues with each release. In November 2026 per-employee performance moved out of a spreadsheet: target against completed work per employee and work type, written in the same database statement as the Daily Report save, deployed behind a switch that turns on with its migration.",
           "One manual distinction had to survive digitisation intact. On the floor, accepting a router and packing it are different jobs done by different people, so the system never records the packer as a router's acceptor, however convenient a single field would have been. Preserving that distinction is the difference between a system that models the process and one that flattens it.",
         ],
       },

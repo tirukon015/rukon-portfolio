@@ -6,6 +6,7 @@ export const post: BlogPost = {
     description:
       "Building software for a real operation goes better when the developer understands the physical process it supports, not just the data model.",
     date: "2026-07-07",
+    updated: "2026-11-27",
     category: "Building Real Systems",
     tags: ["IT Systems", "Operations", "Software Engineering"],
     contentType: "Experience-led",
@@ -14,21 +15,22 @@ export const post: BlogPost = {
     relatedPosts: ["what-is-a-production-management-system", "why-internal-software-needs-good-ux"],
     sections: [
       {
-        heading: "What is it?",
+        heading: "What does understanding the physical process mean for a developer?",
         body: [
           "This is about the gap between building software from a spec someone else wrote about a process, and building it while directly involved in that process.",
         ],
       },
       {
-        heading: "Why does it matter?",
+        heading: "Why should software developers understand the physical process?",
         body: [
           "A spec describes a process. It rarely captures the exceptions: what happens when a box is one unit short, what happens when two people are on the same station on different shifts. Those exceptions are exactly what breaks software that was designed from a document instead of the floor.",
         ],
       },
       {
-        heading: "Real-world perspective",
+        heading: "How this works in RPOMS",
         body: [
           "I work as IT Systems & Operations Lead on RPOMS, which puts me on both sides: I write the software, and I'm involved in the operational process it supports. Rules like never letting a packer be recorded as a router's acceptor came directly from knowing those are different jobs on the floor, not from a requirements document.",
+          "One example from November 2026: a router accepted on one day and retired later must draw from stock once, not twice. The release of 27 November counts only approved retirements, on their approval day, which is a rule that only makes sense once you have watched the floor handle a retired unit.",
         ],
       },
       {

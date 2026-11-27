@@ -10,7 +10,7 @@ export const post: BlogPost = {
   tags: ["OAuth", "PKCE", "Supabase Auth", "Authorization", "Next.js", "Access Control"],
   contentType: "Technical Guide",
   searchIntent: "informational",
-  seoTitle: "Server-Side PKCE Google Sign-In With Supabase and Per-Service Authorization in Next.js",
+  seoTitle: "Google Sign-In With Server-Side PKCE and Per-Service Grants",
   relatedProjects: ["rpoms", "rpoms-print-engine"],
   relatedPosts: [
     "sharing-one-supabase-project-between-two-apps",

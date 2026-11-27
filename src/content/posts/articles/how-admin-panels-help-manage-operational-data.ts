@@ -6,6 +6,7 @@ export const post: BlogPost = {
     description:
       "What a well-designed admin panel actually needs to do for a production or operations system, beyond CRUD screens.",
     date: "2026-06-23",
+    updated: "2026-11-27",
     category: "Building Real Systems",
     tags: ["Admin Systems", "Software Engineering", "Data"],
     contentType: "Technical Guide",
@@ -14,21 +15,22 @@ export const post: BlogPost = {
     relatedPosts: ["why-internal-software-needs-good-ux", "reporting-from-operational-data"],
     sections: [
       {
-        heading: "What is it?",
+        heading: "What is an admin panel for operational data?",
         body: [
           "An admin panel for an operational system is the interface staff use to enter, correct, and review the data a physical process produces: reports, registries, stock, deliveries.",
         ],
       },
       {
-        heading: "Why does it matter?",
+        heading: "Why does an operations team need a purpose-built admin panel?",
         body: [
           "For an internal, operational tool, the admin panel isn't a secondary feature, it's most of the product. Whoever uses it every day will judge the whole system by how well it fits their actual workflow, not by how the dashboard looks.",
         ],
       },
       {
-        heading: "Real-world perspective",
+        heading: "How this works in RPOMS",
         body: [
           "In RPOMS, the admin side covers daily production reports, a serial registry, packing, delivery, workforce, inventory, and report history. Each one is scoped to a specific job on the floor rather than being one generic data-entry screen, because the jobs themselves are different.",
+          "Access is granted per person and per service. In November 2026 Access Management gained a Supervisor preset for daily operations, kept separate from the owner-only boundary, with actions attributed to the individual rather than to a shared role.",
         ],
       },
       {

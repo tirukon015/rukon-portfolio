@@ -47,6 +47,21 @@ export function sanitizeText(text: string, options: SanitizeOptions = {}): strin
     "National Device Circularity Programme"
   );
 
+  // 3a. Full tool names first: once the company's short name is replaced,
+  // these compound names can no longer be recognised.
+  result = result.replace(
+    /BBTech Laptop Tool/gi,
+    "Laptop QC & SMBIOS Tool"
+  );
+  result = result.replace(
+    /BBTech Laptop Inspection Tool/gi,
+    "Laptop Driver Inspection & Repair Tool"
+  );
+  result = result.replace(
+    /WiFi Router Diagnostic Tool/gi,
+    "Multi-Vendor Network Hardware Diagnostic Tool"
+  );
+
   // 3. Exact Company Identities
   result = result.replace(
     /Blue Bee Technologies\s+Sdn\.\s*Bhd\./gi,
@@ -103,19 +118,6 @@ export function sanitizeText(text: string, options: SanitizeOptions = {}): strin
     "Leading Malaysian telecommunications provider"
   );
 
-  // 4. Project & System Tool Names with Confidential Business Affiliation
-  result = result.replace(
-    /BBTech Laptop Tool/gi,
-    "Laptop QC & SMBIOS Tool"
-  );
-  result = result.replace(
-    /BBTech Laptop Inspection Tool/gi,
-    "Laptop Driver Inspection & Repair Tool"
-  );
-  result = result.replace(
-    /WiFi Router Diagnostic Tool/gi,
-    "Multi-Vendor Network Hardware Diagnostic Tool"
-  );
 
   // 5. Context-aware Hardware Models
   if (!options.preserveGenericHardware) {

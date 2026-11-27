@@ -3,6 +3,7 @@ import type { BlogPost } from "../types";
 export const post: BlogPost = {
   slug: "printing-labels-from-the-browser-over-web-bluetooth",
   title: "Printing Labels From the Browser Over Web Bluetooth: The RPOMS Print Engine",
+  seoTitle: "Printing Labels From the Browser Over Web Bluetooth",
   description:
     "A scan-to-label workflow that drives a NIIMBOT B1 Pro directly from Chrome, with no vendor app and no backend. What the protocol work looked like, how 116 tests run without a printer, and what the first real print taught.",
   date: "2026-09-24",

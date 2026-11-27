@@ -3,6 +3,7 @@ import type { BlogPost } from "../types";
 export const post: BlogPost = {
   slug: "a-vision-model-that-only-observes",
   title: "A Vision Model That Only Observes: Building RPOMS AI Without Letting the Model Decide",
+  seoTitle: "A Vision Model That Only Observes: Keeping Decisions in Rules",
   description:
     "A router surface inspector where the vision model reports what it sees and a deterministic rule engine decides. Why the split, what a 7B open model actually scored, the blank-image control that changed the prompt, and a safety gate that turns most answers into \"check manually\".",
   date: "2026-09-24",

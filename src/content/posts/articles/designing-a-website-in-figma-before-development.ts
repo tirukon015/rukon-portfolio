@@ -15,21 +15,22 @@ export const post: BlogPost = {
     relatedPosts: ["from-figma-design-to-production-website"],
     sections: [
       {
-        heading: "What is it?",
+        heading: "What does designing a website in Figma before development mean?",
         body: [
           "Designing in Figma before writing any code means the layout, typography, components, and user flow are all worked out and reviewable before development starts.",
         ],
       },
       {
-        heading: "Why does it matter?",
+        heading: "Why design a website in Figma before writing code?",
         body: [
           "Designing directly in code tends to lock in early decisions just because they're already built. Working in Figma first keeps everything easy to change, laid out and typography, spacing, entire flows, before any of it is expensive to touch.",
         ],
       },
       {
-        heading: "Real-world perspective",
+        heading: "How this worked on a production homepage",
         body: [
           "On ERTH, the design was worked out and approved as a single file before the build started, and my part began with that approved file. Having the page structure, the visual direction and the user flow from choosing a device through to payout settled up front is what made a faithful build possible.",
+          "The approved file was specific enough to build against directly, and the build kept its promises measurable: the shipped page cut JavaScript from about 250 kB to 3.7 kB and images from 12.0 MB to 2.7 MB without changing what the client had approved.",
           "That groundwork is what the production build was then made from. The client approved one design file as final, and the site was built from it as static HTML, CSS and vanilla JavaScript. Working through the approved design element by element surfaced four defects the prototype had carried unnoticed, including a wrapper element that closed early and left a heading black on a near-black background. Design-first did not prevent those; it did mean every one of them was found against a reference everyone had already agreed on, rather than argued about.",
         ],
       },

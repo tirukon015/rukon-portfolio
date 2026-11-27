@@ -15,19 +15,19 @@ export const post: BlogPost = {
     relatedPosts: ["from-figma-design-to-production-website"],
     sections: [
       {
-        heading: "What is it?",
+        heading: "What does translating Figma components into reusable code involve?",
         body: [
           "Figma components (a button, a card, a form field) and code components look similar on the surface, but turning one into the other cleanly takes real decisions about variants, states, and structure.",
         ],
       },
       {
-        heading: "Why does it matter?",
+        heading: "Why translate design components into code components deliberately?",
         body: [
           "A one-to-one, screen-by-screen build produces duplicated, inconsistent code. Recognizing which pieces are genuinely the same component in different states, versus which only look similar, is what keeps a codebase maintainable as a site grows.",
         ],
       },
       {
-        heading: "Real-world perspective",
+        heading: "How this worked on a production homepage",
         body: [
           "On ERTH the design came as an approved file, so the intent behind each component had to be read from the file itself before deciding what should be one reusable component with variants versus two genuinely different ones. That is the practical argument for keeping design and build close, whoever holds the pen in Figma: the person translating a component into code should know why it looks the way it does.",
           "On ERTH the translation was unusual, because the approved design shipped with its own inline styles as the specification. Rather than rewrite a thousand style attributes into a class system and risk drift, the markup was preserved and only what a static page cannot express moved into CSS: hover states, open and closed state, and the desktop and mobile split. The component thinking still applied. It decided which repeated patterns got one rule and which only looked alike.",
